@@ -28,19 +28,19 @@
 }
 
 .barlow-regular {
-	font-family: "Barlow", sans-serif;
+	font-family: var(--font-body-family);
 	font-weight: 400;
 	font-style: normal;
 }
 
 .barlow-semibold {
-	font-family: "Barlow", sans-serif;
+	font-family: var(--font-body-family);
 	font-weight: 600;
 	font-style: normal;
 }
 
 .barlow-condensed-semibold {
-	font-family: "Barlow Condensed", sans-serif;
+	font-family: var(--font-heading-family);
 	font-weight: 600;
 	font-style: normal;
 }
