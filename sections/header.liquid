@@ -8,27 +8,51 @@
 	
 	<div class="container">
 		
-
+		
 
 	</div>
 
 </header>
 
 {% schema %}
-{
-  "name": "t:general.header",
-  "settings": [
-    {
-      "type": "link_list",
-      "id": "menu",
-      "label": "t:labels.menu"
-    },
-    {
-      "type": "link_list",
-      "id": "customer_account_menu",
-      "label": "t:labels.customer_account_menu",
-      "default": "customer-account-main-menu"
-    }
-  ]
-}
+	{
+		"name": "t:general.header",
+		"settings": [
+			{
+				"type": "link_list",
+				"id": "menu",
+				"label": "t:labels.menu"
+			},
+			{
+				"type": "link_list",
+				"id": "customer_account_menu",
+				"label": "t:labels.customer_account_menu",
+				"default": "customer-account-main-menu"
+			}
+		],
+
+		"blocks": [
+     
+	        {
+	            "type": "announcement",
+	            "name": "Announcement",
+	            "settings": [
+	                
+	                {
+	                    "type": "text",
+	                    "id": "title",
+	                    "label": "Title"
+	                },
+	                {
+	                    "type": "url",
+	                    "id": "url",
+	                    "label": "URL"
+	                }
+
+	            ]
+
+	        }
+
+	    ]
+	}
 {% endschema %}
