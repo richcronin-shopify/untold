@@ -29,21 +29,21 @@
 }
 
 .barlow-regular {
-  font-family: "Barlow", sans-serif;
-  font-weight: 400;
-  font-style: normal;
+	font-family: "Barlow", sans-serif;
+	font-weight: 400;
+	font-style: normal;
 }
 
 .barlow-semibold {
-  font-family: "Barlow", sans-serif;
-  font-weight: 600;
-  font-style: normal;
+	font-family: "Barlow", sans-serif;
+	font-weight: 600;
+	font-style: normal;
 }
 
 .barlow-condensed-semibold {
-  font-family: "Barlow Condensed", sans-serif;
-  font-weight: 600;
-  font-style: normal;
+	font-family: "Barlow Condensed", sans-serif;
+	font-weight: 600;
+	font-style: normal;
 }
 
 /* Reset */
