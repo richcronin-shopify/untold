@@ -1,3 +1,32 @@
+:root {
+
+	--color-white: #FFFFFF;
+	--color-primary: #61C968;
+	--color-primary-reduced: rgba(63,149,255,.5);
+	--color-black: #0E0E0E;
+	
+
+	--border-white: rgba(255,255,255,0.3);
+
+	--h1: 60px;
+	--h2: 56px;
+	--h3: 52px;
+	--h4: 40px;
+	--h5: 32px;
+	--h6: 25px;
+	
+	--base: 20px;
+	--small: 18px;
+	--xs: 16px;
+	--xxs: 14px;
+	--xxxs: 12px; 
+	
+	// Fonts - set in theme.liquid
+	// --font-body-family: 'campton-book';
+	// --font-heading-family: 'campton-semibold';
+
+}
+
 /* Reset */
 *,
 *::before,
