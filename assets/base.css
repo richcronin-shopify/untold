@@ -22,9 +22,8 @@
 	--xxs: 14px;
 	--xxxs: 12px; 
 	
-	// Fonts - set in theme.liquid
-	// --font-body-family: 'campton-book';
-	// --font-heading-family: 'campton-semibold';
+	--font-body-family: "Barlow", sans-serif;
+	--font-heading-family: "Barlow Condensed", sans-serif;
 
 }
 
