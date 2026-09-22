@@ -79,6 +79,6 @@ body {
 }
 
 .container {
-	max-width: calc(100vw - 120px);
+	width: 100%;
 	padding: 0 60px;
 }
