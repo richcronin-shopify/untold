@@ -129,6 +129,7 @@ textarea {
 				color: #111;
 				text-transform: uppercase;
 				font-family: var(--font-heading-family);
+				font-weight: 500;
 				a {
 					color: #111;
 				}
