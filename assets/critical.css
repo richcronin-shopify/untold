@@ -77,3 +77,8 @@ body {
   background-color: var(--color-background);
   color: var(--color-foreground);
 }
+
+.container {
+	max-width: calc(100vw - 120px);
+	padding: 0 60px;
+}
