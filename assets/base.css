@@ -128,6 +128,7 @@ textarea {
 			.announcement-bar__item {
 				color: #111;
 				text-transform: uppercase;
+				font-family: var(--font-heading-family);
 				a {
 					color: #111;
 				}
