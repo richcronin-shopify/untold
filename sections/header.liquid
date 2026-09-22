@@ -7,7 +7,11 @@
 		{% for block in section.blocks %}
 
 			{% assign bs = block.settings %}
-			
+			{% case block.type %}
+				{% when 'announcement' %}
+				
+			{% endcase %}
+
 
 		{% endfor %}
 
@@ -15,7 +19,7 @@
 	
 	<div class="container">
 		
-
+		{% comment %}logo{% endcomment %}
 
 	</div>
 
