@@ -1,25 +1,24 @@
-{% assign ss = section.settings %}
+{%- assign ss = section.settings -%}
 
 <header>
 
 	<div class="announcement-bar">
 		
-		{% for block in section.blocks %}
+		{%- for block in section.blocks -%}
 
-			{% assign bs = block.settings %}
-			{% case block.type %}
+			{%- assign bs = block.settings -%}
+			{%- case block.type -%}
 				{% when 'announcement' %}
-				{% if bs.title != blank %}
+				{%- if bs.title != blank -%}
 					<div class="announcement-bar--item">
-						{% if bs.url != blank %}<a href="{{ bs.url }}">{% endif %}
+						{%- if bs.url != blank %}<a href="{{ bs.url }}">{% endif -%}
 							{{- bs.title -}}
-						{% if bs.url != blank %}</a>{% endif %}
+						{%- if bs.url != blank %}</a>{% endif -%}
 					</div>
-				{% endif %}
-			{% endcase %}
+				{%- endif -%}
+			{%- endcase -%}
 
-
-		{% endfor %}
+		{%- endfor -%}
 
 	</div>
 	
