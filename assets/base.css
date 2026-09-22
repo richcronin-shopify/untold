@@ -169,9 +169,8 @@ textarea {
 		padding: 25px 0;
 
 		.site-header__inner {
-			display: grid;
-			grid-template-columns: auto 1fr auto;
-			align-items: center;
+			display: flex;
+			justify-content: space-between;
 		}
 
 		.site-header__logo {
