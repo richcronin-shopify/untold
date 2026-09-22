@@ -113,3 +113,13 @@ textarea {
   );
   margin-inline: auto;
 }
+
+/* Header */
+
+.site-header {
+
+	.announcement-bar {
+		background: var(--color-primary);
+	}
+
+}
