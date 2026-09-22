@@ -127,6 +127,10 @@ textarea {
 			align-items: center;
 			.announcement-bar__item {
 				color: #111;
+				text-transform: uppercase;
+				a {
+					color: #111;
+				}
 			}
 		}
 	}
