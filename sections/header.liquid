@@ -9,7 +9,13 @@
 			{% assign bs = block.settings %}
 			{% case block.type %}
 				{% when 'announcement' %}
-				
+				{% if bs.title != blank %}
+					<div class="announcement-bar--item">
+						{% if bs.url != blank %}<a href="{{ bs.url }}">{% endif %}
+							{{- bs.title -}}
+						{% if bs.url != blank %}</a>{% endif %}
+					</div>
+				{% endif %}
 			{% endcase %}
 
 
