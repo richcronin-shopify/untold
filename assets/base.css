@@ -483,12 +483,15 @@ textarea {
 		}
 
 		.site-navigation__root {
-			display: block;
+
 			height: 100%;
 			overflow-y: auto;
+			display: flex;
+			
+
 			.site-navigation__item {
 
-				
+
 
 			}
 		}
