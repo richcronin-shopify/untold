@@ -120,7 +120,12 @@ textarea {
 
 	.announcement-bar {
 		background: var(--color-primary);
-		height: 40px;
+		.announcement-bar__inner {
+			height: 40px;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
 	}
 
 }
