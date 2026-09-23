@@ -177,7 +177,7 @@ textarea {
 		}
 
 		.site-header__logo {
-			display: block;
+			display: flex;
 
 			svg {
 				display: block;
@@ -239,6 +239,7 @@ textarea {
 
 .site-navigation {
 	justify-self: center;
+	height: 100%;
 
 	.site-navigation__overlay {
 		display: none;
