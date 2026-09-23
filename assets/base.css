@@ -277,6 +277,7 @@ textarea {
 
 	.site-navigation__link--level-1 {
 		display: flex;
+		gap: 10px;
 		align-items: center;
 		text-decoration: none;
 		text-transform: uppercase;
