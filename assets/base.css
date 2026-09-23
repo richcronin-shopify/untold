@@ -294,6 +294,10 @@ textarea {
 	 * Desktop mega menu
 	 */
 
+	.site-navigation__panel {
+		background: red;
+	}
+
 	.site-navigation__panel--level-2 {
 		position: absolute;
 		top: 100%;
