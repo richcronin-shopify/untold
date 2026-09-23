@@ -136,7 +136,7 @@
 												class="site-navigation__arrow"
 												aria-hidden="true"
 											>
-												→
+												{{- 'icon-chev.svg' | inline_asset_content -}}
 											</span>
 										{%- endif -%}
 
@@ -200,9 +200,7 @@
 																	<span
 																		class="site-navigation__arrow"
 																		aria-hidden="true"
-																	>
-																		→
-																	</span>
+																	>{{- 'icon-chev.svg' | inline_asset_content -}}</span>
 																{%- endif -%}
 
 															</a>
