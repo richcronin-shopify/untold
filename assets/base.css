@@ -509,7 +509,7 @@ textarea {
 			}
 		}
 
-		.site-navigation__item--level-1 {
+		.site-navigation__link--level-1 {
 			
 			position: static;
 			text-transform: uppercase;
