@@ -510,7 +510,15 @@ textarea {
 		}
 
 		.site-navigation__item--level-1 {
+			
 			position: static;
+
+			a {
+				text-transform: uppercase;
+				font-family: var(--font-heading-family);
+				font-weight: 600;
+			}
+
 		}
 
 		.site-navigation__link--level-1,
