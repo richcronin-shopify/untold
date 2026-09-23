@@ -495,29 +495,6 @@ textarea {
 			transition: transform 250ms ease;
 		}
 
-		.site-navigation__root {
-
-			height: 100%;
-			overflow-y: auto;
-			display: flex;
-
-
-			.site-navigation__item {
-
-				.site-navigation__link--level-1 {
-			
-					position: static;
-					text-transform: uppercase;
-					font-family: var(--font-heading-family);
-					font-weight: 600;
-
-				}
-
-			}
-		}
-
-		
-
 		.site-navigation__link--level-1,
 		.site-navigation__heading {
 			width: 100%;
