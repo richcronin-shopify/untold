@@ -278,6 +278,9 @@ textarea {
 		display: flex;
 		align-items: center;
 		text-decoration: none;
+		text-transform: uppercase;
+		font-family: var(--font-heading-family);
+		font-weight: 600;
 	}
 
 	.site-navigation__arrow {
