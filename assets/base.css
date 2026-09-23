@@ -332,7 +332,7 @@ textarea {
 		display: flex;
 		align-items: flex-start;
 		.site-navigation__column {
-			flex: 1;
+			width: 20%;
 		}
 	}
 
