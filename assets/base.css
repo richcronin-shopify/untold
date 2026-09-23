@@ -217,6 +217,9 @@ textarea {
 			color: #fff;
 			font-size: 10px;
 			font-family: var(--font-heading-family);
+			width: 13px;
+			height: 13px;
+			border-radius: 50%;
 		}
 	}
 }
