@@ -167,7 +167,7 @@ textarea {
 	.site-header__main {
 		position: relative;
 		height: 120px;
-		background: blue;
+		background: var(--color-black);
 		display: flex;
 		align-items: center;
 
@@ -302,7 +302,7 @@ textarea {
 	 */
 
 	.site-navigation__panel {
-		background: red;
+		
 	}
 
 	.site-navigation__panel--level-2 {
