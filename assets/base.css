@@ -168,6 +168,8 @@ textarea {
 		position: relative;
 		height: 120px;
 		background: blue;
+		display: flex;
+		align-items: center;
 
 		.site-header__inner {
 			display: flex;
