@@ -331,6 +331,9 @@ textarea {
 	.site-navigation__columns {
 		display: flex;
 		align-items: flex-start;
+		.site-navigation__column {
+			flex: 1;
+		}
 	}
 
 	.site-navigation__column {
