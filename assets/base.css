@@ -899,6 +899,7 @@ button,
 		.product-card__price {
 
 			display: flex;
+			align-items: flex-end;
 			gap: 5px;
 			border-bottom: 1px solid var(--border-white);
 
@@ -907,7 +908,11 @@ button,
 			}
 
 			.product-card__price-compare {
-				
+				font-size: 10px;
+				.product-card__price-compare-sale {
+					text-decoration: linethrough;
+					font-size: 12px;
+				}
 			}
 
 		}
