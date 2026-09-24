@@ -724,7 +724,7 @@ button,
 					padding-left: 60px;
 
 					&::placeholder {
-						color: red;
+						color: #fff;
 					}
 
 				}
