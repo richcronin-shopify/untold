@@ -870,6 +870,11 @@ button,
 
 							display: flex;
 							flex-wrap: wrap;
+							gap: 10px;
+
+							.product-card {
+								width: calc(25% - 10px);
+							}
 
 						}
 
