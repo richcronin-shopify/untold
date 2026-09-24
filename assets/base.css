@@ -779,6 +779,23 @@ button,
 
 					margin: 40px 0 0 0;
 
+					.search-modal__trending-list {
+
+						display: flex;
+						gap: 10px;
+
+						.search-modal__trending-item {
+
+							font-size: 16px;
+							padding: 10px 20px;
+							line-height: 1;
+							border: 1px solid var(--border-white);
+							border-radius: 100px;
+
+						}
+
+					}
+
 				}
 
 				.search-modal__popular {
