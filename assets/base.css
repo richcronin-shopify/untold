@@ -725,6 +725,7 @@ button,
 				margin: 0;
 				font-family: var(--font-heading-family);
 				text-transform: uppercase;
+				font-size: var(--h5);
 			}
 
 		}
