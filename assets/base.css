@@ -637,5 +637,7 @@ textarea {
 	width: 980px;
 	max-width: 100%;
 	transform: translate(-50%, -50%);
+	border: 1px solid var(--border-white);
+	border-radius: 10px;
 
 }
