@@ -831,7 +831,15 @@ button,
 
 	.product-card__media {
 
+		width: 100%;
+		aspect-ratio: 1/1;
+		display: block;
 
+		img {
+
+			
+
+		}
 
 	}
 
