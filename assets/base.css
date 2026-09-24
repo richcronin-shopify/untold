@@ -272,6 +272,8 @@ textarea {
 		&:hover,
 		&:focus-within {
 
+			color: var(--color-primary);
+
 			> .site-navigation__panel--level-2 {
 				opacity: 1;
 				visibility: visible;
