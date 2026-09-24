@@ -807,7 +807,11 @@ button,
 				}
 
 				.search-modal__popular {
-					display: none;
+					
+					.search-modal__products {
+						
+					}
+					
 				}
 
 			}
