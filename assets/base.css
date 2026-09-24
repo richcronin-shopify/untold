@@ -295,7 +295,6 @@ textarea {
 		flex: 0 0 auto;
 	}
 
-
 	/*
 	 * Desktop mega menu
 	 */
@@ -329,6 +328,7 @@ textarea {
 	.site-navigation__columns {
 		display: flex;
 		align-items: flex-start;
+		justify-content: center;
 		.site-navigation__column {
 			width: 20%;
 		}
