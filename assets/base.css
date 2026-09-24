@@ -858,10 +858,12 @@ button,
 
 		.product-card__vendor {
 
-			margin: 0;
+			margin: 0 0 7px 0;
 			font-size: 11px;
 
 		}
+
+		
 
 	}
 
