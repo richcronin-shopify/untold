@@ -659,13 +659,20 @@ textarea {
 		overflow: auto;
 		padding: 40px 50px 0;
 
+		.search-modal__header {
+
+			display: flex;
+			justify-content: space-between;
+
+		}
+
 		.search-modal__content {
 
 			.search-modal__initial {
 
 				.search-modal__trending {
 
-					
+
 
 				}
 
