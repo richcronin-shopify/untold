@@ -933,6 +933,10 @@ button,
 				border-radius: 50%;
 			}
 
+			span:not(.product-card__availability-dot) {
+				font-size: 10px;
+			}
+
 		}
 
 	}
