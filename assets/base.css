@@ -792,6 +792,7 @@ button,
 							border: 1px solid var(--border-white);
 							border-radius: 100px;
 							background: rgba(255,255,255,0.15);
+							text-decoration: none;
 
 						}
 
