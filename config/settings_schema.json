@@ -4,8 +4,8 @@
     "theme_name": "Skeleton",
     "theme_version": "0.1.0",
     "theme_author": "Shopify",
-    "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
-    "theme_support_url": "https://support.shopify.com/"
+    "theme_documentation_url": "https:\/\/help.shopify.com\/manual\/online-store\/themes",
+    "theme_support_url": "https:\/\/support.shopify.com\/"
   },
   {
     "name": "t:general.typography",
@@ -79,5 +79,18 @@
         "default": 4
       }
     ]
+  },
+
+  {
+    "name": "Search",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enable_search",
+        "default": true,
+        "label": "Enable search"
+      }
+    ]
   }
+
 ]
