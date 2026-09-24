@@ -725,7 +725,7 @@ button,
 				margin: 0;
 				font-family: var(--font-heading-family);
 				text-transform: uppercase;
-				font-size: var(--h5);
+				font-size: var(--h6);
 			}
 
 		}
@@ -769,8 +769,8 @@ button,
 
 			.search-modal__subtitle {
 				margin: 0 0 10px 0;
-				text-transform: uppercase;
-				font-family: var(--font-heading-family);
+				font-family: var(--font-body-family);
+				font-size: 18px;
 			}
 
 			.search-modal__initial {
