@@ -833,7 +833,18 @@ button,
 					display: flex;
 					gap: 20px;
 
-					
+					.predictive-search__content {
+
+						width: 180px;
+						min-width: 180px;
+
+					}
+
+					.predictive-search__products {
+
+						flex: 1;
+
+					}
 
 				}
 
