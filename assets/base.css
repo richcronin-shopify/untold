@@ -826,6 +826,8 @@ button,
 
 			.search-modal__results {
 
+				margin: 20px 0;
+
 				.predictive-search__products-header {
 
 					display: flex;
