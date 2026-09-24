@@ -721,6 +721,12 @@ button,
 			justify-content: space-between;
 			margin: 0 0 28px 0;
 
+			.search-modal__title {
+				margin: 0;
+				font-family: var(--font-heading-family);
+				text-transform: uppercase;
+			}
+
 		}
 
 		.search-modal__form {
