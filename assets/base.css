@@ -90,6 +90,11 @@ a {
   color: inherit;
 }
 
+.visually-hidden {
+	display: none;
+	visibility: hidden;
+}
+
 /* Media */
 img,
 svg,
