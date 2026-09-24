@@ -846,6 +846,10 @@ button,
 			left: 0;
 			object-fit: cover;
 
+			&.product-card__image--secondary {
+				opacity: 0;
+			}
+
 		}
 
 	}
