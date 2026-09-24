@@ -856,7 +856,12 @@ button,
 
 	.product-card__content {
 
-		
+		.product-card__vendor {
+
+			margin: 0;
+			font-size: 11px;
+
+		}
 
 	}
 
