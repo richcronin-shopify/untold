@@ -909,8 +909,9 @@ button,
 
 			.product-card__price-compare {
 				font-size: 10px;
+				opacity: .6;
 				.product-card__price-compare-sale {
-					text-decoration: linethrough;
+					text-decoration: line-through;
 					font-size: 12px;
 				}
 			}
