@@ -1,0 +1,161 @@
+{%- liquid
+	assign card_product = product
+
+	assign primary_image = card_product.featured_image
+	assign secondary_image = card_product.images[1]
+
+	assign show_secondary_image = false
+
+	if settings.product_card_second_image and secondary_image != blank
+		assign show_secondary_image = true
+	endif
+
+	assign on_sale = false
+
+	if card_product.compare_at_price_max > card_product.price
+		assign on_sale = true
+	endif
+-%}
+
+<article
+	class="
+		product-card
+		{% unless card_product.available %}product-card--sold-out{% endunless %}
+		{% if on_sale %}product-card--sale{% endif %}
+	"
+>
+
+	<a
+		href="{{ card_product.url }}"
+		class="product-card__media"
+		aria-label="{{ card_product.title | escape }}"
+	>
+
+		{%- if primary_image != blank -%}
+
+			<div class="product-card__images">
+
+				{{
+					primary_image
+					| image_url: width: 800
+					| image_tag:
+						class: 'product-card__image product-card__image--primary',
+						loading: 'lazy',
+						widths: '300, 400, 500, 600, 800',
+						sizes: '(min-width: 990px) 25vw, 50vw',
+						alt: primary_image.alt
+				}}
+
+				{%- if show_secondary_image -%}
+
+					{{
+						secondary_image
+							| image_url: width: 800
+							| image_tag:
+								class: 'product-card__image product-card__image--secondary',
+								loading: 'lazy',
+								widths: '300, 400, 500, 600, 800',
+								sizes: '(min-width: 990px) 25vw, 50vw',
+								alt: secondary_image.alt
+					}}
+
+				{%- endif -%}
+
+			</div>
+
+		{%- else -%}
+
+			<div class="product-card__placeholder">
+				{{ 'product-1' | placeholder_svg_tag }}
+			</div>
+
+		{%- endif -%}
+
+	</a>
+
+
+	<div class="product-card__content">
+
+		{%- if settings.product_card_show_vendor and card_product.vendor != blank -%}
+
+			<div class="product-card__vendor">
+				{{ card_product.vendor }}
+			</div>
+
+		{%- endif -%}
+
+
+		<h3 class="product-card__title">
+
+			<a href="{{ card_product.url }}">
+				{{ card_product.title }}
+			</a>
+
+		</h3>
+
+
+		<div class="product-card__price">
+
+			{%- if card_product.price_varies -%}
+
+				<span class="product-card__price-current">
+					From {{ card_product.price_min | money }}
+				</span>
+
+			{%- else -%}
+
+				<span class="product-card__price-current">
+					{{ card_product.price | money }}
+				</span>
+
+			{%- endif -%}
+
+
+			{%- if on_sale -%}
+
+				<span class="product-card__price-compare">
+					<span class="visually-hidden">
+						Regular price
+					</span>
+
+					Was {{ card_product.compare_at_price_max | money }}
+				</span>
+
+			{%- endif -%}
+
+		</div>
+
+
+		{%- if settings.product_card_show_availability -%}
+
+			<div
+				class="
+					product-card__availability
+					{% if card_product.available %}
+						product-card__availability--available
+					{% else %}
+						product-card__availability--sold-out
+					{% endif %}
+				"
+			>
+
+				<span
+					class="product-card__availability-dot"
+					aria-hidden="true"
+				></span>
+
+				<span>
+					{%- if card_product.available -%}
+						In Stock
+					{%- else -%}
+						Sold Out
+					{%- endif -%}
+				</span>
+
+			</div>
+
+		{%- endif -%}
+
+	</div>
+
+</article>
