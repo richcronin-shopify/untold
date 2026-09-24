@@ -1,0 +1,420 @@
+{%- if settings.enable_search -%}
+
+	{%- assign trending_searches = settings.search_trending | split: ',' -%}
+
+	<dialog
+		class="search-modal"
+		data-search-modal
+		data-predictive-url="{{ routes.predictive_search_url }}"
+	>
+
+		<div class="search-modal__inner">
+
+			<div class="search-modal__header">
+
+				<h2 class="search-modal__title">
+					{{ settings.search_title }}
+				</h2>
+
+				<button
+					type="button"
+					class="search-modal__close"
+					aria-label="Close search"
+					data-search-close
+				>
+					{{- 'icon-close.svg' | inline_asset_content -}}
+				</button>
+
+			</div>
+
+
+			<form
+				action="{{ routes.search_url }}"
+				method="get"
+				role="search"
+				class="search-modal__form"
+			>
+
+				<label
+					for="SearchModalInput"
+					class="visually-hidden"
+				>
+					Search
+				</label>
+
+				<div class="search-modal__field">
+
+					<span
+						class="search-modal__search-icon"
+						aria-hidden="true"
+					>
+						{{- 'icon-search.svg' | inline_asset_content -}}
+					</span>
+
+					<input
+						id="SearchModalInput"
+						type="search"
+						name="q"
+						value=""
+						placeholder="{{ settings.search_placeholder | escape }}"
+						autocomplete="off"
+						autocorrect="off"
+						autocapitalize="off"
+						spellcheck="false"
+						class="search-modal__input"
+						data-search-input
+					>
+
+				</div>
+
+			</form>
+
+
+			<div class="search-modal__content">
+
+				{%- comment -%}
+					Initial state
+				{%- endcomment -%}
+
+				<div
+					class="search-modal__initial"
+					data-search-initial
+				>
+
+					{%- if settings.search_trending != blank -%}
+
+						<div class="search-modal__trending">
+
+							<h3>
+								Trending Searches
+							</h3>
+
+							<div class="search-modal__trending-list">
+
+								{%- for trending_search in trending_searches -%}
+
+									{%- assign search_term = trending_search | strip -%}
+
+									{%- if search_term != blank -%}
+
+										<a
+											href="{{ routes.search_url }}?q={{ search_term | url_encode }}"
+											class="search-modal__trending-item"
+											data-search-term="{{ search_term | escape }}"
+										>
+											<span aria-hidden="true">🔥</span>
+											{{ search_term }}
+										</a>
+
+									{%- endif -%}
+
+								{%- endfor -%}
+
+							</div>
+
+						</div>
+
+					{%- endif -%}
+
+
+					{%- if settings.search_popular_collection != blank -%}
+
+						<div class="search-modal__popular">
+
+							<h3>
+								Popular Products
+							</h3>
+
+							<div class="search-modal__products">
+
+								{%- for product in settings.search_popular_collection.products limit: 4 -%}
+
+									{% render 'product-card', product: product %}
+
+								{%- endfor -%}
+
+							</div>
+
+						</div>
+
+					{%- endif -%}
+
+				</div>
+
+
+				{%- comment -%}
+					Predictive results get injected here
+				{%- endcomment -%}
+
+				<div
+					class="search-modal__results"
+					data-search-results
+					hidden
+				></div>
+
+			</div>
+
+		</div>
+
+	</dialog>
+
+
+	<script>
+		(() => {
+
+			class SearchModal {
+
+				constructor(element) {
+
+					this.element = element;
+
+					this.input = element.querySelector('[data-search-input]');
+					this.initial = element.querySelector('[data-search-initial]');
+					this.results = element.querySelector('[data-search-results]');
+					this.closeButton = element.querySelector('[data-search-close]');
+					this.trendingLinks = element.querySelectorAll('[data-search-term]');
+
+					this.predictiveUrl = element.dataset.predictiveUrl;
+
+					this.abortController = null;
+					this.timeout = null;
+
+					this.bindEvents();
+
+				}
+
+
+				bindEvents() {
+
+					document
+						.querySelectorAll('[data-search-open]')
+						.forEach((trigger) => {
+
+							trigger.addEventListener('click', (event) => {
+
+								event.preventDefault();
+
+								this.open();
+
+							});
+
+						});
+
+
+					this.closeButton?.addEventListener('click', () => {
+						this.close();
+					});
+
+
+					this.element.addEventListener('click', (event) => {
+
+						if (event.target === this.element) {
+							this.close();
+						}
+
+					});
+
+
+					this.input?.addEventListener('input', () => {
+
+						window.clearTimeout(this.timeout);
+
+						this.timeout = window.setTimeout(() => {
+							this.search();
+						}, 250);
+
+					});
+
+
+					this.trendingLinks.forEach((link) => {
+
+						link.addEventListener('click', (event) => {
+
+							event.preventDefault();
+
+							const term = link.dataset.searchTerm;
+
+							this.input.value = term;
+
+							this.search();
+
+						});
+
+					});
+
+				}
+
+
+				open() {
+
+					if (!this.element.open) {
+						this.element.showModal();
+					}
+
+					document.documentElement.classList.add('search-open');
+
+					window.setTimeout(() => {
+						this.input?.focus();
+					}, 50);
+
+				}
+
+
+				close() {
+
+					this.element.close();
+
+					document.documentElement.classList.remove('search-open');
+
+				}
+
+
+				search() {
+
+					const query = this.input.value.trim();
+
+					if (query.length < 2) {
+
+						this.showInitial();
+
+						return;
+
+					}
+
+
+					if (this.abortController) {
+						this.abortController.abort();
+					}
+
+
+					this.abortController = new AbortController();
+
+
+					const url = new URL(
+						this.predictiveUrl,
+						window.location.origin
+					);
+
+
+					url.searchParams.set(
+						'q',
+						query
+					);
+
+					url.searchParams.set(
+						'section_id',
+						'search-predictive-results'
+					);
+
+					url.searchParams.set(
+						'resources[type]',
+						'product,collection,page'
+					);
+
+					url.searchParams.set(
+						'resources[limit]',
+						'6'
+					);
+
+
+					fetch(url.toString(), {
+						signal: this.abortController.signal
+					})
+						.then((response) => {
+
+							if (!response.ok) {
+								throw new Error('Search request failed');
+							}
+
+							return response.text();
+
+						})
+						.then((html) => {
+
+							const documentHTML = new DOMParser()
+								.parseFromString(
+									html,
+									'text/html'
+								);
+
+
+							const section = documentHTML.querySelector(
+								'#shopify-section-search-predictive-results'
+							);
+
+
+							if (!section) {
+								return;
+							}
+
+
+							this.results.innerHTML = section.innerHTML;
+
+							this.initial.hidden = true;
+							this.results.hidden = false;
+
+						})
+						.catch((error) => {
+
+							if (error.name === 'AbortError') {
+								return;
+							}
+
+							console.error(
+								'Predictive search:',
+								error
+							);
+
+						});
+
+				}
+
+
+				showInitial() {
+
+					if (this.abortController) {
+						this.abortController.abort();
+					}
+
+					this.results.innerHTML = '';
+
+					this.results.hidden = true;
+					this.initial.hidden = false;
+
+				}
+
+			}
+
+
+			const initialiseSearchModal = () => {
+
+				const element = document.querySelector(
+					'[data-search-modal]'
+				);
+
+				if (
+					!element ||
+					element.dataset.initialised === 'true'
+				) {
+					return;
+				}
+
+				element.dataset.initialised = 'true';
+
+				new SearchModal(element);
+
+			};
+
+
+			initialiseSearchModal();
+
+
+			document.addEventListener(
+				'shopify:section:load',
+				initialiseSearchModal
+			);
+
+		})();
+	</script>
+
+{%- endif -%}
