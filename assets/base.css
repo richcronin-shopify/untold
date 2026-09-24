@@ -63,7 +63,6 @@ html.menu-open body {
 
 body {
   margin: 0;
-  background: #222;
 }
 
 /* Typography */
@@ -302,7 +301,7 @@ textarea {
 	 */
 
 	.site-navigation__panel {
-		
+		background: var(--color-black);
 	}
 
 	.site-navigation__panel--level-2 {
