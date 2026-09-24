@@ -864,6 +864,8 @@ button,
 
 	.product-card__content {
 
+		padding: 10px;
+
 		.product-card__vendor {
 
 			margin: 0 0 7px 0;
@@ -891,6 +893,7 @@ button,
 
 			display: flex;
 			gap: 5px;
+			border-bottom: 1px solid var(--border-white);
 
 		}
 
