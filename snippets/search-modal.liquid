@@ -123,15 +123,25 @@
 
 							<div class="search-modal__products">
 
-								{%- for product in settings.search_popular_collection.products limit: 4 -%}
+								{%- assign available_count = 0 -%}
 
-									<div class="search-modal__product">
+								{%- for product in settings.search_popular_collection.products -%}
 
-										{% render 'product-card', product: product %}
+									{%- if product.available -%}
 
-									</div>
+										<div class="search-modal__product">
+											{% render 'product-card', product: product %}
+										</div>
 
-								{%- endfor -%}
+										{%- assign available_count = available_count | plus: 1 -%}
+
+										{%- if available_count == 4 -%}
+											{%- break -%}
+										{%- endif -%}
+
+									{%- endif -%}
+
+								{%- endfor -%}								
 
 							</div>
 
