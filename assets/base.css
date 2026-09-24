@@ -735,13 +735,11 @@ button,
 
 		.search-modal__content {
 
-			margin: 40px 0 0 0;
-
 			.search-modal__initial {
 
 				.search-modal__trending {
 
-
+					margin: 40px 0 0 0;
 
 				}
 
