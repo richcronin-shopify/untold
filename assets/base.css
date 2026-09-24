@@ -702,7 +702,16 @@ button,
 
 			.search-modal__field {
 
-				
+				position: relative;
+
+				.search-modal__search-icon {
+
+					position: absolute;
+					left: 23px;
+					top: 50%;
+					transform: translate(0,-50%);
+
+				}
 
 			}
 
