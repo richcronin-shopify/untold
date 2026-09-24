@@ -866,6 +866,13 @@ button,
 
 						flex: 1;
 
+						.predictive-search__product-grid {
+
+							display: flex;
+							flex-wrap: wrap;
+
+						}
+
 					}
 
 				}
