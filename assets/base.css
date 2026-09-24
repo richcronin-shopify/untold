@@ -931,6 +931,7 @@ button,
 				width: 10px;
 				height: 10px;
 				border-radius: 50%;
+				background: var(--color-primary);
 			}
 
 			span:not(.product-card__availability-dot) {
