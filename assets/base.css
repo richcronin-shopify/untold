@@ -651,10 +651,12 @@ textarea {
 		left: 50%;
 		width: 980px;
 		max-width: 100%;
+		max-height: calc(100vh - 200px);
 		transform: translate(-50%, -50%);
 		border: 1px solid var(--border-white);
 		border-radius: 10px;
 		background: var(--color-black);
+		overflow: auto;
 
 	}
 
