@@ -838,6 +838,10 @@ button,
 						width: 180px;
 						min-width: 180px;
 
+						.predictive-search__group {
+							margin: 0 0 30px 0;
+						}
+
 						.predictive-search__heading {
 							font-size: 18px;
 						}
