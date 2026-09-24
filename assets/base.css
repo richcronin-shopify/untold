@@ -807,8 +807,16 @@ button,
 				}
 
 				.search-modal__popular {
+
+					margin: 40px 0 0 0;
 					
 					.search-modal__products {
+						display: flex;
+						gap: 10px;
+
+						.search-modal__product {
+							width: calc(25% - 10px);
+						}
 
 					}
 
@@ -860,18 +868,29 @@ button,
 
 			margin: 0 0 7px 0;
 			font-size: 11px;
+			font-family: var(--font-heading-family);
+			text-transform: uppercase;
+			color: var(--color-primary);
 
 		}
 
 		.product-card__title {
 
+			margin: 0 0 7px 0;
+			font-size: 16px;
+			font-family: var(--font-heading-family);
+			text-transform: uppercase;
+
 			a {
 				display: inline-block;
-				margin: 0 0 7px 0;
-				font-size: 16px;
-				font-family: var(--font-heading-family);
-				text-transform: uppercase;
 			}
+
+		}
+
+		.product-card__price {
+
+			display: flex;
+			gap: 5px;
 
 		}
 
