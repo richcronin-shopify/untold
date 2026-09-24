@@ -825,10 +825,13 @@ button,
 .product-card {
 
 	width: 100%;
+	border: 1px solid var(--border-white);
+	border-radius: 4px;
+	overflow: hidden;
 
 	.product-card__media {
 
-		
+
 
 	}
 
