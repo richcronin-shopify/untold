@@ -838,10 +838,21 @@ button,
 						width: 180px;
 						min-width: 180px;
 
+						.predictive-search__heading {
+							font-size: 18px;
+						}
+
 						.predictive-search__list {
 
 							margin: 0;
 							padding: 0;
+
+							li {
+								list-style: none;
+								a {
+									display: inline-block;
+								}
+							}
 
 						}
 
