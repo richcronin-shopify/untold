@@ -309,17 +309,16 @@ textarea {
 		top: 100%;
 		right: 0;
 		left: 0;
-
 		opacity: 0;
 		visibility: hidden;
 		pointer-events: none;
-
 		transform: translateY(-0.5rem);
-
 		transition:
 			opacity 150ms ease,
 			visibility 150ms ease,
 			transform 150ms ease;
+		border-top: 1px solid var(--border-white);
+		border-bottom: 1px solid var(--border-white);
 	}
 
 	.site-navigation__mega {
