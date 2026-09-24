@@ -828,6 +828,15 @@ button,
 
 				margin: 20px 0;
 
+				.predictive-search__grid {
+
+					display: flex;
+					gap: 20px;
+
+					
+
+				}
+
 				.predictive-search__products-header {
 
 					display: flex;
