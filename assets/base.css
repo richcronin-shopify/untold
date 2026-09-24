@@ -657,6 +657,7 @@ textarea {
 		border-radius: 10px;
 		background: var(--color-black);
 		overflow: auto;
+		padding: 40px 50px 0;
 
 	}
 
