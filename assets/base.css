@@ -766,6 +766,12 @@ button,
 
 		.search-modal__content {
 
+			p {
+				margin: 0 0 10px 0;
+				text-transform: uppercase;
+				font-family: var(--font-heading-family);
+			}
+
 			.search-modal__initial {
 
 				.search-modal__trending {
