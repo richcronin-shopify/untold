@@ -4,7 +4,7 @@
 	--color-primary: #61C968;
 	--color-primary-reduced: rgb(from var(--color-primary) r g b / 15%);
 	--color-black: #0E0E0E;
-	--color-black-reduced: rgb(from var(--color-black) r g b / 15%);
+	--color-black-reduced: rgb(from var(--color-black) r g b / 80%);
 	--color-sale: #ED3F41;
 	--color-error: #ED3F41;
 	
@@ -114,6 +114,7 @@ button,
 	padding: 10px 35px;
 	background: var(--color-primary);
 	color: var(--color-black);
+	cursor: pointer;
 
 }
 
