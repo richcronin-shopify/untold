@@ -826,7 +826,15 @@ button,
 
 			.search-modal__results {
 
-				
+				.predictive-search__products-header {
+					
+					.predictive-search__heading {
+						margin: 0 0 10px 0;
+						font-family: var(--font-body-family);
+						font-size: 18px;
+					}
+					
+				}
 
 			} /* search-modal__results */
 
