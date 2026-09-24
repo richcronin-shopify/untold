@@ -856,6 +856,11 @@ button,
 
 			&.product-card__image--secondary {
 				opacity: 0;
+				z-index: 2;
+				transition: .3s opacity;
+				&:hover {
+					opacity: 1;
+				}
 			}
 
 		}
