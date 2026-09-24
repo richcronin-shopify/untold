@@ -658,7 +658,7 @@ textarea {
 		border-radius: 10px;
 		background: var(--color-black);
 		overflow: auto;
-		padding: 40px 50px 0;
+		padding: 40px 50px;
 
 		.search-modal__header {
 
