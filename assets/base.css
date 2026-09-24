@@ -36,13 +36,13 @@
 
 .barlow-semibold {
 	font-family: var(--font-body-family);
-	font-weight: 600;
+	font-weight: 500;
 	font-style: normal;
 }
 
 .barlow-condensed-semibold {
 	font-family: var(--font-heading-family);
-	font-weight: 600;
+	font-weight: 500;
 	font-style: normal;
 }
 
@@ -142,7 +142,7 @@ textarea {
 				color: #111;
 				text-transform: uppercase;
 				font-family: var(--font-heading-family);
-				font-weight: 600;
+				font-weight: 500;
 
 				&:nth-child(2) {
 					text-align: center;
@@ -658,6 +658,10 @@ textarea {
 		background: var(--color-black);
 		overflow: auto;
 		padding: 40px 50px 0;
+
+		.search-modal__popular {
+			display: none;
+		}
 
 	}
 
