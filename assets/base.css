@@ -375,6 +375,7 @@ textarea {
 		gap: 6px;
 		li {
 			a {
+				transition: .3s all;
 				&:hover {
 					color: var(--color-primary);
 				}
