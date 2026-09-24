@@ -116,6 +116,11 @@ button,
 	color: var(--color-black);
 	cursor: pointer;
 
+	&.button--outline {
+		background: transparent;
+		color: var(--color-primary);
+	}
+
 }
 
 /* Layout */
