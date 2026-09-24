@@ -904,7 +904,7 @@ button,
 			border-bottom: 1px solid var(--border-white);
 
 			.product-card__price-current {
-				color: red;
+				font-weight: 500;
 			}
 
 			.product-card__price-compare {
