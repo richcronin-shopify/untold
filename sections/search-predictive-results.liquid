@@ -9,14 +9,27 @@
 				Collections / pages
 			{%- endcomment -%}
 
-			{%- if settings.search_show_collections or settings.search_show_pages -%}
+			{%- assign has_collection_results = false -%}
+			{%- assign has_page_results = false -%}
+
+			{%- if settings.search_show_collections
+				and predictive_search.resources.collections.size > 0
+			-%}
+				{%- assign has_collection_results = true -%}
+			{%- endif -%}
+
+			{%- if settings.search_show_pages
+				and predictive_search.resources.pages.size > 0
+			-%}
+				{%- assign has_page_results = true -%}
+			{%- endif -%}
+
+
+			{%- if has_collection_results or has_page_results -%}
 
 				<div class="predictive-search__content">
 
-
-					{%- if settings.search_show_collections
-						and predictive_search.resources.collections.size > 0
-					-%}
+					{%- if has_collection_results -%}
 
 						<div class="predictive-search__group">
 
@@ -43,9 +56,7 @@
 					{%- endif -%}
 
 
-					{%- if settings.search_show_pages
-						and predictive_search.resources.pages.size > 0
-					-%}
+					{%- if has_page_results -%}
 
 						<div class="predictive-search__group">
 
@@ -73,7 +84,7 @@
 
 				</div>
 
-			{%- endif -%}
+			{%- endif -%}			
 
 
 			{%- comment -%}
