@@ -661,8 +661,18 @@ textarea {
 
 		.search-modal__content {
 
-			.search-modal__popular {
-				display: none;
+			.search-modal__initial {
+
+				.search-modal__trending {
+
+					
+
+				}
+
+				.search-modal__popular {
+					display: none;
+				}
+
 			}
 
 		}
