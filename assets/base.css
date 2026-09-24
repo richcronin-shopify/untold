@@ -169,7 +169,6 @@ textarea {
 		background: var(--color-black);
 		display: flex;
 		align-items: center;
-		border-bottom: 1px solid var(--border-white);
 
 		.site-header__inner {
 			display: flex;
