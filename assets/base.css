@@ -902,6 +902,14 @@ button,
 			gap: 5px;
 			border-bottom: 1px solid var(--border-white);
 
+			.product-card__price-current {
+				color: red;
+			}
+
+			.product-card__price-compare {
+				
+			}
+
 		}
 
 
