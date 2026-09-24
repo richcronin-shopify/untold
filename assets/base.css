@@ -873,7 +873,7 @@ button,
 							gap: 10px;
 
 							.product-card {
-								width: calc(25% - 10px);
+								width: calc(33.3% - 10px);
 							}
 
 						}
