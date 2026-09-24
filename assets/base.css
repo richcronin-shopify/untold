@@ -376,6 +376,7 @@ textarea {
 	.site-navigation__links {
 		display: flex;
 		flex-direction: column;
+		gap: 6px;
 	}
 
 	.site-navigation__link--level-3 {
