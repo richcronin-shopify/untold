@@ -127,6 +127,30 @@
 	      "label": "Show page results"
 	    }
 	  ]
+	},
+
+	{
+	  "name": "Product cards",
+	  "settings": [
+	    {
+	      "type": "checkbox",
+	      "id": "product_card_second_image",
+	      "default": true,
+	      "label": "Show second image on hover"
+	    },
+	    {
+	      "type": "checkbox",
+	      "id": "product_card_show_vendor",
+	      "default": true,
+	      "label": "Show vendor"
+	    },
+	    {
+	      "type": "checkbox",
+	      "id": "product_card_show_availability",
+	      "default": true,
+	      "label": "Show availability"
+	    }
+	  ]
 	}
 
 ]
