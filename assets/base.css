@@ -902,6 +902,8 @@ button,
 			align-items: flex-end;
 			gap: 5px;
 			border-bottom: 1px solid var(--border-white);
+			padding: 0 0 7px 0;
+			margin: 0 0 7px 0;
 
 			.product-card__price-current {
 				font-weight: 500;
@@ -918,7 +920,11 @@ button,
 
 		}
 
+		.product-card__availability {
 
+
+
+		}
 
 	}
 
