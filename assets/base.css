@@ -863,7 +863,19 @@ button,
 
 		}
 
-		
+		.product-card__title {
+
+			a {
+				display: inline-block;
+				margin: 0 0 7px 0;
+				font-size: 16px;
+				font-family: var(--font-heading-family);
+				text-transform: uppercase;
+			}
+
+		}
+
+
 
 	}
 
