@@ -112,6 +112,8 @@ button,
 	border: 1px solid var(--color-primary);
 	border-radius: 2px;
 	padding: 10px 35px;
+	background: var(--color-primary);
+	color: var(--color-black);
 
 }
 
