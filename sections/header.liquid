@@ -58,7 +58,7 @@
 			<button
 				type="button"
 				class="site-header__menu-toggle"
-				aria-label="Open menu"
+				aria-label="Open navigation menu"
 				aria-expanded="false"
 				aria-controls="site-navigation-{{ section.id }}"
 				data-menu-toggle
@@ -76,7 +76,7 @@
 			<a
 				href="{{ routes.root_url }}"
 				class="site-header__logo"
-				aria-label="{{ shop.name | escape }}"
+				aria-label="{{ shop.name | escape }} home"
 			>
 				{{- 'web-logo.svg' | inline_asset_content -}}
 			</a>
@@ -91,7 +91,7 @@
 				<nav
 					id="site-navigation-{{ section.id }}"
 					class="site-navigation"
-					aria-label="Main navigation"
+					aria-label="Primary navigation"
 					data-navigation
 				>
 
@@ -154,7 +154,8 @@
 											<button
 												type="button"
 												class="site-navigation__back"
-												data-nav-back
+												aria-label="Back to {{ link.title | escape }}"
+														data-nav-back
 											>
 												<span
 													class="site-navigation__back-arrow"
@@ -217,6 +218,7 @@
 																	<button
 																		type="button"
 																		class="site-navigation__back"
+																		aria-label="Back to {{ child_link.title | escape }}"
 																		data-nav-back
 																	>
 
@@ -295,7 +297,7 @@
 
 							<nav
 								class="site-navigation__footer"
-								aria-label="Additional navigation"
+								aria-label="Utility navigation"
 							>
 
 								<ul>
@@ -332,7 +334,7 @@
 				<a
 					href="{{ routes.search_url }}"
 					class="site-header__control site-header__control--search"
-					aria-label="Search"
+					aria-label="Search {{ shop.name | escape }}"
 				>
 					{{- 'icon-search.svg' | inline_asset_content -}}
 				</a>
@@ -341,7 +343,7 @@
 				<a
 					href="{{ routes.account_url }}"
 					class="site-header__control site-header__control--account"
-					aria-label="Account"
+					aria-label="My account"
 				>
 					{{- 'icon-account.svg' | inline_asset_content -}}
 				</a>
@@ -350,7 +352,7 @@
 				<a
 					href="{{ routes.cart_url }}"
 					class="site-header__control site-header__control--cart"
-					aria-label="Cart"
+					aria-label="Cart, {{ cart.item_count }} {% if cart.item_count == 1 %}item{% else %}items{% endif %}"
 				>
 
 					{{- 'icon-cart.svg' | inline_asset_content -}}
@@ -497,6 +499,11 @@
 				'true'
 			);
 
+			this.toggle?.setAttribute(
+				'aria-label',
+				'Close navigation menu'
+			);
+
 			document.documentElement.classList.add(
 				'menu-open'
 			);
@@ -511,6 +518,11 @@
 			this.toggle?.setAttribute(
 				'aria-expanded',
 				'false'
+			);
+
+			this.toggle?.setAttribute(
+				'aria-label',
+				'Open navigation menu'
 			);
 
 			document.documentElement.classList.remove(
@@ -563,6 +575,11 @@
 			this.toggle?.setAttribute(
 				'aria-expanded',
 				'false'
+			);
+
+			this.toggle?.setAttribute(
+				'aria-label',
+				'Open navigation menu'
 			);
 
 			document.documentElement.classList.remove(
