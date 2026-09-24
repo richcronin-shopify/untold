@@ -865,6 +865,7 @@ button,
 	.product-card__content {
 
 		padding: 10px;
+		text-decoration: none;
 
 		.product-card__vendor {
 
@@ -873,6 +874,7 @@ button,
 			font-family: var(--font-heading-family);
 			text-transform: uppercase;
 			color: var(--color-primary);
+			font-weight: 500;
 
 		}
 
