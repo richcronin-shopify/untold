@@ -106,6 +106,13 @@ textarea {
   font: inherit;
 }
 
+button,
+.button {
+
+	
+
+}
+
 /* Layout */
 .page-width {
   width: min(
