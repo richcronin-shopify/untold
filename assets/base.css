@@ -350,6 +350,8 @@ textarea {
 		text-transform: uppercase;
 		font-family: var(--font-heading-family);
 		font-size: 22px;
+		margin: 0 0 20px 0;
+		color: #fff;
 
 		.site-navigation__arrow {
 			display: none;
