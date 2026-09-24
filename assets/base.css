@@ -365,11 +365,7 @@ textarea {
 	.site-navigation__panel--level-3 {
 		position: static;
 		display: block;
-
 		opacity: 1;
-		visibility: visible;
-		pointer-events: auto;
-
 		transform: none;
 	}
 
