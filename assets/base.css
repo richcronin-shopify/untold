@@ -121,6 +121,14 @@ button,
 		color: var(--color-primary);
 	}
 
+	&.button--reset {
+		background: transparent;
+		border: none;
+		border-radius: 0;
+		padding: 0;
+		text-transform: unset;
+	}
+
 }
 
 /* Layout */
