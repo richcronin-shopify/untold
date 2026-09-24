@@ -886,6 +886,7 @@ button,
 
 			margin: 0 0 7px 0;
 			font-size: 16px;
+			line-height: 20px;
 			font-family: var(--font-heading-family);
 			text-transform: uppercase;
 
