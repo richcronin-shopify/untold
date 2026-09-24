@@ -327,6 +327,7 @@ textarea {
 	.site-navigation__mega {
 		width: 100%;
 		padding: 30px 60px;
+		color: #fff;
 	}
 
 	.site-navigation__columns {
@@ -350,8 +351,7 @@ textarea {
 		text-transform: uppercase;
 		font-family: var(--font-heading-family);
 		font-size: 22px;
-		margin: 0 0 20px 0;
-		color: #fff;
+		margin: 0 0 12px 0;
 
 		.site-navigation__arrow {
 			display: none;
