@@ -1,0 +1,134 @@
+{%- if predictive_search.performed -%}
+
+	<div class="predictive-search">
+
+		<div class="predictive-search__grid">
+
+
+			{%- comment -%}
+				Collections / pages
+			{%- endcomment -%}
+
+			{%- if settings.search_show_collections or settings.search_show_pages -%}
+
+				<div class="predictive-search__content">
+
+
+					{%- if settings.search_show_collections
+						and predictive_search.resources.collections.size > 0
+					-%}
+
+						<div class="predictive-search__group">
+
+							<h3 class="predictive-search__heading">
+								Collections
+							</h3>
+
+							<ul class="predictive-search__list">
+
+								{%- for collection in predictive_search.resources.collections -%}
+
+									<li>
+										<a href="{{ collection.url }}">
+											{{ collection.title }}
+										</a>
+									</li>
+
+								{%- endfor -%}
+
+							</ul>
+
+						</div>
+
+					{%- endif -%}
+
+
+					{%- if settings.search_show_pages
+						and predictive_search.resources.pages.size > 0
+					-%}
+
+						<div class="predictive-search__group">
+
+							<h3 class="predictive-search__heading">
+								Pages
+							</h3>
+
+							<ul class="predictive-search__list">
+
+								{%- for page in predictive_search.resources.pages -%}
+
+									<li>
+										<a href="{{ page.url }}">
+											{{ page.title }}
+										</a>
+									</li>
+
+								{%- endfor -%}
+
+							</ul>
+
+						</div>
+
+					{%- endif -%}
+
+				</div>
+
+			{%- endif -%}
+
+
+			{%- comment -%}
+				Products
+			{%- endcomment -%}
+
+			<div class="predictive-search__products">
+
+				<div class="predictive-search__products-header">
+
+					<h3 class="predictive-search__heading">
+						Products
+					</h3>
+
+					<a
+						href="{{ routes.search_url }}?q={{ predictive_search.terms | url_encode }}"
+						class="predictive-search__view-all"
+					>
+						View All
+					</a>
+
+				</div>
+
+
+				{%- if predictive_search.resources.products.size > 0 -%}
+
+					<div class="predictive-search__product-grid">
+
+						{%- for product in predictive_search.resources.products -%}
+
+							{% render 'product-card', product: product %}
+
+						{%- endfor -%}
+
+					</div>
+
+				{%- else -%}
+
+					<p>
+						No products found.
+					</p>
+
+				{%- endif -%}
+
+			</div>
+
+		</div>
+
+	</div>
+
+{%- endif -%}
+
+{% schema %}
+{
+	"name": "Predictive search results",
+	"settings": []
+}
+{% endschema %}
