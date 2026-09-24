@@ -265,9 +265,11 @@ textarea {
 	}
 
 	.site-navigation__item--level-1 {
+		
 		position: static;
 		height: 100%;
 		display: flex;
+		transition: .3s all;
 
 		&:hover,
 		&:focus-within {
