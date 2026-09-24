@@ -331,13 +331,15 @@
 
 			<div class="site-header__controls">
 
-				<a
-					href="{{ routes.search_url }}"
-					class="site-header__control site-header__control--search"
-					aria-label="Search {{ shop.name | escape }}"
-				>
-					{{- 'icon-search.svg' | inline_asset_content -}}
-				</a>
+				{%- if settings.enable_search -%}
+					<a
+						href="{{ routes.search_url }}"
+						class="site-header__control site-header__control--search"
+						aria-label="Search {{ shop.name | escape }}"
+					>
+						{{- 'icon-search.svg' | inline_asset_content -}}
+					</a>
+				{%- endif -%}
 
 
 				<a
