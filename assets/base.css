@@ -838,6 +838,13 @@ button,
 						width: 180px;
 						min-width: 180px;
 
+						.predictive-search__list {
+
+							margin: 0;
+							padding: 0;
+
+						}
+
 					}
 
 					.predictive-search__products {
