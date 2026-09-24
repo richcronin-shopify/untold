@@ -922,7 +922,16 @@ button,
 
 		.product-card__availability {
 
+			display: flex;
+			align-items: center;
+			gap: 5px;
 
+			.product-card__availability-dot {
+				display: block;
+				width: 10px;
+				height: 10px;
+				border-radius: 50%;
+			}
 
 		}
 
