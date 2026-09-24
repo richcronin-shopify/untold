@@ -349,6 +349,7 @@ textarea {
 		text-decoration: none;
 		text-transform: uppercase;
 		font-family: var(--font-heading-family);
+		font-size: 22px;
 
 		.site-navigation__arrow {
 			display: none;
