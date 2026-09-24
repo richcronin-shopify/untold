@@ -793,6 +793,12 @@ button,
 							border-radius: 100px;
 							background: rgba(255,255,255,0.15);
 							text-decoration: none;
+							transition: .3s all;
+
+							&:hover {
+								background: rgba(255,255,255,0.8);
+								color: #000;
+							}
 
 						}
 
