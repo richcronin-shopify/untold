@@ -82,15 +82,51 @@
   },
 
   {
-    "name": "Search",
-    "settings": [
-      {
-        "type": "checkbox",
-        "id": "enable_search",
-        "default": true,
-        "label": "Enable search"
-      }
-    ]
-  }
+	  "name": "Search",
+	  "settings": [
+	    {
+	      "type": "checkbox",
+	      "id": "enable_search",
+	      "default": true,
+	      "label": "Enable search"
+	    },
+	    {
+	      "type": "text",
+	      "id": "search_title",
+	      "default": "Search",
+	      "label": "Title"
+	    },
+	    {
+	      "type": "text",
+	      "id": "search_placeholder",
+	      "default": "What are you looking for?",
+	      "label": "Search placeholder"
+	    },
+	    {
+	      "type": "text",
+	      "id": "search_trending",
+	      "default": "Frames, S&M, Front Wheels, Grips, Tyres",
+	      "label": "Trending searches",
+	      "info": "Separate searches with commas."
+	    },
+	    {
+	      "type": "collection",
+	      "id": "search_popular_collection",
+	      "label": "Popular products collection"
+	    },
+	    {
+	      "type": "checkbox",
+	      "id": "search_show_collections",
+	      "default": true,
+	      "label": "Show collection results"
+	    },
+	    {
+	      "type": "checkbox",
+	      "id": "search_show_pages",
+	      "default": true,
+	      "label": "Show page results"
+	    }
+	  ]
+	}
 
 ]
