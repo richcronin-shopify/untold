@@ -379,6 +379,10 @@
 
 </header>
 
+{%- if settings.enable_search -%}
+	{%- render 'search-modal' -%}
+{%- endif -%}
+
 
 {% javascript %}
 
