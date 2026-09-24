@@ -12,6 +12,7 @@
     "background_color": "#0E0E0E",
     "foreground_color": "#FFFFFF",
     "input_corner_radius": 0,
+    "search_popular_collection": "popular-products",
     "content_for_index": []
   }
 }
