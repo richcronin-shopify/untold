@@ -261,7 +261,6 @@ textarea {
 	.site-navigation__root {
 		display: flex;
 		align-items: center;
-		gap: 30px;
 	}
 
 	.site-navigation__item--level-1 {
@@ -269,6 +268,7 @@ textarea {
 		position: static;
 		height: 100%;
 		display: flex;
+		padding: 0 15px;
 		transition: .3s all;
 
 		&:hover,
