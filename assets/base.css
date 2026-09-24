@@ -659,8 +659,12 @@ textarea {
 		overflow: auto;
 		padding: 40px 50px 0;
 
-		.search-modal__popular {
-			display: none;
+		.search-modal__content {
+
+			.search-modal__popular {
+				display: none;
+			}
+
 		}
 
 	}
