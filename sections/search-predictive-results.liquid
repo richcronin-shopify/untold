@@ -114,9 +114,9 @@
 					<div class="predictive-search__product-grid">
 
 						{%- for product in predictive_search.resources.products -%}
-
-							{% render 'product-card', product: product %}
-
+							<div class="predictive-search__product">
+								{% render 'product-card', product: product %}
+							</div>
 						{%- endfor -%}
 
 					</div>
