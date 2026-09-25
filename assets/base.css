@@ -59,6 +59,12 @@ html {
 
   &.menu-open {
 
+  	overflow: hidden;
+
+  	body {
+  		overflow: hidden;
+  	}
+
 	.site-header__menu-toggle {
 
 		span {
@@ -81,11 +87,6 @@ html {
 
   }
 
-}
-
-html.menu-open,
-html.menu-open body {
-	overflow: hidden;
 }
 
 body {
