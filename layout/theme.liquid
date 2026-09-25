@@ -21,7 +21,7 @@
 
   </head>
 
-  <body>
+  <body class="template-{{ template.name | handleize }}">
     {% sections 'header-group' %}
 
     {{ content_for_layout }}
