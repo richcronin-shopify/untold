@@ -135,12 +135,14 @@
 
 								{%- if bs.button_label != blank and bs.button_url != blank -%}
 
-									<a
-										href="{{ bs.button_url }}"
-										class="button hero-slider__button"
-									>
-										{{ bs.button_label }}
-									</a>
+									<div class="hero-slider__button">
+										<a
+											href="{{ bs.button_url }}"
+											class="{{ss.button_style}}"
+										>
+											{{ bs.button_label }}
+										</a>
+									</div>
 
 								{%- endif -%}
 
@@ -395,7 +397,16 @@
 					"type": "url",
 					"id": "button_url",
 					"label": "Button link"
-				}
+				},
+				{
+		            "type": "select",
+		            "id": "button_style",
+		            "options": [
+		                { "value": "button", "label": "Filled"},
+		                { "value": "button button--outline", "label": "Outline"}
+		            ],
+		            "label": "Button tyle"
+		        }
 			]
 		}
 	],
