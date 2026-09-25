@@ -759,6 +759,10 @@ button,
 						color: #fff;
 					}
 
+					&::-webkit-search-cancel-button {
+						color: #fff;
+					}
+
 				}
 
 			}
