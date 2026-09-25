@@ -374,6 +374,8 @@ button,
 
 			svg {
 				display: block;
+				max-width: 26px;
+				height: unset;
 			}
 
 			&.site-header__control--search {
@@ -381,7 +383,7 @@ button,
 				@media (max-width: 989px) {
 					position: absolute;
 					top: 50%;
-					left: 60px;
+					left: 80px;
 					transform: translate(0,-50%);
 				}
 
