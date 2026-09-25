@@ -180,10 +180,6 @@ button,
 	position: relative;
 	z-index: 50;
 
-	/*
-	 * Announcement bar
-	 */
-
 	.announcement-bar {
 		background: var(--color-primary);
 
