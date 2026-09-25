@@ -9,6 +9,9 @@
 	.hero-slider__slide {
 		position: relative;
 		min-height: 720px;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
 
 		@media (max-width: 749px) {
 			min-height: unset;
