@@ -475,8 +475,16 @@ button,
 	}
 
 	.site-navigation__root {
+		
 		display: flex;
 		align-items: center;
+
+		@media (max-width: 989px) {
+
+			flex-direction: column;
+
+		}
+
 	}
 
 	.site-navigation__item--level-1 {
