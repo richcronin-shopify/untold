@@ -9,13 +9,61 @@
  */
 {
   "sections": {
-    "main": {
-      "type": "hello-world",
-      "disabled": true,
-      "settings": {}
+    "hero_XdJJ7X": {
+      "type": "hero",
+      "blocks": {
+        "slide_f8jdEQ": {
+          "type": "slide",
+          "settings": {
+            "image_desktop": "shopify://shop_images/hero.jpg",
+            "image_mobile": "shopify://shop_images/hero-m.jpg",
+            "eyebrow": "New in!",
+            "heading": "kink feral frame drop",
+            "text": "<strong>From £349.99</strong> · Ready to dispatch",
+            "button_label": "Shop now",
+            "button_url": "shopify://products/alienation-bmx-rim-tape-pair-black"
+          }
+        },
+        "slide_3WnhVN": {
+          "type": "slide",
+          "settings": {
+            "image_desktop": "shopify://shop_images/hero.jpg",
+            "image_mobile": "shopify://shop_images/hero-m.jpg",
+            "eyebrow": "New in!",
+            "heading": "kink feral frame drop 3",
+            "text": "<strong>From £349.99</strong> · Ready to dispatch",
+            "button_label": "Shop now",
+            "button_url": "shopify://products/alienation-bmx-rim-tape-pair-black"
+          }
+        },
+        "slide_U46yUp": {
+          "type": "slide",
+          "settings": {
+            "image_desktop": "shopify://shop_images/hero.jpg",
+            "image_mobile": "shopify://shop_images/hero-m.jpg",
+            "eyebrow": "New in!",
+            "heading": "kink feral frame drop",
+            "text": "<strong>From £349.99</strong> · Ready to dispatch",
+            "button_label": "Shop now",
+            "button_url": "shopify://products/alienation-bmx-rim-tape-pair-black"
+          }
+        }
+      },
+      "block_order": [
+        "slide_f8jdEQ",
+        "slide_3WnhVN",
+        "slide_U46yUp"
+      ],
+      "name": "Hero slider",
+      "settings": {
+        "autoplay": false,
+        "autoplay_delay": 5,
+        "show_arrows": true,
+        "show_pagination": true
+      }
     }
   },
   "order": [
-    "main"
+    "hero_XdJJ7X"
   ]
 }
