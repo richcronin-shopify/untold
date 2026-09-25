@@ -127,7 +127,7 @@
 		&.hero-slider__arrow--prev {
 
 			svg {
-				transform: rotate(90deg);
+				transform: rotate(180deg);
 			}
 		}
 	}
