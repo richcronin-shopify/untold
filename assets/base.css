@@ -378,6 +378,10 @@ button,
 	justify-self: center;
 	height: 120px;
 
+	@media (max-width: 989px) {
+		display: none;
+	}
+
 	.site-navigation__overlay {
 		display: none;
 	}
