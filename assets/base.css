@@ -482,13 +482,9 @@ button,
 	height: 120px;
 
 	@media (max-width: 989px) {
-		display: none;
+		display: block;
 		position: fixed;
 
-		/*
-		 * 40px announcement +
-		 * 68px main header
-		 */
 		top: 108px;
 		right: 0;
 		bottom: 0;
@@ -497,8 +493,12 @@ button,
 		height: auto;
 		z-index: 100;
 
+		visibility: hidden;
+		pointer-events: none;
+
 		&.is-open {
-			display: block;
+			visibility: visible;
+			pointer-events: auto;
 
 			.site-navigation__overlay {
 				opacity: 1;
