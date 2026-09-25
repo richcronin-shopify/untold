@@ -930,6 +930,7 @@ button,
 			top: 0;
 			left: 0;
 			object-fit: cover;
+			background: #fff;
 
 			&.product-card__image--secondary {
 				opacity: 0;
