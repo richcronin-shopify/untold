@@ -394,6 +394,7 @@ button,
 
 	@media (max-width: 989px) {
 		display: none;
+		height: 68px;
 	}
 
 	.site-navigation__overlay {
