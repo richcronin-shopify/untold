@@ -723,7 +723,7 @@ button,
 			position: sticky;
 			top: 0;
 			width: 100%;
-			background: var(--color-black);
+			background: var(--color-black-reduced);
 			z-index: 3;
 			padding: 20px 0;
 
