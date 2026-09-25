@@ -73,7 +73,7 @@
 
 	.hero-slider__heading {
 		color: #fff;
-		line-height: 1.2;
+		line-height: 1;
 		margin: 0 0 15px 0;
 	}
 
@@ -83,22 +83,8 @@
 		gap: 7px;
 
 		.hero-slider__status {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-
 			width: 16px;
-			height: 16px;
-
-			flex: 0 0 16px;
-
-			border-radius: 50%;
-
-			background: var(--color-primary);
-			color: #000;
-
-			font-size: 11px;
-			font-weight: 700;
+			height: unset;
 		}
 
 		p {
