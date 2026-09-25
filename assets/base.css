@@ -374,8 +374,6 @@ button,
 
 			svg {
 				display: block;
-				max-width: 26px;
-				height: unset;
 			}
 
 			&.site-header__control--search {
