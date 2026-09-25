@@ -188,7 +188,10 @@ button,
 }
 
 .site-header {
-	position: relative;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
 	z-index: 50;
 
 	.announcement-bar {
@@ -440,7 +443,7 @@ button,
 
 		@media (max-width: 989px) {
 
-			
+
 
 		}
 	}
