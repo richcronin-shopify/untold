@@ -882,8 +882,8 @@ button,
 							flex-wrap: wrap;
 							gap: 10px;
 
-							.product-card {
-								width: calc(33.3% - 10px);
+							.predictive-search__product {
+								width: calc(33.3% - 7px);
 							}
 
 						}
