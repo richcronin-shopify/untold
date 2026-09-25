@@ -8,7 +8,7 @@
 
 	.hero-slider__slide {
 		position: relative;
-		min-height: 520px;
+		min-height: 720px;
 
 		@media (max-width: 749px) {
 			min-height: unset;
