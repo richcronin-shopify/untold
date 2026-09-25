@@ -1307,6 +1307,10 @@ body.template-index {
 	.site-header {
 		.site-header__main {
 			background: transparent;
+			transition: .3s all;
+			&:hover {
+				background: var(--color-black-reduced);
+			}
 		}
 	}
 }
