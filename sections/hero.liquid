@@ -106,9 +106,9 @@
 
 								{%- if bs.heading != blank -%}
 
-									<h2 class="hero-slider__heading">
+									<h{{bs.heading_tag}} class="h{{bs.font_size}} hero-slider__heading">
 										{{ bs.heading }}
-									</h2>
+									</h{{bs.heading_tag}}>
 
 								{%- endif -%}
 
@@ -381,6 +381,26 @@
 					"label": "Heading",
 					"default": "Kink Feral Frame Drop"
 				},
+				{
+		            "type": "range",
+		            "id": "heading_tag",
+		            "min": 1,
+		            "max": 6,
+		            "step": 1,
+		            "label": "Title heading tag",
+		            "info": "Header tags, also known as heading tags, are used to separate headings and subheadings on a webpage. They rank in order of importance, from H1 to H6, with H1s usually being the title. Header tags improve the readability and SEO of a webpage.",
+		            "default": 6
+		        },
+		        {
+		            "type": "range",
+		            "id": "font_size",
+		            "min": 1,
+		            "max": 6,
+		            "step": 1,
+		            "label": "Font size",
+		            "info": "1 being the largest. 6 being the smallest.",
+		            "default": 4
+		        },
 				{
 					"type": "inline_richtext",
 					"id": "text",
