@@ -70,7 +70,7 @@ html {
 		span {
 
 			&:nth-child(1) {
-				top: 10px;
+				top: 10px !important;
 				transform: rotate(45deg);
 			}
 
@@ -79,7 +79,7 @@ html {
 			}
 
 			&:nth-child(3) {
-				top: 10px;
+				top: 10px !important;
 				transform: rotate(-45deg);
 			}
 		}
