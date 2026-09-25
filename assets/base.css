@@ -54,7 +54,15 @@
 }
 
 html {
+  
   scroll-behavior: smooth;
+
+  &.menu-open {
+
+  	
+
+  }
+
 }
 
 html.menu-open,
