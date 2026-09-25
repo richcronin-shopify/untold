@@ -374,6 +374,10 @@ button,
 
 			svg {
 				display: block;
+				@media (max-width: 989px) {
+					width: 20px;
+					height: unset;
+				}
 			}
 
 			&.site-header__control--search {
