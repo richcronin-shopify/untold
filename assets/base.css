@@ -16,6 +16,17 @@
 	--h4: 32px;
 	--h5: 26px;
 	--h6: 20px;
+
+	@media (max-width: 990px) {
+
+		--h1: 80px;
+		--h2: 60px;
+		--h3: 40px;
+		--h4: 32px;
+		--h5: 26px;
+		--h6: 20px;
+
+	}
 	
 	--base: 20px;
 	--small: 18px;
