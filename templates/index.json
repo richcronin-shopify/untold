@@ -19,9 +19,12 @@
             "image_mobile": "shopify://shop_images/hero-m.jpg",
             "eyebrow": "New in!",
             "heading": "kink feral frame drop",
+            "heading_tag": 1,
+            "font_size": 1,
             "text": "<strong>From £349.99</strong> · Ready to dispatch",
             "button_label": "Shop now",
-            "button_url": "shopify://products/alienation-bmx-rim-tape-pair-black"
+            "button_url": "shopify://products/alienation-bmx-rim-tape-pair-black",
+            "button_style": "button"
           }
         },
         "slide_3WnhVN": {
@@ -31,9 +34,12 @@
             "image_mobile": "shopify://shop_images/hero-m.jpg",
             "eyebrow": "New in!",
             "heading": "kink feral frame drop 3",
+            "heading_tag": 2,
+            "font_size": 1,
             "text": "<strong>From £349.99</strong> · Ready to dispatch",
             "button_label": "Shop now",
-            "button_url": "shopify://products/alienation-bmx-rim-tape-pair-black"
+            "button_url": "shopify://products/alienation-bmx-rim-tape-pair-black",
+            "button_style": "button"
           }
         },
         "slide_U46yUp": {
@@ -43,9 +49,12 @@
             "image_mobile": "shopify://shop_images/hero-m.jpg",
             "eyebrow": "New in!",
             "heading": "kink feral frame drop",
+            "heading_tag": 2,
+            "font_size": 1,
             "text": "<strong>From £349.99</strong> · Ready to dispatch",
             "button_label": "Shop now",
-            "button_url": "shopify://products/alienation-bmx-rim-tape-pair-black"
+            "button_url": "shopify://products/alienation-bmx-rim-tape-pair-black",
+            "button_style": "button"
           }
         }
       },
