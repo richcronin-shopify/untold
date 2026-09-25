@@ -149,15 +149,12 @@
 	.hero-slider__pagination {
 		position: absolute;
 		z-index: 3;
-
 		left: 50% !important;
 		bottom: 25px !important;
-
 		width: auto !important;
-
 		transform: translateX(-50%);
 
-		@media (max-width: 768px) {
+		@media (max-width: 990px) {
 			left: 16px !important;
 			bottom: 12px !important;
 			transform: none;
