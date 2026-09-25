@@ -42,7 +42,8 @@
         "announcement_V3w8YC"
       ],
       "settings": {
-        "menu": "main-menu"
+        "menu": "main-menu",
+        "mobile_footer_menu": "mobile-footer"
       }
     }
   },
