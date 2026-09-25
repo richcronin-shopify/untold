@@ -257,6 +257,10 @@ button,
 				gap: 60px;
 				padding-right: 60px;
 				justify-content: flex-start;
+				@media (max-width: 768px) {
+					gap: 30px;
+					padding-right: 30px;
+				}
 			}
 
 			.announcement-bar__group--duplicate {
