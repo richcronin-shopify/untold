@@ -325,6 +325,9 @@ button,
 
 		.site-header__menu-toggle {
 			display: none;
+			@media (max-width: 989px) {
+				display: block;
+			}
 		}
 
 		.site-header__controls {
