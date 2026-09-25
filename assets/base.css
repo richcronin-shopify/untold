@@ -938,6 +938,12 @@ button,
 				display: grid;
 				grid-template-columns: repeat(2, 1fr);
 				gap: 6px 20px;
+				li {
+					a {
+						text-decoration: none;
+						font-size: 14px;
+					}
+				}
 			}
 		}
 	}
