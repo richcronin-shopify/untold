@@ -460,7 +460,8 @@ button,
 			left: 0;
 			width: 100%;
 			height: calc(100vh - 68px);
-			background: red;
+			background: var(--color-black);
+			justify-content: flex-start;
 
 		}
 	}
