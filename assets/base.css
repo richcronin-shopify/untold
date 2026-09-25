@@ -760,7 +760,7 @@ button,
 					}
 
 					&::-webkit-search-cancel-button {
-						color: #fff;
+						display: none;
 					}
 
 				}
