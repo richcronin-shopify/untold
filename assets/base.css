@@ -375,6 +375,13 @@ button,
 			svg {
 				display: block;
 			}
+
+			&.site-header__control--search {
+
+				
+
+			}
+
 		}
 
 		.site-header__cart-count {
