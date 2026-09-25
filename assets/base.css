@@ -521,6 +521,9 @@ button,
 		text-transform: uppercase;
 		font-family: var(--font-heading-family);
 		font-size: 24px;
+		@media (max-width: 989px) {
+			font-size: 18px;
+		}
 	}
 
 	.site-navigation__arrow {
