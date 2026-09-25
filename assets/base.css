@@ -483,6 +483,8 @@ button,
 		@media (max-width: 989px) {
 
 			flex-direction: column;
+			justify-content: flex-start;
+			width: 100%;
 
 		}
 
