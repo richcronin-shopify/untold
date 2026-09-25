@@ -378,7 +378,12 @@ button,
 
 			&.site-header__control--search {
 
-				
+				@media (max-width: 989px) {
+					position: absolute;
+					top: 50%;
+					left: 60px;
+					transform: translate(0,-50%);
+				}
 
 			}
 
