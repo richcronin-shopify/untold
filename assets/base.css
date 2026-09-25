@@ -720,6 +720,10 @@ button,
 			display: flex;
 			justify-content: space-between;
 			margin: 0 0 28px 0;
+			position: sticky;
+			top: 0;
+			width: 100%;
+			background: var(--color-black);
 
 			.search-modal__title {
 				margin: 0;
