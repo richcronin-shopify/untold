@@ -17,6 +17,12 @@
     {% render 'structured-data' %}
 
     {{ content_for_header }}
+
+    <link
+		rel="stylesheet"
+		href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+	>
+
   </head>
 
   <body>
@@ -25,5 +31,10 @@
     {{ content_for_layout }}
 
     {% sections 'footer-group' %}
+
+    <script
+		src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"
+		defer
+	></script>
   </body>
 </html>
