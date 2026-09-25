@@ -856,6 +856,10 @@ button,
 							font-size: 18px;
 						}
 
+						.predictive-search__view-all {
+							color:var(--color-primary);
+						}
+
 						.predictive-search__list {
 
 							margin: 0;
