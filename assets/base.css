@@ -59,7 +59,11 @@ html {
 
   &.menu-open {
 
-  	
+  	.site-navigation {
+
+  		display: block;
+
+  	}
 
   }
 
