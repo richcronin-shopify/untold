@@ -192,51 +192,106 @@ button,
 	z-index: 50;
 
 	.announcement-bar {
-			background: var(--color-primary);
+		background: var(--color-primary);
+		overflow: hidden;
+
+		.announcement-bar__inner {
+			height: 40px;
 			overflow: hidden;
+		}
+
+		.announcement-bar__track {
+			height: 100%;
+		}
+
+		.announcement-bar__group {
+			height: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+		}
+
+		.announcement-bar__group--duplicate {
+			display: none;
+		}
+
+		.announcement-bar__item {
+			flex: 1 1 0;
+			color: #111;
+			text-transform: uppercase;
+			font-family: var(--font-heading-family);
+			font-weight: 500;
+			white-space: nowrap;
+
+			&:nth-child(2) {
+				text-align: center;
+			}
+
+			&:last-child {
+				text-align: right;
+			}
+
+			a {
+				color: #111;
+				text-decoration: none;
+			}
+		}
+
+		@media (max-width: 989px) {
 
 			.announcement-bar__inner {
-				height: 40px;
-				overflow: hidden;
+				max-width: none;
+				padding-left: 0;
+				padding-right: 0;
 			}
 
 			.announcement-bar__track {
-				height: 100%;
+				display: flex;
+				width: max-content;
+				animation: announcement-ticker 18s linear infinite;
 			}
 
 			.announcement-bar__group {
-				height: 100%;
+				flex: 0 0 auto;
+				width: max-content;
+				gap: 30px;
+				padding-right: 30px;
+				justify-content: flex-start;
+			}
+
+			.announcement-bar__group--duplicate {
 				display: flex;
-				align-items: center;
-				justify-content: space-between;
+			}
+
+			.announcement-bar__item {
+				flex: 0 0 auto;
+				text-align: left;
+
+				&:nth-child(2),
+				&:last-child {
+					text-align: left;
+				}
+			}
+
+			&:hover {
+
+				.announcement-bar__track {
+					animation-play-state: paused;
+				}
+			}
+		}
+
+		@media (prefers-reduced-motion: reduce) {
+
+			.announcement-bar__track {
+				animation: none;
 			}
 
 			.announcement-bar__group--duplicate {
 				display: none;
 			}
-
-			.announcement-bar__item {
-				flex: 1 1 0;
-				color: #111;
-				text-transform: uppercase;
-				font-family: var(--font-heading-family);
-				font-weight: 500;
-				white-space: nowrap;
-
-				&:nth-child(2) {
-					text-align: center;
-				}
-
-				&:last-child {
-					text-align: right;
-				}
-
-				a {
-					color: #111;
-					text-decoration: none;
-				}
-			}
 		}
+	}	
 
 	/*
 	 * Main header
