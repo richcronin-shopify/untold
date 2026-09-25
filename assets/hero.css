@@ -37,9 +37,8 @@
 		height: 720px;
 		object-fit: cover;
 		@media (max-width: 990px) {
-			height: 440px;
+			height: unset;
 			@media (max-width: 768px) {
-				height: 300px;
 			}
 		}
 	}
