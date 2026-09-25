@@ -99,6 +99,14 @@
 		}
 	}
 
+	.hero-slider__button {
+
+		.button {
+			display: inline-block;
+		}
+
+	}
+
 	.hero-slider__navigation {
 		position: absolute;
 		z-index: 3;
