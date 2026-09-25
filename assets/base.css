@@ -327,6 +327,10 @@ button,
 				display: block;
 				width: 100%;
 				height: auto;
+				@media (max-width: 989px) {
+					width: 88px;
+					height: unset;
+				}
 			}
 		}
 
