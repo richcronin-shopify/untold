@@ -311,6 +311,9 @@ button,
 		.site-header__inner {
 			display: flex;
 			justify-content: space-between;
+			@media (max-width: 989px) {
+				align-items: center;
+			}
 		}
 
 		.site-header__logo {
