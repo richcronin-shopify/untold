@@ -856,10 +856,6 @@ button,
 							font-size: 18px;
 						}
 
-						.predictive-search__view-all {
-							color:var(--color-primary);
-						}
-
 						.predictive-search__list {
 
 							margin: 0;
@@ -905,6 +901,11 @@ button,
 						margin: 0 0 10px 0;
 						font-family: var(--font-body-family);
 						font-size: 18px;
+					}
+
+					.predictive-search__view-all {
+						color:var(--color-primary);
+						font-size: 14px;
 					}
 
 				}
