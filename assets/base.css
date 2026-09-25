@@ -491,30 +491,32 @@ button,
 	}
 
 	.site-navigation__item--level-1 {
-		
 		position: static;
 		height: 100%;
 		display: flex;
 		padding: 0 15px;
 		transition: .3s all;
 
-		@media (max-width: 989px) {
-			border-top: 1px solid var(--border-white);
-			height: 60px;
-			width: 100%;
+		@media (min-width: 990px) {
+
+			&:hover,
+			&:focus-within {
+				color: var(--color-primary);
+
+				> .site-navigation__panel--level-2 {
+					opacity: 1;
+					visibility: visible;
+					pointer-events: auto;
+					transform: translateY(0);
+				}
+			}
 		}
 
-		&:hover,
-		&:focus-within {
-
-			color: var(--color-primary);
-
-			> .site-navigation__panel--level-2 {
-				opacity: 1;
-				visibility: visible;
-				pointer-events: auto;
-				transform: translateY(0);
-			}
+		@media (max-width: 989px) {
+			height: 60px;
+			width: 100%;
+			padding: 0;
+			border-top: 1px solid var(--border-white);
 		}
 	}
 
