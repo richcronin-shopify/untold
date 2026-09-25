@@ -7,44 +7,89 @@
 >
 
 	{%- if section.blocks.size > 0 -%}
+
 		<div class="announcement-bar">
 
 			<div class="announcement-bar__inner container">
 
-				{%- for block in section.blocks -%}
-					{%- assign bs = block.settings -%}
+				<div class="announcement-bar__track">
 
-					{%- case block.type -%}
-						{%- when 'announcement' -%}
+					<div class="announcement-bar__group">
 
-							{%- if bs.title != blank -%}
+						{%- for block in section.blocks -%}
+							{%- assign bs = block.settings -%}
 
-								<div
-									class="announcement-bar__item"
-									{{ block.shopify_attributes }}
-								>
+							{%- case block.type -%}
+								{%- when 'announcement' -%}
 
-									{%- if bs.url != blank -%}
-										<a href="{{ bs.url }}">
+									{%- if bs.title != blank -%}
+
+										<div
+											class="announcement-bar__item"
+											{{ block.shopify_attributes }}
+										>
+
+											{%- if bs.url != blank -%}
+												<a href="{{ bs.url }}">
+											{%- endif -%}
+
+												{{- bs.title -}}
+
+											{%- if bs.url != blank -%}
+												</a>
+											{%- endif -%}
+
+										</div>
+
 									{%- endif -%}
 
-										{{- bs.title -}}
+							{%- endcase -%}
+						{%- endfor -%}
 
-									{%- if bs.url != blank -%}
-										</a>
+					</div>
+
+
+					<div
+						class="announcement-bar__group announcement-bar__group--duplicate"
+						aria-hidden="true"
+					>
+
+						{%- for block in section.blocks -%}
+							{%- assign bs = block.settings -%}
+
+							{%- case block.type -%}
+								{%- when 'announcement' -%}
+
+									{%- if bs.title != blank -%}
+
+										<div class="announcement-bar__item">
+
+											{%- if bs.url != blank -%}
+												<a href="{{ bs.url }}" tabindex="-1">
+											{%- endif -%}
+
+												{{- bs.title -}}
+
+											{%- if bs.url != blank -%}
+												</a>
+											{%- endif -%}
+
+										</div>
+
 									{%- endif -%}
 
-								</div>
+							{%- endcase -%}
+						{%- endfor -%}
 
-							{%- endif -%}
+					</div>
 
-					{%- endcase -%}
-				{%- endfor -%}
+				</div>
 
 			</div>
 
 		</div>
-	{%- endif -%}
+
+	{%- endif -%}	
 
 
 	<div class="site-header__main">
