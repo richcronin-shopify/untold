@@ -143,8 +143,15 @@ a {
 }
 
 .visually-hidden {
-	display: none;
-	visibility: hidden;
+	position: absolute !important;
+	width: 1px !important;
+	height: 1px !important;
+	padding: 0 !important;
+	margin: -1px !important;
+	overflow: hidden !important;
+	clip: rect(0, 0, 0, 0) !important;
+	white-space: nowrap !important;
+	border: 0 !important;
 }
 
 /* Media */
@@ -484,7 +491,7 @@ button,
 	@media (max-width: 989px) {
 		display: block;
 		position: fixed;
-
+		width: 100%;
 		top: 108px;
 		right: 0;
 		bottom: 0;
