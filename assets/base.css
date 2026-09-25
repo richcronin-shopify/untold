@@ -308,6 +308,10 @@ button,
 		display: flex;
 		align-items: center;
 
+		@media (max-width: 989px) {
+			height: 68px;
+		}
+
 		.site-header__inner {
 			display: flex;
 			justify-content: space-between;
