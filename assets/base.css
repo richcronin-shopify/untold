@@ -713,7 +713,7 @@ button,
 		border-radius: 10px;
 		background: var(--color-black);
 		overflow: auto;
-		padding: 40px 50px;
+		padding: 0 50px 40px;
 
 		.search-modal__header {
 
@@ -724,6 +724,8 @@ button,
 			top: 0;
 			width: 100%;
 			background: var(--color-black);
+			z-index: 3;
+			padding: 20px 0;
 
 			.search-modal__title {
 				margin: 0;
