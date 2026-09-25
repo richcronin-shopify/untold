@@ -500,8 +500,7 @@ button,
 
 		@media (max-width: 989px) {
 			border-top: 1px solid var(--border-white);
-			height: unset;
-			display: block;
+			height: 60px;
 			width: 100%;
 		}
 
