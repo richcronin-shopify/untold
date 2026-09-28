@@ -9,23 +9,8 @@
 
 			min-width: 25%;
 			flex: 1;
-			position: relative;
-
-			&::after {
-				content: '';
-				position: absolute;
-				right: 0;
-				top: 50%;
-				transform: translate(-50%, 0);
-				width: 1px;
-				background: var(--border-white);
-				height: 43px;
-			}
 
 			&:last-child {
-				&::after {
-					display: none;
-				}
 			}
 
 			.usp-bar__link {
