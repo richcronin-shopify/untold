@@ -10,7 +10,10 @@
 			min-width: 25%;
 			flex: 1;
 
-			&:last-child {
+			.usp-bar__divider {
+				width: 1px;
+				height: 50px;
+				background: var(--border-white);
 			}
 
 			.usp-bar__link {

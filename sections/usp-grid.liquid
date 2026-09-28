@@ -41,6 +41,10 @@
 					</{% if bs.url != blank %}a{% else %}div{% endif %}>
 				</div>
 
+				{%- unless forloop.last -%}
+					<span class="usp-bar__divider"></span>
+				{%- endunless -%}
+
 			{%- endfor -%}
 
 		</div>
