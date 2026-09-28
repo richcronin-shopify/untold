@@ -16,8 +16,8 @@
 			overflow: hidden;
 
 			@media (max-width: 990px) {
-				width: calc(50% - 10px);
-				min-width: calc(50% - 10px);
+				width: calc(50% - 5px);
+				min-width: calc(50% - 5px);
 			}
 
 			&:hover {
