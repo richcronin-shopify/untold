@@ -1,6 +1,6 @@
 {{- 'usp-grid.css' | asset_url | stylesheet_tag -}}
 
-<section class="usp-bar">
+<section class="usp-bar" id="{{ section.id }}">
 	<div class="container">
 		<div class="usp-bar__items">
 
@@ -48,6 +48,28 @@
 		</div>
 	</div>
 </section>
+
+{%- style -%}
+
+	#{{section.id}} {
+		padding-top: {{ss.padding-top}}px;
+		padding-bottom: {{ss.padding-bottom}}px;
+	}
+
+	#{{section.id}} .blocks {
+		gap: {{ss.block-gap}}px;
+	}
+
+	@media screen and (max-width: 750px) {
+
+		#{{section.id}} {
+			padding-top: {{ss.padding-top-m}}px;
+			padding-bottom: {{ss.padding-bottom-m}}px;
+		}
+
+	}
+
+{%- endstyle -%}
 
 {% schema %}
 {
