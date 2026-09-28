@@ -118,7 +118,12 @@
         "usp_GaKBP4"
       ],
       "name": "USP bar",
-      "settings": {}
+      "settings": {
+        "padding-top": 50,
+        "padding-bottom": 50,
+        "padding-top-m": 20,
+        "padding-bottom-m": 20
+      }
     }
   },
   "order": [
