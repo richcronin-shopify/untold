@@ -9,6 +9,24 @@
 
 			min-width: 25%;
 			flex: 1;
+			position: relative;
+
+			&::after {
+				content: '';
+				position: absolute;
+				right: 0;
+				top: 50%;
+				transform: translate(-50%, 0);
+				width: 1px;
+				background: var(--border-white);
+				height: 43px;
+			}
+
+			&:last-child {
+				&::after {
+					display: none;
+				}
+			}
 
 			.usp-bar__link {
 
@@ -17,17 +35,22 @@
 				gap: 20px;
 
 				.usp-bar__icon {
-					
+					img {
+						width: 30px;
+						height: 30px;
+						display: block;
+						object-fit: contain;
+					}
 				}
 
 				.usp-bar__content {
 
 					.usp-bar__title {
-
+						margin: 0 0 2px 0;
 					}
 
 					.usp-bar__description {
-
+						margin: 0;
 					}
 
 				}
