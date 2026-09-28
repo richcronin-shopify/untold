@@ -55,6 +55,7 @@
 
 					.usp-bar__title {
 						margin: 0 0 2px 0;
+						transition: .3s all;
 						@media (max-width: 990px) {
 							font-size: 15px;
 						}
@@ -62,6 +63,7 @@
 
 					.usp-bar__description {
 						margin: 0;
+						transition: .3s all;
 						@media (max-width: 990px) {
 							font-size: 10px;
 						}
@@ -69,6 +71,14 @@
 
 				}
 
+			}
+
+			a {
+				&:hover {
+					.usp-bar__content * {
+						color: var(--color-primary);
+					}
+				}
 			}
 
 		}
