@@ -69,13 +69,23 @@
 				color: var(--color-primary);
 
 				.payment-options__cta-arrow {
-
+					.payment-options__cta-arrow {
+						svg {
+							path {
+								transition: .3s all;
+							}
+						}
+					}
 				}
 
 				&:hover {
 					color: #fff;
 					.payment-options__cta-arrow {
-						
+						svg {
+							path {
+								fill: #fff;
+							}
+						}
 					}
 				}
 
