@@ -120,7 +120,7 @@
       "name": "USP bar",
       "settings": {
         "padding-top": 45,
-        "padding-bottom": 45,
+        "padding-bottom": 60,
         "padding-top-m": 20,
         "padding-bottom-m": 20
       }
