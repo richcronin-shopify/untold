@@ -52,10 +52,16 @@
 
 					.usp-bar__title {
 						margin: 0 0 2px 0;
+						@media (max-width: 990px) {
+							font-size: 15px;
+						}
 					}
 
 					.usp-bar__description {
 						margin: 0;
+						@media (max-width: 990px) {
+							font-size: 10px;
+						}
 					}
 
 				}
