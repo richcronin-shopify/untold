@@ -37,6 +37,11 @@
 					display: flex;
 					align-items: center;
 					gap: 10px;
+					background: linear-gradient(
+						to top,
+						rgba(0, 0, 0, 0.85) 0%,
+						rgba(0, 0, 0, 0) 100%
+					);
 
 					.collection-grid__title {
 						margin: 0;
