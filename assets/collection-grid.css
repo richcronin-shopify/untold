@@ -18,6 +18,10 @@
 			@media (max-width: 990px) {
 				width: calc(50% - 5px);
 				min-width: calc(50% - 5px);
+				&:nth-child(5) {
+					width: 100%;
+					min-width: 100%;
+				}
 			}
 
 			&:hover {
