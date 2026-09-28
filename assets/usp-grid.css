@@ -12,10 +12,12 @@
 
 			.usp-bar__link {
 
-				display: block;
+				display: flex;
+				align-items: center;
+				gap: 20px;
 
 				.usp-bar__icon {
-
+					
 				}
 
 				.usp-bar__content {

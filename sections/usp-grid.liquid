@@ -8,9 +8,9 @@
 				{%- assign bs = block.settings -%}
 
 				<div class="usp-bar__item" {{ block.shopify_attributes }}>
-					{%- if bs.url != blank -%}
-						<a href="{{ bs.url }}" class="usp-bar__link">
-					{%- endif -%}
+					
+					<{% if bs.url != blank %}a href="{{ bs.url }}"{% else %}div{%- endif -%} class="usp-bar__link">
+					
 
 						{%- if bs.image != blank -%}
 							<div class="usp-bar__icon">
@@ -38,9 +38,7 @@
 							{%- endif -%}
 						</div>
 
-					{%- if bs.url != blank -%}
-						</a>
-					{%- endif -%}
+					</{% if bs.url != blank %}a{% else %}div{%- endif -%}>
 				</div>
 
 			{%- endfor -%}
