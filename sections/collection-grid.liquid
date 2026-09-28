@@ -1,0 +1,161 @@
+{{- 'collection-grid.css' | asset_url | stylesheet_tag -}}
+{%- assign ss = section.settings -%}
+
+<section class="collection-grid" id="{{ section.id }}">
+	<div class="container">
+		<div class="collection-grid__items">
+
+			{%- for block in section.blocks -%}
+				{%- assign bs = block.settings -%}
+				{%- assign block_collection = bs.collection -%}
+				{%- assign block_image = bs.image | default: block_collection.image -%}
+				{%- assign block_title = bs.title | default: block_collection.title -%}
+
+				{%- if block_collection != blank -%}
+					<div class="collection-grid__item" {{ block.shopify_attributes }}>
+						<a href="{{ block_collection.url }}" class="collection-grid__link">
+
+							{%- if block_image != blank -%}
+								<div class="collection-grid__media">
+									{{
+										block_image
+										| image_url: width: 1000
+										| image_tag:
+											class: 'collection-grid__image',
+											loading: 'lazy',
+											widths: '400, 600, 800, 1000',
+											sizes: '(min-width: 990px) 20vw, 50vw',
+											alt: block_image.alt
+									}}
+								</div>
+							{%- endif -%}
+
+							<div class="collection-grid__content">
+								{%- if block_title != blank -%}
+									<p class="collection-grid__title">{{ block_title }}</p>
+								{%- endif -%}
+
+								<span class="collection-grid__arrow" aria-hidden="true">
+									{{- 'icon-long-arrow.svg' | inline_asset_content -}}
+								</span>
+							</div>
+
+						</a>
+					</div>
+				{%- endif -%}
+
+			{%- endfor -%}
+
+		</div>
+	</div>
+</section>
+
+{%- style -%}
+
+	#{{ section.id }} {
+		padding-top: {{ ss.padding-top }}px;
+		padding-bottom: {{ ss.padding-bottom }}px;
+	}
+
+	@media screen and (max-width: 750px) {
+
+		#{{ section.id }} {
+			padding-top: {{ ss.padding-top-m }}px;
+			padding-bottom: {{ ss.padding-bottom-m }}px;
+		}
+
+	}
+
+{%- endstyle -%}
+
+{% schema %}
+{
+	"name": "Collection grid",
+	"tag": "section",
+	"class": "collection-grid-section",
+	"settings": [
+		{
+			"type": "header",
+			"content": "Padding (desktop)"
+		},
+		{
+			"type": "range",
+			"id": "padding-top",
+			"min": 0,
+			"max": 300,
+			"step": 5,
+			"label": "Padding top",
+			"default": 0
+		},
+		{
+			"type": "range",
+			"id": "padding-bottom",
+			"min": 0,
+			"max": 300,
+			"step": 5,
+			"label": "Padding bottom",
+			"default": 0
+		},
+		{
+			"type": "header",
+			"content": "Padding (mobile)"
+		},
+		{
+			"type": "range",
+			"id": "padding-top-m",
+			"min": 0,
+			"max": 300,
+			"step": 5,
+			"label": "Padding top",
+			"default": 0
+		},
+		{
+			"type": "range",
+			"id": "padding-bottom-m",
+			"min": 0,
+			"max": 300,
+			"step": 5,
+			"label": "Padding bottom",
+			"default": 0
+		}
+	],
+	"blocks": [
+		{
+			"type": "collection",
+			"name": "Collection",
+			"settings": [
+				{
+					"type": "collection",
+					"id": "collection",
+					"label": "Collection"
+				},
+				{
+					"type": "image_picker",
+					"id": "image",
+					"label": "Image override",
+					"info": "Leave blank to use the collection image."
+				},
+				{
+					"type": "text",
+					"id": "title",
+					"label": "Title override",
+					"info": "Leave blank to use the collection title."
+				}
+			]
+		}
+	],
+	"max_blocks": 8,
+	"presets": [
+		{
+			"name": "Collection grid",
+			"blocks": [
+				{ "type": "collection" },
+				{ "type": "collection" },
+				{ "type": "collection" },
+				{ "type": "collection" },
+				{ "type": "collection" }
+			]
+		}
+	]
+}
+{% endschema %}
