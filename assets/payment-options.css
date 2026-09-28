@@ -67,6 +67,7 @@
 				align-items: center;
 				color: var(--color-primary);
 				font-family: var(--font-heading-family);
+				text-transform: uppercase;
 
 				.payment-options__cta-arrow {
 
