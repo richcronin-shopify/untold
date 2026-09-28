@@ -14,6 +14,10 @@
 
 		.usp-bar__item {
 
+			@media (max-width: 990px) {
+				background: #151515;
+			}
+
 			.usp-bar__link {
 
 				display: flex;
