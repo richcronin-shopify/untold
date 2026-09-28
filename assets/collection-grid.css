@@ -64,6 +64,9 @@
 
 					.collection-grid__title {
 						margin: 0;
+						@media (max-width: 990px) {
+							font-size: 16px;
+						}
 					}
 
 					.collection-grid__arrow {
