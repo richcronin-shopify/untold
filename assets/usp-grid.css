@@ -1,0 +1,39 @@
+.usp-bar {
+
+	.usp-bar__items {
+
+		display: flex;
+		flex-wrap: wrap;
+
+		.usp-bar__item {
+
+			min-width: 25%;
+			flex: 1;
+
+			.usp-bar__link {
+
+				display: block;
+
+				.usp-bar__icon {
+
+				}
+
+				.usp-bar__content {
+
+					.usp-bar__title {
+
+					}
+
+					.usp-bar__description {
+
+					}
+
+				}
+
+			}
+
+		}
+
+	}
+
+}
