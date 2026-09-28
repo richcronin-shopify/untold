@@ -183,11 +183,54 @@
         "padding-top-m": 0,
         "padding-bottom-m": 0
       }
+    },
+    "payment_icons_74q9MM": {
+      "type": "payment-icons",
+      "blocks": {
+        "payment_q9fk8L": {
+          "type": "payment",
+          "settings": {
+            "title": "Pay in 3",
+            "description": "Interest-free"
+          }
+        },
+        "payment_KRkpYa": {
+          "type": "payment",
+          "settings": {
+            "title": "Pay in 3",
+            "description": "Interest-free"
+          }
+        },
+        "payment_mKqnB9": {
+          "type": "payment",
+          "settings": {
+            "title": "Pay in 3",
+            "description": "Interest-free"
+          }
+        }
+      },
+      "block_order": [
+        "payment_q9fk8L",
+        "payment_KRkpYa",
+        "payment_mKqnB9"
+      ],
+      "name": "Payment options",
+      "settings": {
+        "title": "Ride now. Pay your way.",
+        "description": "Interest-free options available at checkout",
+        "button_label": "Learn more",
+        "button_url": "",
+        "padding-top": 0,
+        "padding-bottom": 0,
+        "padding-top-m": 0,
+        "padding-bottom-m": 0
+      }
     }
   },
   "order": [
     "hero_XdJJ7X",
     "usp_grid_giqUqR",
-    "collection_grid_ydaH7n"
+    "collection_grid_ydaH7n",
+    "payment_icons_74q9MM"
   ]
 }
