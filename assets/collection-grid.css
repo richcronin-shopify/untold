@@ -11,6 +11,7 @@
 
 			width: calc(20% - 10px);
 			min-width: calc(20% - 10px);
+			background: red;
 
 			.collection-grid__link {
 
