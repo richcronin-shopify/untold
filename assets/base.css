@@ -634,6 +634,7 @@ button,
 					visibility: visible;
 					pointer-events: auto;
 					transform: translateY(0);
+					overflow: hidden;
 				}
 			}
 		}
