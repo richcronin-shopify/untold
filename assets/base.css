@@ -1324,7 +1324,7 @@ body.template-index {
 			background: transparent;
 			transition: .3s all;
 			&:hover {
-				background: var(--color-black-reduced);
+				background: var(--color-black);
 			}
 		}
 	}
