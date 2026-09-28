@@ -634,7 +634,6 @@ button,
 					visibility: visible;
 					pointer-events: auto;
 					transform: translateY(0);
-					overflow: hidden;
 				}
 			}
 		}
@@ -730,7 +729,7 @@ button,
 			visibility: hidden;
 			pointer-events: none;
 
-			overflow-y: auto;
+			overflow: hidden;
 
 			transform: translateX(100%);
 
