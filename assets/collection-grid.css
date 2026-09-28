@@ -43,7 +43,11 @@
 					}
 
 					.collection-grid__arrow {
-
+						svg {
+							path {
+								fill: #fff;
+							}
+						}
 					}
 
 				}
