@@ -14,6 +14,8 @@
 
 			.collection-grid__link {
 
+				position: relative;
+
 				.collection-grid__media {
 
 					.collection-grid__image {
