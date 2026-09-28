@@ -106,7 +106,7 @@
 												aria-label="Back to {{ link.title | escape }}"
 												data-nav-back
 											>
-												<span class="site-navigation__back-arrow" aria-hidden="true">←</span>
+												<span class="site-navigation__back-arrow" aria-hidden="true">{{- 'icon-long-arrow.svg' | inline_asset_content -}}</span>
 												<span>Back to {{ link.title }}</span>
 											</button>
 
@@ -142,7 +142,7 @@
 																		aria-label="Back to {{ child_link.title | escape }}"
 																		data-nav-back
 																	>
-																		<span class="site-navigation__back-arrow" aria-hidden="true">←</span>
+																		<span class="site-navigation__back-arrow" aria-hidden="true">{{- 'icon-long-arrow.svg' | inline_asset_content -}}</span>
 																		<span>Back to {{ child_link.title }}</span>
 																	</button>
 
