@@ -23,7 +23,6 @@
 
 			@media (max-width: 990px) {
 				background: #151515;
-				background: red;
 				width: calc(50% - 5px);
 				min-width: calc(50% - 5px);
 				padding: 16px 12px;
