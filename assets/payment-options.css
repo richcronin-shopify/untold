@@ -72,6 +72,13 @@
 
 				}
 
+				&:hover {
+					color: #fff;
+					.payment-options__cta-arrow {
+						
+					}
+				}
+
 			}
 
 		}
