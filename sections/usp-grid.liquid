@@ -9,7 +9,7 @@
 
 				<div class="usp-bar__item" {{ block.shopify_attributes }}>
 					
-					<{% if bs.url != blank %}a href="{{ bs.url }}"{% else %}div{%- endif -%} class="usp-bar__link">
+					<{% if bs.url != blank %}a href="{{ bs.url }}"{% else %}div{% endif %} class="usp-bar__link">
 					
 
 						{%- if bs.image != blank -%}
@@ -38,7 +38,7 @@
 							{%- endif -%}
 						</div>
 
-					</{% if bs.url != blank %}a{% else %}div{%- endif -%}>
+					</{% if bs.url != blank %}a{% else %}div{% endif %}>
 				</div>
 
 			{%- endfor -%}
