@@ -30,6 +30,10 @@
 
 			.payment-options__item {
 
+				display: flex;
+				align-items: center;
+				gap: 16px;
+
 				.payment-options__icon {
 
 				}
