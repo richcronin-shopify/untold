@@ -8,6 +8,9 @@
 
 		.collection-grid__item {
 
+			width: calc(20% - 5px);
+			min-width: calc(20% - 5px);
+
 			.collection-grid__link {
 
 				.collection-grid__media {
