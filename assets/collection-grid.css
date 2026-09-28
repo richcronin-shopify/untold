@@ -21,6 +21,13 @@
 				&:nth-child(5) {
 					width: 100%;
 					min-width: 100%;
+					.collection-grid__link {
+						.collection-grid__media {
+							.collection-grid__image {
+								aspect-ratio: 1/0.5;
+							}
+						}
+					}
 				}
 			}
 
