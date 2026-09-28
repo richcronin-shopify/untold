@@ -1,0 +1,101 @@
+{{- 'usp-grid.css' | asset_url | stylesheet_tag -}}
+
+<section class="usp-bar">
+	<div class="container">
+		<div class="usp-bar__items">
+
+			{%- for block in section.blocks -%}
+				{%- assign bs = block.settings -%}
+
+				<div class="usp-bar__item" {{ block.shopify_attributes }}>
+					{%- if bs.url != blank -%}
+						<a href="{{ bs.url }}" class="usp-bar__link">
+					{%- endif -%}
+
+						{%- if bs.image != blank -%}
+							<div class="usp-bar__icon">
+								{{
+									bs.image
+									| image_url: width: 120
+									| image_tag:
+										loading: 'lazy',
+										widths: '40, 60, 80, 120',
+										sizes: '60px',
+										alt: bs.image.alt
+								}}
+							</div>
+						{%- endif -%}
+
+						<div class="usp-bar__content">
+							{%- if bs.title != blank -%}
+								<p class="usp-bar__title">{{ bs.title }}</p>
+							{%- endif -%}
+
+							{%- if bs.description != blank -%}
+								<div class="usp-bar__description">
+									{{ bs.description }}
+								</div>
+							{%- endif -%}
+						</div>
+
+					{%- if bs.url != blank -%}
+						</a>
+					{%- endif -%}
+				</div>
+
+			{%- endfor -%}
+
+		</div>
+	</div>
+</section>
+
+{% schema %}
+{
+	"name": "USP bar",
+	"tag": "section",
+	"class": "usp-bar-section",
+	"settings": [],
+	"blocks": [
+		{
+			"type": "usp",
+			"name": "USP",
+			"settings": [
+				{
+					"type": "image_picker",
+					"id": "image",
+					"label": "Image"
+				},
+				{
+					"type": "text",
+					"id": "title",
+					"label": "Title",
+					"default": "Rider owned"
+				},
+				{
+					"type": "inline_richtext",
+					"id": "description",
+					"label": "Description",
+					"default": "Real riders. Real service."
+				},
+				{
+					"type": "url",
+					"id": "url",
+					"label": "Link"
+				}
+			]
+		}
+	],
+	"max_blocks": 6,
+	"presets": [
+		{
+			"name": "USP bar",
+			"blocks": [
+				{ "type": "usp" },
+				{ "type": "usp" },
+				{ "type": "usp" },
+				{ "type": "usp" }
+			]
+		}
+	]
+}
+{% endschema %}
