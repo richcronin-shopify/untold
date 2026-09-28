@@ -35,7 +35,11 @@
 				gap: 16px;
 
 				.payment-options__icon {
-
+					img {
+						width: 84px;
+						height: unset;
+						display: block;
+					}
 				}
 
 				.payment-options__content {
