@@ -936,6 +936,8 @@ button,
 
 	.is-view-all {
 
+		margin-top: 12px;
+
 		.site-navigation__link {
 			color: var(--color-primary);
 		}
