@@ -36,9 +36,10 @@
 					padding: 0 15px;
 					display: flex;
 					align-items: center;
+					gap: 10px;
 
 					.collection-grid__title {
-
+						margin: 0;
 					}
 
 					.collection-grid__arrow {
