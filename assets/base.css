@@ -770,6 +770,14 @@ button,
 			font-family: var(--font-body-family);
 			text-transform: unset;
 			font-weight: 400;
+			.site-navigation__back-arrow {
+				svg {
+					transform: rotate(180deg);
+					path {
+						fill: #fff;
+					}
+				}
+			}
 		}
 	}
 
