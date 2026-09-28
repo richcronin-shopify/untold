@@ -12,6 +12,8 @@
 			width: calc(20% - 10px);
 			min-width: calc(20% - 10px);
 			background: var(--color-primary);
+			border-radius: 2px;
+			overflow: hidden;
 
 			&:hover {
 				.collection-grid__link {
