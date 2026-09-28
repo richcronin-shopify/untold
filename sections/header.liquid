@@ -1,105 +1,50 @@
 {%- assign ss = section.settings -%}
 
-<header
-	class="site-header"
-	data-header
-	data-section-id="{{ section.id }}"
->
-
+<header class="site-header" data-header data-section-id="{{ section.id }}">
 	{%- if section.blocks.size > 0 -%}
-
 		<div class="announcement-bar">
-
 			<div class="announcement-bar__inner container">
-
 				<div class="announcement-bar__track">
-
 					<div class="announcement-bar__group">
-
 						{%- for block in section.blocks -%}
 							{%- assign bs = block.settings -%}
-
 							{%- case block.type -%}
 								{%- when 'announcement' -%}
-
 									{%- if bs.title != blank -%}
-
-										<div
-											class="announcement-bar__item"
-											{{ block.shopify_attributes }}
-										>
-
-											{%- if bs.url != blank -%}
-												<a href="{{ bs.url }}">
-											{%- endif -%}
-
+										<div class="announcement-bar__item" {{ block.shopify_attributes }}>
+											{%- if bs.url != blank -%}<a href="{{ bs.url }}">{%- endif -%}
 												{{- bs.title -}}
-
-											{%- if bs.url != blank -%}
-												</a>
-											{%- endif -%}
-
+											{%- if bs.url != blank -%}</a>{%- endif -%}
 										</div>
-
 									{%- endif -%}
-
 							{%- endcase -%}
 						{%- endfor -%}
-
 					</div>
 
-
-					<div
-						class="announcement-bar__group announcement-bar__group--duplicate"
-						aria-hidden="true"
-					>
-
+					<div class="announcement-bar__group announcement-bar__group--duplicate" aria-hidden="true">
 						{%- for block in section.blocks -%}
 							{%- assign bs = block.settings -%}
-
 							{%- case block.type -%}
 								{%- when 'announcement' -%}
-
 									{%- if bs.title != blank -%}
-
 										<div class="announcement-bar__item">
-
-											{%- if bs.url != blank -%}
-												<a href="{{ bs.url }}" tabindex="-1">
-											{%- endif -%}
-
+											{%- if bs.url != blank -%}<a href="{{ bs.url }}" tabindex="-1">{%- endif -%}
 												{{- bs.title -}}
-
-											{%- if bs.url != blank -%}
-												</a>
-											{%- endif -%}
-
+											{%- if bs.url != blank -%}</a>{%- endif -%}
 										</div>
-
 									{%- endif -%}
-
 							{%- endcase -%}
 						{%- endfor -%}
-
 					</div>
-
 				</div>
-
 			</div>
-
 		</div>
-
-	{%- endif -%}	
-
+	{%- endif -%}
 
 	<div class="site-header__main">
-
 		<div class="container site-header__inner">
 
-			{%- comment -%}
-				Mobile menu toggle
-			{%- endcomment -%}
-
+			{%- comment -%} Mobile menu toggle {%- endcomment -%}
 			<button
 				type="button"
 				class="site-header__menu-toggle button--reset"
@@ -113,269 +58,139 @@
 				<span></span>
 			</button>
 
-
-			{%- comment -%}
-				Logo
-			{%- endcomment -%}
-
-			<a
-				href="{{ routes.root_url }}"
-				class="site-header__logo"
-				aria-label="{{ shop.name | escape }} home"
-			>
+			{%- comment -%} Logo {%- endcomment -%}
+			<a href="{{ routes.root_url }}" class="site-header__logo" aria-label="{{ shop.name | escape }} home">
 				{{- 'web-logo.svg' | inline_asset_content -}}
 			</a>
 
-
-			{%- comment -%}
-				One navigation tree for desktop + mobile
-			{%- endcomment -%}
-
+			{%- comment -%} One navigation tree for desktop + mobile {%- endcomment -%}
 			{%- if ss.menu != blank -%}
-
 				<nav
 					id="site-navigation-{{ section.id }}"
 					class="site-navigation"
 					aria-label="Primary navigation"
 					data-navigation
 				>
-
-					<div
-						class="site-navigation__overlay"
-						data-menu-close
-					></div>
-
+					<div class="site-navigation__overlay" data-menu-close></div>
 
 					<div class="site-navigation__drawer">
-
 						<ul class="site-navigation__root">
-
 							{%- for link in ss.menu.links -%}
-
 								{%- assign level_1_index = forloop.index -%}
 								{%- assign link_title_downcase = link.title | downcase -%}
 
-								<li
-									class="
-										site-navigation__item site-navigation__item--level-1
-										{% if link.links != blank %}has-children{% endif %}
-										{% if link.active %}is-active{% endif %}
-										{% if link_title_downcase == 'sale' %}is-sale{% endif %}
-									"
-								>
-
+								<li class="site-navigation__item site-navigation__item--level-1{% if link.links != blank %} has-children{% endif %}{% if link.active %} is-active{% endif %}{% if link_title_downcase == 'sale' %} is-sale{% endif %}">
 									<a
 										href="{{ link.url }}"
 										class="site-navigation__link site-navigation__link--level-1"
-										{% if link.links != blank %}
-											data-nav-target="nav-{{ section.id }}-{{ level_1_index }}"
-										{% endif %}
+										{% if link.links != blank %}data-nav-target="nav-{{ section.id }}-{{ level_1_index }}"{% endif %}
 									>
-
-										<span>
-											{{ link.title }}
-										</span>
+										<span>{{- link.title -}}</span>
 
 										{%- if link.links != blank -%}
-											<span
-												class="site-navigation__arrow"
-												aria-hidden="true"
-											>
+											<span class="site-navigation__arrow" aria-hidden="true">
 												{{- 'icon-chev.svg' | inline_asset_content -}}
 											</span>
 										{%- endif -%}
-
 									</a>
 
-
 									{%- if link.links != blank -%}
-
 										<div
 											id="nav-{{ section.id }}-{{ level_1_index }}"
 											class="site-navigation__panel site-navigation__panel--level-2"
 											data-nav-panel
 										>
-
 											<button
 												type="button"
 												class="site-navigation__back"
 												aria-label="Back to {{ link.title | escape }}"
-														data-nav-back
+												data-nav-back
 											>
-												<span
-													class="site-navigation__back-arrow"
-													aria-hidden="true"
-												>
-													←
-												</span>
-
-												<span>
-													Back to {{ link.title }}
-												</span>
+												<span class="site-navigation__back-arrow" aria-hidden="true">←</span>
+												<span>Back to {{ link.title }}</span>
 											</button>
 
-
 											<div class="site-navigation__mega">
-
 												<ul class="site-navigation__columns">
-
 													{%- for child_link in link.links -%}
-
 														{%- assign level_2_index = forloop.index -%}
 
-														<li
-															class="
-																site-navigation__column
-																{% if child_link.links != blank %}has-children{% endif %}
-															"
-														>
-
+														<li class="site-navigation__column{% if child_link.links != blank %} has-children{% endif %}">
 															<a
 																href="{{ child_link.url }}"
 																class="site-navigation__heading"
-																{% if child_link.links != blank %}
-																	data-nav-target="nav-{{ section.id }}-{{ level_1_index }}-{{ level_2_index }}"
-																{% endif %}
+																{% if child_link.links != blank %}data-nav-target="nav-{{ section.id }}-{{ level_1_index }}-{{ level_2_index }}"{% endif %}
 															>
-
-																<span>
-																	{{ child_link.title }}
-																</span>
+																<span>{{- child_link.title -}}</span>
 
 																{%- if child_link.links != blank -%}
-																	<span
-																		class="site-navigation__arrow"
-																		aria-hidden="true"
-																	>{{- 'icon-chev.svg' | inline_asset_content -}}</span>
+																	<span class="site-navigation__arrow" aria-hidden="true">
+																		{{- 'icon-chev.svg' | inline_asset_content -}}
+																	</span>
 																{%- endif -%}
-
 															</a>
 
-
 															{%- if child_link.links != blank -%}
-
 																<div
 																	id="nav-{{ section.id }}-{{ level_1_index }}-{{ level_2_index }}"
 																	class="site-navigation__panel site-navigation__panel--level-3"
 																	data-nav-panel
 																>
-
 																	<button
 																		type="button"
 																		class="site-navigation__back"
 																		aria-label="Back to {{ child_link.title | escape }}"
 																		data-nav-back
 																	>
-
-																		<span
-																			class="site-navigation__back-arrow"
-																			aria-hidden="true"
-																		>
-																			←
-																		</span>
-
-																		<span>
-																			Back to {{ child_link.title }}
-																		</span>
-
+																		<span class="site-navigation__back-arrow" aria-hidden="true">←</span>
+																		<span>Back to {{ child_link.title }}</span>
 																	</button>
 
-
 																	<ul class="site-navigation__links">
-
 																		{%- for grandchild_link in child_link.links -%}
-
 																			{%- assign grandchild_title_downcase = grandchild_link.title | downcase -%}
 																			{%- assign is_view_all = false -%}
 
-																			{%- if grandchild_title_downcase contains 'view all'
-																				or grandchild_title_downcase contains 'all sizes'
-																			-%}
+																			{%- if grandchild_title_downcase contains 'view all' or grandchild_title_downcase contains 'all sizes' -%}
 																				{%- assign is_view_all = true -%}
 																			{%- endif -%}
 
-																			<li
-																				class="
-																					site-navigation__item
-																					site-navigation__item--level-3
-																					{% if is_view_all %}is-view-all{% endif %}
-																				"
-																			>
-
-																				<a
-																					href="{{ grandchild_link.url }}"
-																					class="site-navigation__link site-navigation__link--level-3"
-																				>
-																					{{ grandchild_link.title }}
+																			<li class="site-navigation__item site-navigation__item--level-3{% if is_view_all %} is-view-all{% endif %}">
+																				<a href="{{ grandchild_link.url }}" class="site-navigation__link site-navigation__link--level-3">
+																					{{- grandchild_link.title -}}
 																				</a>
-
 																			</li>
-
 																		{%- endfor -%}
-
 																	</ul>
-
 																</div>
-
 															{%- endif -%}
-
 														</li>
-
 													{%- endfor -%}
-
 												</ul>
-
 											</div>
-
 										</div>
-
 									{%- endif -%}
-
 								</li>
-
 							{%- endfor -%}
-
 						</ul>
 
-
 						{%- if ss.mobile_footer_menu != blank -%}
-
-							<nav
-								class="site-navigation__footer"
-								aria-label="Utility navigation"
-							>
-
+							<nav class="site-navigation__footer" aria-label="Utility navigation">
 								<ul>
-
 									{%- for footer_link in ss.mobile_footer_menu.links -%}
-
 										<li>
-											<a href="{{ footer_link.url }}">
-												{{ footer_link.title }}
-											</a>
+											<a href="{{ footer_link.url }}">{{- footer_link.title -}}</a>
 										</li>
-
 									{%- endfor -%}
-
 								</ul>
-
 							</nav>
-
 						{%- endif -%}
-
 					</div>
-
 				</nav>
-
 			{%- endif -%}
 
-
-			{%- comment -%}
-				Header controls
-			{%- endcomment -%}
-
+			{%- comment -%} Header controls {%- endcomment -%}
 			<div class="site-header__controls">
-
 				{%- if settings.enable_search -%}
 					<a
 						href="{{ routes.search_url }}"
@@ -387,48 +202,33 @@
 					</a>
 				{%- endif -%}
 
-
-				<a
-					href="{{ routes.account_url }}"
-					class="site-header__control site-header__control--account"
-					aria-label="My account"
-				>
+				<a href="{{ routes.account_url }}" class="site-header__control site-header__control--account" aria-label="My account">
 					{{- 'icon-account.svg' | inline_asset_content -}}
 				</a>
-
 
 				<a
 					href="{{ routes.cart_url }}"
 					class="site-header__control site-header__control--cart"
 					aria-label="Cart, {{ cart.item_count }} {% if cart.item_count == 1 %}item{% else %}items{% endif %}"
 				>
-
 					{{- 'icon-cart.svg' | inline_asset_content -}}
 
 					<span
 						class="site-header__cart-count"
 						data-cart-count
-						{% if cart.item_count == 0 %}
-							hidden
-						{% endif %}
+						{% if cart.item_count == 0 %}hidden{% endif %}
 					>
-						{{ cart.item_count }}
+						{{- cart.item_count -}}
 					</span>
-
 				</a>
-
 			</div>
-
 		</div>
-
 	</div>
-
 </header>
 
 {%- if settings.enable_search -%}
 	{%- render 'search-modal' -%}
 {%- endif -%}
-
 
 {% javascript %}
 
