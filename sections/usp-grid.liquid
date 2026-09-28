@@ -1,7 +1,7 @@
 {{- 'usp-grid.css' | asset_url | stylesheet_tag -}}
 {%- assign ss = section.settings -%}
 
-<section class="usp-bar" id="{{ section.id }}">
+<div class="usp-bar" id="{{ section.id }}">
 	<div class="container">
 		<div class="usp-bar__items">
 
@@ -9,12 +9,15 @@
 				{%- assign bs = block.settings -%}
 
 				<div class="usp-bar__item" {{ block.shopify_attributes }}>
-					
-					<{% if bs.url != blank %}a href="{{ bs.url }}"{% else %}div{% endif %} class="usp-bar__link">
-					
+
+					{%- if bs.url != blank -%}
+						<a href="{{ bs.url }}" class="usp-bar__link">
+					{%- else -%}
+						<div class="usp-bar__link">
+					{%- endif -%}
 
 						{%- if bs.image != blank -%}
-							<div class="usp-bar__icon">
+							<div class="usp-bar__icon" aria-hidden="true">
 								{{
 									bs.image
 									| image_url: width: 120
@@ -22,7 +25,7 @@
 										loading: 'lazy',
 										widths: '40, 60, 80, 120',
 										sizes: '60px',
-										alt: bs.image.alt
+										alt: ''
 								}}
 							</div>
 						{%- endif -%}
@@ -39,35 +42,36 @@
 							{%- endif -%}
 						</div>
 
-					</{% if bs.url != blank %}a{% else %}div{% endif %}>
+					{%- if bs.url != blank -%}
+						</a>
+					{%- else -%}
+						</div>
+					{%- endif -%}
+
 				</div>
 
 				{%- unless forloop.last -%}
-					<span class="usp-bar__divider"></span>
+					<span class="usp-bar__divider" aria-hidden="true"></span>
 				{%- endunless -%}
 
 			{%- endfor -%}
 
 		</div>
 	</div>
-</section>
+</div>
 
 {%- style -%}
 
-	#{{section.id}} {
-		padding-top: {{ss.padding-top}}px;
-		padding-bottom: {{ss.padding-bottom}}px;
-	}
-
-	#{{section.id}} .blocks {
-		gap: {{ss.block-gap}}px;
+	#{{ section.id }} {
+		padding-top: {{ ss.padding-top }}px;
+		padding-bottom: {{ ss.padding-bottom }}px;
 	}
 
 	@media screen and (max-width: 750px) {
 
-		#{{section.id}} {
-			padding-top: {{ss.padding-top-m}}px;
-			padding-bottom: {{ss.padding-bottom-m}}px;
+		#{{ section.id }} {
+			padding-top: {{ ss.padding-top-m }}px;
+			padding-bottom: {{ ss.padding-bottom-m }}px;
 		}
 
 	}
