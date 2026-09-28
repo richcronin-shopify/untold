@@ -1,0 +1,55 @@
+.payment-options {
+
+	.payment-options__inner {
+
+		.payment-options__intro {
+
+			.payment-options__title {
+
+			}
+
+			.payment-options__description {
+
+			}
+
+		}
+
+		.payment-options__items {
+
+			.payment-options__item {
+
+				.payment-options__icon {
+
+				}
+
+				.payment-options__content {
+
+					.payment-options__item-title {
+
+					}
+
+					.payment-options__item-description {
+
+					}
+
+				}
+
+			}
+
+		}
+
+		.payment-options__cta {
+
+			.payment-options__cta-link {
+
+				.payment-options__cta-arrow {
+
+				}
+
+			}
+
+		}
+
+	}
+
+}
