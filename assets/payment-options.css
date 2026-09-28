@@ -25,6 +25,9 @@
 
 		.payment-options__items {
 
+			display: flex;
+			justify-content: space-between;
+
 			.payment-options__item {
 
 				.payment-options__icon {
