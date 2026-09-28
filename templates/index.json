@@ -190,6 +190,7 @@
         "payment_q9fk8L": {
           "type": "payment",
           "settings": {
+            "image": "shopify://shop_images/klarna.png",
             "title": "Pay in 3",
             "description": "Interest-free"
           }
@@ -197,15 +198,17 @@
         "payment_KRkpYa": {
           "type": "payment",
           "settings": {
-            "title": "Pay in 3",
+            "image": "shopify://shop_images/clearpay.png",
+            "title": "pay in 4",
             "description": "Interest-free"
           }
         },
         "payment_mKqnB9": {
           "type": "payment",
           "settings": {
-            "title": "Pay in 3",
-            "description": "Interest-free"
+            "image": "shopify://shop_images/paypal.png",
+            "title": "PayPal",
+            "description": "Pay in 3"
           }
         }
       },
