@@ -64,6 +64,7 @@
 
 					@media (max-width: 990px) {
 						padding: 40px 10px 10px 10px;
+						gap: 6px;
 					}
 
 					.collection-grid__title {
@@ -77,6 +78,10 @@
 						svg {
 							path {
 								fill: #fff;
+							}
+							@media (max-width: 990px) {
+								width: 14px;
+								height: unset;
 							}
 						}
 					}
