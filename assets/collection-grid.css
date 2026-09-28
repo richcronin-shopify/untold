@@ -8,8 +8,8 @@
 
 		.collection-grid__item {
 
-			width: calc(20% - 5px);
-			min-width: calc(20% - 5px);
+			width: calc(20% - 10px);
+			min-width: calc(20% - 10px);
 
 			.collection-grid__link {
 
