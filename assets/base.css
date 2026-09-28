@@ -101,7 +101,18 @@ html {
 }
 
 body {
-  margin: 0;
+  	margin: 0;
+  	&.template-index {
+		.site-header {
+			.site-header__main {
+				background: transparent;
+				transition: .3s all;
+				&:hover {
+					background: var(--color-black);
+				}
+			}
+		}
+	}
 }
 
 /* Typography */
@@ -1326,16 +1337,4 @@ button,
 	}
 
 
-}
-
-body.template-index {
-	.site-header {
-		.site-header__main {
-			background: transparent;
-			transition: .3s all;
-			&:hover {
-				background: var(--color-black);
-			}
-		}
-	}
 }
