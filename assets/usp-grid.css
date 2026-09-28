@@ -5,16 +5,16 @@
 		display: flex;
 		flex-wrap: wrap;
 
+		.usp-bar__divider {
+			width: 1px;
+			height: 50px;
+			background: var(--border-white);
+		}
+
 		.usp-bar__item {
 
-			min-width: 25%;
+			min-width: calc(25% - 1px);
 			flex: 1;
-
-			.usp-bar__divider {
-				width: 1px;
-				height: 50px;
-				background: var(--border-white);
-			}
 
 			.usp-bar__link {
 
