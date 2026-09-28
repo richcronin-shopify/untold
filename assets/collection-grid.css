@@ -2,6 +2,10 @@
 
 	.collection-grid__items {
 
+		display: flex;
+		gap: 10px;
+		flex-wrap: wrap;
+
 		.collection-grid__item {
 
 			.collection-grid__link {
