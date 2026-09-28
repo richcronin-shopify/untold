@@ -6,6 +6,10 @@
 		flex-wrap: wrap;
 		justify-content: space-between;
 
+		@media (max-width: 990px) {
+			gap: 10px;
+		}
+
 		.usp-bar__divider {
 			width: 1px;
 			height: 44px;
@@ -19,6 +23,7 @@
 
 			@media (max-width: 990px) {
 				background: #151515;
+				background: red;
 				width: 50%;
 				min-width: 50%;
 			}
