@@ -26,6 +26,7 @@
 				background: red;
 				width: calc(50% - 5px);
 				min-width: calc(50% - 5px);
+				padding: 20px;
 			}
 
 			.usp-bar__link {
@@ -40,6 +41,10 @@
 						height: 30px;
 						display: block;
 						object-fit: contain;
+						@media (max-width: 990px) {
+							width: 24px;
+							height: 24px;
+						}
 					}
 				}
 
