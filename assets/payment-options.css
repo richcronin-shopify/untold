@@ -1,6 +1,15 @@
 .payment-options {
 
+	width: 100%;
+
 	.payment-options__inner {
+
+		background: var(--color-primary-reduced);
+		border-radius: 4px;
+		padding: 30px 35px;
+
+		display: flex;
+		align-items: center;
 
 		.payment-options__intro {
 
