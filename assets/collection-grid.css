@@ -13,6 +13,16 @@
 			min-width: calc(20% - 10px);
 			background: red;
 
+			&:hover {
+				.collection-grid__link {
+					.collection-grid__media {
+						.collection-grid__image {
+							opacity: .8;
+						}
+					}
+				}
+			}
+
 			.collection-grid__link {
 
 				position: relative;
@@ -24,6 +34,7 @@
 						aspect-ratio: 1/1;
 						height: unset;
 						object-fit: cover;
+						transition: .3s all;
 					}
 
 				}
