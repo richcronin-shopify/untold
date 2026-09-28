@@ -30,10 +30,10 @@
 				.collection-grid__content {
 
 					position: absolute;
-					bottom: 15px;
+					bottom: 0;
 					left: 0;
 					width: 100%;
-					padding: 0 15px;
+					padding: 30px 15px;
 					display: flex;
 					align-items: center;
 					gap: 10px;
