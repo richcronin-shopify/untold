@@ -10,12 +10,17 @@
 			width: 1px;
 			height: 44px;
 			background: var(--border-white);
+			@media (max-width: 990px) {
+				display: none;
+			}
 		}
 
 		.usp-bar__item {
 
 			@media (max-width: 990px) {
 				background: #151515;
+				width: 50%;
+				min-width: 50%;
 			}
 
 			.usp-bar__link {
