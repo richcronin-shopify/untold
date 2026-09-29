@@ -1749,6 +1749,9 @@ button,
 
 			.site-footer__nav-group {
 
+				display: flex;
+				justify-content: space-between;
+
 				.site-footer__nav-toggle {
 					display: flex;
 					align-items: center;
