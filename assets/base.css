@@ -1753,7 +1753,6 @@ button,
 					display: flex;
 					align-items: center;
 					justify-content: space-between;
-					width: 100%;
 
 					.site-footer__nav-chevron {
 						display: block;
