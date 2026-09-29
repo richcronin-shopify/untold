@@ -1,0 +1,181 @@
+.multicolumn {
+
+	.multicolumn__header {
+
+		.multicolumn__eyebrow {
+			margin: 0;
+		}
+
+		.multicolumn__heading {
+			margin: 0;
+		}
+
+		.multicolumn__description {
+
+		}
+
+	}
+
+	.multicolumn__items {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 10px;
+
+		.multicolumn__item {
+			min-width: 0;
+
+			.multicolumn__link {
+				position: relative;
+				display: block;
+				width: 100%;
+				height: 100%;
+				overflow: hidden;
+
+				.multicolumn__media {
+					position: absolute;
+					inset: 0;
+					width: 100%;
+					height: 100%;
+
+					.multicolumn__image {
+						display: block;
+						width: 100%;
+						height: 100%;
+						object-fit: cover;
+					}
+
+					&::after {
+						content: "";
+						position: absolute;
+						inset: 0;
+						background: linear-gradient(
+							to top,
+							rgba(0, 0, 0, 0.8) 0%,
+							rgba(0, 0, 0, 0) 65%
+						);
+					}
+
+				}
+
+				.multicolumn__icon {
+					position: absolute;
+					top: 20px;
+					left: 20px;
+					z-index: 2;
+
+					img {
+						display: block;
+						width: auto;
+						height: auto;
+					}
+
+				}
+
+				.multicolumn__content {
+					position: relative;
+					z-index: 2;
+					display: flex;
+					align-items: flex-end;
+					justify-content: space-between;
+					gap: 20px;
+					height: 100%;
+
+					.multicolumn__content-inner {
+
+						.multicolumn__item-title {
+							margin: 0;
+						}
+
+						.multicolumn__item-description {
+
+						}
+
+					}
+
+					.multicolumn__arrow {
+						flex-shrink: 0;
+
+						svg {
+							display: block;
+						}
+
+					}
+
+				}
+
+			}
+
+		}
+
+	}
+
+	@media (max-width: 989px) {
+
+		.multicolumn__items {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+
+	}
+
+	@media (max-width: 767px) {
+
+		.multicolumn__header {
+
+			.multicolumn__eyebrow {
+
+			}
+
+			.multicolumn__heading {
+
+			}
+
+			.multicolumn__description {
+
+			}
+
+		}
+
+		.multicolumn__items {
+			grid-template-columns: 1fr;
+
+			.multicolumn__item {
+
+				.multicolumn__link {
+
+					.multicolumn__media {
+
+					}
+
+					.multicolumn__icon {
+
+					}
+
+					.multicolumn__content {
+
+						.multicolumn__content-inner {
+
+							.multicolumn__item-title {
+
+							}
+
+							.multicolumn__item-description {
+
+							}
+
+						}
+
+						.multicolumn__arrow {
+
+						}
+
+					}
+
+				}
+
+			}
+
+		}
+
+	}
+
+}
