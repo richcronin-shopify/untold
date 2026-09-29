@@ -1434,6 +1434,10 @@ button,
 		justify-content: center;
 		border-right:  1px solid var(--border-white);
 
+		@media (max-width: 989px) {
+			border-bottom:  1px solid var(--border-white);
+		}
+
 		.site-footer__logo {
 
 			.site-footer__logo-image {
