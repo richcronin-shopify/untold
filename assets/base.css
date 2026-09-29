@@ -1559,7 +1559,8 @@ button,
 		}
 
 		.site-footer__newsletter-terms {
-
+			font-size: 14px;
+			margin: 10px 0 20px 0;
 		}
 
 	}
