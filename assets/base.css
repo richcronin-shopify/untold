@@ -1005,6 +1005,7 @@ button,
 
 		.site-navigation__link {
 			color: var(--color-primary);
+			font-weight: 400;
 		}
 	}
 
