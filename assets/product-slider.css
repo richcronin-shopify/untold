@@ -22,7 +22,8 @@
 
 			.product-slider__navigation {
 
-				
+				display: flex;
+				gap: 5px;
 
 				.product-slider__arrow {
 					display: flex;
@@ -37,10 +38,14 @@
 						display: none;
 					}
 
+					svg {
+						transform: rotate(180deg);
+					}
+
 					&.product-slider__arrow--next {
 
 						svg {
-							transform: rotate(180deg);
+							transform: rotate(0deg);
 						}
 					}
 				}
