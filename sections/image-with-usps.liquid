@@ -22,9 +22,11 @@
 					{%- endif -%}
 
 					{%- if ss.button_label != blank and ss.button_url != blank -%}
-						<a href="{{ ss.button_url }}" class="button image-with-usps__button">
-							{{ ss.button_label }}
-						</a>
+						<div class="image-with-usps__button-wrapper">
+							<a href="{{ ss.button_url }}" class="button image-with-usps__button">
+								{{- ss.button_label -}}
+							</a>
+						</div>
 					{%- endif -%}
 
 				</div>
