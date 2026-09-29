@@ -49,6 +49,9 @@
 				}
 
 				.image-with-usps__text {
+					@media (max-width: 767px) {
+						font-size: 14px;
+					}
 				}
 
 				.image-with-usps__button-wrapper {
