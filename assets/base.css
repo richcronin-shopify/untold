@@ -224,6 +224,11 @@ button,
 	font-weight: 500;
 	display: inline-block;
 
+	@media (max-width: 767px) {
+		font-size: 18px;
+		padding: 8px 30px;
+	}
+
 	&.button--outline {
 		background: transparent;
 		color: var(--color-primary);
