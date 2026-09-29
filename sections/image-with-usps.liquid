@@ -5,35 +5,6 @@
 	<div class="container">
 		<div class="image-with-usps__inner">
 
-			{%- if ss.desktop_image != blank -%}
-				<div class="image-with-usps__media">
-					<picture>
-						{%- if ss.mobile_image != blank -%}
-							<source
-								media="(max-width: 767px)"
-								srcset="
-									{{ ss.mobile_image | image_url: width: 400 }} 400w,
-									{{ ss.mobile_image | image_url: width: 600 }} 600w,
-									{{ ss.mobile_image | image_url: width: 800 }} 800w
-								"
-								sizes="100vw"
-							>
-						{%- endif -%}
-
-						{{
-							ss.desktop_image
-							| image_url: width: 1600
-							| image_tag:
-								class: 'image-with-usps__image',
-								loading: 'lazy',
-								widths: '600, 800, 1000, 1200, 1400, 1600',
-								sizes: '(min-width: 990px) 50vw, 100vw',
-								alt: ss.desktop_image.alt
-						}}
-					</picture>
-				</div>
-			{%- endif -%}
-
 			<div class="image-with-usps__content">
 
 				<div class="image-with-usps__main">
@@ -104,6 +75,35 @@
 				{%- endif -%}
 
 			</div>
+
+			{%- if ss.desktop_image != blank -%}
+				<div class="image-with-usps__media">
+					<picture>
+						{%- if ss.mobile_image != blank -%}
+							<source
+								media="(max-width: 767px)"
+								srcset="
+									{{ ss.mobile_image | image_url: width: 400 }} 400w,
+									{{ ss.mobile_image | image_url: width: 600 }} 600w,
+									{{ ss.mobile_image | image_url: width: 800 }} 800w
+								"
+								sizes="100vw"
+							>
+						{%- endif -%}
+
+						{{
+							ss.desktop_image
+							| image_url: width: 1600
+							| image_tag:
+								class: 'image-with-usps__image',
+								loading: 'lazy',
+								widths: '600, 800, 1000, 1200, 1400, 1600',
+								sizes: '(min-width: 990px) 50vw, 100vw',
+								alt: ss.desktop_image.alt
+						}}
+					</picture>
+				</div>
+			{%- endif -%}
 
 		</div>
 	</div>
