@@ -1570,6 +1570,7 @@ button,
 					flex: 1;
 					min-width: 0;
 					height: 50px;
+					min-height: 50px;
 					background: transparent;
 					color: #fff;
 					border: 1px solid var(--border-white);
