@@ -17,6 +17,11 @@
 
 		.payment-options__intro {
 
+			@media (max-width: 990px) {
+				width: 100%;
+				text-align: center;
+			}
+
 			.payment-options__title {
 
 			}
@@ -32,6 +37,10 @@
 			display: flex;
 			justify-content: space-between;
 			gap: 50px;
+
+			@media (max-width: 990px) {
+				width: 100%;
+			}
 
 			.payment-options__item {
 
