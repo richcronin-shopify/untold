@@ -1411,7 +1411,7 @@ button,
 
 .site-footer {
 
-	margin: 100px 0 0 0;
+	margin: 70px 0 0 0;
 	border-top: 1px solid var(--border-white);
 
 	.site-footer__grid {
@@ -1444,6 +1444,7 @@ button,
 	}
 
 	.site-footer__navigation {
+		
 		display: contents;
 
 		.site-footer__nav-group {
