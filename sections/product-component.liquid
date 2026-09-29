@@ -18,6 +18,7 @@
 	data-product-slider
 	data-carousel="{{ ss.enable_carousel }}"
 	data-products-desktop="{{ ss.products_desktop }}"
+	data-products-tablet="{{ ss.products_tablet }}"
 	data-products-mobile="{{ ss.products_mobile }}"
 >
 	<div class="container">
@@ -67,7 +68,6 @@
 
 		</div>
 
-
 		<div class="{% if ss.enable_carousel %}swiper product-slider__swiper{% else %}product-slider__grid{% endif %}">
 
 			<div class="{% if ss.enable_carousel %}swiper-wrapper{% else %}product-slider__items{% endif %}">
@@ -90,7 +90,6 @@
 
 					{%- endfor -%}
 
-
 				{%- elsif ss.collection != blank -%}
 
 					{%- for product in ss.collection.products limit: ss.product_limit -%}
@@ -105,12 +104,9 @@
 
 			</div>
 
-
 			{%- if ss.enable_carousel -%}
 
-				<div
-					class="product-slider__pagination swiper-pagination"
-				></div>
+				<div class="product-slider__pagination swiper-pagination"></div>
 
 			{%- endif -%}
 
@@ -119,7 +115,6 @@
 	</div>
 </section>
 
-
 {%- style -%}
 
 	#{{ section.id }} {
@@ -127,6 +122,7 @@
 		padding-bottom: {{ ss.padding-bottom }}px;
 
 		--products-desktop: {{ ss.products_desktop }};
+		--products-tablet: {{ ss.products_tablet }};
 		--products-mobile: {{ ss.products_mobile }};
 	}
 
@@ -141,7 +137,6 @@
 
 {%- endstyle -%}
 
-
 {% javascript %}
 
 	(() => {
@@ -151,7 +146,6 @@
 			if (typeof Swiper === 'undefined') {
 				return;
 			}
-
 
 			document
 				.querySelectorAll('[data-product-slider]')
@@ -164,7 +158,6 @@
 						return;
 					}
 
-
 					const swiperElement = section.querySelector(
 						'.product-slider__swiper'
 					);
@@ -173,19 +166,23 @@
 						return;
 					}
 
-
 					const productsDesktop =
 						parseInt(
 							section.dataset.productsDesktop,
 							10
 						) || 5;
 
+					const productsTablet =
+						parseInt(
+							section.dataset.productsTablet,
+							10
+						) || 3;
+
 					const productsMobile =
 						parseInt(
 							section.dataset.productsMobile,
 							10
 						) || 2;
-
 
 					const previousButton = section.querySelector(
 						'.product-slider__arrow--prev'
@@ -198,7 +195,6 @@
 					const pagination = section.querySelector(
 						'.product-slider__pagination'
 					);
-
 
 					new Swiper(swiperElement, {
 
@@ -225,7 +221,11 @@
 
 						breakpoints: {
 
-							751: {
+							768: {
+								slidesPerView: productsTablet
+							},
+
+							990: {
 								slidesPerView: productsDesktop
 							}
 
@@ -240,22 +240,18 @@
 
 					});
 
-
 					section.dataset.initialised = 'true';
 
 				});
 
 		};
 
-
 		initialiseProductSliders();
-
 
 		window.addEventListener(
 			'load',
 			initialiseProductSliders
 		);
-
 
 		document.addEventListener(
 			'shopify:section:load',
@@ -265,7 +261,6 @@
 	})();
 
 {% endjavascript %}
-
 
 {% schema %}
 {
@@ -315,6 +310,15 @@
 			"step": 1,
 			"label": "Products shown on desktop",
 			"default": 5
+		},
+		{
+			"type": "range",
+			"id": "products_tablet",
+			"min": 2,
+			"max": 5,
+			"step": 1,
+			"label": "Products shown on tablet",
+			"default": 3
 		},
 		{
 			"type": "range",
