@@ -395,7 +395,7 @@
             "icon": "shopify://shop_images/icon-height.svg",
             "title": "Shop by height",
             "description": "Find the right frame size",
-            "url": ""
+            "url": "shopify://collections/chains"
           }
         },
         "card_HhjRXp": {
@@ -415,7 +415,7 @@
             "icon": "shopify://shop_images/icon-star_9722ab4a-a2ac-40ed-9b4d-8696858b930e.svg",
             "title": "Shop by riding style",
             "description": "Street, park or trails",
-            "url": ""
+            "url": "shopify://collections/brakes"
           }
         }
       },
