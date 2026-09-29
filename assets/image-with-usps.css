@@ -51,6 +51,10 @@
 
 				.image-with-usps__usp {
 
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+
 					.image-with-usps__usp-icon {
 
 						img {
