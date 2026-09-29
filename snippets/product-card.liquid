@@ -17,25 +17,15 @@
 	endif
 -%}
 
-<div
-	class="
-		product-card
-		{% unless card_product.available %}product-card--sold-out{% endunless %}
-		{% if on_sale %}product-card--sale{% endif %}
-	"
->
+<a href="{{ card_product.url }}" class="product-card {% unless card_product.available %}product-card--sold-out{% endunless %} {% if on_sale %}product-card--sale{% endif %}">
 
-	<a
-		href="{{ card_product.url }}"
-		class="product-card__media"
-		aria-label="{{ card_product.title | escape }}"
-	>
+	<div class="product-card__media" aria-label="{{ card_product.title | escape }}" >
 
 		{%- if primary_image != blank -%}
 
 			<div class="product-card__images">
 
-				{{
+				{{-
 					primary_image
 					| image_url: width: 800
 					| image_tag:
@@ -44,11 +34,11 @@
 						widths: '300, 400, 500, 600, 800',
 						sizes: '(min-width: 990px) 25vw, 50vw',
 						alt: primary_image.alt
-				}}
+				-}}
 
 				{%- if show_secondary_image -%}
 
-					{{
+					{{-
 						secondary_image
 							| image_url: width: 800
 							| image_tag:
@@ -57,7 +47,7 @@
 								widths: '300, 400, 500, 600, 800',
 								sizes: '(min-width: 990px) 25vw, 50vw',
 								alt: secondary_image.alt
-					}}
+					-}}
 
 				{%- endif -%}
 
@@ -66,12 +56,12 @@
 		{%- else -%}
 
 			<div class="product-card__placeholder">
-				{{ 'product-1' | placeholder_svg_tag }}
+				{{- 'product-1' | placeholder_svg_tag -}}
 			</div>
 
 		{%- endif -%}
 
-	</a>
+	</div>
 
 
 	<div class="product-card__content">
@@ -79,18 +69,14 @@
 		{%- if settings.product_card_show_vendor and card_product.vendor != blank -%}
 
 			<div class="product-card__vendor">
-				{{ card_product.vendor }}
+				{{- card_product.vendor -}}
 			</div>
 
 		{%- endif -%}
 
 
 		<h3 class="product-card__title">
-
-			<a href="{{ card_product.url }}">
-				{{ card_product.title }}
-			</a>
-
+			{{- card_product.title -}}
 		</h3>
 
 
@@ -158,4 +144,4 @@
 
 	</div>
 
-</div>
+</a>
