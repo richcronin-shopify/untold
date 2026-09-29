@@ -85,23 +85,26 @@
 
 		display: none;
 
-		display: flex;
-		justify-content: center;
-		.swiper-pagination-bullet {
-			width: 30px;
-			height: 3px;
-			margin: 0 3px !important;
+		@media (max-width: 990px) {
 
-			border-radius: 0;
+			display: flex;
+			justify-content: center;
 
-			background: var(--color-primary);
+			.swiper-pagination-bullet {
+				width: 30px;
+				height: 3px;
+				margin: 0 3px !important;
+				border-radius: 0;
+				background: var(--color-primary);
+				opacity: .3;
+			}
 
-			opacity: .3;
+			.swiper-pagination-bullet-active {
+				opacity: 1;
+			}
+
 		}
 
-		.swiper-pagination-bullet-active {
-			opacity: 1;
-		}
 	}
 
 }
