@@ -1518,8 +1518,11 @@ button,
 
 	.site-footer__newsletter {
 
+		padding: 20px 30px;
+
 		.site-footer__newsletter-heading {
 			margin: 0;
+			font-size: 22px;
 		}
 
 		.site-footer__newsletter-description {
