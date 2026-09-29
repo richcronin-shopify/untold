@@ -302,6 +302,7 @@
         "brand_nKBDgw": {
           "type": "brand",
           "settings": {
+            "max_image_width": 180,
             "brand_name": "",
             "url": ""
           }
@@ -309,6 +310,7 @@
         "brand_WwBrXK": {
           "type": "brand",
           "settings": {
+            "max_image_width": 180,
             "brand_name": "",
             "url": ""
           }
@@ -316,6 +318,7 @@
         "brand_aEpHHn": {
           "type": "brand",
           "settings": {
+            "max_image_width": 180,
             "brand_name": "",
             "url": ""
           }
@@ -323,6 +326,7 @@
         "brand_qbnw8V": {
           "type": "brand",
           "settings": {
+            "max_image_width": 180,
             "brand_name": "",
             "url": ""
           }
@@ -330,6 +334,7 @@
         "brand_VDRg9N": {
           "type": "brand",
           "settings": {
+            "max_image_width": 180,
             "brand_name": "",
             "url": ""
           }
@@ -337,6 +342,7 @@
         "brand_3bDTqF": {
           "type": "brand",
           "settings": {
+            "max_image_width": 180,
             "brand_name": "",
             "url": ""
           }
@@ -441,6 +447,7 @@
           "type": "brand",
           "settings": {
             "image": "shopify://shop_images/image_20.png",
+            "max_image_width": 120,
             "brand_name": "CULT",
             "url": ""
           }
@@ -449,6 +456,7 @@
           "type": "brand",
           "settings": {
             "image": "shopify://shop_images/image_21.png",
+            "max_image_width": 180,
             "brand_name": "KINK BMX",
             "url": "shopify://collections/backpacks"
           }
@@ -457,6 +465,7 @@
           "type": "brand",
           "settings": {
             "image": "shopify://shop_images/image_24.png",
+            "max_image_width": 180,
             "brand_name": "Tribal",
             "url": ""
           }
@@ -465,6 +474,7 @@
           "type": "brand",
           "settings": {
             "image": "shopify://shop_images/image_23.png",
+            "max_image_width": 180,
             "brand_name": "Tall Order",
             "url": ""
           }
@@ -473,6 +483,7 @@
           "type": "brand",
           "settings": {
             "image": "shopify://shop_images/image_22.png",
+            "max_image_width": 180,
             "brand_name": "Primo",
             "url": ""
           }
@@ -481,6 +492,7 @@
           "type": "brand",
           "settings": {
             "image": "shopify://shop_images/image_25.png",
+            "max_image_width": 180,
             "brand_name": "Federal",
             "url": ""
           }
@@ -489,6 +501,7 @@
           "type": "brand",
           "settings": {
             "image": "shopify://shop_images/image_25.png",
+            "max_image_width": 180,
             "brand_name": "Federal",
             "url": ""
           }
