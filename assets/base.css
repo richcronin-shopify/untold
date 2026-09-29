@@ -1336,13 +1336,14 @@ button,
 			flex: 1;
 			align-content: flex-end;
 			padding: 7px 0 0 0;
-			border-top: 1px solid var(--border-white);
 
 			.product-card__availability-inner {
 
 				display: flex;
 				align-items: center;
 				gap: 5px;
+				border-top: 1px solid var(--border-white);
+				width: 100%;
 
 				.product-card__availability-dot {
 					display: block;
