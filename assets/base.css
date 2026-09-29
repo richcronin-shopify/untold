@@ -217,6 +217,7 @@ button,
 	font-size: 22px;
 	font-family: var(--font-heading-family);
 	font-weight: 500;
+	display: inline-block;
 
 	&.button--outline {
 		background: transparent;
