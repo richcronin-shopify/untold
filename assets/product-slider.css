@@ -2,11 +2,18 @@
 
 	.product-slider__header {
 
-		.product-slider__title {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
 
+		.product-slider__title {
+			margin: 0;
 		}
 
 		.product-slider__controls {
+
+			display: flex;
+			align-items: center;
 
 			.product-slider__view-all {
 
