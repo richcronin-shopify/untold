@@ -16,10 +16,13 @@
 			align-items: center;
 
 			.product-slider__view-all {
-
+				color: var(--color-primary);
+				text-decoration: underline;
 			}
 
 			.product-slider__navigation {
+
+				
 
 				.product-slider__arrow {
 
