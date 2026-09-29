@@ -109,24 +109,6 @@
 		--brands-desktop: {{ ss.brands_desktop }};
 		--brands-tablet: {{ ss.brands_tablet }};
 		--brands-mobile: {{ ss.brands_mobile }};
-
-		--brand-logo-width-desktop: {{ ss.logo_width_desktop }}px;
-		--brand-logo-width-tablet: {{ ss.logo_width_tablet }}px;
-		--brand-logo-width-mobile: {{ ss.logo_width_mobile }}px;
-	}
-
-	#{{ section.id }} .brand-slider__logo {
-		width: 100%;
-		max-width: var(--brand-logo-width-desktop);
-		height: auto;
-	}
-
-	@media screen and (max-width: 989px) {
-
-		#{{ section.id }} .brand-slider__logo {
-			max-width: var(--brand-logo-width-tablet);
-		}
-
 	}
 
 	@media screen and (max-width: 767px) {
@@ -135,11 +117,6 @@
 			padding-top: {{ ss.padding-top-m }}px;
 			padding-bottom: {{ ss.padding-bottom-m }}px;
 		}
-
-		#{{ section.id }} .brand-slider__logo {
-			max-width: var(--brand-logo-width-mobile);
-		}
-
 	}
 
 {%- endstyle -%}
@@ -305,40 +282,6 @@
 			"step": 1,
 			"label": "Brands shown on mobile",
 			"default": 3
-		},
-		{
-			"type": "header",
-			"content": "Logo width"
-		},
-		{
-			"type": "range",
-			"id": "logo_width_desktop",
-			"min": 50,
-			"max": 400,
-			"step": 10,
-			"unit": "px",
-			"label": "Logo width - desktop",
-			"default": 220
-		},
-		{
-			"type": "range",
-			"id": "logo_width_tablet",
-			"min": 50,
-			"max": 300,
-			"step": 10,
-			"unit": "px",
-			"label": "Logo width - tablet",
-			"default": 180
-		},
-		{
-			"type": "range",
-			"id": "logo_width_mobile",
-			"min": 50,
-			"max": 200,
-			"step": 10,
-			"unit": "px",
-			"label": "Logo width - mobile",
-			"default": 110
 		},
 		{
 			"type": "header",
