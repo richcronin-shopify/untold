@@ -1,0 +1,129 @@
+.image-with-usps {
+
+	.image-with-usps__inner {
+
+		.image-with-usps__media {
+
+			picture {
+				display: block;
+				width: 100%;
+			}
+
+			.image-with-usps__image {
+				display: block;
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+			}
+
+		}
+
+		.image-with-usps__content {
+
+			.image-with-usps__main {
+
+				.image-with-usps__heading {
+					margin: 0;
+				}
+
+				.image-with-usps__text {
+
+				}
+
+				.image-with-usps__button {
+
+				}
+
+			}
+
+			.image-with-usps__usps {
+
+				.image-with-usps__usp {
+
+					.image-with-usps__usp-icon {
+
+						img {
+							display: block;
+							max-width: 100%;
+							height: auto;
+						}
+
+					}
+
+					.image-with-usps__usp-content {
+
+						.image-with-usps__usp-title {
+							margin: 0;
+						}
+
+						.image-with-usps__usp-description {
+
+						}
+
+					}
+
+				}
+
+			}
+
+		}
+
+	}
+
+	@media (max-width: 989px) {
+
+		.image-with-usps__inner {
+
+			.image-with-usps__media {
+
+			}
+
+			.image-with-usps__content {
+
+				.image-with-usps__main {
+
+				}
+
+				.image-with-usps__usps {
+
+					.image-with-usps__usp {
+
+					}
+
+				}
+
+			}
+
+		}
+
+	}
+
+	@media (max-width: 767px) {
+
+		.image-with-usps__inner {
+
+			.image-with-usps__media {
+
+			}
+
+			.image-with-usps__content {
+
+				.image-with-usps__main {
+
+				}
+
+				.image-with-usps__usps {
+
+					.image-with-usps__usp {
+
+					}
+
+				}
+
+			}
+
+		}
+
+	}
+
+}
