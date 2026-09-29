@@ -244,6 +244,16 @@ button,
 
 }
 
+.swiper-slider__arrow {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	height: 40px;
+	padding: 0;
+	border: 1px solid var(--color-primary);
+}
+
 /* Layout */
 .page-width {
   width: min(
