@@ -302,48 +302,63 @@
         "brand_nKBDgw": {
           "type": "brand",
           "settings": {
-            "max_image_width": 180,
-            "brand_name": "",
+            "image": "shopify://shop_images/image_20.png",
+            "max_image_width": 110,
+            "brand_name": "CULT",
             "url": ""
           }
         },
         "brand_WwBrXK": {
           "type": "brand",
           "settings": {
+            "image": "shopify://shop_images/image_23.png",
             "max_image_width": 180,
-            "brand_name": "",
+            "brand_name": "Tall Order",
             "url": ""
           }
         },
         "brand_aEpHHn": {
           "type": "brand",
           "settings": {
+            "image": "shopify://shop_images/image_21.png",
             "max_image_width": 180,
-            "brand_name": "",
+            "brand_name": "Kink BMX",
             "url": ""
           }
         },
         "brand_qbnw8V": {
           "type": "brand",
           "settings": {
+            "image": "shopify://shop_images/image_24.png",
             "max_image_width": 180,
-            "brand_name": "",
+            "brand_name": "Tribal",
             "url": ""
           }
         },
         "brand_VDRg9N": {
           "type": "brand",
           "settings": {
+            "image": "shopify://shop_images/image_22.png",
             "max_image_width": 180,
-            "brand_name": "",
+            "brand_name": "Primo",
             "url": ""
           }
         },
         "brand_3bDTqF": {
           "type": "brand",
           "settings": {
+            "image": "shopify://shop_images/image_25.png",
             "max_image_width": 180,
-            "brand_name": "",
+            "brand_name": "Federal",
+            "url": ""
+          }
+        },
+        "brand_763Gtz": {
+          "type": "brand",
+          "settings": {
+            "image": "shopify://shop_images/image_22.png",
+            "max_image_width": 180,
+            "brand_name": "Primo",
             "url": ""
           }
         }
@@ -354,7 +369,8 @@
         "brand_aEpHHn",
         "brand_qbnw8V",
         "brand_VDRg9N",
-        "brand_3bDTqF"
+        "brand_3bDTqF",
+        "brand_763Gtz"
       ],
       "name": "Brand slider",
       "settings": {
