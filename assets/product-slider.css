@@ -65,6 +65,10 @@
 	.product-slider__swiper,
 	.product-slider__grid {
 
+		.swiper-wrapper {
+			align-items: stretch;
+		}
+
 		.product-slider__items {
 			display: grid;
 			grid-template-columns: repeat(var(--products-desktop), minmax(0, 1fr));
@@ -76,7 +80,7 @@
 		}
 
 		.product-slider__item {
-
+			height: auto;
 		}
 
 	}
