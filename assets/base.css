@@ -257,7 +257,7 @@ button,
 		transform: rotate(180deg);
 	}
 
-	&.product-slider__arrow--next {
+	&.swiper-slider__arrow--next {
 
 		svg {
 			transform: rotate(0deg);
