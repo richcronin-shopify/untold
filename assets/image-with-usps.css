@@ -32,14 +32,13 @@
 			.image-with-usps__main {
 
 				.image-with-usps__heading {
-					margin: 0;
 				}
 
 				.image-with-usps__text {
-
 				}
 
 				.image-with-usps__button-wrapper {
+					margin: 30px 0 0 0;
 					.image-with-usps__button {
 					}
 				}
