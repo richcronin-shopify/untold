@@ -26,10 +26,6 @@
 				margin: 0 0 20px 0;
 			}
 
-			.payment-options__title {
-
-			}
-
 			.payment-options__description {
 				@media (max-width: 768px) {
 					font-size: 13px;
@@ -83,7 +79,9 @@
 					}
 
 					.payment-options__item-description {
-
+						@media (max-width: 768px) {
+							font-size: 13px;
+						}
 					}
 
 				}
