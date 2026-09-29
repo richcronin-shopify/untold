@@ -1235,6 +1235,8 @@ button,
 	border: 1px solid var(--border-white);
 	border-radius: 4px;
 	overflow: hidden;
+	display: block;
+	transition: .3s all;
 
 	.product-card__media {
 
