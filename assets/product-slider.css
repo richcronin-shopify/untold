@@ -31,32 +31,9 @@
 				display: flex;
 				gap: 5px;
 
-				.product-slider__arrow {
-					display: flex;
-					align-items: center;
-					justify-content: center;
-					width: 40px;
-					height: 40px;
-					padding: 0;
-					border: 1px solid var(--color-primary);
-
+				.swiper-slider__arrow {
 					@media (max-width: 990px) {
 						display: none;
-					}
-
-					svg {
-						transform: rotate(180deg);
-					}
-
-					&.product-slider__arrow--next {
-
-						svg {
-							transform: rotate(0deg);
-						}
-					}
-
-					&.swiper-button-disabled {
-						opacity: .3;
 					}
 				}
 

@@ -252,6 +252,20 @@ button,
 	height: 40px;
 	padding: 0;
 	border: 1px solid var(--color-primary);
+	svg {
+		transform: rotate(180deg);
+	}
+
+	&.product-slider__arrow--next {
+
+		svg {
+			transform: rotate(0deg);
+		}
+	}
+
+	&.swiper-button-disabled {
+		opacity: .3;
+	}
 }
 
 /* Layout */
