@@ -1313,8 +1313,6 @@ button,
 			display: flex;
 			align-items: flex-end;
 			gap: 5px;
-			border-bottom: 1px solid var(--border-white);
-			padding: 0 0 7px 0;
 			margin: 0 0 7px 0;
 
 			.product-card__price-current {
@@ -1335,6 +1333,10 @@ button,
 		.product-card__availability {
 
 			width: 100%;
+			flex: 1;
+			align-content: flex-end;
+			padding: 7px 0 0 0;
+			border-top: 1px solid var(--border-white);
 
 			.product-card__availability-inner {
 
