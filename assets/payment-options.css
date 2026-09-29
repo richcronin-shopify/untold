@@ -13,6 +13,9 @@
 
 		@media (max-width: 990px) {
 			flex-wrap: wrap;
+			@media (max-width: 768px) {
+				padding: 20px;
+			}
 		}
 
 		.payment-options__intro {
