@@ -75,6 +75,10 @@
 
 		.payment-options__cta { 
 
+			@media (max-width: 990px) {
+				width: 100%;
+			}
+
 			.payment-options__cta-link {
 
 				display: flex;
@@ -85,7 +89,7 @@
 				@media (max-width: 990px) {
 					justify-content: center;
 					width: 100%;
-					margin: 20px 0 0 0;
+					margin: 24px 0 0 0;
 				}
 
 				.payment-options__cta-arrow {
