@@ -1672,10 +1672,6 @@ button,
 			grid-template-columns: 1fr 1fr;
 		}
 
-		.site-footer__brand {
-
-		}
-
 		.site-footer__navigation {
 			display: block;
 		}
@@ -1695,8 +1691,10 @@ button,
 		}
 
 		.site-footer__brand {
+			
 			order: 0;
 			justify-content: space-between;
+			
 
 			.site-footer__logo {
 
