@@ -1586,6 +1586,10 @@ button,
 					padding: 0;
 					text-align: center;
 					font-size: 18px;
+					@media (max-width: 767px) {
+						width: 100%;
+						text-align: center;
+					}
 				}
 
 			}
