@@ -82,6 +82,12 @@
 				align-items: center;
 				color: var(--color-primary);
 
+				@media (max-width: 990px) {
+					justify-content: center;
+					width: 100%;
+					margin: 20px 0 0 0;
+				}
+
 				.payment-options__cta-arrow {
 					.payment-options__cta-arrow {
 						svg {
