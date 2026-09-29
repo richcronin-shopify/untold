@@ -1,0 +1,44 @@
+.product-slider {
+
+	.product-slider__header {
+
+		.product-slider__title {
+
+		}
+
+		.product-slider__controls {
+
+			.product-slider__view-all {
+
+			}
+
+			.product-slider__navigation {
+
+				.product-slider__arrow {
+
+				}
+
+			}
+
+		}
+
+	}
+
+	.product-slider__swiper,
+	.product-slider__grid {
+
+		.product-slider__items {
+
+		}
+
+		.product-slider__item {
+
+		}
+
+	}
+
+	.product-slider__pagination {
+
+	}
+
+}
