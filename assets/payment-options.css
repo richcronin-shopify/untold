@@ -81,6 +81,10 @@
 						text-align: center;
 					}
 
+					.payment-options__item-title {
+						margin: 0 0 2px 0;
+					}
+
 					.payment-options__item-description {
 						@media (max-width: 768px) {
 							font-size: 13px;
