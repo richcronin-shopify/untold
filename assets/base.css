@@ -1606,6 +1606,8 @@ button,
 
 	.site-footer__bottom {
 
+		padding: 20px 0;
+
 		.site-footer__bottom-inner {
 			display: flex;
 			align-items: center;
