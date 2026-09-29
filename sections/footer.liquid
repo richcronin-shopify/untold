@@ -77,58 +77,89 @@
 					{%- for block in section.blocks -%}
 						{%- assign bs = block.settings -%}
 
-						{%- if block.type == 'navigation' -%}
+						<div
+							class="site-footer__nav-group"
+							data-footer-nav
+							{{ block.shopify_attributes }}
+						>
 
-							<div
-								class="site-footer__nav-group"
-								data-footer-nav
-								{{ block.shopify_attributes }}
+							{%- if bs.title != blank -%}
+								<p class="site-footer__nav-title h5">
+									{{ bs.title }}
+								</p>
+							{%- endif -%}
+
+							<button
+								type="button"
+								class="site-footer__nav-toggle button--reset"
+								aria-expanded="false"
+								aria-controls="FooterNav-{{ section.id }}-{{ block.id }}"
 							>
+								<span>{{ bs.title }}</span>
 
-								<button
-									type="button"
-									class="site-footer__nav-toggle button--reset"
-									aria-expanded="false"
-									aria-controls="FooterNav-{{ section.id }}-{{ block.id }}"
+								<span class="site-footer__nav-chevron" aria-hidden="true">
+									{{- 'icon-chev.svg' | inline_asset_content -}}
+								</span>
+							</button>
+
+							{%- if bs.menu != blank -%}
+								<nav
+									class="site-footer__nav"
+									id="FooterNav-{{ section.id }}-{{ block.id }}"
+									aria-label="{{ bs.title | escape }}"
 								>
-									<span>{{ bs.title }}</span>
+									<ul class="site-footer__nav-list" role="list">
 
-									<span class="site-footer__nav-chevron" aria-hidden="true">
-										{{- 'icon-chev.svg' | inline_asset_content -}}
-									</span>
-								</button>
+										{%- for link in bs.menu.links -%}
+											<li class="site-footer__nav-item">
+												<a
+													href="{{ link.url }}"
+													class="site-footer__nav-link{% if link.current %} is-current{% endif %}"
+													{% if link.current %}aria-current="page"{% endif %}
+												>
+													{{ link.title }}
+												</a>
+											</li>
+										{%- endfor -%}
 
-								{%- if bs.menu != blank -%}
-									<nav
-										class="site-footer__nav"
-										id="FooterNav-{{ section.id }}-{{ block.id }}"
-										aria-label="{{ bs.title | escape }}"
-									>
+									</ul>
+								</nav>
+							{%- endif -%}
 
-										<ul class="site-footer__nav-list" role="list">
-
-											{%- for link in bs.menu.links -%}
-												<li class="site-footer__nav-item">
-													<a
-														href="{{ link.url }}"
-														class="site-footer__nav-link{% if link.current %} is-current{% endif %}"
-														{% if link.current %}aria-current="page"{% endif %}
-													>
-														{{ link.title }}
-													</a>
-												</li>
-											{%- endfor -%}
-
-										</ul>
-
-									</nav>
-								{%- endif -%}
-
-							</div>
-
-						{%- endif -%}
+						</div>
 
 					{%- endfor -%}
+
+				</div>
+
+
+				<div class="site-footer__shop" data-footer-nav>
+
+					{%- if ss.shop_heading != blank -%}
+						<p class="site-footer__nav-title h5">
+							{{ ss.shop_heading }}
+						</p>
+					{%- endif -%}
+
+					<button
+						type="button"
+						class="site-footer__nav-toggle button--reset"
+						aria-expanded="false"
+						aria-controls="FooterShop-{{ section.id }}"
+					>
+						<span>{{ ss.shop_heading }}</span>
+
+						<span class="site-footer__nav-chevron" aria-hidden="true">
+							{{- 'icon-chev.svg' | inline_asset_content -}}
+						</span>
+					</button>
+
+					<div
+						class="site-footer__shop-content site-footer__nav"
+						id="FooterShop-{{ section.id }}"
+					>
+						{{ ss.shop_info }}
+					</div>
 
 				</div>
 
