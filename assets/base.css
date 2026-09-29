@@ -1515,6 +1515,10 @@ button,
 		padding: 20px 30px;
 		border-right:  1px solid var(--border-white);
 
+		@media (max-width: 767px) {
+			padding: 20px 16px;
+		}
+
 		.site-footer__nav-title {
 			margin: 0 0 12px 0;
 			font-size: 22px;
