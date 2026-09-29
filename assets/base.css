@@ -1279,6 +1279,8 @@ button,
 
 		padding: 10px;
 		flex: 1;
+		display: flex;
+		flex-direction: column;
 
 		.product-card__vendor {
 
@@ -1332,7 +1334,7 @@ button,
 
 		.product-card__availability {
 
-			
+			align-self: flex-end;
 
 			.product-card__availability-inner {
 
