@@ -1,0 +1,306 @@
+{{- 'multicolumn.css' | asset_url | stylesheet_tag -}}
+{%- assign ss = section.settings -%}
+
+<section class="multicolumn" id="{{ section.id }}">
+	<div class="container">
+
+		<div class="multicolumn__header">
+
+			{%- if ss.eyebrow != blank -%}
+				<p class="multicolumn__eyebrow h6">
+					{{ ss.eyebrow }}
+				</p>
+			{%- endif -%}
+
+			{%- if ss.heading != blank -%}
+				<h{{ ss.heading_tag }} class="h{{ ss.font_size }} multicolumn__heading">
+					{{ ss.heading }}
+				</h{{ ss.heading_tag }}>
+			{%- endif -%}
+
+			{%- if ss.description != blank -%}
+				<div class="multicolumn__description">
+					{{ ss.description }}
+				</div>
+			{%- endif -%}
+
+		</div>
+
+
+		{%- if section.blocks.size > 0 -%}
+
+			<div class="multicolumn__items">
+
+				{%- for block in section.blocks -%}
+					{%- assign bs = block.settings -%}
+
+					<div class="multicolumn__item" {{ block.shopify_attributes }}>
+
+						{%- if bs.url != blank -%}
+							<a href="{{ bs.url }}" class="multicolumn__link">
+						{%- else -%}
+							<div class="multicolumn__link">
+						{%- endif -%}
+
+
+							{%- if bs.image != blank -%}
+
+								<div class="multicolumn__media">
+
+									{{
+										bs.image
+										| image_url: width: 1200
+										| image_tag:
+											class: 'multicolumn__image',
+											loading: 'lazy',
+											widths: '400, 600, 800, 1000, 1200',
+											sizes: '(min-width: 990px) 33vw, 100vw',
+											alt: ''
+									}}
+
+								</div>
+
+							{%- endif -%}
+
+
+							{%- if bs.icon != blank -%}
+
+								<div class="multicolumn__icon" aria-hidden="true">
+
+									{{
+										bs.icon
+										| image_url: width: 120
+										| image_tag:
+											loading: 'lazy',
+											widths: '40, 60, 80, 120',
+											sizes: '60px',
+											alt: ''
+									}}
+
+								</div>
+
+							{%- endif -%}
+
+
+							<div class="multicolumn__content">
+
+								<div class="multicolumn__content-inner">
+
+									{%- if bs.title != blank -%}
+										<p class="multicolumn__item-title h4">
+											{{ bs.title }}
+										</p>
+									{%- endif -%}
+
+									{%- if bs.description != blank -%}
+										<div class="multicolumn__item-description">
+											{{ bs.description }}
+										</div>
+									{%- endif -%}
+
+								</div>
+
+
+								{%- if bs.url != blank -%}
+
+									<span class="multicolumn__arrow" aria-hidden="true">
+										{{- 'icon-long-arrow.svg' | inline_asset_content -}}
+									</span>
+
+								{%- endif -%}
+
+							</div>
+
+
+						{%- if bs.url != blank -%}
+							</a>
+						{%- else -%}
+							</div>
+						{%- endif -%}
+
+					</div>
+
+				{%- endfor -%}
+
+			</div>
+
+		{%- endif -%}
+
+	</div>
+</section>
+
+
+{%- style -%}
+
+	#{{ section.id }} {
+		padding-top: {{ ss.padding-top }}px;
+		padding-bottom: {{ ss.padding-bottom }}px;
+	}
+
+	@media screen and (max-width: 767px) {
+
+		#{{ section.id }} {
+			padding-top: {{ ss.padding-top-m }}px;
+			padding-bottom: {{ ss.padding-bottom-m }}px;
+		}
+
+	}
+
+{%- endstyle -%}
+
+
+{% schema %}
+{
+	"name": "Multicolumn",
+	"tag": "section",
+	"class": "multicolumn-section",
+	"settings": [
+		{
+			"type": "text",
+			"id": "eyebrow",
+			"label": "Eyebrow",
+			"default": "Find your perfect ride"
+		},
+		{
+			"type": "inline_richtext",
+			"id": "heading",
+			"label": "Heading",
+			"default": "Need help choosing a bike?"
+		},
+		{
+			"type": "range",
+			"id": "heading_tag",
+			"min": 1,
+			"max": 6,
+			"step": 1,
+			"label": "Title heading tag",
+			"info": "Header tags, also known as heading tags, are used to separate headings and subheadings on a webpage. They rank in order of importance, from H1 to H6, with H1s usually being the title. Header tags improve the readability and SEO of a webpage.",
+			"default": 2
+		},
+		{
+			"type": "range",
+			"id": "font_size",
+			"min": 1,
+			"max": 6,
+			"step": 1,
+			"label": "Font size",
+			"info": "1 being the largest. 6 being the smallest.",
+			"default": 2
+		},
+		{
+			"type": "inline_richtext",
+			"id": "description",
+			"label": "Description",
+			"default": "Shop by height, age or riding style and find the right setup faster."
+		},
+		{
+			"type": "header",
+			"content": "Padding (desktop)"
+		},
+		{
+			"type": "range",
+			"id": "padding-top",
+			"min": 0,
+			"max": 300,
+			"step": 5,
+			"label": "Padding top",
+			"default": 40
+		},
+		{
+			"type": "range",
+			"id": "padding-bottom",
+			"min": 0,
+			"max": 300,
+			"step": 5,
+			"label": "Padding bottom",
+			"default": 40
+		},
+		{
+			"type": "header",
+			"content": "Padding (mobile)"
+		},
+		{
+			"type": "range",
+			"id": "padding-top-m",
+			"min": 0,
+			"max": 300,
+			"step": 5,
+			"label": "Padding top",
+			"default": 30
+		},
+		{
+			"type": "range",
+			"id": "padding-bottom-m",
+			"min": 0,
+			"max": 300,
+			"step": 5,
+			"label": "Padding bottom",
+			"default": 30
+		}
+	],
+	"blocks": [
+		{
+			"type": "card",
+			"name": "Card",
+			"settings": [
+				{
+					"type": "image_picker",
+					"id": "image",
+					"label": "Image"
+				},
+				{
+					"type": "image_picker",
+					"id": "icon",
+					"label": "Icon"
+				},
+				{
+					"type": "text",
+					"id": "title",
+					"label": "Title",
+					"default": "Shop by height"
+				},
+				{
+					"type": "inline_richtext",
+					"id": "description",
+					"label": "Description",
+					"default": "Find the right frame size"
+				},
+				{
+					"type": "url",
+					"id": "url",
+					"label": "Link"
+				}
+			]
+		}
+	],
+	"max_blocks": 6,
+	"presets": [
+		{
+			"name": "Multicolumn",
+			"blocks": [
+				{
+					"type": "card",
+					"settings": {
+						"title": "Shop by height",
+						"description": "Find the right frame size"
+					}
+				},
+				{
+					"type": "card",
+					"settings": {
+						"title": "Shop by age",
+						"description": "Perfect picks for younger riders"
+					}
+				},
+				{
+					"type": "card",
+					"settings": {
+						"title": "Shop by riding style",
+						"description": "Street, park or trails"
+					}
+				}
+			]
+		}
+	]
+}
+{% endschema %}
