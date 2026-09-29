@@ -81,6 +81,9 @@
 
 		.product-slider__item {
 			height: auto;
+			.product-card {
+				height: 100%;
+			}
 		}
 
 	}
