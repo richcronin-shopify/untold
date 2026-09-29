@@ -93,7 +93,7 @@
 
 				{%- elsif ss.collection != blank -%}
 
-					{%- for product in ss.collection.products -%}
+					{%- for product in ss.collection.products limit: ss.product_limit -%}
 
 						<div class="product-slider__item{% if ss.enable_carousel %} swiper-slide{% endif %}">
 							{% render 'product-card', product: product %}
@@ -284,6 +284,16 @@
 			"id": "collection",
 			"label": "Collection",
 			"info": "Products added as blocks will override products from this collection."
+		},
+		{
+			"type": "range",
+			"id": "product_limit",
+			"min": 1,
+			"max": 50,
+			"step": 1,
+			"label": "Maximum collection products",
+			"default": 20,
+			"info": "Only applies when using the collection above."
 		},
 		{
 			"type": "checkbox",
