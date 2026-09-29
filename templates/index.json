@@ -296,6 +296,73 @@
         "padding-bottom-m": 0
       }
     },
+    "brand_slider_CBWDTy": {
+      "type": "brand-slider",
+      "blocks": {
+        "brand_nKBDgw": {
+          "type": "brand",
+          "settings": {
+            "brand_name": "",
+            "url": ""
+          }
+        },
+        "brand_WwBrXK": {
+          "type": "brand",
+          "settings": {
+            "brand_name": "",
+            "url": ""
+          }
+        },
+        "brand_aEpHHn": {
+          "type": "brand",
+          "settings": {
+            "brand_name": "",
+            "url": ""
+          }
+        },
+        "brand_qbnw8V": {
+          "type": "brand",
+          "settings": {
+            "brand_name": "",
+            "url": ""
+          }
+        },
+        "brand_VDRg9N": {
+          "type": "brand",
+          "settings": {
+            "brand_name": "",
+            "url": ""
+          }
+        },
+        "brand_3bDTqF": {
+          "type": "brand",
+          "settings": {
+            "brand_name": "",
+            "url": ""
+          }
+        }
+      },
+      "block_order": [
+        "brand_nKBDgw",
+        "brand_WwBrXK",
+        "brand_aEpHHn",
+        "brand_qbnw8V",
+        "brand_VDRg9N",
+        "brand_3bDTqF"
+      ],
+      "name": "Brand slider",
+      "settings": {
+        "title": "Shop by brand",
+        "enable_carousel": true,
+        "brands_desktop": 6,
+        "brands_tablet": 4,
+        "brands_mobile": 3,
+        "padding-top": 40,
+        "padding-bottom": 40,
+        "padding-top-m": 30,
+        "padding-bottom-m": 30
+      }
+    },
     "product_component_aiiB9b": {
       "type": "product-component",
       "blocks": {
@@ -367,59 +434,74 @@
         "padding-bottom-m": 30
       }
     },
-    "brand_slider_CBWDTy": {
+    "brand_slider_3WdMEK": {
       "type": "brand-slider",
       "blocks": {
-        "brand_nKBDgw": {
+        "brand_6yzrNR": {
           "type": "brand",
           "settings": {
-            "brand_name": "",
+            "image": "shopify://shop_images/image_20.png",
+            "brand_name": "CULT",
             "url": ""
           }
         },
-        "brand_WwBrXK": {
+        "brand_fUjWXV": {
           "type": "brand",
           "settings": {
-            "brand_name": "",
+            "image": "shopify://shop_images/image_21.png",
+            "brand_name": "KINK BMX",
+            "url": "shopify://collections/backpacks"
+          }
+        },
+        "brand_t6YxhL": {
+          "type": "brand",
+          "settings": {
+            "image": "shopify://shop_images/image_24.png",
+            "brand_name": "Tribal",
             "url": ""
           }
         },
-        "brand_aEpHHn": {
+        "brand_cGqiPA": {
           "type": "brand",
           "settings": {
-            "brand_name": "",
+            "image": "shopify://shop_images/image_23.png",
+            "brand_name": "Tall Order",
             "url": ""
           }
         },
-        "brand_qbnw8V": {
+        "brand_BbGM6c": {
           "type": "brand",
           "settings": {
-            "brand_name": "",
+            "image": "shopify://shop_images/image_22.png",
+            "brand_name": "Primo",
             "url": ""
           }
         },
-        "brand_VDRg9N": {
+        "brand_jQcemw": {
           "type": "brand",
           "settings": {
-            "brand_name": "",
+            "image": "shopify://shop_images/image_25.png",
+            "brand_name": "Federal",
             "url": ""
           }
         },
-        "brand_3bDTqF": {
+        "brand_DHhVtb": {
           "type": "brand",
           "settings": {
-            "brand_name": "",
+            "image": "shopify://shop_images/image_25.png",
+            "brand_name": "Federal",
             "url": ""
           }
         }
       },
       "block_order": [
-        "brand_nKBDgw",
-        "brand_WwBrXK",
-        "brand_aEpHHn",
-        "brand_qbnw8V",
-        "brand_VDRg9N",
-        "brand_3bDTqF"
+        "brand_6yzrNR",
+        "brand_fUjWXV",
+        "brand_t6YxhL",
+        "brand_cGqiPA",
+        "brand_BbGM6c",
+        "brand_jQcemw",
+        "brand_DHhVtb"
       ],
       "name": "Brand slider",
       "settings": {
@@ -428,9 +510,6 @@
         "brands_desktop": 6,
         "brands_tablet": 4,
         "brands_mobile": 3,
-        "logo_width_desktop": 220,
-        "logo_width_tablet": 180,
-        "logo_width_mobile": 110,
         "padding-top": 40,
         "padding-bottom": 40,
         "padding-top-m": 30,
@@ -446,6 +525,7 @@
     "product_component_QLzHta",
     "image_with_usps_KeYf6t",
     "brand_slider_CBWDTy",
-    "product_component_aiiB9b"
+    "product_component_aiiB9b",
+    "brand_slider_3WdMEK"
   ]
 }
