@@ -68,6 +68,7 @@
 			.brand-slider__logo {
 				display: block;
 				width: 100%;
+				max-width: 160px;
 				height: auto;
 				object-fit: contain;
 			}
