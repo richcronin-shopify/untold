@@ -2,6 +2,10 @@
 
 	.image-with-usps__inner {
 
+		display: flex;
+		justify-content: space-between;
+		gap: 100px;
+
 		.image-with-usps__media {
 
 			picture {
