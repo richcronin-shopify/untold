@@ -93,9 +93,12 @@
 		.product-slider__items {
 			display: grid;
 			grid-template-columns: repeat(var(--products-desktop), minmax(0, 1fr));
-			gap: 10px;
 
-			@media (max-width: 750px) {
+			@media (max-width: 989px) {
+				grid-template-columns: repeat(var(--products-tablet), minmax(0, 1fr));
+			}
+
+			@media (max-width: 767px) {
 				grid-template-columns: repeat(var(--products-mobile), minmax(0, 1fr));
 			}
 		}
