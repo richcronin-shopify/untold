@@ -1238,6 +1238,10 @@ button,
 	display: block;
 	transition: .3s all;
 
+	&:hover {
+		border-color: var(--color-primary);
+	}
+
 	.product-card__media {
 
 		width: 100%;
