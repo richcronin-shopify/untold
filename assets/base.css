@@ -1500,6 +1500,9 @@ button,
 
 		.site-footer__shop-content {
 
+			padding: 20px 30px;
+			border-right:  1px solid var(--border-white);
+
 			p {
 				margin: 0;
 			}
