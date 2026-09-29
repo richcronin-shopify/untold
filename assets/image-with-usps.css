@@ -70,6 +70,9 @@
 					width: 1px;
 					height: 100px;
 					background: var(--border-white);
+					@media (max-width: 767px) {
+						display: none;
+					}
 				}
 
 				.image-with-usps__usp {
@@ -111,6 +114,7 @@
 							font-size: 14px;
 							@media (max-width: 767px) {
 								font-size: 10px;
+								margin: 2px 0 0 0;
 							}
 						}
 
