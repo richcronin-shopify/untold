@@ -1,0 +1,427 @@
+{{- 'brand-slider.css' | asset_url | stylesheet_tag -}}
+{%- assign ss = section.settings -%}
+
+<section
+	class="brand-slider{% unless ss.enable_carousel %} brand-slider--grid{% endunless %}"
+	id="{{ section.id }}"
+	data-brand-slider
+	data-carousel="{{ ss.enable_carousel }}"
+	data-brands-desktop="{{ ss.brands_desktop }}"
+	data-brands-tablet="{{ ss.brands_tablet }}"
+	data-brands-mobile="{{ ss.brands_mobile }}"
+>
+	<div class="container">
+
+		<div class="brand-slider__header">
+
+			{%- if ss.title != blank -%}
+				<h2 class="brand-slider__title h5">
+					{{ ss.title }}
+				</h2>
+			{%- endif -%}
+
+			{%- if ss.enable_carousel -%}
+				<div class="brand-slider__navigation">
+
+					<button
+						type="button"
+						class="brand-slider__arrow brand-slider__arrow--prev button--reset"
+						aria-label="Previous brands"
+					>
+						{{- 'icon-long-arrow.svg' | inline_asset_content -}}
+					</button>
+
+					<button
+						type="button"
+						class="brand-slider__arrow brand-slider__arrow--next button--reset"
+						aria-label="Next brands"
+					>
+						{{- 'icon-long-arrow.svg' | inline_asset_content -}}
+					</button>
+
+				</div>
+			{%- endif -%}
+
+		</div>
+
+		<div class="{% if ss.enable_carousel %}swiper brand-slider__swiper{% else %}brand-slider__grid{% endif %}">
+
+			<div class="{% if ss.enable_carousel %}swiper-wrapper{% else %}brand-slider__items{% endif %}">
+
+				{%- for block in section.blocks -%}
+					{%- assign bs = block.settings -%}
+
+					{%- if bs.image != blank -%}
+
+						<div
+							class="brand-slider__item{% if ss.enable_carousel %} swiper-slide{% endif %}"
+							{{ block.shopify_attributes }}
+						>
+
+							{%- if bs.url != blank -%}
+								<a
+									href="{{ bs.url }}"
+									class="brand-slider__link"
+									{% if bs.brand_name != blank %}aria-label="{{ bs.brand_name | escape }}"{% endif %}
+								>
+							{%- else -%}
+								<div class="brand-slider__link">
+							{%- endif -%}
+
+								{%- assign logo_alt = bs.image.alt | default: bs.brand_name -%}
+
+								{{
+									bs.image
+									| image_url: width: 600
+									| image_tag:
+										class: 'brand-slider__logo',
+										loading: 'lazy',
+										widths: '120, 180, 240, 320, 480, 600',
+										sizes: '(min-width: 990px) 240px, (min-width: 768px) 180px, 120px',
+										alt: logo_alt
+								}}
+
+							{%- if bs.url != blank -%}
+								</a>
+							{%- else -%}
+								</div>
+							{%- endif -%}
+
+						</div>
+
+					{%- endif -%}
+
+				{%- endfor -%}
+
+			</div>
+
+		</div>
+
+	</div>
+</section>
+
+{%- style -%}
+
+	#{{ section.id }} {
+		padding-top: {{ ss.padding-top }}px;
+		padding-bottom: {{ ss.padding-bottom }}px;
+
+		--brands-desktop: {{ ss.brands_desktop }};
+		--brands-tablet: {{ ss.brands_tablet }};
+		--brands-mobile: {{ ss.brands_mobile }};
+
+		--brand-logo-width-desktop: {{ ss.logo_width_desktop }}px;
+		--brand-logo-width-tablet: {{ ss.logo_width_tablet }}px;
+		--brand-logo-width-mobile: {{ ss.logo_width_mobile }}px;
+	}
+
+	#{{ section.id }} .brand-slider__logo {
+		width: 100%;
+		max-width: var(--brand-logo-width-desktop);
+		height: auto;
+	}
+
+	@media screen and (max-width: 989px) {
+
+		#{{ section.id }} .brand-slider__logo {
+			max-width: var(--brand-logo-width-tablet);
+		}
+
+	}
+
+	@media screen and (max-width: 767px) {
+
+		#{{ section.id }} {
+			padding-top: {{ ss.padding-top-m }}px;
+			padding-bottom: {{ ss.padding-bottom-m }}px;
+		}
+
+		#{{ section.id }} .brand-slider__logo {
+			max-width: var(--brand-logo-width-mobile);
+		}
+
+	}
+
+{%- endstyle -%}
+
+{% javascript %}
+
+	(() => {
+
+		const initialiseBrandSliders = () => {
+
+			if (typeof Swiper === 'undefined') {
+				return;
+			}
+
+			document
+				.querySelectorAll('[data-brand-slider]')
+				.forEach((section) => {
+
+					if (
+						section.dataset.carousel !== 'true' ||
+						section.dataset.initialised === 'true'
+					) {
+						return;
+					}
+
+					const swiperElement = section.querySelector(
+						'.brand-slider__swiper'
+					);
+
+					if (!swiperElement) {
+						return;
+					}
+
+					const brandsDesktop =
+						parseInt(
+							section.dataset.brandsDesktop,
+							10
+						) || 6;
+
+					const brandsTablet =
+						parseInt(
+							section.dataset.brandsTablet,
+							10
+						) || 4;
+
+					const brandsMobile =
+						parseInt(
+							section.dataset.brandsMobile,
+							10
+						) || 3;
+
+					const previousButton = section.querySelector(
+						'.brand-slider__arrow--prev'
+					);
+
+					const nextButton = section.querySelector(
+						'.brand-slider__arrow--next'
+					);
+
+					new Swiper(swiperElement, {
+
+						slidesPerView: brandsMobile,
+
+						spaceBetween: 20,
+
+						watchOverflow: true,
+
+						navigation: previousButton && nextButton
+							? {
+								prevEl: previousButton,
+								nextEl: nextButton
+							}
+							: false,
+
+						breakpoints: {
+
+							768: {
+								slidesPerView: brandsTablet
+							},
+
+							990: {
+								slidesPerView: brandsDesktop
+							}
+
+						},
+
+						a11y: {
+							enabled: true,
+							prevSlideMessage: 'Previous brands',
+							nextSlideMessage: 'Next brands',
+							slideLabelMessage: '{{index}} of {{slidesLength}}'
+						}
+
+					});
+
+					section.dataset.initialised = 'true';
+
+				});
+
+		};
+
+		initialiseBrandSliders();
+
+		window.addEventListener(
+			'load',
+			initialiseBrandSliders
+		);
+
+		document.addEventListener(
+			'shopify:section:load',
+			initialiseBrandSliders
+		);
+
+	})();
+
+{% endjavascript %}
+
+{% schema %}
+{
+	"name": "Brand slider",
+	"tag": "section",
+	"class": "brand-slider-section",
+	"settings": [
+		{
+			"type": "text",
+			"id": "title",
+			"label": "Title",
+			"default": "Shop by brand"
+		},
+		{
+			"type": "checkbox",
+			"id": "enable_carousel",
+			"default": true,
+			"label": "Enable carousel"
+		},
+		{
+			"type": "header",
+			"content": "Brands per row"
+		},
+		{
+			"type": "range",
+			"id": "brands_desktop",
+			"min": 2,
+			"max": 8,
+			"step": 1,
+			"label": "Brands shown on desktop",
+			"default": 6
+		},
+		{
+			"type": "range",
+			"id": "brands_tablet",
+			"min": 2,
+			"max": 6,
+			"step": 1,
+			"label": "Brands shown on tablet",
+			"default": 4
+		},
+		{
+			"type": "range",
+			"id": "brands_mobile",
+			"min": 1,
+			"max": 4,
+			"step": 1,
+			"label": "Brands shown on mobile",
+			"default": 3
+		},
+		{
+			"type": "header",
+			"content": "Logo width"
+		},
+		{
+			"type": "range",
+			"id": "logo_width_desktop",
+			"min": 50,
+			"max": 400,
+			"step": 10,
+			"unit": "px",
+			"label": "Logo width - desktop",
+			"default": 220
+		},
+		{
+			"type": "range",
+			"id": "logo_width_tablet",
+			"min": 50,
+			"max": 300,
+			"step": 10,
+			"unit": "px",
+			"label": "Logo width - tablet",
+			"default": 180
+		},
+		{
+			"type": "range",
+			"id": "logo_width_mobile",
+			"min": 50,
+			"max": 200,
+			"step": 10,
+			"unit": "px",
+			"label": "Logo width - mobile",
+			"default": 110
+		},
+		{
+			"type": "header",
+			"content": "Padding (desktop)"
+		},
+		{
+			"type": "range",
+			"id": "padding-top",
+			"min": 0,
+			"max": 300,
+			"step": 5,
+			"label": "Padding top",
+			"default": 40
+		},
+		{
+			"type": "range",
+			"id": "padding-bottom",
+			"min": 0,
+			"max": 300,
+			"step": 5,
+			"label": "Padding bottom",
+			"default": 40
+		},
+		{
+			"type": "header",
+			"content": "Padding (mobile)"
+		},
+		{
+			"type": "range",
+			"id": "padding-top-m",
+			"min": 0,
+			"max": 300,
+			"step": 5,
+			"label": "Padding top",
+			"default": 30
+		},
+		{
+			"type": "range",
+			"id": "padding-bottom-m",
+			"min": 0,
+			"max": 300,
+			"step": 5,
+			"label": "Padding bottom",
+			"default": 30
+		}
+	],
+	"blocks": [
+		{
+			"type": "brand",
+			"name": "Brand",
+			"settings": [
+				{
+					"type": "image_picker",
+					"id": "image",
+					"label": "Logo"
+				},
+				{
+					"type": "text",
+					"id": "brand_name",
+					"label": "Brand name",
+					"info": "Used as the accessible label and image alt fallback."
+				},
+				{
+					"type": "url",
+					"id": "url",
+					"label": "Link"
+				}
+			]
+		}
+	],
+	"max_blocks": 24,
+	"presets": [
+		{
+			"name": "Brand slider",
+			"blocks": [
+				{ "type": "brand" },
+				{ "type": "brand" },
+				{ "type": "brand" },
+				{ "type": "brand" },
+				{ "type": "brand" },
+				{ "type": "brand" }
+			]
+		}
+	]
+}
+{% endschema %}
