@@ -1428,6 +1428,7 @@ button,
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		border-right:  1px solid var(--border-white);
 
 		.site-footer__logo {
 
@@ -1446,6 +1447,8 @@ button,
 		display: contents;
 
 		.site-footer__nav-group {
+
+			border-right:  1px solid var(--border-white);
 
 			.site-footer__nav-title {
 				margin: 0;
