@@ -7,9 +7,17 @@
 		align-items: center;
 		gap: 100px;
 
+		@media (max-width: 767px) {
+			flex-wrap: wrap;
+		}
+
 		.image-with-usps__media {
 
 			width: 50%;
+
+			@media (max-width: 767px) {
+				width: 100%;
+			}
 
 			picture {
 				display: block;
@@ -28,6 +36,10 @@
 		.image-with-usps__content {
 
 			width: 50%;
+
+			@media (max-width: 767px) {
+				width: 100%;
+			}
 
 			.image-with-usps__main {
 
