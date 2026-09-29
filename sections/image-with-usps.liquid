@@ -1,0 +1,294 @@
+{{- 'image-with-usps.css' | asset_url | stylesheet_tag -}}
+{%- assign ss = section.settings -%}
+
+<section class="image-with-usps" id="{{ section.id }}">
+	<div class="container">
+		<div class="image-with-usps__inner">
+
+			{%- if ss.desktop_image != blank -%}
+				<div class="image-with-usps__media">
+					<picture>
+						{%- if ss.mobile_image != blank -%}
+							<source
+								media="(max-width: 767px)"
+								srcset="
+									{{ ss.mobile_image | image_url: width: 400 }} 400w,
+									{{ ss.mobile_image | image_url: width: 600 }} 600w,
+									{{ ss.mobile_image | image_url: width: 800 }} 800w
+								"
+								sizes="100vw"
+							>
+						{%- endif -%}
+
+						{{
+							ss.desktop_image
+							| image_url: width: 1600
+							| image_tag:
+								class: 'image-with-usps__image',
+								loading: 'lazy',
+								widths: '600, 800, 1000, 1200, 1400, 1600',
+								sizes: '(min-width: 990px) 50vw, 100vw',
+								alt: ss.desktop_image.alt
+						}}
+					</picture>
+				</div>
+			{%- endif -%}
+
+			<div class="image-with-usps__content">
+
+				<div class="image-with-usps__main">
+
+					{%- if ss.heading != blank -%}
+						<h{{ ss.heading_tag }} class="h{{ ss.font_size }} image-with-usps__heading">
+							{{ ss.heading }}
+						</h{{ ss.heading_tag }}>
+					{%- endif -%}
+
+					{%- if ss.text != blank -%}
+						<div class="image-with-usps__text">
+							{{ ss.text }}
+						</div>
+					{%- endif -%}
+
+					{%- if ss.button_label != blank and ss.button_url != blank -%}
+						<a href="{{ ss.button_url }}" class="button image-with-usps__button">
+							{{ ss.button_label }}
+						</a>
+					{%- endif -%}
+
+				</div>
+
+				{%- if section.blocks.size > 0 -%}
+					<div class="image-with-usps__usps">
+
+						{%- for block in section.blocks -%}
+							{%- assign bs = block.settings -%}
+
+							<div class="image-with-usps__usp" {{ block.shopify_attributes }}>
+
+								{%- if bs.icon != blank -%}
+									<div class="image-with-usps__usp-icon" aria-hidden="true">
+										{{
+											bs.icon
+											| image_url: width: 120
+											| image_tag:
+												loading: 'lazy',
+												widths: '40, 60, 80, 120',
+												sizes: '60px',
+												alt: ''
+										}}
+									</div>
+								{%- endif -%}
+
+								<div class="image-with-usps__usp-content">
+
+									{%- if bs.title != blank -%}
+										<p class="image-with-usps__usp-title h6">
+											{{ bs.title }}
+										</p>
+									{%- endif -%}
+
+									{%- if bs.description != blank -%}
+										<div class="image-with-usps__usp-description">
+											{{ bs.description }}
+										</div>
+									{%- endif -%}
+
+								</div>
+
+							</div>
+
+						{%- endfor -%}
+
+					</div>
+				{%- endif -%}
+
+			</div>
+
+		</div>
+	</div>
+</section>
+
+{%- style -%}
+
+	#{{ section.id }} {
+		padding-top: {{ ss.padding-top }}px;
+		padding-bottom: {{ ss.padding-bottom }}px;
+	}
+
+	@media screen and (max-width: 750px) {
+
+		#{{ section.id }} {
+			padding-top: {{ ss.padding-top-m }}px;
+			padding-bottom: {{ ss.padding-bottom-m }}px;
+		}
+
+	}
+
+{%- endstyle -%} 
+
+{% schema %}
+{
+	"name": "Image with USPs",
+	"tag": "section",
+	"class": "image-with-usps-section",
+	"settings": [
+		{
+			"type": "image_picker",
+			"id": "desktop_image",
+			"label": "Desktop image"
+		},
+		{
+			"type": "image_picker",
+			"id": "mobile_image",
+			"label": "Mobile image",
+			"info": "Falls back to the desktop image if left blank."
+		},
+		{
+			"type": "header",
+			"content": "Content"
+		},
+		{
+			"type": "inline_richtext",
+			"id": "heading",
+			"label": "Heading",
+			"default": "Rider owned. Rider approved."
+		},
+		{
+			"type": "range",
+			"id": "heading_tag",
+			"min": 1,
+			"max": 6,
+			"step": 1,
+			"label": "Title heading tag",
+			"info": "Header tags, also known as heading tags, are used to separate headings and subheadings on a webpage. They rank in order of importance, from H1 to H6, with H1s usually being the title. Header tags improve the readability and SEO of a webpage.",
+			"default": 2
+		},
+		{
+			"type": "range",
+			"id": "font_size",
+			"min": 1,
+			"max": 6,
+			"step": 1,
+			"label": "Font size",
+			"info": "1 being the largest. 6 being the smallest.",
+			"default": 1
+		},
+		{
+			"type": "richtext",
+			"id": "text",
+			"label": "Text",
+			"default": "<p>We bring together trusted BMX bikes, frames and parts from the best brands in the scene. Honest advice, dependable service and real support before and after your order.</p>"
+		},
+		{
+			"type": "text",
+			"id": "button_label",
+			"label": "Button label",
+			"default": "Our story"
+		},
+		{
+			"type": "url",
+			"id": "button_url",
+			"label": "Button link"
+		},
+		{
+			"type": "header",
+			"content": "Padding (desktop)"
+		},
+		{
+			"type": "range",
+			"id": "padding-top",
+			"min": 0,
+			"max": 300,
+			"step": 5,
+			"label": "Padding top",
+			"default": 0
+		},
+		{
+			"type": "range",
+			"id": "padding-bottom",
+			"min": 0,
+			"max": 300,
+			"step": 5,
+			"label": "Padding bottom",
+			"default": 0
+		},
+		{
+			"type": "header",
+			"content": "Padding (mobile)"
+		},
+		{
+			"type": "range",
+			"id": "padding-top-m",
+			"min": 0,
+			"max": 300,
+			"step": 5,
+			"label": "Padding top",
+			"default": 0
+		},
+		{
+			"type": "range",
+			"id": "padding-bottom-m",
+			"min": 0,
+			"max": 300,
+			"step": 5,
+			"label": "Padding bottom",
+			"default": 0
+		}
+	],
+	"blocks": [
+		{
+			"type": "usp",
+			"name": "USP",
+			"settings": [
+				{
+					"type": "image_picker",
+					"id": "icon",
+					"label": "Icon"
+				},
+				{
+					"type": "text",
+					"id": "title",
+					"label": "Title",
+					"default": "Trusted brands"
+				},
+				{
+					"type": "inline_richtext",
+					"id": "description",
+					"label": "Description",
+					"default": "Proven BMX names"
+				}
+			]
+		}
+	],
+	"max_blocks": 4,
+	"presets": [
+		{
+			"name": "Image with USPs",
+			"blocks": [
+				{
+					"type": "usp",
+					"settings": {
+						"title": "Trusted brands",
+						"description": "Proven BMX names"
+					}
+				},
+				{
+					"type": "usp",
+					"settings": {
+						"title": "Expert advice",
+						"description": "Help from riders"
+					}
+				},
+				{
+					"type": "usp",
+					"settings": {
+						"title": "Real support",
+						"description": "Before and after"
+					}
+				}
+			]
+		}
+	]
+}
+{% endschema %}
