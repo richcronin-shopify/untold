@@ -82,6 +82,9 @@
 	}
 
 	.product-slider__pagination {
+
+		display: none;
+
 		display: flex;
 		justify-content: center;
 		.swiper-pagination-bullet {
