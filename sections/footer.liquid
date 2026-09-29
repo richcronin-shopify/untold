@@ -1,57 +1,487 @@
-<footer>
-  <div class="footer__copyright">
-    &copy;
-    {{ 'now' | date: '%Y' }}
-    {{ shop.name | link_to: routes.root_url }}, {{ powered_by_link }}
-  </div>
+{%- assign ss = section.settings -%}
 
-  <div class="footer__links">
-    {% for link in section.settings.menu.links %}
-      {{ link.title | link_to: link.url }}
-    {% endfor %}
-  </div>
+<footer class="site-footer" id="{{ section.id }}">
+	<div class="site-footer__main">
+		<div class="container">
 
-  <div class="footer__payment">
-    {% if section.settings.show_payment_icons %}
-      {% for type in shop.enabled_payment_types %}
-        {{ type | payment_type_svg_tag }}
-      {% endfor %}
-    {% endif %}
-  </div>
+			<div class="site-footer__grid">
+
+				<div class="site-footer__brand">
+
+					{%- if ss.logo != blank -%}
+						<a href="{{ routes.root_url }}" class="site-footer__logo" aria-label="{{ shop.name | escape }} home">
+							{{
+								ss.logo
+								| image_url: width: 500
+								| image_tag:
+									class: 'site-footer__logo-image',
+									loading: 'lazy',
+									widths: '150, 200, 300, 400, 500',
+									sizes: '200px',
+									alt: shop.name
+							}}
+						</a>
+					{%- endif -%}
+
+					<div class="site-footer__socials site-footer__socials--mobile">
+
+						{%- if ss.tiktok_url != blank -%}
+							<a
+								href="{{ ss.tiktok_url }}"
+								class="site-footer__social-link"
+								aria-label="TikTok"
+								target="_blank"
+								rel="noopener"
+							>
+								{%- if ss.tiktok_icon != blank -%}
+									{{
+										ss.tiktok_icon
+										| image_url: width: 80
+										| image_tag:
+											loading: 'lazy',
+											width: 40,
+											alt: ''
+									}}
+								{%- endif -%}
+							</a>
+						{%- endif -%}
+
+						{%- if ss.instagram_url != blank -%}
+							<a
+								href="{{ ss.instagram_url }}"
+								class="site-footer__social-link"
+								aria-label="Instagram"
+								target="_blank"
+								rel="noopener"
+							>
+								{%- if ss.instagram_icon != blank -%}
+									{{
+										ss.instagram_icon
+										| image_url: width: 80
+										| image_tag:
+											loading: 'lazy',
+											width: 40,
+											alt: ''
+									}}
+								{%- endif -%}
+							</a>
+						{%- endif -%}
+
+					</div>
+
+				</div>
+
+
+				<div class="site-footer__navigation">
+
+					{%- for block in section.blocks -%}
+						{%- assign bs = block.settings -%}
+
+						{%- if block.type == 'navigation' -%}
+
+							<div
+								class="site-footer__nav-group"
+								data-footer-nav
+								{{ block.shopify_attributes }}
+							>
+
+								<button
+									type="button"
+									class="site-footer__nav-toggle button--reset"
+									aria-expanded="false"
+									aria-controls="FooterNav-{{ section.id }}-{{ block.id }}"
+								>
+									<span>{{ bs.title }}</span>
+
+									<span class="site-footer__nav-chevron" aria-hidden="true">
+										{{- 'icon-chev.svg' | inline_asset_content -}}
+									</span>
+								</button>
+
+								{%- if bs.menu != blank -%}
+									<nav
+										class="site-footer__nav"
+										id="FooterNav-{{ section.id }}-{{ block.id }}"
+										aria-label="{{ bs.title | escape }}"
+									>
+
+										<ul class="site-footer__nav-list" role="list">
+
+											{%- for link in bs.menu.links -%}
+												<li class="site-footer__nav-item">
+													<a
+														href="{{ link.url }}"
+														class="site-footer__nav-link{% if link.current %} is-current{% endif %}"
+														{% if link.current %}aria-current="page"{% endif %}
+													>
+														{{ link.title }}
+													</a>
+												</li>
+											{%- endfor -%}
+
+										</ul>
+
+									</nav>
+								{%- endif -%}
+
+							</div>
+
+						{%- endif -%}
+
+					{%- endfor -%}
+
+				</div>
+
+
+				<div class="site-footer__newsletter">
+
+					{%- if ss.newsletter_heading != blank -%}
+						<p class="site-footer__newsletter-heading h5">
+							{{ ss.newsletter_heading }}
+						</p>
+					{%- endif -%}
+
+					{%- if ss.newsletter_description != blank -%}
+						<div class="site-footer__newsletter-description">
+							{{ ss.newsletter_description }}
+						</div>
+					{%- endif -%}
+
+
+					{%- form 'customer', class: 'site-footer__form' -%}
+
+						<input
+							type="hidden"
+							name="contact[tags]"
+							value="newsletter"
+						>
+
+						<div class="site-footer__form-fields">
+
+							<label
+								for="FooterEmail-{{ section.id }}"
+								class="visually-hidden"
+							>
+								Email address
+							</label>
+
+							<input
+								type="email"
+								id="FooterEmail-{{ section.id }}"
+								name="contact[email]"
+								class="site-footer__email"
+								value="{{ form.email }}"
+								placeholder="{{ ss.newsletter_placeholder }}"
+								autocomplete="email"
+								autocorrect="off"
+								autocapitalize="off"
+								required
+							>
+
+							<button type="submit" class="button site-footer__submit">
+								{{ ss.newsletter_button }}
+							</button>
+
+						</div>
+
+
+						{%- if form.errors -%}
+							<div class="site-footer__form-message site-footer__form-message--error" role="alert">
+								{{ form.errors | default_errors }}
+							</div>
+						{%- endif -%}
+
+
+						{%- if form.posted_successfully? -%}
+							<p class="site-footer__form-message" role="status">
+								{{ ss.newsletter_success }}
+							</p>
+						{%- endif -%}
+
+					{%- endform -%}
+
+
+					{%- if ss.newsletter_terms != blank -%}
+						<div class="site-footer__newsletter-terms">
+							{{ ss.newsletter_terms }}
+						</div>
+					{%- endif -%}
+
+
+					<div class="site-footer__socials site-footer__socials--desktop">
+
+						{%- if ss.tiktok_url != blank -%}
+							<a
+								href="{{ ss.tiktok_url }}"
+								class="site-footer__social-link"
+								aria-label="TikTok"
+								target="_blank"
+								rel="noopener"
+							>
+								{%- if ss.tiktok_icon != blank -%}
+									{{
+										ss.tiktok_icon
+										| image_url: width: 80
+										| image_tag:
+											loading: 'lazy',
+											width: 40,
+											alt: ''
+									}}
+								{%- endif -%}
+							</a>
+						{%- endif -%}
+
+						{%- if ss.instagram_url != blank -%}
+							<a
+								href="{{ ss.instagram_url }}"
+								class="site-footer__social-link"
+								aria-label="Instagram"
+								target="_blank"
+								rel="noopener"
+							>
+								{%- if ss.instagram_icon != blank -%}
+									{{
+										ss.instagram_icon
+										| image_url: width: 80
+										| image_tag:
+											loading: 'lazy',
+											width: 40,
+											alt: ''
+									}}
+								{%- endif -%}
+							</a>
+						{%- endif -%}
+
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+	</div>
+
+
+	<div class="site-footer__bottom">
+		<div class="container">
+
+			<div class="site-footer__bottom-inner">
+
+				{%- if ss.copyright_text != blank -%}
+					<p class="site-footer__copyright">
+						&copy; {{ 'now' | date: '%Y' }}. {{ ss.copyright_text }}
+					</p>
+				{%- endif -%}
+
+
+				{%- if ss.show_payment_icons and shop.enabled_payment_types.size > 0 -%}
+					<ul class="site-footer__payments" role="list">
+
+						{%- for type in shop.enabled_payment_types -%}
+							<li class="site-footer__payment">
+								{{ type | payment_type_svg_tag }}
+							</li>
+						{%- endfor -%}
+
+					</ul>
+				{%- endif -%}
+
+			</div>
+
+		</div>
+	</div>
 </footer>
 
-{% stylesheet %}
-  footer {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 2rem;
-  }
-  footer a {
-    text-decoration: none;
-    color: var(--color-foreground);
-  }
-  footer .footer__links,
-  footer .footer__payment {
-    display: flex;
-    gap: 1rem;
-  }
-{% endstylesheet %}
+
+<script>
+	(() => {
+
+		const initialiseFooterNavigation = (container = document) => {
+
+			container
+				.querySelectorAll('[data-footer-nav]')
+				.forEach((group) => {
+
+					if (group.dataset.initialised === 'true') {
+						return;
+					}
+
+					const toggle = group.querySelector(
+						'.site-footer__nav-toggle'
+					);
+
+					if (!toggle) {
+						return;
+					}
+
+					toggle.addEventListener('click', () => {
+
+						const isOpen = group.classList.toggle('is-open');
+
+						toggle.setAttribute(
+							'aria-expanded',
+							isOpen ? 'true' : 'false'
+						);
+
+					});
+
+					group.dataset.initialised = 'true';
+
+				});
+
+		};
+
+		initialiseFooterNavigation();
+
+		document.addEventListener(
+			'shopify:section:load',
+			(event) => initialiseFooterNavigation(event.target)
+		);
+
+	})();
+</script>
+
 
 {% schema %}
 {
-  "name": "t:general.footer",
-  "settings": [
-    {
-      "type": "link_list",
-      "id": "menu",
-      "label": "t:labels.menu"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_payment_icons",
-      "label": "t:labels.show_payment_icons",
-      "default": true
-    }
-  ]
+	"name": "Footer",
+	"tag": "section",
+	"class": "footer-section",
+	"settings": [
+		{
+			"type": "header",
+			"content": "Brand"
+		},
+		{
+			"type": "image_picker",
+			"id": "logo",
+			"label": "Logo"
+		},
+		{
+			"type": "header",
+			"content": "Newsletter"
+		},
+		{
+			"type": "text",
+			"id": "newsletter_heading",
+			"label": "Heading",
+			"default": "Signup for exclusive news and offers"
+		},
+		{
+			"type": "inline_richtext",
+			"id": "newsletter_description",
+			"label": "Description",
+			"default": "Sign up for exclusive offers, original stories, events and more."
+		},
+		{
+			"type": "text",
+			"id": "newsletter_placeholder",
+			"label": "Email placeholder",
+			"default": "Enter your email"
+		},
+		{
+			"type": "text",
+			"id": "newsletter_button",
+			"label": "Button label",
+			"default": "Subscribe"
+		},
+		{
+			"type": "text",
+			"id": "newsletter_success",
+			"label": "Success message",
+			"default": "Thanks for signing up."
+		},
+		{
+			"type": "inline_richtext",
+			"id": "newsletter_terms",
+			"label": "Terms text",
+			"default": "By subscribing you agree to our terms and conditions."
+		},
+		{
+			"type": "header",
+			"content": "Social media"
+		},
+		{
+			"type": "image_picker",
+			"id": "tiktok_icon",
+			"label": "TikTok icon"
+		},
+		{
+			"type": "url",
+			"id": "tiktok_url",
+			"label": "TikTok link"
+		},
+		{
+			"type": "image_picker",
+			"id": "instagram_icon",
+			"label": "Instagram icon"
+		},
+		{
+			"type": "url",
+			"id": "instagram_url",
+			"label": "Instagram link"
+		},
+		{
+			"type": "header",
+			"content": "Footer bottom"
+		},
+		{
+			"type": "text",
+			"id": "copyright_text",
+			"label": "Copyright text",
+			"default": "All rights reserved UNTOLD BMX."
+		},
+		{
+			"type": "checkbox",
+			"id": "show_payment_icons",
+			"label": "Show payment icons",
+			"default": true
+		}
+	],
+	"blocks": [
+		{
+			"type": "navigation",
+			"name": "Navigation",
+			"settings": [
+				{
+					"type": "text",
+					"id": "title",
+					"label": "Title",
+					"default": "Products"
+				},
+				{
+					"type": "link_list",
+					"id": "menu",
+					"label": "Navigation"
+				}
+			]
+		}
+	],
+	"max_blocks": 3,
+	"presets": [
+		{
+			"name": "Footer",
+			"blocks": [
+				{
+					"type": "navigation",
+					"settings": {
+						"title": "Products"
+					}
+				},
+				{
+					"type": "navigation",
+					"settings": {
+						"title": "Untold"
+					}
+				},
+				{
+					"type": "navigation",
+					"settings": {
+						"title": "Shop"
+					}
+				}
+			]
+		}
+	]
 }
 {% endschema %}
