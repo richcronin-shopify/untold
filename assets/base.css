@@ -1334,7 +1334,7 @@ button,
 
 		.product-card__availability {
 
-			align-self: flex-end;
+			width: 100%;
 
 			.product-card__availability-inner {
 
