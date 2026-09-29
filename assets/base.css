@@ -1607,6 +1607,13 @@ button,
 		.site-footer__newsletter-terms {
 			font-size: 14px;
 			margin: 10px 0 20px 0;
+			opacity: .4;
+			a {
+				text-decoration: underline;
+			}
+			@media (max-width: 767px) {
+				text-align: center;
+			}
 		}
 
 	}
