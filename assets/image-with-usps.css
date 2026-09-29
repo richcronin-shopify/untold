@@ -59,6 +59,8 @@
 
 					.image-with-usps__usp-icon {
 
+						margin: 0 0 20px 0;
+
 						img {
 							display: block;
 							width: 44px;
