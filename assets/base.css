@@ -1414,6 +1414,12 @@ button,
 	margin: 70px 0 0 0;
 	border-top: 1px solid var(--border-white);
 
+	.container {
+		@media (max-width: 989px) {
+			padding: 0;
+		}
+	}
+
 	.site-footer__main {
 		border-bottom:  1px solid var(--border-white);
 	}
