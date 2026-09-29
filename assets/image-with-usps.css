@@ -8,6 +8,8 @@
 
 		.image-with-usps__media {
 
+			width: 50%;
+
 			picture {
 				display: block;
 				width: 100%;
@@ -23,6 +25,8 @@
 		}
 
 		.image-with-usps__content {
+
+			width: 50%;
 
 			.image-with-usps__main {
 
