@@ -84,7 +84,21 @@
 	.product-slider__pagination {
 		display: flex;
 		justify-content: center;
-		
+		.swiper-pagination-bullet {
+			width: 30px;
+			height: 3px;
+			margin: 0 3px !important;
+
+			border-radius: 0;
+
+			background: var(--color-primary);
+
+			opacity: .3;
+		}
+
+		.swiper-pagination-bullet-active {
+			opacity: 1;
+		}
 	}
 
 }
