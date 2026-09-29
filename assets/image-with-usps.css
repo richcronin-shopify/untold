@@ -39,8 +39,9 @@
 
 				}
 
-				.image-with-usps__button {
-
+				.image-with-usps__button-wrapper {
+					.image-with-usps__button {
+					}
 				}
 
 			}
