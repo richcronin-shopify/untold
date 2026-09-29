@@ -1535,7 +1535,9 @@ button,
 			margin: 20px 0 0 0;
 
 			.site-footer__form-fields {
+				
 				display: flex;
+				gap: 10px;
 
 				.site-footer__email {
 					flex: 1;
@@ -1675,7 +1677,6 @@ button,
 
 				.site-footer__form-fields {
 					flex-direction: column;
-					
 				}
 
 			}
