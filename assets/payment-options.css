@@ -20,6 +20,7 @@
 			@media (max-width: 990px) {
 				width: 100%;
 				text-align: center;
+				margin: 0 0 20px 0;
 			}
 
 			.payment-options__title {
