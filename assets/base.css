@@ -1623,7 +1623,7 @@ button,
 		padding: 20px 0;
 
 		@media (max-width: 989px) {
-			padding: 20px;
+			padding: 20px 30px;
 		}
 
 		.site-footer__bottom-inner {
