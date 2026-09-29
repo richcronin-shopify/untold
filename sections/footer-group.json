@@ -14,6 +14,18 @@
     "footer": {
       "type": "footer",
       "settings": {
+        "logo": "shopify://shop_images/web-logo.svg",
+        "newsletter_heading": "Signup for exclusive news and offers",
+        "newsletter_description": "Sign up for exclusive offers, original stories, events and more.",
+        "newsletter_placeholder": "Enter your email",
+        "newsletter_button": "Subscribe",
+        "newsletter_success": "Thanks for signing up.",
+        "newsletter_terms": "By subscribing you agree to our terms and conditions.",
+        "tiktok_icon": "shopify://shop_images/tiktok-svgrepo-com_1.svg",
+        "tiktok_url": "https://www.tiktok.com/@untoldbmx",
+        "instagram_icon": "shopify://shop_images/instagram-svgrepo-com_1.svg",
+        "instagram_url": "https://www.instagram.com/untoldbmx/",
+        "copyright_text": "All rights reserved UNTOLD BMX.",
         "show_payment_icons": true
       }
     }
