@@ -228,12 +228,99 @@
         "padding-top-m": 30,
         "padding-bottom-m": 30
       }
+    },
+    "product_component_QLzHta": {
+      "type": "product-component",
+      "name": "Product slider",
+      "settings": {
+        "title": "Best sellers",
+        "collection": "frames",
+        "show_view_all": true,
+        "enable_carousel": true,
+        "products_desktop": 5,
+        "products_mobile": 2,
+        "padding-top": 40,
+        "padding-bottom": 40,
+        "padding-top-m": 30,
+        "padding-bottom-m": 30
+      }
+    },
+    "product_component_aiiB9b": {
+      "type": "product-component",
+      "blocks": {
+        "product_GRQ4e7": {
+          "type": "product",
+          "settings": {
+            "product": "cult-devotion-26-bike-black-22"
+          }
+        },
+        "product_Y8VPTX": {
+          "type": "product",
+          "settings": {
+            "product": "alienation-bmx-rim-tape-pair-black"
+          }
+        },
+        "product_hExcVD": {
+          "type": "product",
+          "settings": {
+            "product": "alienation-deviant-18-bmx-rim-gloss-black-36-hole"
+          }
+        },
+        "product_BHRJLR": {
+          "type": "product",
+          "settings": {
+            "product": "alienation-felon-rim-purple-36-hole"
+          }
+        },
+        "product_NwRTMN": {
+          "type": "product",
+          "settings": {
+            "product": "alienation-mite-tcs-rim-black-28-hole"
+          }
+        },
+        "product_QQNPB7": {
+          "type": "product",
+          "settings": {
+            "product": "backyard-bars-black-9"
+          }
+        },
+        "product_acPXxn": {
+          "type": "product",
+          "settings": {
+            "product": "cult-ic-sect-v4-18-forks-28mm-rake-black-10mm-3-8"
+          }
+        }
+      },
+      "block_order": [
+        "product_GRQ4e7",
+        "product_Y8VPTX",
+        "product_hExcVD",
+        "product_BHRJLR",
+        "product_NwRTMN",
+        "product_QQNPB7",
+        "product_acPXxn"
+      ],
+      "name": "Product slider",
+      "settings": {
+        "title": "Best sellers",
+        "collection": "",
+        "show_view_all": true,
+        "enable_carousel": true,
+        "products_desktop": 5,
+        "products_mobile": 2,
+        "padding-top": 40,
+        "padding-bottom": 40,
+        "padding-top-m": 30,
+        "padding-bottom-m": 30
+      }
     }
   },
   "order": [
     "hero_XdJJ7X",
     "usp_grid_giqUqR",
     "collection_grid_ydaH7n",
-    "payment_icons_74q9MM"
+    "payment_icons_74q9MM",
+    "product_component_QLzHta",
+    "product_component_aiiB9b"
   ]
 }
