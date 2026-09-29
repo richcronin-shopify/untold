@@ -1621,6 +1621,7 @@ button,
 			.site-footer__copyright {
 				margin: 0;
 				font-size: 14px;
+				opacity: .4;
 			}
 
 			.site-footer__payments {
