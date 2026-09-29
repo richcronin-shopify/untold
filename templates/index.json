@@ -528,6 +528,58 @@
         "padding-top-m": 30,
         "padding-bottom-m": 30
       }
+    },
+    "multicolumn_zU8AgG": {
+      "type": "multicolumn",
+      "blocks": {
+        "card_hM3HHX": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/shop-by-height.jpg",
+            "icon": "shopify://shop_images/icon-height.svg",
+            "title": "Shop by height",
+            "description": "Find the right frame size",
+            "url": ""
+          }
+        },
+        "card_HhjRXp": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/shop-by-age.jpg",
+            "icon": "shopify://shop_images/icon-age.svg",
+            "title": "Shop by age",
+            "description": "Perfect picks for younger riders",
+            "url": "shopify://collections/chains"
+          }
+        },
+        "card_Q4CJDK": {
+          "type": "card",
+          "settings": {
+            "image": "shopify://shop_images/shop-by-style.jpg",
+            "icon": "shopify://shop_images/icon-star_9722ab4a-a2ac-40ed-9b4d-8696858b930e.svg",
+            "title": "Shop by riding style",
+            "description": "Street, park or trails",
+            "url": ""
+          }
+        }
+      },
+      "block_order": [
+        "card_hM3HHX",
+        "card_HhjRXp",
+        "card_Q4CJDK"
+      ],
+      "name": "Multicolumn",
+      "settings": {
+        "eyebrow": "Find your perfect ride",
+        "heading": "Need help choosing a bike?",
+        "heading_tag": 2,
+        "font_size": 2,
+        "description": "Shop by height, age or riding style and find the right setup faster.",
+        "padding-top": 40,
+        "padding-bottom": 40,
+        "padding-top-m": 30,
+        "padding-bottom-m": 30
+      }
     }
   },
   "order": [
@@ -539,6 +591,7 @@
     "image_with_usps_KeYf6t",
     "brand_slider_CBWDTy",
     "product_component_aiiB9b",
-    "brand_slider_3WdMEK"
+    "brand_slider_3WdMEK",
+    "multicolumn_zU8AgG"
   ]
 }
