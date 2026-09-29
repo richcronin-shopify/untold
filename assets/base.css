@@ -1469,6 +1469,7 @@ button,
 			@media (max-width: 989px) {
 				border: none;
 				border-bottom: 1px solid var(--border-white);
+				padding: 20px 16px;
 			}
 
 			.site-footer__nav-title {
