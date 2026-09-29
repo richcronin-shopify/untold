@@ -1475,7 +1475,7 @@ button,
 					.site-footer__nav-item {
 						
 						display: block;
-						
+						margin: 0 0 6px 0;
 
 						.site-footer__nav-link {
 							font-size: 14px;
