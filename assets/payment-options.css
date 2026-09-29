@@ -49,6 +49,11 @@
 				align-items: center;
 				gap: 16px;
 
+				@media (max-width: 768px) {
+					flex-wrap: wrap;
+					justify-content: center;
+				}
+
 				.payment-options__icon {
 					img {
 						width: 60px;
@@ -58,6 +63,11 @@
 				}
 
 				.payment-options__content {
+
+					@media (max-width: 768px) {
+						width: 100%;
+						text-align: center;
+					}
 
 					.payment-options__item-title {
 
