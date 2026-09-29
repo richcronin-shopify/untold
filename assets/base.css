@@ -1543,6 +1543,10 @@ button,
 
 		padding: 20px 30px;
 
+		@media (max-width: 767px) {
+			padding: 20px 16px;
+		}
+
 		.site-footer__newsletter-heading {
 			margin: 0 0 12px 0;
 			font-size: 22px;
