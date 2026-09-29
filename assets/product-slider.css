@@ -85,6 +85,9 @@
 
 		.swiper-wrapper {
 			align-items: stretch;
+			@media (max-width: 990px) {
+				padding-bottom: 40px;
+			}
 		}
 
 		.product-slider__items {
