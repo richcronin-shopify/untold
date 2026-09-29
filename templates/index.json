@@ -235,6 +235,7 @@
       "settings": {
         "title": "Best sellers",
         "collection": "frames",
+        "product_limit": 15,
         "show_view_all": true,
         "enable_carousel": true,
         "products_desktop": 5,
@@ -304,6 +305,7 @@
       "settings": {
         "title": "Best sellers",
         "collection": "",
+        "product_limit": 20,
         "show_view_all": true,
         "enable_carousel": true,
         "products_desktop": 5,
