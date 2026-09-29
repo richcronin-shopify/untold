@@ -253,6 +253,7 @@
         "usp_iU9rTU": {
           "type": "usp",
           "settings": {
+            "icon": "shopify://shop_images/icon-secure.svg",
             "title": "Trusted brands",
             "description": "Proven BMX names"
           }
@@ -260,6 +261,7 @@
         "usp_hzFa6y": {
           "type": "usp",
           "settings": {
+            "icon": "shopify://shop_images/icon-cs.svg",
             "title": "Expert advice",
             "description": "Help from riders"
           }
@@ -267,6 +269,7 @@
         "usp_8tKfzx": {
           "type": "usp",
           "settings": {
+            "icon": "shopify://shop_images/icon-delivery.svg",
             "title": "Real support",
             "description": "Before and after"
           }
