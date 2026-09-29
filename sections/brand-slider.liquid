@@ -55,6 +55,7 @@
 
 						<div
 							class="brand-slider__item{% if ss.enable_carousel %} swiper-slide{% endif %}"
+							style="--brand-logo-max-width: {{ bs.max_image_width }}px;"
 							{{ block.shopify_attributes }}
 						>
 
@@ -337,6 +338,16 @@
 					"type": "image_picker",
 					"id": "image",
 					"label": "Logo"
+				},
+				{
+					"type": "range",
+					"id": "max_image_width",
+					"min": 100,
+					"max": 240,
+					"step": 10,
+					"unit": "px",
+					"label": "Max image width",
+					"default": 180
 				},
 				{
 					"type": "text",
