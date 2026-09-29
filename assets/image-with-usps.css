@@ -97,11 +97,17 @@
 
 						.image-with-usps__usp-title {
 							margin: 0;
+							@media (max-width: 767px) {
+								font-size: 15px;
+							}
 						}
 
 						.image-with-usps__usp-description {
 							margin: 4px 0 0 0;
 							font-size: 14px;
+							@media (max-width: 767px) {
+								font-size: 10px;
+							}
 						}
 
 					}
