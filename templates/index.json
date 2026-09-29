@@ -282,8 +282,8 @@
       ],
       "name": "Image with USPs",
       "settings": {
-        "desktop_image": "shopify://shop_images/rider-owned.jpg",
-        "mobile_image": "shopify://shop_images/frames_99457d6c-7c1b-43f0-a4d8-7d76fac3a0de.jpg",
+        "desktop_image": "shopify://shop_images/rider-owned_be7f1bbf-26a1-431d-9ff6-34c0b4d24e88.jpg",
+        "mobile_image": "shopify://shop_images/rider-owned-m.jpg",
         "heading": "Rider owned. Rider approved.",
         "heading_tag": 2,
         "font_size": 2,
