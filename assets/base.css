@@ -1457,7 +1457,7 @@ button,
 			padding: 20px 30px;
 
 			.site-footer__nav-title {
-				margin: 0;
+				margin: 0 0 12px 0;
 				font-size: 22px;
 			}
 
@@ -1473,9 +1473,12 @@ button,
 					list-style: none;
 
 					.site-footer__nav-item {
+						
+						display: block;
+						
 
 						.site-footer__nav-link {
-
+							font-size: 14px;
 						}
 
 					}
@@ -1494,7 +1497,7 @@ button,
 		border-right:  1px solid var(--border-white);
 
 		.site-footer__nav-title {
-			margin: 0;
+			margin: 0 0 12px 0;
 			font-size: 22px;
 		}
 
