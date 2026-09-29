@@ -224,7 +224,7 @@
         "button_label": "Learn more",
         "button_url": "shopify://pages/terms-conditions",
         "padding-top": 50,
-        "padding-bottom": 50,
+        "padding-bottom": 40,
         "padding-top-m": 30,
         "padding-bottom-m": 30
       }
@@ -239,10 +239,10 @@
         "enable_carousel": true,
         "products_desktop": 5,
         "products_mobile": 2,
-        "padding-top": 40,
+        "padding-top": 0,
         "padding-bottom": 40,
-        "padding-top-m": 30,
-        "padding-bottom-m": 30
+        "padding-top-m": 0,
+        "padding-bottom-m": 20
       }
     },
     "product_component_aiiB9b": {
