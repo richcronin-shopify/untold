@@ -62,6 +62,18 @@
 
 	}
 
+	.product-slider__swiper {
+
+		opacity: 0;
+		visibility: hidden;
+
+		&.swiper-initialized {
+			opacity: 1;
+			visibility: visible;
+		}
+
+	}
+
 	.product-slider__swiper,
 	.product-slider__grid {
 
