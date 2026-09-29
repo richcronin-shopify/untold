@@ -40,7 +40,7 @@
         "newsletter_placeholder": "Enter your email",
         "newsletter_button": "Subscribe",
         "newsletter_success": "Thanks for signing up.",
-        "newsletter_terms": "By subscribing you agree to our terms and conditions.",
+        "newsletter_terms": "By subscribing you agree to our <a href=\"/policies/terms-of-service\" title=\"Terms of Service\">terms and conditions</a>.",
         "tiktok_icon": "shopify://shop_images/tiktok-svgrepo-com_1.svg",
         "tiktok_url": "https://www.tiktok.com/@untoldbmx",
         "instagram_icon": "shopify://shop_images/instagram-svgrepo-com_1.svg",
