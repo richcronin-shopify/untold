@@ -13,6 +13,26 @@
   "sections": {
     "footer": {
       "type": "footer",
+      "blocks": {
+        "navigation_DBy8jj": {
+          "type": "navigation",
+          "settings": {
+            "title": "Products",
+            "menu": "footer-1"
+          }
+        },
+        "navigation_DtRkpP": {
+          "type": "navigation",
+          "settings": {
+            "title": "UNTOLD",
+            "menu": "footer-2"
+          }
+        }
+      },
+      "block_order": [
+        "navigation_DBy8jj",
+        "navigation_DtRkpP"
+      ],
       "settings": {
         "logo": "shopify://shop_images/web-logo.svg",
         "newsletter_heading": "Signup for exclusive news and offers",
