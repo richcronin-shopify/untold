@@ -28,7 +28,13 @@
 	.product-slider__grid {
 
 		.product-slider__items {
+			display: grid;
+			grid-template-columns: repeat(var(--products-desktop), minmax(0, 1fr));
+			gap: 10px;
 
+			@media (max-width: 750px) {
+				grid-template-columns: repeat(var(--products-mobile), minmax(0, 1fr));
+			}
 		}
 
 		.product-slider__item {
