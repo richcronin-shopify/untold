@@ -1412,14 +1412,7 @@ button,
 .site-footer {
 
 	margin: 100px 0 0 0;
-
-	.site-footer__main {
-
-		.container {
-
-		}
-
-	}
+	border-top: 1px solid var(--border-white);
 
 	.site-footer__grid {
 		display: grid;
