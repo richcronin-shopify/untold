@@ -366,6 +366,76 @@
         "padding-top-m": 30,
         "padding-bottom-m": 30
       }
+    },
+    "brand_slider_CBWDTy": {
+      "type": "brand-slider",
+      "blocks": {
+        "brand_nKBDgw": {
+          "type": "brand",
+          "settings": {
+            "brand_name": "",
+            "url": ""
+          }
+        },
+        "brand_WwBrXK": {
+          "type": "brand",
+          "settings": {
+            "brand_name": "",
+            "url": ""
+          }
+        },
+        "brand_aEpHHn": {
+          "type": "brand",
+          "settings": {
+            "brand_name": "",
+            "url": ""
+          }
+        },
+        "brand_qbnw8V": {
+          "type": "brand",
+          "settings": {
+            "brand_name": "",
+            "url": ""
+          }
+        },
+        "brand_VDRg9N": {
+          "type": "brand",
+          "settings": {
+            "brand_name": "",
+            "url": ""
+          }
+        },
+        "brand_3bDTqF": {
+          "type": "brand",
+          "settings": {
+            "brand_name": "",
+            "url": ""
+          }
+        }
+      },
+      "block_order": [
+        "brand_nKBDgw",
+        "brand_WwBrXK",
+        "brand_aEpHHn",
+        "brand_qbnw8V",
+        "brand_VDRg9N",
+        "brand_3bDTqF"
+      ],
+      "name": "Brand slider",
+      "settings": {
+        "title": "Shop by brand",
+        "enable_carousel": true,
+        "brands_desktop": 6,
+        "brands_tablet": 4,
+        "brands_mobile": 3,
+        "logo_width_desktop": 220,
+        "logo_width_tablet": 180,
+        "logo_width_mobile": 110,
+        "padding-top": 40,
+        "padding-bottom": 40,
+        "padding-top-m": 30,
+        "padding-bottom-m": 30
+      }
     }
   },
   "order": [
@@ -375,6 +445,7 @@
     "payment_icons_74q9MM",
     "product_component_QLzHta",
     "image_with_usps_KeYf6t",
+    "brand_slider_CBWDTy",
     "product_component_aiiB9b"
   ]
 }
