@@ -1406,3 +1406,338 @@ button,
 
 
 }
+
+/* Footer */
+
+.site-footer {
+
+	.site-footer__main {
+
+		.container {
+
+		}
+
+	}
+
+	.site-footer__grid {
+		display: grid;
+		grid-template-columns:
+			minmax(200px, 1.1fr)
+			minmax(180px, 0.9fr)
+			minmax(180px, 0.9fr)
+			minmax(180px, 0.9fr)
+			minmax(420px, 2fr);
+	}
+
+	.site-footer__brand {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		.site-footer__logo {
+
+			.site-footer__logo-image {
+				display: block;
+				width: 100%;
+				height: auto;
+				max-width: 180px;
+			}
+
+		}
+
+	}
+
+	.site-footer__navigation {
+		display: contents;
+
+		.site-footer__nav-group {
+
+			.site-footer__nav-title {
+				margin: 0;
+			}
+
+			.site-footer__nav-toggle {
+				display: none;
+			}
+
+			.site-footer__nav {
+
+				.site-footer__nav-list {
+					margin: 0;
+					padding: 0;
+					list-style: none;
+
+					.site-footer__nav-item {
+
+						.site-footer__nav-link {
+
+						}
+
+					}
+
+				}
+
+			}
+
+		}
+
+	}
+
+	.site-footer__shop {
+
+		.site-footer__nav-title {
+			margin: 0;
+		}
+
+		.site-footer__nav-toggle {
+			display: none;
+		}
+
+		.site-footer__shop-content {
+
+			p {
+				margin: 0;
+			}
+
+		}
+
+	}
+
+	.site-footer__newsletter {
+
+		.site-footer__newsletter-heading {
+			margin: 0;
+		}
+
+		.site-footer__newsletter-description {
+
+		}
+
+		.site-footer__form {
+
+			.site-footer__form-fields {
+				display: flex;
+
+				.site-footer__email {
+					flex: 1;
+					min-width: 0;
+				}
+
+				.site-footer__submit {
+					flex-shrink: 0;
+				}
+
+			}
+
+			.site-footer__form-message {
+
+				&.site-footer__form-message--error {
+
+				}
+
+			}
+
+		}
+
+		.site-footer__newsletter-terms {
+
+		}
+
+	}
+
+	.site-footer__socials {
+		display: flex;
+		align-items: center;
+		gap: 20px;
+
+		.site-footer__social-link {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+
+			img,
+			svg {
+				display: block;
+			}
+
+		}
+
+		&.site-footer__socials--mobile {
+			display: none;
+		}
+
+	}
+
+	.site-footer__bottom {
+
+		.site-footer__bottom-inner {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 30px;
+
+			.site-footer__copyright {
+				margin: 0;
+			}
+
+			.site-footer__payments {
+				display: flex;
+				align-items: center;
+				gap: 5px;
+				margin: 0;
+				padding: 0;
+				list-style: none;
+
+				.site-footer__payment {
+
+					svg {
+						display: block;
+					}
+
+				}
+
+			}
+
+		}
+
+	}
+
+
+	@media (max-width: 989px) {
+
+		.site-footer__grid {
+			grid-template-columns: 1fr 1fr;
+		}
+
+		.site-footer__brand {
+
+		}
+
+		.site-footer__navigation {
+			display: block;
+		}
+
+		.site-footer__newsletter {
+
+		}
+
+	}
+
+
+	@media (max-width: 767px) {
+
+		.site-footer__grid {
+			display: flex;
+			flex-direction: column;
+		}
+
+		.site-footer__brand {
+			order: 0;
+			justify-content: space-between;
+
+			.site-footer__logo {
+
+				.site-footer__logo-image {
+					max-width: 100px;
+				}
+
+			}
+
+		}
+
+
+		.site-footer__newsletter {
+			order: 1;
+
+			.site-footer__form {
+
+				.site-footer__form-fields {
+					flex-direction: column;
+				}
+
+			}
+
+		}
+
+
+		.site-footer__navigation {
+			order: 2;
+
+			.site-footer__nav-group {
+
+				.site-footer__nav-toggle {
+					display: flex;
+					align-items: center;
+					justify-content: space-between;
+					width: 100%;
+
+					.site-footer__nav-chevron {
+						display: block;
+						transition: transform 0.2s ease;
+
+						svg {
+							display: block;
+						}
+
+					}
+
+				}
+
+				.site-footer__nav {
+					display: none;
+				}
+
+				&.is-open {
+
+					.site-footer__nav-toggle {
+
+						.site-footer__nav-chevron {
+							transform: rotate(180deg);
+						}
+
+					}
+
+					.site-footer__nav {
+						display: block;
+					}
+
+				}
+
+			}
+
+		}
+
+
+		.site-footer__socials {
+
+			&.site-footer__socials--desktop {
+				display: none;
+			}
+
+			&.site-footer__socials--mobile {
+				display: flex;
+			}
+
+		}
+
+
+		.site-footer__bottom {
+
+			.site-footer__bottom-inner {
+				flex-direction: column;
+				justify-content: center;
+			}
+
+			.site-footer__copyright {
+				text-align: center;
+			}
+
+			.site-footer__payments {
+				justify-content: center;
+			}
+
+		}
+
+	}
+
+}
