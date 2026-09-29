@@ -1542,10 +1542,13 @@ button,
 				.site-footer__email {
 					flex: 1;
 					min-width: 0;
+					
 				}
 
 				.site-footer__submit {
 					flex-shrink: 0;
+					width: 115px;
+					min-width: 115px;
 				}
 
 			}
