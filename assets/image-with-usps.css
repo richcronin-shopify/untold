@@ -46,6 +46,9 @@
 
 			.image-with-usps__usps {
 
+				display: flex;
+				justify-content: space-between;
+
 				.image-with-usps__usp {
 
 					.image-with-usps__usp-icon {
