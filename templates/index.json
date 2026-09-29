@@ -239,11 +239,58 @@
         "show_view_all": true,
         "enable_carousel": true,
         "products_desktop": 5,
+        "products_tablet": 3,
         "products_mobile": 2,
         "padding-top": 0,
         "padding-bottom": 40,
         "padding-top-m": 0,
         "padding-bottom-m": 20
+      }
+    },
+    "image_with_usps_KeYf6t": {
+      "type": "image-with-usps",
+      "blocks": {
+        "usp_iU9rTU": {
+          "type": "usp",
+          "settings": {
+            "title": "Trusted brands",
+            "description": "Proven BMX names"
+          }
+        },
+        "usp_hzFa6y": {
+          "type": "usp",
+          "settings": {
+            "title": "Expert advice",
+            "description": "Help from riders"
+          }
+        },
+        "usp_8tKfzx": {
+          "type": "usp",
+          "settings": {
+            "title": "Real support",
+            "description": "Before and after"
+          }
+        }
+      },
+      "block_order": [
+        "usp_iU9rTU",
+        "usp_hzFa6y",
+        "usp_8tKfzx"
+      ],
+      "name": "Image with USPs",
+      "settings": {
+        "desktop_image": "shopify://shop_images/rider-owned.jpg",
+        "mobile_image": "shopify://shop_images/frames_99457d6c-7c1b-43f0-a4d8-7d76fac3a0de.jpg",
+        "heading": "Rider owned. Rider approved.",
+        "heading_tag": 2,
+        "font_size": 1,
+        "text": "<p>We bring together trusted BMX bikes, frames and parts from the best brands in the scene. Honest advice, dependable service and real support before and after your order.</p>",
+        "button_label": "Our story",
+        "button_url": "shopify://pages/brands-we-stock",
+        "padding-top": 0,
+        "padding-bottom": 0,
+        "padding-top-m": 0,
+        "padding-bottom-m": 0
       }
     },
     "product_component_aiiB9b": {
@@ -309,6 +356,7 @@
         "show_view_all": true,
         "enable_carousel": true,
         "products_desktop": 5,
+        "products_tablet": 3,
         "products_mobile": 2,
         "padding-top": 40,
         "padding-bottom": 40,
@@ -323,6 +371,7 @@
     "collection_grid_ydaH7n",
     "payment_icons_74q9MM",
     "product_component_QLzHta",
+    "image_with_usps_KeYf6t",
     "product_component_aiiB9b"
   ]
 }
