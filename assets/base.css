@@ -1694,7 +1694,7 @@ button,
 			
 			order: 0;
 			justify-content: space-between;
-			
+			padding: 30px 16px;
 
 			.site-footer__logo {
 
