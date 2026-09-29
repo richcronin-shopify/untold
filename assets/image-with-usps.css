@@ -51,6 +51,12 @@
 				justify-content: space-between;
 				margin: 50px 0 0 0;
 
+				.image-with-usps__divider {
+					width: 1px;
+					height: 100%;
+					background: var(--border-white);
+				}
+
 				.image-with-usps__usp {
 
 					display: flex;
