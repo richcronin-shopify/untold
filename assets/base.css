@@ -1302,8 +1302,8 @@ button,
 		.product-card__title {
 
 			margin: 0 0 7px 0;
-			font-size: 16px;
-			line-height: 20px;
+			font-size: 20px;
+			line-height: 1;
 			font-family: var(--font-heading-family);
 			text-transform: uppercase;
 
