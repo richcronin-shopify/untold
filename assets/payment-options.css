@@ -11,6 +11,10 @@
 		display: flex;
 		align-items: center; 
 
+		@media (max-width: 990px) {
+			flex-wrap: wrap;
+		}
+
 		.payment-options__intro {
 
 			.payment-options__title {
