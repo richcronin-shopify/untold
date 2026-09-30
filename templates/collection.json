@@ -20,7 +20,7 @@
         "products_desktop": 5,
         "products_tablet": 3,
         "products_mobile": 2,
-        "products_per_page": 4,
+        "products_per_page": 5,
         "force_out_of_stock_last": true,
         "pagination_type": "standard",
         "padding-top": 40,
