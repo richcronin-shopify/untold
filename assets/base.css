@@ -1163,11 +1163,11 @@ button,
 					&::-webkit-search-cancel-button {
 						appearance: none;
 						-webkit-appearance: none;
-						width: 18px;
-						height: 18px;
+						width: 16px;
+						height: 16px;
 						cursor: pointer;
 						display: block;
-						background: url("icon-close.svg") center / contain no-repeat red;
+						background: url("icon-close.svg") center / contain no-repeat;
 					}
 
 				}
