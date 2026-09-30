@@ -1633,6 +1633,9 @@ button,
 					border: 1px solid var(--border-white);
 					box-shadow: none;
 					padding: 0 20px;
+					&:hover {
+						border-color: #fff;
+					}
 				}
 
 				.site-footer__submit {
