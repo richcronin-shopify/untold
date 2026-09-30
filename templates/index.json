@@ -237,7 +237,7 @@
         "collection": "frames",
         "product_limit": 10,
         "show_view_all": true,
-        "enable_carousel": true,
+        "enable_carousel": false,
         "products_desktop": 5,
         "products_tablet": 3,
         "products_mobile": 2,
