@@ -2002,7 +2002,7 @@ button,
 			}
 
 			.breadcrumbs__separator {
-
+				margin-right: 10px;
 			}
 
 			.breadcrumbs__current {
