@@ -33,6 +33,10 @@
 				margin: 0 0 20px 0;
 			}
 
+			.payment-options__title {
+				margin: 0;
+			}
+
 			.payment-options__description {
 				@media (max-width: 768px) {
 					font-size: 13px;
