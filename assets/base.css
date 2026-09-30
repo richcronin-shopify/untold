@@ -1998,7 +1998,7 @@ button,
 			font-weight: 400;
 
 			.breadcrumbs__link {
-				display: block;
+				display: inline-block;
 			}
 
 			.breadcrumbs__separator {
@@ -2006,7 +2006,7 @@ button,
 			}
 
 			.breadcrumbs__current {
-
+				opacity: .5;
 			}
 
 		}
