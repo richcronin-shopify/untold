@@ -14,7 +14,8 @@
 		justify-content: center;
 
 		@media (max-width: 990px) {
-			aspect-ratio: 1/1;
+			min-height: unset;
+			aspect-ratio: unset;
 		}
 	}
 
@@ -38,7 +39,7 @@
 		object-fit: cover;
 		aspect-ratio: 1/0.6;
 		@media (max-width: 990px) {
-			aspect-ratio: 1/1;
+			aspect-ratio: unset;
 		}
 	}
 
