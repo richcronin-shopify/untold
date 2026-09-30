@@ -1478,6 +1478,9 @@ button,
 				font-size: 22px;
 				.site-footer__nav-chevron {
 					display: none;
+					@media (max-width: 767px) {
+						display: block;
+					}
 				}
 			}
 
@@ -1525,6 +1528,9 @@ button,
 			font-size: 22px;
 			.site-footer__nav-chevron {
 				display: none;
+				@media (max-width: 767px) {
+					display: block;
+				}
 			}
 		}
 
