@@ -9,16 +9,22 @@
  */
 {
   "sections": {
-    "main": {
-      "type": "collection",
-      "settings": {}
-    },
     "collection_hero_WDVMA6": {
       "type": "collection-hero",
       "name": "Collection hero",
+      "settings": {}
+    },
+    "main": {
+      "type": "collection",
       "settings": {
-        "padding-top": 60,
-        "padding-bottom": 60,
+        "products_desktop": 5,
+        "products_tablet": 3,
+        "products_mobile": 2,
+        "products_per_page": 4,
+        "force_out_of_stock_last": true,
+        "pagination_type": "standard",
+        "padding-top": 40,
+        "padding-bottom": 40,
         "padding-top-m": 30,
         "padding-bottom-m": 30
       }
