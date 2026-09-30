@@ -207,7 +207,11 @@ button,
 input,
 select,
 textarea {
-  font: inherit;
+  	font: inherit;
+  	&:focus {
+  		outline: none;
+  		border-color: #fff;
+  	}
 }
 
 button,
