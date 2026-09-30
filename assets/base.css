@@ -1532,7 +1532,7 @@ button,
 	border-top: 1px solid var(--border-white);
 
 	.container {
-		@media (max-width: 989px) {
+		@media (max-width: 1080px) {
 			padding: 0;
 		}
 	}
@@ -1557,7 +1557,7 @@ button,
 		justify-content: center;
 		border-right:  1px solid var(--border-white);
 
-		@media (max-width: 989px) {
+		@media (max-width: 1080px) {
 			border-bottom:  1px solid var(--border-white);
 		}
 
@@ -1583,7 +1583,7 @@ button,
 			border-right: 1px solid var(--border-white);
 			padding: 20px 30px;
 
-			@media (max-width: 989px) {
+			@media (max-width: 1080px) {
 				border: none;
 				border-bottom: 1px solid var(--border-white);
 				padding: 20px 16px;
@@ -1822,7 +1822,7 @@ button,
 
 		padding: 20px 0;
 
-		@media (max-width: 989px) {
+		@media (max-width: 1080px) {
 			padding: 20px 30px;
 		}
 
@@ -1861,7 +1861,7 @@ button,
 	}
 
 
-	@media (max-width: 989px) {
+	@media (max-width: 1080px) {
 
 		.site-footer__grid {
 			grid-template-columns: 1fr 1fr;
