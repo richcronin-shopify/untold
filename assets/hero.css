@@ -14,7 +14,7 @@
 		justify-content: center;
 
 		@media (max-width: 990px) {
-			min-height: unset;
+			aspect-ratio: 1/1;
 		}
 	}
 
