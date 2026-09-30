@@ -1993,6 +1993,10 @@ button,
 
 		.breadcrumbs__item {
 
+			font-family: var(--font-heading-family);
+			text-transform: uppercase;
+			font-weight: 400;
+
 			.breadcrumbs__link {
 
 			}
