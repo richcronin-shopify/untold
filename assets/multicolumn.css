@@ -86,11 +86,21 @@
 					justify-content: center;
 					align-items: center;
 
+					@media (max-width: 767px) {
+						top: 16px;
+						left: 16px;
+					}
+
 					img {
 						display: block;
 						width: auto;
 						max-width: 23px;
 						height: auto;
+						@media (max-width: 767px) {
+							width: 22px;
+							height: 22px;
+							object-fit: contain;
+						}
 					}
 
 				}
