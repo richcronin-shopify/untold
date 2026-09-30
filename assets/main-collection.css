@@ -17,6 +17,9 @@
 
 		.main-collection__item {
 			min-width: 0;
+			.product-card {
+				height: 100%; 
+			}
 		}
 
 		.main-collection__empty {
