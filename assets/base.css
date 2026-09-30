@@ -1171,6 +1171,11 @@ button,
 							overflow: auto;
 							margin: 0 -20px;
 							padding: 0 20px;
+							scrollbar-width: none;
+							-ms-overflow-style: none;
+							&::-webkit-scrollbar {
+								display: none;
+							}
 						}
 
 						.search-modal__trending-item {
