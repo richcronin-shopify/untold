@@ -26,56 +26,7 @@
 	<div class="container">
 		<div class="collection-hero__content">
 
-			{% comment %}<nav class="collection-hero__breadcrumbs" aria-label="Breadcrumb">
-				<ol class="collection-hero__breadcrumb-list" role="list">
-
-					<li class="collection-hero__breadcrumb-item">
-						<a href="{{ routes.root_url }}" class="collection-hero__breadcrumb-link">
-							Home
-						</a>
-					</li>
-
-					{%- if breadcrumbs != blank -%}
-						{%- for breadcrumb_collection in breadcrumbs -%}
-
-							{%- unless breadcrumb_collection.handle == collection.handle -%}
-								<li class="collection-hero__breadcrumb-item">
-
-									<span class="collection-hero__breadcrumb-separator" aria-hidden="true">
-										/
-									</span>
-
-									<a
-										href="{{ breadcrumb_collection.url }}"
-										class="collection-hero__breadcrumb-link"
-									>
-										{{ breadcrumb_collection.title }}
-									</a>
-
-								</li>
-							{%- endunless -%}
-
-						{%- endfor -%}
-					{%- endif -%}
-
-					<li class="collection-hero__breadcrumb-item">
-
-						<span class="collection-hero__breadcrumb-separator" aria-hidden="true">
-							/
-						</span>
-
-						<span
-							class="collection-hero__breadcrumb-current"
-							aria-current="page"
-						>
-							{{ collection.title }}
-						</span>
-
-					</li>
-
-				</ol>
-			</nav>{% endcomment %}
-
+			{%- render 'breadcrumbs', resource: collection -%}
 
 			<h1 class="collection-hero__title">
 				{{ collection.title }}
