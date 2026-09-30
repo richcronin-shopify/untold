@@ -1079,6 +1079,10 @@ button,
 
 		@media (max-width: 990px) {
 			padding: 0 20px 40px;
+			top: auto;
+			bottom: 0;
+			left: 0;
+			transform: translate(0, 0);
 		}
 
 		.search-modal__header {
