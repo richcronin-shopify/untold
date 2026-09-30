@@ -1,0 +1,54 @@
+{%- liquid
+	assign breadcrumbs = resource.metafields.custom.breadcrumbs.value
+-%}
+
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+	<ol class="breadcrumbs__list" role="list">
+
+		<li class="breadcrumbs__item">
+			<a href="{{ routes.root_url }}" class="breadcrumbs__link">
+				Home
+			</a>
+		</li>
+
+		{%- if breadcrumbs != blank -%}
+
+			{%- for breadcrumb_collection in breadcrumbs -%}
+
+				{%- unless breadcrumb_collection.url == resource.url -%}
+
+					<li class="breadcrumbs__item">
+
+						<span class="breadcrumbs__separator" aria-hidden="true">
+							/
+						</span>
+
+						<a
+							href="{{ breadcrumb_collection.url }}"
+							class="breadcrumbs__link"
+						>
+							{{ breadcrumb_collection.title }}
+						</a>
+
+					</li>
+
+				{%- endunless -%}
+
+			{%- endfor -%}
+
+		{%- endif -%}
+
+		<li class="breadcrumbs__item">
+
+			<span class="breadcrumbs__separator" aria-hidden="true">
+				/
+			</span>
+
+			<span class="breadcrumbs__current" aria-current="page">
+				{{ resource.title }}
+			</span>
+
+		</li>
+
+	</ol>
+</nav>
