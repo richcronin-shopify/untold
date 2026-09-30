@@ -1318,6 +1318,9 @@ button,
 								@media (max-width: 990px) {
 									width: calc(50% - 7px);
 								}
+								.product-card  {
+									height: 100%;
+								}
 							}
 
 						}
