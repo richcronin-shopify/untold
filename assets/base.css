@@ -1088,6 +1088,10 @@ button,
 			border-radius: 0;
 		}
 
+		@media (max-width: 768px) {
+			max-height: 100vh;
+		}
+
 		.search-modal__header {
 
 			display: flex;
