@@ -249,6 +249,10 @@ button,
 		text-transform: unset;
 	}
 
+	&:hover {
+		background: var(--color-primary-reduced);
+	}
+
 }
 
 .swiper-slider__arrow {
