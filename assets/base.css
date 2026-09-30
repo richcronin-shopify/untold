@@ -208,7 +208,8 @@ input,
 select,
 textarea {
   	font: inherit;
-  	&:focus {
+  	&:focus,
+  	&:hover {
   		outline: none;
   		border-color: #fff;
   	}
