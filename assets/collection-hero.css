@@ -5,9 +5,7 @@
 	margin-top: 200px;
 
 	.collection-hero__media {
-		position: absolute;
-		inset: 0;
-		display: none;
+		
 
 		@media (max-width: 767px) {
 			display: none;
@@ -40,7 +38,10 @@
 
 	&.collection-hero--has-image {
 
+		.collection-hero__content {
 
+
+		}
 
 	}
 
