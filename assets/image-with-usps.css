@@ -65,7 +65,7 @@
 			.image-with-usps__usps {
 
 				display: flex;
-				justify-content: space-between;
+				gap: 50px;
 				align-items: center;
 				margin: 50px 0 0 0;
 
