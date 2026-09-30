@@ -24,4 +24,18 @@
 
 	}
 
+	.collection-hero__content {
+
+		.breadcrumbs {
+			margin: 0 0 30px 0;
+		}
+
+		.collection-hero__title {
+
+			margin: 0;
+
+		}
+
+	}
+
 }
