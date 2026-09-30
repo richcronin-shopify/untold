@@ -1186,8 +1186,15 @@ button,
 						display: flex;
 						gap: 10px;
 
+						@media (max-width: 990px) {
+							flex-wrap: wrap;
+						}
+
 						.search-modal__product {
 							width: calc(25% - 10px);
+							@media (max-width: 990px) {
+								width: calc(50% - 10px);
+							}
 						}
 
 					}
