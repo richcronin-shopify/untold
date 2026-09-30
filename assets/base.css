@@ -1262,6 +1262,7 @@ button,
 
 						.predictive-search__heading {
 							font-size: 18px;
+							font-weight: 400;
 						}
 
 						.predictive-search__list {
