@@ -1528,6 +1528,21 @@ button,
 			padding: 20px 16px;
 			border: none;
 			border-bottom:  1px solid var(--border-white);
+
+			&.is-open {
+
+				.site-footer__nav-title {
+					.site-footer__nav-chevron {
+						transform: rotate(180deg);
+					}
+				}
+
+				.site-footer__shop-content {
+					display: block;
+				}
+
+			}
+			
 		}
 
 		.site-footer__nav-title {
