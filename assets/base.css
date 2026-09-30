@@ -1477,6 +1477,11 @@ button,
 				margin: 0 0 12px 0;
 				font-size: 22px;
 				position: relative;
+
+				@media (max-width: 767px) {
+					font-size: 18px;
+				}
+				
 				.site-footer__nav-chevron {
 					display: none;
 					@media (max-width: 767px) {
@@ -1550,6 +1555,11 @@ button,
 			margin: 0 0 12px 0;
 			font-size: 22px;
 			position: relative;
+
+			@media (max-width: 767px) {
+				font-size: 18px;
+			}
+
 			.site-footer__nav-chevron {
 				display: none;
 				@media (max-width: 767px) {
