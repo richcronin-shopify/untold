@@ -1167,7 +1167,10 @@ button,
 						height: 18px;
 						cursor: pointer;
 						display: block;
-						background: url("icon-close.svg") center / contain no-repeat red;
+						background: red;
+						position: absolute;
+						top: 0;
+						right: 0;
 					}
 
 				}
