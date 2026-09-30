@@ -1999,6 +1999,10 @@ button,
 
 			.breadcrumbs__link {
 				display: inline-block;
+				transition: .3s all;
+				&:hover {
+					color: var(--color-primary);
+				}
 			}
 
 			.breadcrumbs__separator {
