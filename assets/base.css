@@ -1998,7 +1998,7 @@ button,
 			font-weight: 400;
 
 			.breadcrumbs__link {
-
+				display: block;
 			}
 
 			.breadcrumbs__separator {
