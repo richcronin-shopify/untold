@@ -1130,6 +1130,14 @@ button,
 					top: 50%;
 					transform: translate(0,-50%);
 
+					@media (max-width: 768px) {
+						left: 16px;
+						svg {
+							height: unset;
+							width: 18px;
+						}
+					}
+
 				}
 
 				.search-modal__input {
