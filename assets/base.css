@@ -1104,6 +1104,10 @@ button,
 			z-index: 3;
 			padding: 20px 0;
 
+			@media (max-width: 768px) {
+				margin: 0;
+			}
+
 			.search-modal__title {
 				margin: 0;
 				font-family: var(--font-heading-family);
