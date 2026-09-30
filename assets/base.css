@@ -230,6 +230,7 @@ button,
 	font-family: var(--font-heading-family);
 	font-weight: 500;
 	display: inline-block;
+	transition: .3s all;
 
 	@media (max-width: 767px) {
 		font-size: 18px;
@@ -250,7 +251,7 @@ button,
 	}
 
 	&:hover {
-		background: var(--color-primary-reduced);
+		opacity: .8;
 	}
 
 }
