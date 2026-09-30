@@ -12,9 +12,20 @@
     "main": {
       "type": "collection",
       "settings": {}
+    },
+    "collection_hero_WDVMA6": {
+      "type": "collection-hero",
+      "name": "Collection hero",
+      "settings": {
+        "padding-top": 60,
+        "padding-bottom": 60,
+        "padding-top-m": 30,
+        "padding-bottom-m": 30
+      }
     }
   },
   "order": [
+    "collection_hero_WDVMA6",
     "main"
   ]
 }
