@@ -1485,6 +1485,7 @@ button,
 						top: 50%;
 						right: 0;
 						transform: translate(-50%, 0);
+						transform-origin: top left;
 					}
 				}
 			}
@@ -1557,6 +1558,7 @@ button,
 					top: 50%;
 					right: 0;
 					transform: translate(-50%, 0);
+					transform-origin: top left;
 				}
 			}
 		}
