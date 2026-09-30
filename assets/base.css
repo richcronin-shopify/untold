@@ -1544,11 +1544,11 @@ button,
 	.site-footer__grid {
 		display: grid;
 		grid-template-columns:
-			minmax(200px, 1.1fr)
+			minmax(100px, 1.1fr)
 			minmax(180px, 0.9fr)
 			minmax(180px, 0.9fr)
 			minmax(180px, 0.9fr)
-			minmax(420px, 2fr);
+			minmax(360px, 2fr);
 	}
 
 	.site-footer__brand {
