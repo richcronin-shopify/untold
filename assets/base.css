@@ -1077,6 +1077,10 @@ button,
 		overflow: auto;
 		padding: 0 50px 40px;
 
+		@media (max-width: 990px) {
+			padding: 0 20px 40px;
+		}
+
 		.search-modal__header {
 
 			display: flex;
