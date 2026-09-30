@@ -1179,6 +1179,10 @@ button,
 							}
 						}
 
+						@media (max-width: 768px) {
+							gap: 5px;
+						}
+
 						.search-modal__trending-item {
 
 							font-size: 16px;
