@@ -1526,6 +1526,8 @@ button,
 
 		@media (max-width: 767px) {
 			padding: 20px 16px;
+			border: none;
+			border-bottom:  1px solid var(--border-white);
 		}
 
 		.site-footer__nav-title {
