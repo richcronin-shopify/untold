@@ -92,76 +92,13 @@
 	</div>
 </section>
 
-
-{%- style -%}
-
-	#{{ section.id }} {
-		padding-top: {{ ss.padding-top }}px;
-		padding-bottom: {{ ss.padding-bottom }}px;
-	}
-
-	@media screen and (max-width: 767px) {
-
-		#{{ section.id }} {
-			padding-top: {{ ss.padding-top-m }}px;
-			padding-bottom: {{ ss.padding-bottom-m }}px;
-		}
-
-	}
-
-{%- endstyle -%}
-
-
 {% schema %}
 {
 	"name": "Collection hero",
 	"tag": "section",
 	"class": "collection-hero-section",
 	"settings": [
-		{
-			"type": "header",
-			"content": "Padding (desktop)"
-		},
-		{
-			"type": "range",
-			"id": "padding-top",
-			"min": 0,
-			"max": 300,
-			"step": 5,
-			"label": "Padding top",
-			"default": 60
-		},
-		{
-			"type": "range",
-			"id": "padding-bottom",
-			"min": 0,
-			"max": 300,
-			"step": 5,
-			"label": "Padding bottom",
-			"default": 60
-		},
-		{
-			"type": "header",
-			"content": "Padding (mobile)"
-		},
-		{
-			"type": "range",
-			"id": "padding-top-m",
-			"min": 0,
-			"max": 300,
-			"step": 5,
-			"label": "Padding top",
-			"default": 30
-		},
-		{
-			"type": "range",
-			"id": "padding-bottom-m",
-			"min": 0,
-			"max": 300,
-			"step": 5,
-			"label": "Padding bottom",
-			"default": 30
-		}
+
 	],
 	"presets": [
 		{
