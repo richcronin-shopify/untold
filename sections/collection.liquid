@@ -1,45 +1,449 @@
-{% comment %}
-  This section is used in the collection template to render collection page
-  listing all products within a collection.
+{{- 'main-collection.css' | asset_url | stylesheet_tag -}}
+{%- assign ss = section.settings -%}
 
-  https://shopify.dev/docs/storefronts/themes/architecture/templates/collection
-{% endcomment %}
+<section
+	class="main-collection"
+	id="{{ section.id }}"
+	data-main-collection
+	data-section-id="{{ section.id }}"
+	data-pagination-type="{{ ss.pagination_type }}"
+	data-force-out-of-stock-last="{{ ss.force_out_of_stock_last }}"
+>
+	<div class="container">
 
-<div class="collection-products">
-  {% paginate collection.products by 20 %}
-    {% for product in collection.products %}
-      <div class="collection-product">
-        {% if product.featured_image %}
-          {% render 'image',
-            class: 'collection-product__image',
-            image: product.featured_image,
-            url: product.url,
-            width: 400,
-            height: 400,
-            crop: 'center'
-          %}
-        {% endif %}
-        <div class="collection-product__content">
-          <p>{{ product.title | escape | link_to: product.url }}</p>
-          <p>{{ product.price | money }}</p>
-        </div>
-      </div>
-    {% endfor %}
+		{%- paginate collection.products by ss.products_per_page -%}
 
-    {{ paginate | default_pagination }}
-  {% endpaginate %}
-</div>
+			<div class="main-collection__items" data-collection-grid>
 
-{% stylesheet %}
-  .collection-products {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
-  }
-{% endstylesheet %}
+				{%- if collection.products.size > 0 -%}
+
+					{%- if ss.force_out_of_stock_last -%}
+
+						{%- for product in collection.products -%}
+							{%- if product.available -%}
+								<div class="main-collection__item" data-product-available="true">
+									{% render 'product-card', product: product %}
+								</div>
+							{%- endif -%}
+						{%- endfor -%}
+
+						{%- for product in collection.products -%}
+							{%- unless product.available -%}
+								<div class="main-collection__item" data-product-available="false">
+									{% render 'product-card', product: product %}
+								</div>
+							{%- endunless -%}
+						{%- endfor -%}
+
+					{%- else -%}
+
+						{%- for product in collection.products -%}
+							<div class="main-collection__item" data-product-available="{{ product.available }}">
+								{% render 'product-card', product: product %}
+							</div>
+						{%- endfor -%}
+
+					{%- endif -%}
+
+				{%- else -%}
+
+					<div class="main-collection__empty">
+						<p>No products found.</p>
+					</div>
+
+				{%- endif -%}
+
+			</div>
+
+			{%- if paginate.pages > 1 -%}
+
+				{%- if ss.pagination_type == 'standard' -%}
+
+					<nav class="main-collection__pagination" aria-label="Collection pagination">
+
+						{%- if paginate.previous -%}
+							<a
+								href="{{ paginate.previous.url }}"
+								class="main-collection__pagination-arrow main-collection__pagination-arrow--prev"
+								aria-label="Previous page"
+							>
+								{{- 'icon-chev.svg' | inline_asset_content -}}
+							</a>
+						{%- endif -%}
+
+						{%- assign current_page_string = paginate.current_page | append: '' -%}
+
+						{%- for part in paginate.parts -%}
+
+							{%- if part.is_link -%}
+								<a
+									href="{{ part.url }}"
+									class="main-collection__pagination-page"
+									aria-label="Go to page {{ part.title }}"
+								>
+									{{ part.title }}
+								</a>
+							{%- elsif part.title == current_page_string -%}
+								<span
+									class="main-collection__pagination-page is-current"
+									aria-current="page"
+								>
+									{{ part.title }}
+								</span>
+							{%- else -%}
+								<span class="main-collection__pagination-ellipsis">
+									{{ part.title }}
+								</span>
+							{%- endif -%}
+
+						{%- endfor -%}
+
+						{%- if paginate.next -%}
+							<a
+								href="{{ paginate.next.url }}"
+								class="main-collection__pagination-arrow main-collection__pagination-arrow--next"
+								aria-label="Next page"
+							>
+								{{- 'icon-chev.svg' | inline_asset_content -}}
+							</a>
+						{%- endif -%}
+
+					</nav>
+
+				{%- else -%}
+
+					<div
+						class="main-collection__infinite"
+						data-infinite-pagination
+						data-next-url="{{ paginate.next.url | default: '' }}"
+					>
+						<div
+							class="main-collection__infinite-sentinel"
+							data-infinite-sentinel
+							aria-hidden="true"
+						></div>
+
+						<p
+							class="main-collection__infinite-status visually-hidden"
+							data-infinite-status
+							role="status"
+							aria-live="polite"
+						></p>
+
+						<noscript>
+							<nav class="main-collection__pagination" aria-label="Collection pagination">
+								{{ paginate | default_pagination }}
+							</nav>
+						</noscript>
+					</div>
+
+				{%- endif -%}
+
+			{%- endif -%}
+
+		{%- endpaginate -%}
+
+	</div>
+</section>
+
+{%- style -%}
+
+	#{{ section.id }} {
+		padding-top: {{ ss.padding-top }}px;
+		padding-bottom: {{ ss.padding-bottom }}px;
+
+		--products-desktop: {{ ss.products_desktop }};
+		--products-tablet: {{ ss.products_tablet }};
+		--products-mobile: {{ ss.products_mobile }};
+	}
+
+	@media screen and (max-width: 767px) {
+
+		#{{ section.id }} {
+			padding-top: {{ ss.padding-top-m }}px;
+			padding-bottom: {{ ss.padding-bottom-m }}px;
+		}
+
+	}
+
+{%- endstyle -%}
+
+{% javascript %}
+
+	(() => {
+
+		const initialiseMainCollections = (container = document) => {
+
+			container
+				.querySelectorAll('[data-main-collection]')
+				.forEach((section) => {
+
+					if (section.dataset.initialised === 'true') {
+						return;
+					}
+
+					const grid = section.querySelector('[data-collection-grid]');
+
+					if (!grid) {
+						return;
+					}
+
+					const forceOutOfStockLast =
+						section.dataset.forceOutOfStockLast === 'true';
+
+					const reorderOutOfStock = () => {
+
+						if (!forceOutOfStockLast) {
+							return;
+						}
+
+						Array
+							.from(grid.children)
+							.filter((item) => item.dataset.productAvailable === 'false')
+							.forEach((item) => grid.appendChild(item));
+
+					};
+
+					reorderOutOfStock();
+
+					if (section.dataset.paginationType !== 'infinite') {
+						section.dataset.initialised = 'true';
+						return;
+					}
+
+					const infinite = section.querySelector('[data-infinite-pagination]');
+					const sentinel = section.querySelector('[data-infinite-sentinel]');
+					const status = section.querySelector('[data-infinite-status]');
+
+					if (!infinite || !sentinel) {
+						section.dataset.initialised = 'true';
+						return;
+					}
+
+					let isLoading = false;
+					let observer = null;
+
+					const loadNextPage = async () => {
+
+						const nextUrl = infinite.dataset.nextUrl;
+
+						if (!nextUrl || isLoading) {
+							return;
+						}
+
+						isLoading = true;
+						section.classList.add('is-loading');
+
+						if (status) {
+							status.textContent = 'Loading more products';
+						}
+
+						try {
+
+							const response = await fetch(nextUrl);
+
+							if (!response.ok) {
+								throw new Error(`Unable to load collection page: ${response.status}`);
+							}
+
+							const html = await response.text();
+							const nextDocument = new DOMParser().parseFromString(html, 'text/html');
+							const nextSection = nextDocument.getElementById(section.dataset.sectionId);
+							const nextGrid = nextSection?.querySelector('[data-collection-grid]');
+							const nextInfinite = nextSection?.querySelector('[data-infinite-pagination]');
+
+							if (!nextGrid) {
+								throw new Error('Unable to find the next collection grid.');
+							}
+
+							const newItems = Array.from(nextGrid.children);
+
+							newItems.forEach((item) => grid.appendChild(item));
+
+							reorderOutOfStock();
+
+							infinite.dataset.nextUrl =
+								nextInfinite?.dataset.nextUrl || '';
+
+							if (status) {
+								status.textContent = `${newItems.length} more products loaded`;
+							}
+
+							if (!infinite.dataset.nextUrl) {
+								observer?.disconnect();
+								sentinel.remove();
+							}
+
+						} catch (error) {
+
+							console.error(error);
+
+							if (status) {
+								status.textContent = 'Unable to load more products';
+							}
+
+						} finally {
+
+							isLoading = false;
+							section.classList.remove('is-loading');
+
+						}
+
+					};
+
+					if ('IntersectionObserver' in window) {
+
+						observer = new IntersectionObserver(
+							(entries) => {
+
+								if (entries.some((entry) => entry.isIntersecting)) {
+									loadNextPage();
+								}
+
+							},
+							{
+								rootMargin: '400px 0px'
+							}
+						);
+
+						observer.observe(sentinel);
+
+					}
+
+					section.dataset.initialised = 'true';
+
+				});
+
+		};
+
+		initialiseMainCollections();
+
+		document.addEventListener(
+			'shopify:section:load',
+			(event) => initialiseMainCollections(event.target)
+		);
+
+	})();
+
+{% endjavascript %}
 
 {% schema %}
 {
-  "name": "t:general.collection",
-  "settings": []
+	"name": "Main collection",
+	"tag": "section",
+	"class": "main-collection-section",
+	"settings": [
+		{
+			"type": "header",
+			"content": "Product grid"
+		},
+		{
+			"type": "range",
+			"id": "products_desktop",
+			"min": 2,
+			"max": 6,
+			"step": 1,
+			"label": "Products per row - desktop",
+			"default": 5
+		},
+		{
+			"type": "range",
+			"id": "products_tablet",
+			"min": 2,
+			"max": 5,
+			"step": 1,
+			"label": "Products per row - tablet",
+			"default": 3
+		},
+		{
+			"type": "range",
+			"id": "products_mobile",
+			"min": 1,
+			"max": 3,
+			"step": 1,
+			"label": "Products per row - mobile",
+			"default": 2
+		},
+		{
+			"type": "range",
+			"id": "products_per_page",
+			"min": 4,
+			"max": 50,
+			"step": 1,
+			"label": "Products per page",
+			"default": 20
+		},
+		{
+			"type": "checkbox",
+			"id": "force_out_of_stock_last",
+			"label": "Force out of stock products to appear last",
+			"default": true
+		},
+		{
+			"type": "select",
+			"id": "pagination_type",
+			"label": "Pagination type",
+			"options": [
+				{
+					"value": "standard",
+					"label": "Standard pagination"
+				},
+				{
+					"value": "infinite",
+					"label": "Infinite pagination"
+				}
+			],
+			"default": "standard"
+		},
+		{
+			"type": "header",
+			"content": "Padding (desktop)"
+		},
+		{
+			"type": "range",
+			"id": "padding-top",
+			"min": 0,
+			"max": 300,
+			"step": 5,
+			"label": "Padding top",
+			"default": 40
+		},
+		{
+			"type": "range",
+			"id": "padding-bottom",
+			"min": 0,
+			"max": 300,
+			"step": 5,
+			"label": "Padding bottom",
+			"default": 40
+		},
+		{
+			"type": "header",
+			"content": "Padding (mobile)"
+		},
+		{
+			"type": "range",
+			"id": "padding-top-m",
+			"min": 0,
+			"max": 300,
+			"step": 5,
+			"label": "Padding top",
+			"default": 30
+		},
+		{
+			"type": "range",
+			"id": "padding-bottom-m",
+			"min": 0,
+			"max": 300,
+			"step": 5,
+			"label": "Padding bottom",
+			"default": 30
+		}
+	],
+	"presets": [
+		{
+			"name": "Main collection"
+		}
+	]
 }
 {% endschema %}
