@@ -128,9 +128,6 @@
 					{%- if ss.shop_heading != blank -%}
 						<p class="site-footer__nav-title h5">
 							{{ ss.shop_heading }}
-							<span class="site-footer__nav-chevron" aria-hidden="true">
-								{{- 'icon-chev.svg' | inline_asset_content -}}
-							</span>
 						</p>
 					{%- endif -%}
 
@@ -309,6 +306,8 @@
 
 		const initialiseFooterNavigation = (container = document) => {
 
+			const mobileQuery = window.matchMedia('(max-width: 767px)');
+
 			container
 				.querySelectorAll('[data-footer-nav]')
 				.forEach((group) => {
@@ -317,24 +316,71 @@
 						return;
 					}
 
-					const toggle = group.querySelector(
-						'.site-footer__nav-toggle'
+					const trigger = group.querySelector(
+						'.site-footer__nav-title'
 					);
 
-					if (!toggle) {
+					const navigation = group.querySelector(
+						'.site-footer__nav'
+					);
+
+					if (!trigger || !navigation) {
 						return;
 					}
 
-					toggle.addEventListener('click', () => {
+
+					trigger.setAttribute('role', 'button');
+					trigger.setAttribute('tabindex', '0');
+					trigger.setAttribute('aria-expanded', 'false');
+
+					if (navigation.id) {
+						trigger.setAttribute(
+							'aria-controls',
+							navigation.id
+						);
+					}
+
+
+					const toggleNavigation = () => {
+
+						if (!mobileQuery.matches) {
+							return;
+						}
 
 						const isOpen = group.classList.toggle('is-open');
 
-						toggle.setAttribute(
+						trigger.setAttribute(
 							'aria-expanded',
 							isOpen ? 'true' : 'false'
 						);
 
-					});
+					};
+
+
+					trigger.addEventListener(
+						'click',
+						toggleNavigation
+					);
+
+
+					trigger.addEventListener(
+						'keydown',
+						(event) => {
+
+							if (
+								event.key !== 'Enter' &&
+								event.key !== ' '
+							) {
+								return;
+							}
+
+							event.preventDefault();
+
+							toggleNavigation();
+
+						}
+					);
+
 
 					group.dataset.initialised = 'true';
 
@@ -342,7 +388,9 @@
 
 		};
 
+
 		initialiseFooterNavigation();
+
 
 		document.addEventListener(
 			'shopify:section:load',
