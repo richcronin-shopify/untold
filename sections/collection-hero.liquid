@@ -6,7 +6,7 @@
 {%- assign hero_image = collection.metafields.hero.image.value -%}
 
 <section
-	class="collection-hero{% if hero_image == blank %} collection-hero--no-image{% endif %}"
+	class="collection-hero{% if hero_image != blank %} collection-hero--has-image{% endif %}"
 	id="{{ section.id }}"
 >
 	{%- if hero_image != blank -%}
