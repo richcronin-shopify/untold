@@ -31,9 +31,11 @@
 		}
 
 		.collection-hero__title {
-
 			margin: 0;
+		}
 
+		.collection-hero__description {
+			margin: 20px 0 0 0;
 		}
 
 	}
