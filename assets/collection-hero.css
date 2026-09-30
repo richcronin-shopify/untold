@@ -1,0 +1,22 @@
+.collection-hero {
+
+	.collection-hero__media {
+		position: absolute;
+		inset: 0;
+
+		.collection-hero__image {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+	}
+
+	@media (max-width: 767px) {
+
+		.collection-hero__media {
+			display: none;
+		}
+
+	}
+
+}
