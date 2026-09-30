@@ -1579,6 +1579,7 @@ button,
 
 			@media (max-width: 767px) {
 				display: none;
+				margin-top: 20px;
 			}
 
 			p {
