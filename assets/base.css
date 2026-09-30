@@ -1161,7 +1161,12 @@ button,
 					}
 
 					&::-webkit-search-cancel-button {
-						display: none;
+						appearance: none;
+						-webkit-appearance: none;
+						width: 18px;
+						height: 18px;
+						cursor: pointer;
+						background: url("icon-close.svg") center / contain no-repeat;
 					}
 
 				}
