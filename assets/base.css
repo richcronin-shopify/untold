@@ -1162,6 +1162,8 @@ button,
 
 						@media (max-width: 990px) {
 							overflow: auto;
+							margin: 0 -20px;
+							padding: 0 20px;
 						}
 
 						.search-modal__trending-item {
