@@ -1163,6 +1163,10 @@ button,
 
 					margin: 40px 0 0 0;
 
+					@media (max-width: 768px) {
+						margin-top: 20px;
+					}
+
 					.search-modal__trending-list {
 
 						display: flex;
@@ -1217,6 +1221,10 @@ button,
 				.search-modal__popular {
 
 					margin: 40px 0 0 0;
+
+					@media (max-width: 768px) {
+						margin-top: 20px;
+					}
 					
 					.search-modal__products {
 						display: flex;
