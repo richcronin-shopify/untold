@@ -1478,10 +1478,6 @@ button,
 				font-size: 22px;
 			}
 
-			.site-footer__nav-toggle {
-				display: none;
-			}
-
 			.site-footer__nav {
 
 				.site-footer__nav-list {
@@ -1524,10 +1520,6 @@ button,
 		.site-footer__nav-title {
 			margin: 0 0 12px 0;
 			font-size: 22px;
-		}
-
-		.site-footer__nav-toggle {
-			display: none;
 		}
 
 		.site-footer__shop-content {
@@ -1749,36 +1741,11 @@ button,
 
 			.site-footer__nav-group {
 
-				.site-footer__nav-toggle {
-					display: flex;
-					align-items: center;
-					justify-content: space-between;
-
-					.site-footer__nav-chevron {
-						display: block;
-						transition: transform 0.2s ease;
-
-						svg {
-							display: block;
-						}
-
-					}
-
-				}
-
 				.site-footer__nav {
 					display: none;
 				}
 
 				&.is-open {
-
-					.site-footer__nav-toggle {
-
-						.site-footer__nav-chevron {
-							transform: rotate(180deg);
-						}
-
-					}
 
 					.site-footer__nav {
 						display: block;
