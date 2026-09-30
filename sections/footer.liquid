@@ -161,39 +161,47 @@
 
 					{%- form 'customer', class: 'site-footer__form' -%}
 
-						<input
-							type="hidden"
-							name="contact[tags]"
-							value="newsletter"
-						>
+						{%- if form.posted_successfully? -%}
+							
+							<p class="site-footer__form-message" role="status">
+								{{ ss.newsletter_success }}
+							</p>
 
-						<div class="site-footer__form-fields">
-
-							<label
-								for="FooterEmail-{{ section.id }}"
-								class="visually-hidden"
-							>
-								Email address
-							</label>
-
+						{%- else -%}
+							
 							<input
-								type="email"
-								id="FooterEmail-{{ section.id }}"
-								name="contact[email]"
-								class="site-footer__email"
-								value="{{ form.email }}"
-								placeholder="{{ ss.newsletter_placeholder }}"
-								autocomplete="email"
-								autocorrect="off"
-								autocapitalize="off"
-								required
+								type="hidden"
+								name="contact[tags]"
+								value="newsletter"
 							>
 
-							<button type="submit" class="button site-footer__submit">
-								{{ ss.newsletter_button }}
-							</button>
+							<div class="site-footer__form-fields">
 
-						</div>
+								<label
+									for="FooterEmail-{{ section.id }}"
+									class="visually-hidden"
+								>Email address</label>
+
+								<input
+									type="email"
+									id="FooterEmail-{{ section.id }}"
+									name="contact[email]"
+									class="site-footer__email"
+									value="{{ form.email }}"
+									placeholder="{{ ss.newsletter_placeholder }}"
+									autocomplete="email"
+									autocorrect="off"
+									autocapitalize="off"
+									required
+								>
+
+								<button type="submit" class="button site-footer__submit">
+									{{ ss.newsletter_button }}
+								</button>
+
+							</div>
+
+						{%- endif -%}
 
 
 						{%- if form.errors -%}
@@ -203,11 +211,7 @@
 						{%- endif -%}
 
 
-						{%- if form.posted_successfully? -%}
-							<p class="site-footer__form-message" role="status">
-								{{ ss.newsletter_success }}
-							</p>
-						{%- endif -%}
+						
 
 					{%- endform -%}
 
