@@ -109,6 +109,8 @@
 				gap: 10px;
 				align-items: center;
 				color: var(--color-primary);
+				margin: 0;
+				transition: .3s all;
 
 				@media (max-width: 990px) {
 					justify-content: center;
