@@ -38,8 +38,10 @@
 	&.collection-hero--has-image {
 
 		.collection-hero__content {
-
-
+			position: absolute;
+			top: 50%;
+			transform: translate(-50%, 0);
+			left: 0;
 		}
 
 	}
