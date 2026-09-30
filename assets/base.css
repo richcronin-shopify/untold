@@ -1226,6 +1226,7 @@ button,
 							background: rgba(255,255,255,0.15);
 							text-decoration: none;
 							transition: .3s all;
+							font-weight: 400;
 
 							@media (max-width: 990px) {
 								white-space: nowrap;
