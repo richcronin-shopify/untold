@@ -6,6 +6,7 @@
 		display: grid;
 		grid-template-columns: repeat(var(--products-desktop), minmax(0, 1fr));
 		gap: 10px;
+		row-gap: 30px;
 
 		@media (max-width: 989px) {
 			grid-template-columns: repeat(var(--products-tablet), minmax(0, 1fr));
