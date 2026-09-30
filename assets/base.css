@@ -1476,6 +1476,9 @@ button,
 			.site-footer__nav-title {
 				margin: 0 0 12px 0;
 				font-size: 22px;
+				.site-footer__nav-chevron {
+					display: none;
+				}
 			}
 
 			.site-footer__nav {
