@@ -71,6 +71,8 @@
 
 				@media (max-width: 767px) {
 					margin-top: 24px;
+					justify-content: space-between;
+					gap: 0;
 				}
 
 				.image-with-usps__divider {
