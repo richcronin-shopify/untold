@@ -1083,6 +1083,9 @@ button,
 			bottom: 0;
 			left: 0;
 			transform: translate(0, 0);
+			border: none;
+			border-top: 1px solid var(--border-white);
+			border-radius: 0;
 		}
 
 		.search-modal__header {
