@@ -1275,6 +1275,10 @@ button,
 
 						flex: 1;
 
+						@media (max-width: 990px) {
+							width: 100%;
+						}
+
 						.predictive-search__product-grid {
 
 							display: flex;
@@ -1283,6 +1287,9 @@ button,
 
 							.predictive-search__product {
 								width: calc(33.3% - 7px);
+								@media (max-width: 990px) {
+									width: calc(50% - 7px);
+								}
 							}
 
 						}
