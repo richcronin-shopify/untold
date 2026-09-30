@@ -1237,7 +1237,7 @@ button,
 						.search-modal__product {
 							width: calc(25% - 10px);
 							@media (max-width: 990px) {
-								width: calc(50% - 10px);
+								width: calc(50% - 5px);
 							}
 							.product-card {
 								height: 100%;
