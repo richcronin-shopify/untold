@@ -1533,7 +1533,7 @@ button,
 
 				.site-footer__nav-title {
 					.site-footer__nav-chevron {
-						transform: rotate(180deg);
+						transform: rotate(180deg) translate(-50%, 0);
 					}
 				}
 
@@ -1542,7 +1542,7 @@ button,
 				}
 
 			}
-			
+
 		}
 
 		.site-footer__nav-title {
@@ -1792,7 +1792,7 @@ button,
 
 					.site-footer__nav-title {
 						.site-footer__nav-chevron {
-							transform: rotate(180deg);
+							transform: rotate(180deg) translate(-50%, 0);
 						}
 					}
 
