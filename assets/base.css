@@ -1662,8 +1662,11 @@ button,
 
 			.site-footer__form-message {
 
-				&.site-footer__form-message--error {
+				color: var(--color-primary);
+				margin: 0 0 20px 0;
 
+				&.site-footer__form-message--error {
+					color: var(--color-error);
 				}
 
 			}
