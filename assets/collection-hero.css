@@ -7,6 +7,7 @@
 	.collection-hero__media {
 		position: absolute;
 		inset: 0;
+		display: none;
 
 		.collection-hero__image {
 			width: 100%;
