@@ -39,8 +39,7 @@
 
 		.collection-hero__content {
 			position: absolute;
-			top: 50%;
-			transform: translate(0, -50%);
+			top: 100px;
 			left: 60px;
 		}
 
