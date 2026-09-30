@@ -86,21 +86,11 @@
 							{%- if bs.title != blank -%}
 								<p class="site-footer__nav-title h5">
 									{{ bs.title }}
+									<span class="site-footer__nav-chevron" aria-hidden="true">
+										{{- 'icon-chev.svg' | inline_asset_content -}}
+									</span>
 								</p>
 							{%- endif -%}
-
-							<button
-								type="button"
-								class="site-footer__nav-toggle button--reset"
-								aria-expanded="false"
-								aria-controls="FooterNav-{{ section.id }}-{{ block.id }}"
-							>
-								<span>{{ bs.title }}</span>
-
-								<span class="site-footer__nav-chevron" aria-hidden="true">
-									{{- 'icon-chev.svg' | inline_asset_content -}}
-								</span>
-							</button>
 
 							{%- if bs.menu != blank -%}
 								<nav
@@ -138,21 +128,11 @@
 					{%- if ss.shop_heading != blank -%}
 						<p class="site-footer__nav-title h5">
 							{{ ss.shop_heading }}
+							<span class="site-footer__nav-chevron" aria-hidden="true">
+								{{- 'icon-chev.svg' | inline_asset_content -}}
+							</span>
 						</p>
 					{%- endif -%}
-
-					<button
-						type="button"
-						class="site-footer__nav-toggle button--reset"
-						aria-expanded="false"
-						aria-controls="FooterShop-{{ section.id }}"
-					>
-						<span>{{ ss.shop_heading }}</span>
-
-						<span class="site-footer__nav-chevron" aria-hidden="true">
-							{{- 'icon-chev.svg' | inline_asset_content -}}
-						</span>
-					</button>
 
 					<div
 						class="site-footer__shop-content site-footer__nav"
