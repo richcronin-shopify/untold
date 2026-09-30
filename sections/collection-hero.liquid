@@ -23,24 +23,26 @@
 		</div>
 	{%- endif -%} 
 
-	<div class="container">
-		<div class="collection-hero__content">
+	<div class="collection-hero__content">
 
-			{%- render 'breadcrumbs', resource: collection -%}
+		{%- render 'breadcrumbs', resource: collection -%}
 
-			<h1 class="collection-hero__title">
-				{{ collection.title }}
-			</h1>
+		<h1 class="collection-hero__title">
+			{{ collection.title }}
+		</h1>
 
 
-			{%- if short_description.value != blank -%}
-				<div class="collection-hero__description">
-					{{ short_description | metafield_tag }}
-				</div>
-			{%- endif -%}
+		{%- if short_description.value != blank -%}
+			<div class="collection-hero__description">
+				{{- short_description | metafield_tag -}}
+				{%- if collection.description != blank -%}
+					<span class="collection-hero__description-read-more">Read more.</span>
+				{%- endif -%}
+			</div>
+		{%- endif -%}
 
-		</div>
 	</div>
+
 </section>
 
 {% style %}
