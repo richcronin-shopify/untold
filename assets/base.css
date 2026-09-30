@@ -1355,6 +1355,7 @@ button,
 
 					display: flex;
 					justify-content: space-between;
+					align-items: center;
 					
 					.predictive-search__heading {
 						margin: 0 0 10px 0;
