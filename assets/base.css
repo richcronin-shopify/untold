@@ -1536,6 +1536,10 @@ button,
 
 		.site-footer__shop-content {
 
+			@media (max-width: 767px) {
+				display: none;
+			}
+
 			p {
 				margin: 0 0 6px 0;
 				font-size: 14px;
