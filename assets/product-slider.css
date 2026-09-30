@@ -90,6 +90,12 @@
 
 	}
 
+	.product-slider__grid {
+		.product-slider__items {
+			gap: 10px;
+		}
+	}
+
 	.product-slider__pagination {
 
 		display: none;
