@@ -1233,10 +1233,19 @@ button,
 					display: flex;
 					gap: 20px;
 
+					@media (max-width: 990px) {
+						gap: 16px;
+						flex-wrap: wrap;
+					}
+
 					.predictive-search__content {
 
 						width: 180px;
 						min-width: 180px;
+
+						@media (max-width: 990px) {
+							width: 100%;
+						}
 
 						.predictive-search__group {
 							margin: 0 0 30px 0;
