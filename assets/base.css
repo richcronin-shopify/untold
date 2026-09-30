@@ -1979,3 +1979,30 @@ button,
 	}
 
 }
+
+.breadcrumbs {
+
+	.breadcrumbs__list {
+
+		display: flex;
+		align-items: center;
+
+		.breadcrumbs__item {
+
+			.breadcrumbs__link {
+
+			}
+
+			.breadcrumbs__separator {
+
+			}
+
+			.breadcrumbs__current {
+
+			}
+
+		}
+
+	}
+
+}
