@@ -128,6 +128,9 @@
 					{%- if ss.shop_heading != blank -%}
 						<p class="site-footer__nav-title h5">
 							{{ ss.shop_heading }}
+							<span class="site-footer__nav-chevron" aria-hidden="true">
+								{{- 'icon-chev.svg' | inline_asset_content -}}
+							</span>
 						</p>
 					{%- endif -%}
 
