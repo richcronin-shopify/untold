@@ -1089,7 +1089,7 @@ button,
 		}
 
 		@media (max-width: 768px) {
-			max-height: 100vh;
+			max-height: 100dvh;
 		}
 
 		.search-modal__header {
