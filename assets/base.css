@@ -1480,8 +1480,9 @@ button,
 
 				@media (max-width: 767px) {
 					font-size: 18px;
+					margin: 0;
 				}
-				
+
 				.site-footer__nav-chevron {
 					display: none;
 					@media (max-width: 767px) {
@@ -1558,6 +1559,7 @@ button,
 
 			@media (max-width: 767px) {
 				font-size: 18px;
+				margin: 0;
 			}
 
 			.site-footer__nav-chevron {
