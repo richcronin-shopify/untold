@@ -64,6 +64,7 @@
 
 				.collection-filters__dropdown {
 					position: relative;
+					border: 1px solid var(--border-white);
 
 					@media (max-width: 767px) {
 						width: 100%;
