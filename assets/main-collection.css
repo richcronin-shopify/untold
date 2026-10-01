@@ -37,6 +37,9 @@
 					width: 100%;
 					grid-column: 1;
 					grid-row: 2;
+					border: 1px solid var(--border-white);
+					border-radius: 3px;
+					height: 40px;
 				}
 
 				.collection-filters__mobile-trigger-icon {
