@@ -70,6 +70,7 @@
 					padding: 0 10px;
 					display: flex;
 					align-items: center;
+					min-width: 160px;
 
 					@media (max-width: 767px) {
 						width: 100%;
@@ -79,7 +80,6 @@
 						display: flex;
 						align-items: center;
 						justify-content: space-between;
-						gap: 20px;
 						cursor: pointer;
 						list-style: none;
 
