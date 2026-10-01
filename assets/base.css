@@ -2000,6 +2000,10 @@ button,
 			text-transform: uppercase;
 			font-weight: 400;
 
+			@media (max-width: 768px) {
+				font-size: 12px;
+			}
+
 			.breadcrumbs__link {
 				display: inline-block;
 				transition: .3s all;
