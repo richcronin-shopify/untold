@@ -146,7 +146,7 @@
             	padding: 130px 40px 20px;
             }
             @media (max-width: 768px) {
-            	padding: 130px 16px 20px;
+            	padding: 110px 16px 20px;
             }
             .breadcrumbs {
             	width: 100%;
@@ -157,7 +157,7 @@
             	@media (max-width: 990px) {
             		width: 100%;
             		padding:0;
-            		margin: 0 0 20px 0;
+            		margin: 0 0 10px 0;
             	}
             }
             .collection-hero__description {
