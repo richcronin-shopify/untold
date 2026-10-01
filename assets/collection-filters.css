@@ -10,12 +10,29 @@
 			justify-content: space-between;
 			gap: 20px;
 
+			@media (max-width: 767px) {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 12px;
+			}
+
 			.collection-filters__count {
 				flex-shrink: 0;
+
+				@media (max-width: 767px) {
+					grid-column: 1 / -1;
+				}
 			}
 
 			.collection-filters__mobile-trigger {
 				display: none;
+
+				@media (max-width: 767px) {
+					display: flex;
+					align-items: center;
+					justify-content: space-between;
+					width: 100%;
+				}
 
 				.collection-filters__mobile-trigger-icon {
 					display: flex;
@@ -27,9 +44,7 @@
 						width: 14px;
 						height: 1px;
 					}
-
 				}
-
 			}
 
 			.collection-filters__filters {
@@ -38,8 +53,20 @@
 				gap: 8px;
 				flex: 1;
 
+				@media (max-width: 767px) {
+					display: none;
+					grid-column: 1 / -1;
+					flex-direction: column;
+					align-items: stretch;
+					gap: 0;
+				}
+
 				.collection-filters__dropdown {
 					position: relative;
+
+					@media (max-width: 767px) {
+						width: 100%;
+					}
 
 					.collection-filters__dropdown-trigger {
 						display: flex;
@@ -48,6 +75,10 @@
 						gap: 20px;
 						cursor: pointer;
 						list-style: none;
+
+						@media (max-width: 767px) {
+							width: 100%;
+						}
 
 						&::-webkit-details-marker {
 							display: none;
@@ -62,9 +93,7 @@
 							svg {
 								display: block;
 							}
-
 						}
-
 					}
 
 					.collection-filters__dropdown-content {
@@ -73,6 +102,12 @@
 						left: 0;
 						z-index: 10;
 						min-width: 220px;
+
+						@media (max-width: 767px) {
+							position: static;
+							min-width: 0;
+							width: 100%;
+						}
 
 						.collection-filters__option {
 							display: flex;
@@ -96,7 +131,6 @@
 								opacity: 0.4;
 								pointer-events: none;
 							}
-
 						}
 
 						.collection-filters__price-option {
@@ -107,9 +141,7 @@
 							&.is-active {
 
 							}
-
 						}
-
 					}
 
 					&[open] {
@@ -119,17 +151,13 @@
 							.collection-filters__dropdown-chevron {
 								transform: rotate(180deg);
 							}
-
 						}
-
 					}
 
 					&.collection-filters__dropdown--price {
 
 					}
-
 				}
-
 			}
 
 			.collection-filters__sort {
@@ -161,130 +189,48 @@
 						svg {
 							display: block;
 						}
-
 					}
+				}
 
+				&.collection-filters__sort--desktop {
+
+					@media (max-width: 767px) {
+						display: none;
+					}
 				}
 
 				&.collection-filters__sort--mobile {
 					display: none;
-				}
 
-			}
-
-		}
-
-	}
-
-
-	@media (max-width: 989px) {
-
-		.collection-filters__form {
-
-			.collection-filters__bar {
-
-				.collection-filters__filters {
-
-					.collection-filters__dropdown {
-
-						.collection-filters__dropdown-trigger {
-
-						}
-
-					}
-
-				}
-
-			}
-
-		}
-
-	}
-
-
-	@media (max-width: 767px) {
-
-		.collection-filters__form {
-
-			.collection-filters__bar {
-				display: grid;
-				grid-template-columns: 1fr 1fr;
-				gap: 12px;
-
-				.collection-filters__count {
-					grid-column: 1 / -1;
-				}
-
-				.collection-filters__mobile-trigger {
-					display: flex;
-					align-items: center;
-					justify-content: space-between;
-					width: 100%;
-				}
-
-				.collection-filters__filters {
-					display: none;
-					grid-column: 1 / -1;
-					flex-direction: column;
-					align-items: stretch;
-					gap: 0;
-
-					.collection-filters__dropdown {
-						width: 100%;
-
-						.collection-filters__dropdown-trigger {
-							width: 100%;
-						}
-
-						.collection-filters__dropdown-content {
-							position: static;
-							min-width: 0;
-							width: 100%;
-						}
-
-					}
-
-				}
-
-				.collection-filters__sort {
-
-					&.collection-filters__sort--desktop {
-						display: none;
-					}
-
-					&.collection-filters__sort--mobile {
+					@media (max-width: 767px) {
 						display: block;
 						width: 100%;
+					}
 
-						.collection-filters__sort-select-wrap {
+					.collection-filters__sort-select-wrap {
+
+						@media (max-width: 767px) {
 							width: 100%;
 						}
-
 					}
-
 				}
-
 			}
-
 		}
-
-
-		&.is-filter-open {
-
-			.collection-filters__form {
-
-				.collection-filters__bar {
-
-					.collection-filters__filters {
-						display: flex;
-					}
-
-				}
-
-			}
-
-		}
-
 	}
 
+	&.is-filter-open {
+
+		.collection-filters__form {
+
+			.collection-filters__bar {
+
+				.collection-filters__filters {
+
+					@media (max-width: 767px) {
+						display: flex;
+					}
+				}
+			}
+		}
+	}
 }
