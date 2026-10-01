@@ -42,42 +42,44 @@
 			</div>
 		{%- endif -%}
 
-		{%- if sub_collections != blank -%}
-			<div class="collection-hero__subcollections">
+		{%- if hero_image == blank -%}
+			{%- if sub_collections != blank -%}
+				<div class="collection-hero__subcollections">
 
-				{%- for sub_collection in sub_collections -%} 
+					{%- for sub_collection in sub_collections -%} 
 
-					<a
-						href="{{ sub_collection.url }}"
-						class="collection-hero__subcollection{% if sub_collection.handle contains 'sale' %} collection-hero__subcollection--sale{% endif %}"
-					>
+						<a
+							href="{{ sub_collection.url }}"
+							class="collection-hero__subcollection{% if sub_collection.handle contains 'sale' %} collection-hero__subcollection--sale{% endif %}"
+						>
 
-						{%- if sub_collection.image != blank -%}
-							<div class="collection-hero__subcollection-media">
-								{{
-									sub_collection.image
-									| image_url: width: 600
-									| image_tag:
-										class: 'collection-hero__subcollection-image',
-										loading: 'lazy',
-										widths: '200, 300, 400, 500, 600',
-										sizes: '(min-width: 990px) 200px, 40vw',
-										alt: sub_collection.image.alt | default: sub_collection.title
-								}}
+							{%- if sub_collection.image != blank -%}
+								<div class="collection-hero__subcollection-media">
+									{{
+										sub_collection.image
+										| image_url: width: 600
+										| image_tag:
+											class: 'collection-hero__subcollection-image',
+											loading: 'lazy',
+											widths: '200, 300, 400, 500, 600',
+											sizes: '(min-width: 990px) 200px, 40vw',
+											alt: sub_collection.image.alt | default: sub_collection.title
+									}}
+								</div>
+							{%- endif -%}
+
+							<div class="collection-hero__subcollection-content">
+								<p class="collection-hero__subcollection-title h5">
+									{{ sub_collection.title }}
+								</p>
 							</div>
-						{%- endif -%}
 
-						<div class="collection-hero__subcollection-content">
-							<p class="collection-hero__subcollection-title h5">
-								{{ sub_collection.title }}
-							</p>
-						</div>
+						</a>
 
-					</a>
+					{%- endfor -%}
 
-				{%- endfor -%}
-
-			</div>
+				</div>
+			{%- endif -%}
 		{%- endif -%}
 
 	</div>
