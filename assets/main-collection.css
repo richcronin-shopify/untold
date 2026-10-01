@@ -456,6 +456,7 @@
 
 		@media (max-width: 767px) {
 			grid-template-columns: repeat(var(--products-mobile), minmax(0, 1fr));
+			row-gap: 16px;
 		}
 
 		.main-collection__item {
