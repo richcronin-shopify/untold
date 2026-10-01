@@ -47,6 +47,7 @@
 			height: 40px;
 			border: 1px solid var(--border-white);
 			border-radius: 3px;
+			transition: .3s all;
 		}
 
 		.main-collection__pagination-page {
@@ -70,7 +71,7 @@
 			&.main-collection__pagination-arrow--prev {
 
 				svg {
-					transform: rotate(-90deg);
+					transform: rotate(90deg);
 				}
 
 			}
