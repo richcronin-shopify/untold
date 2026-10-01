@@ -143,6 +143,15 @@
 			top: auto;
 		}
 
+		&.product__info--sold-out {
+
+			.product__form,
+			.product__availability {
+				display: none;
+			}
+
+		}
+
 		.product__vendor {
 			margin-bottom: 10px;
 			text-transform: uppercase;
