@@ -50,4 +50,10 @@
 
 	}
 
+	&:not(.collection-hero--has-image) {
+		.collection-hero__content {
+			position: static;
+		}
+	}
+
 }
