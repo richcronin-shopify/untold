@@ -240,6 +240,7 @@
 				border: none;
 				display: flex;
 				align-items: center;
+				gap: 15px;
 
 				.product__option-label {
 					margin: 0;
