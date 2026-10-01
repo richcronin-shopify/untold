@@ -266,6 +266,12 @@
 							flex: 1 1 0;
 							min-width: 0;
 						}
+
+						&:checked + .product__option-value {
+							border-color: var(--color-primary);
+							color: var(--color-primary);
+						}
+						
 					}
 				}
 			}
