@@ -65,6 +65,15 @@
 
 				}
 
+				.collection-hero__subcollection-content {
+
+					.collection-hero__subcollection-title {
+						text-align: center;
+						margin: 10px 0 0 0;
+					}
+
+				}
+
 			}
 
 		}
