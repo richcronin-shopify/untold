@@ -238,9 +238,11 @@
 				padding: 0;
 				min-width: 0;
 				border: none;
+				display: flex;
+				align-items: center;
 
 				.product__option-label {
-					margin-bottom: 8px;
+					margin: 0;
 				}
 
 				.product__option-values {
