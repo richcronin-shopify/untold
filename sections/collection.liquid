@@ -678,6 +678,47 @@
 					let isLoading = false;
 					let observer = null;
 
+					let isInfinitePaused = false;
+
+
+					const pauseInfiniteScroll = () => {
+
+						isInfinitePaused = true;
+
+						observer?.disconnect();
+
+					};
+
+
+					const resumeInfiniteScroll = () => {
+
+						if (!isInfinitePaused) {
+							return;
+						}
+
+						isInfinitePaused = false;
+
+						if (
+							observer &&
+							sentinel.isConnected &&
+							infinite.dataset.nextUrl
+						) {
+							observer.observe(sentinel);
+						}
+
+					};
+
+
+					section.addEventListener(
+						'collection:pause-infinite',
+						pauseInfiniteScroll
+					);
+
+					section.addEventListener(
+						'collection:resume-infinite',
+						resumeInfiniteScroll
+					);
+
 
 					const updateUrl = (page) => {
 
