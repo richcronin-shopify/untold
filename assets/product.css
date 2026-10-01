@@ -48,6 +48,7 @@
 				width: 72px;
 				aspect-ratio: 1 / 1;
 				overflow: hidden;
+				border-radius: 6px;
 
 				img {
 					display: block;
