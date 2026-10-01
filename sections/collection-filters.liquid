@@ -98,6 +98,7 @@
 													for="Filter-{{ section.id }}-{{ forloop.index }}-true"
 												>
 													<input
+														class="collection-filters__checkbox-input"
 														type="checkbox"
 														id="Filter-{{ section.id }}-{{ forloop.index }}-true"
 														name="{{ filter_value.param_name }}"
@@ -106,6 +107,8 @@
 														{% if filter_value.count == 0 and filter_value.active == false %}disabled{% endif %}
 														data-filter-input
 													>
+
+													<span class="collection-filters__checkbox" aria-hidden="true"></span>
 
 													<span class="collection-filters__option-label">
 														{{ filter_value.label }}
@@ -125,6 +128,7 @@
 													for="Filter-{{ section.id }}-{{ forloop.index }}-false"
 												>
 													<input
+														class="collection-filters__checkbox-input"
 														type="checkbox"
 														id="Filter-{{ section.id }}-{{ forloop.index }}-false"
 														name="{{ filter_value.param_name }}"
@@ -134,12 +138,14 @@
 														data-filter-input
 													>
 
+													<span class="collection-filters__checkbox" aria-hidden="true"></span>
+
 													<span class="collection-filters__option-label">
 														{{ filter_value.label }}
 													</span>
 
 													<span class="collection-filters__option-count">
-														{{ filter_value.count }}
+														({{- filter_value.count -}})
 													</span>
 												</label>
 											{%- endif -%}
@@ -153,6 +159,7 @@
 													for="Filter-{{ section.id }}-{{ filter.param_name | handle }}-{{ forloop.index }}"
 												>
 													<input
+														class="collection-filters__checkbox-input"
 														type="checkbox"
 														id="Filter-{{ section.id }}-{{ filter.param_name | handle }}-{{ forloop.index }}"
 														name="{{ filter_value.param_name }}"
@@ -162,12 +169,14 @@
 														data-filter-input
 													>
 
+													<span class="collection-filters__checkbox" aria-hidden="true"></span>
+
 													<span class="collection-filters__option-label">
 														{{ filter_value.label }}
 													</span>
 
 													<span class="collection-filters__option-count">
-														{{ filter_value.count }}
+														({{- filter_value.count -}})
 													</span>
 												</label>
 
@@ -183,66 +192,82 @@
 
 					{%- endfor -%}
 
-					<details class="collection-filters__dropdown collection-filters__dropdown--price" data-price-dropdown>
+					{%- if price_filter != blank -%}
 
-						<summary class="collection-filters__dropdown-trigger">
-							<span data-price-label>Price</span>
+						<details
+							class="collection-filters__dropdown collection-filters__dropdown--price"
+							data-price-dropdown
+							{% if price_filter.min_value.value != blank or price_filter.max_value.value != blank %}open{% endif %}
+						>
 
-							<span class="collection-filters__dropdown-chevron" aria-hidden="true">
-								{{- 'icon-chev.svg' | inline_asset_content -}}
-							</span>
-						</summary>
+							<summary class="collection-filters__dropdown-trigger">
+								<span>Price</span>
 
-						<div class="collection-filters__dropdown-content">
+								<span class="collection-filters__dropdown-chevron" aria-hidden="true">
+									{{- 'icon-chev.svg' | inline_asset_content -}}
+								</span>
+							</summary>
 
-							<button
-								type="button"
-								class="collection-filters__price-option button--reset"
-								data-price-option
-								data-price-min=""
-								data-price-max=""
-							>
-								All prices
-							</button>
+							<div class="collection-filters__dropdown-content">
 
-							{%- for i in (1..price_bracket_count) -%}
+								{%- for i in (1..price_bracket_count) -%}
 
-								{%- liquid
-									assign min_price = i | minus: 1 | times: 50
-									assign max_price = i | times: 50
-									assign min_price_cents = min_price | times: 100
-									assign max_price_cents = max_price | times: 100
-								-%}
+									{%- liquid
+										assign min_price = i | minus: 1 | times: 50
+										assign max_price = i | times: 50
+										assign min_price_cents = min_price | times: 100
+										assign max_price_cents = max_price | times: 100
+									-%}
 
-								<button
-									type="button"
-									class="collection-filters__price-option button--reset"
-									data-price-option
-									data-price-min="{{ min_price }}"
-									data-price-max="{{ max_price }}"
-								>
-									{{ min_price_cents | money_without_trailing_zeros }}–{{ max_price_cents | money_without_trailing_zeros }}
-								</button>
+									<label
+										class="collection-filters__option collection-filters__option--price"
+										for="Filter-{{ section.id }}-price-{{ forloop.index }}"
+									>
+										<input
+											class="collection-filters__checkbox-input"
+											type="checkbox"
+											id="Filter-{{ section.id }}-price-{{ forloop.index }}"
+											value="{{ min_price }}-{{ max_price }}"
+											data-price-option
+											data-price-min="{{ min_price }}"
+											data-price-max="{{ max_price }}"
+										>
 
-							{%- endfor -%}
+										<span class="collection-filters__checkbox" aria-hidden="true"></span>
 
-						</div>
+										<span class="collection-filters__option-label">
+											{{ min_price_cents | money_without_trailing_zeros }}–{{ max_price_cents | money_without_trailing_zeros }}
+										</span>
+									</label>
 
-					</details>
+								{%- endfor -%}
 
-					<input
-						type="hidden"
-						name="filter.v.price.gte"
-						value="{% if price_filter.min_value.value != blank %}{{ price_filter.min_value.value | divided_by: 100.0 }}{% endif %}"
-						data-price-min-input
+							</div>
+
+						</details>
+
+						<input
+							type="hidden"
+							name="{{ price_filter.min_value.param_name }}"
+							value="{% if price_filter.min_value.value != blank %}{{ price_filter.min_value.value | money_without_currency | replace: ',', '' }}{% endif %}"
+							data-price-min-input
+						>
+
+						<input
+							type="hidden"
+							name="{{ price_filter.max_value.param_name }}"
+							value="{% if price_filter.max_value.value != blank %}{{ price_filter.max_value.value | money_without_currency | replace: ',', '' }}{% endif %}"
+							data-price-max-input
+						>
+
+					{%- endif -%}
+
+					<a
+						href="{{ collection.url }}?sort_by={{ sort_by | url_encode }}"
+						class="collection-filters__clear-all"
 					>
-
-					<input
-						type="hidden"
-						name="filter.v.price.lte"
-						value="{% if price_filter.max_value.value != blank %}{{ price_filter.max_value.value | divided_by: 100.0 }}{% endif %}"
-						data-price-max-input
-					>
+						Clear all
+					</a>
 
 				</div>
 
@@ -362,8 +387,32 @@
 					const mobileSort = section.querySelector('[data-mobile-sort]');
 					const priceMinInput = section.querySelector('[data-price-min-input]');
 					const priceMaxInput = section.querySelector('[data-price-max-input]');
-					const priceLabel = section.querySelector('[data-price-label]');
-					const priceDropdown = section.querySelector('[data-price-dropdown]');
+					const priceOptions = section.querySelectorAll('[data-price-option]');
+
+					const normalisePrice = (value) => {
+
+						if (value === null || value === '') {
+							return '';
+						}
+
+						const number = Number(value);
+
+						return Number.isFinite(number)
+							? String(number)
+							: String(value);
+
+					};
+
+					const updatePriceInput = (input, value) => {
+
+						if (!input) {
+							return;
+						}
+
+						input.value = value;
+						input.disabled = value === '';
+
+					};
 
 					const submitFilters = () => {
 						form.requestSubmit();
@@ -405,66 +454,57 @@
 
 					const currentUrl = new URL(window.location.href);
 
-					const currentPriceMin =
-						currentUrl.searchParams.get('filter.v.price.gte') || '';
+					const currentPriceMin = priceMinInput
+						? normalisePrice(
+							currentUrl.searchParams.get(priceMinInput.name)
+						)
+						: '';
 
-					const currentPriceMax =
-						currentUrl.searchParams.get('filter.v.price.lte') || '';
+					const currentPriceMax = priceMaxInput
+						? normalisePrice(
+							currentUrl.searchParams.get(priceMaxInput.name)
+						)
+						: '';
 
-					if (priceMinInput) {
-						priceMinInput.value = currentPriceMin;
-					}
+					updatePriceInput(priceMinInput, currentPriceMin);
+					updatePriceInput(priceMaxInput, currentPriceMax);
 
-					if (priceMaxInput) {
-						priceMaxInput.value = currentPriceMax;
-					}
+					priceOptions.forEach((option) => {
 
-					section
-						.querySelectorAll('[data-price-option]')
-						.forEach((option) => {
+						const optionMin = normalisePrice(option.dataset.priceMin);
+						const optionMax = normalisePrice(option.dataset.priceMax);
 
-							const optionMin = option.dataset.priceMin;
-							const optionMax = option.dataset.priceMax;
+						option.checked =
+							optionMin === currentPriceMin &&
+							optionMax === currentPriceMax;
 
-							const isActive =
-								optionMin === currentPriceMin &&
-								optionMax === currentPriceMax;
+						option.addEventListener('change', () => {
 
-							option.classList.toggle('is-active', isActive);
+							if (option.checked) {
 
-							option.setAttribute(
-								'aria-pressed',
-								isActive ? 'true' : 'false'
-							);
+								priceOptions.forEach((otherOption) => {
 
-							if (
-								isActive &&
-								priceLabel &&
-								optionMin !== '' &&
-								optionMax !== ''
-							) {
-								priceLabel.textContent = option.textContent.trim();
+									if (otherOption !== option) {
+										otherOption.checked = false;
+									}
+
+								});
+
+								updatePriceInput(priceMinInput, optionMin);
+								updatePriceInput(priceMaxInput, optionMax);
+
+							} else {
+
+								updatePriceInput(priceMinInput, '');
+								updatePriceInput(priceMaxInput, '');
+
 							}
 
-							option.addEventListener('click', () => {
-
-								if (priceMinInput) {
-									priceMinInput.value = optionMin;
-								}
-
-								if (priceMaxInput) {
-									priceMaxInput.value = optionMax;
-								}
-
-								if (priceDropdown) {
-									priceDropdown.open = false;
-								}
-
-								submitFilters();
-
-							});
+							submitFilters();
 
 						});
+
+					});
 
 					section.dataset.initialised = 'true';
 
