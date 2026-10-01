@@ -7,7 +7,6 @@
 	data-main-collection
 	data-section-id="{{ section.id }}"
 	data-pagination-type="{{ ss.pagination_type }}"
-	data-force-out-of-stock-last="{{ ss.force_out_of_stock_last }}"
 >
 	<div class="container">
 
@@ -17,33 +16,13 @@
 
 				{%- if collection.products.size > 0 -%}
 
-					{%- if ss.force_out_of_stock_last -%}
+					{%- for product in collection.products -%}
 
-						{%- for product in collection.products -%}
-							{%- if product.available -%}
-								<div class="main-collection__item" data-product-available="true">
-									{% render 'product-card', product: product %}
-								</div>
-							{%- endif -%}
-						{%- endfor -%}
+						<div class="main-collection__item">
+							{% render 'product-card', product: product %}
+						</div>
 
-						{%- for product in collection.products -%}
-							{%- unless product.available -%}
-								<div class="main-collection__item" data-product-available="false">
-									{% render 'product-card', product: product %}
-								</div>
-							{%- endunless -%}
-						{%- endfor -%}
-
-					{%- else -%}
-
-						{%- for product in collection.products -%}
-							<div class="main-collection__item" data-product-available="{{ product.available }}">
-								{% render 'product-card', product: product %}
-							</div>
-						{%- endfor -%}
-
-					{%- endif -%}
+					{%- endfor -%}
 
 				{%- else -%}
 
@@ -378,12 +357,6 @@
 			"step": 1,
 			"label": "Products per page",
 			"default": 20
-		},
-		{
-			"type": "checkbox",
-			"id": "force_out_of_stock_last",
-			"label": "Force out of stock products to appear last",
-			"default": true
 		},
 		{
 			"type": "select",
