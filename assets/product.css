@@ -472,6 +472,10 @@
 				flex: 1;
 				min-width: 0;
 
+				.product__points-title {
+					font-weight: 400;
+				}
+
 				.product__points-subtext {
 					margin-top: 3px;
 				}
