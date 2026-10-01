@@ -212,13 +212,6 @@
 
 										{%- assign option_input_id = section.id | append: '-option-' | append: option.position | append: '-' | append: forloop.index0 -%}
 
-										<label
-											class="product__option-value{% unless option_value.available %} is-unavailable{% endunless %}"
-											for="{{ option_input_id }}"
-										>
-											{{ option_value.name }}
-										</label>
-
 										<input
 											class="product__option-input "
 											type="radio"
@@ -229,6 +222,13 @@
 											data-option-position="{{ option.position }}"
 											{% if option_value.selected %}checked{% endif %}
 										>
+
+										<label
+											class="product__option-value{% unless option_value.available %} is-unavailable{% endunless %}"
+											for="{{ option_input_id }}"
+										>
+											{{ option_value.name }}
+										</label>
 
 									{%- endfor -%}
 
