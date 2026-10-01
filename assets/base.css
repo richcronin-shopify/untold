@@ -74,6 +74,15 @@ html {
 
   	body {
   		overflow: hidden;
+
+  		&.scrolled {
+			.site-header {
+				@media (max-width: 767px) {
+					top: 0;
+				}
+			}
+		}
+
   	}
 
 	.site-header__menu-toggle {
