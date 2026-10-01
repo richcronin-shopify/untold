@@ -436,6 +436,10 @@
 						padding: 0 20px;
 						background: transparent;
 						color: #fff;
+						&:hover,
+						&:focus {
+							border-color: #fff;
+						}
 					}
 
 					.product__back-in-stock-button {
