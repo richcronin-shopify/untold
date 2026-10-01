@@ -23,7 +23,7 @@
 	endif
 -%}
 
-<section class="collection-filters" id="{{ section.id }}" data-collection-filters>
+<section class="collection-filters" id="{{ section.id }}" data-collection-filters data-product-count="{{ collection.products_count }}">
 	<div class="container">
 
 		<form
@@ -238,6 +238,8 @@
 										<span class="collection-filters__option-label">
 											{{ min_price_cents | money_without_trailing_zeros }}–{{ max_price_cents | money_without_trailing_zeros }}
 										</span>
+
+										<span class="collection-filters__option-count" data-price-count></span>
 									</label>
 
 								{%- endfor -%}
@@ -262,9 +264,12 @@
 
 					{%- endif -%}
 
-					{%- if has_active_values -%}
-						<a href="{{ collection.url }}" class="collection-filters__clear-all">Clear all</a>
-					{%- endif -%}
+					<a
+						href="{{ collection.url }}?sort_by={{ sort_by | url_encode }}"
+						class="collection-filters__clear-all"
+					>
+						Clear all
+					</a>
 
 				</div>
 
@@ -385,6 +390,7 @@
 					const priceMinInput = section.querySelector('[data-price-min-input]');
 					const priceMaxInput = section.querySelector('[data-price-max-input]');
 					const priceOptions = section.querySelectorAll('[data-price-option]');
+					const priceDropdown = section.querySelector('[data-price-dropdown]');
 
 					const normalisePrice = (value) => {
 
@@ -410,6 +416,165 @@
 						input.disabled = value === '';
 
 					};
+
+					const getPriceResultCount = async (option) => {
+
+						if (!priceMinInput || !priceMaxInput) {
+							return null;
+						}
+
+						const url = new URL(window.location.href);
+
+						url.searchParams.delete('page');
+						url.searchParams.delete('section_id');
+						url.searchParams.delete(priceMinInput.name);
+						url.searchParams.delete(priceMaxInput.name);
+
+						url.searchParams.set(
+							priceMinInput.name,
+							normalisePrice(option.dataset.priceMin)
+						);
+
+						url.searchParams.set(
+							priceMaxInput.name,
+							normalisePrice(option.dataset.priceMax)
+						);
+
+						url.searchParams.set('section_id', section.id);
+
+						const response = await fetch(
+							`${url.pathname}${url.search}`,
+							{
+								headers: {
+									'X-Requested-With': 'XMLHttpRequest'
+								}
+							}
+						);
+
+						if (!response.ok) {
+							return null;
+						}
+
+						const html = await response.text();
+
+						const nextDocument = new DOMParser().parseFromString(
+							html,
+							'text/html'
+						);
+
+						const nextSection = nextDocument.querySelector(
+							'[data-collection-filters]'
+						);
+
+						if (!nextSection) {
+							return null;
+						}
+
+						const count = Number(
+							nextSection.dataset.productCount
+						);
+
+						return Number.isFinite(count)
+							? count
+							: null;
+
+					};
+
+
+					const loadPriceCounts = async () => {
+
+						if (
+							!priceDropdown ||
+							priceDropdown.dataset.priceCountsState === 'loading' ||
+							priceDropdown.dataset.priceCountsState === 'loaded'
+						) {
+							return;
+						}
+
+						const options = Array.from(priceOptions);
+
+						if (!options.length) {
+							return;
+						}
+
+						priceDropdown.dataset.priceCountsState = 'loading';
+
+						let optionIndex = 0;
+
+						const loadNextOption = async () => {
+
+							while (optionIndex < options.length) {
+
+								const option = options[optionIndex];
+								optionIndex += 1;
+
+								const optionWrapper = option.closest(
+									'.collection-filters__option'
+								);
+
+								const countElement = optionWrapper?.querySelector(
+									'[data-price-count]'
+								);
+
+								optionWrapper?.classList.add('is-loading');
+
+								try {
+
+									const count = await getPriceResultCount(
+										option
+									);
+
+									if (count === null) {
+										continue;
+									}
+
+									if (countElement) {
+										countElement.textContent = `(${count})`;
+									}
+
+									const shouldDisable =
+										count === 0 &&
+										!option.checked;
+
+									option.disabled = shouldDisable;
+
+									optionWrapper?.classList.toggle(
+										'is-disabled',
+										shouldDisable
+									);
+
+								} catch (error) {
+
+									console.error(error);
+
+								} finally {
+
+									optionWrapper?.classList.remove(
+										'is-loading'
+									);
+
+								}
+
+							}
+
+						};
+
+						const workerCount = Math.min(
+							4,
+							options.length
+						);
+
+						await Promise.all(
+							Array.from(
+								{ length: workerCount },
+								() => loadNextOption()
+							)
+						);
+
+						priceDropdown.dataset.priceCountsState = 'loaded';
+
+					};
+
 
 					const submitFilters = () => {
 						form.requestSubmit();
@@ -502,6 +667,26 @@
 						});
 
 					});
+
+
+					if (priceDropdown) {
+
+						priceDropdown.addEventListener(
+							'toggle',
+							() => {
+
+								if (priceDropdown.open) {
+									loadPriceCounts();
+								}
+
+							}
+						);
+
+						if (priceDropdown.open) {
+							loadPriceCounts();
+						}
+
+					}
 
 					section.dataset.initialised = 'true';
 
