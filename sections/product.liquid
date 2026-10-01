@@ -1,4 +1,5 @@
 {%- assign ss = section.settings -%}
+{{- 'product.css' | asset_url | stylesheet_tag -}}
 {%- assign current_variant = product.selected_or_first_available_variant -%}
 {%- assign short_description = product.metafields.custom.short_description -%}
 {%- assign product_form_id = 'ProductForm-' | append: section.id -%}
