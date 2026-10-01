@@ -125,6 +125,7 @@
 
 			@media (max-width: 768px) {
 				padding: 0 16px;
+				position: static;
 			}
 
 			.collection-hero__title,
