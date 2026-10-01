@@ -3,7 +3,12 @@
 .collection-filters {
 
 	.collection-filters__form {
+		
 		margin-bottom: 30px;
+
+		@media (max-width: 989px) {
+			margin-bottom: 16px;
+		}
 
 		.collection-filters__bar {
 			display: flex;
