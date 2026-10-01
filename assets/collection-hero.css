@@ -48,6 +48,7 @@
 				border-radius: 4px;
 				overflow: hidden;
 				background: #151515;
+				padding: 10px;
 				transition: .3s all;
 
 				&:hover {
