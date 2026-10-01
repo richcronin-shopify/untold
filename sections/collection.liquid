@@ -1125,6 +1125,46 @@
 
 (() => {
 
+	document.addEventListener('click', (event) => {
+
+		const trigger = event.target.closest(
+			'.collection-hero__description-read-more'
+		);
+
+		if (!trigger) {
+			return;
+		}
+
+		const target = document.querySelector(
+			'.collection-description, .collection--description'
+		);
+
+		if (!target) {
+			return;
+		}
+
+		const isMobile = window.matchMedia(
+			'(max-width: 767px)'
+		).matches;
+
+		const offset = isMobile ? 120 : 180;
+
+		const targetPosition =
+			target.getBoundingClientRect().top +
+			window.scrollY -
+			offset;
+
+		window.scrollTo({
+			top: targetPosition,
+			behavior: 'smooth'
+		});
+
+	});
+
+})();
+
+(() => {
+
 		const initialiseCollectionFilters = (container = document) => {
 
 			container
