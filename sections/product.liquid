@@ -126,7 +126,7 @@
 
 			</div>
 
-			<div class="product__info">
+			<div class="product__info{% unless current_variant.available %} product__info--sold-out{% endunless %}">
 
 				{%- if product.vendor != blank -%}
 					<div class="product__vendor">
