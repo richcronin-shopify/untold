@@ -66,6 +66,8 @@
 					position: relative;
 					border: 1px solid var(--border-white);
 					border-radius: 3px;
+					height: 40px;
+					padding: 0 10px;
 
 					@media (max-width: 767px) {
 						width: 100%;
