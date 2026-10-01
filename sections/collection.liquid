@@ -71,11 +71,12 @@
 							</a>
 						{%- endif -%}
 
-						{%- assign current_page_string = paginate.current_page | append: '' -%}
-
 						{%- for part in paginate.parts -%}
 
+							{%- assign part_page = part.title | plus: 0 -%}
+
 							{%- if part.is_link -%}
+
 								<a
 									href="{{ part.url }}"
 									class="main-collection__pagination-page"
@@ -83,17 +84,22 @@
 								>
 									{{ part.title }}
 								</a>
-							{%- elsif part.title == current_page_string -%}
+
+							{%- elsif part_page == paginate.current_page -%}
+
 								<span
 									class="main-collection__pagination-page is-current"
 									aria-current="page"
 								>
 									{{ part.title }}
 								</span>
+
 							{%- else -%}
+
 								<span class="main-collection__pagination-ellipsis">
 									{{ part.title }}
 								</span>
+
 							{%- endif -%}
 
 						{%- endfor -%}
@@ -108,7 +114,7 @@
 							</a>
 						{%- endif -%}
 
-					</nav>
+					</nav>					
 
 				{%- else -%}
 
