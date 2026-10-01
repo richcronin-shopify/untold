@@ -39,6 +39,8 @@
 			display: flex;
 			flex-direction: column;
 			gap: 10px;
+			position: sticky;
+			top: 180px;
 
 			@media (max-width: 989px) {
 				display: none;
