@@ -670,22 +670,7 @@
 
 
 					if (priceDropdown) {
-
-						priceDropdown.addEventListener(
-							'toggle',
-							() => {
-
-								if (priceDropdown.open) {
-									loadPriceCounts();
-								}
-
-							}
-						);
-
-						if (priceDropdown.open) {
-							loadPriceCounts();
-						}
-
+						loadPriceCounts();
 					}
 
 					section.dataset.initialised = 'true';
