@@ -431,6 +431,8 @@
 						width: 100%;
 						min-width: 0;
 						height: 48px;
+						border: 1px solid var(--border-white);
+						border-radius: 3px;
 					}
 
 					.product__back-in-stock-button {
