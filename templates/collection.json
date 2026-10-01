@@ -16,23 +16,12 @@
         "subcollection_image_source": "collection"
       }
     },
-    "collection_filters_gieayn": {
-      "type": "collection-filters",
-      "disabled": true,
-      "name": "Collection filters",
-      "settings": {
-        "padding-top": 20,
-        "padding-bottom": 0,
-        "padding-top-m": 20,
-        "padding-bottom-m": 0
-      }
-    },
     "main": {
       "type": "collection",
       "settings": {
-        "products_desktop": 5,
-        "products_tablet": 3,
-        "products_mobile": 2,
+        "products_desktop": 4,
+        "products_tablet": "3",
+        "products_mobile": "2",
         "products_per_page": 30,
         "pagination_type": "infinite",
         "padding-top": 20,
@@ -44,7 +33,6 @@
   },
   "order": [
     "collection_hero_WDVMA6",
-    "collection_filters_gieayn",
     "main"
   ]
 }
