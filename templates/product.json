@@ -35,7 +35,7 @@
         "show_klarna": true,
         "product_description_label": "Product Description",
         "delivery_returns_label": "Delivery & Returns",
-        "delivery_returns": ""
+        "delivery_returns": "<p>Delivery & Returns info</p>"
       }
     }
   },
