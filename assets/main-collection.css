@@ -69,6 +69,7 @@
 				&[aria-expanded="true"] {
 					.collection-filters__mobile-trigger-icon {
 						span {
+							&:first-child,
 							&:nth-child(2){
 								display: none;
 							}
