@@ -78,7 +78,7 @@
       ],
       "name": "USP bar",
       "settings": {
-        "padding-top": 45,
+        "padding-top": 100,
         "padding-bottom": 60,
         "padding-top-m": 20,
         "padding-bottom-m": 20
