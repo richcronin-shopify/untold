@@ -341,6 +341,12 @@
 						border-color: var(--color-primary);
 						background: var(--color-primary);
 						color: var(--color-black);
+
+						.collection-filters__grid-view-icon {
+							span {
+								background: var(--color-black);
+							}
+						}
 					}
 
 					&:focus-visible {
