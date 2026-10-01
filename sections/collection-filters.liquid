@@ -1,0 +1,543 @@
+{{- 'collection-filters.css' | asset_url | stylesheet_tag -}}
+{%- assign ss = section.settings -%}
+
+{%- liquid
+	assign sort_by = collection.sort_by | default: collection.default_sort_by
+	assign price_filter = blank
+
+	for filter in collection.filters
+		if filter.type == 'price_range'
+			assign price_filter = filter
+			break
+		endif
+	endfor
+
+	assign price_bracket_count = 20
+
+	if price_filter != blank and price_filter.range_max != blank
+		assign price_bracket_count = price_filter.range_max | divided_by: 5000.0 | ceil
+	endif
+
+	if price_bracket_count < 1
+		assign price_bracket_count = 1
+	endif
+-%}
+
+<section class="collection-filters" id="{{ section.id }}" data-collection-filters>
+	<div class="container">
+
+		<form
+			class="collection-filters__form"
+			action="{{ collection.url }}"
+			method="get"
+			data-filter-form
+		>
+
+			<div class="collection-filters__bar">
+
+				<div class="collection-filters__count">
+					{{ collection.products_count }} {% if collection.products_count == 1 %}Product{% else %}Products{% endif %}
+				</div>
+
+				<button
+					type="button"
+					class="collection-filters__mobile-trigger button--reset"
+					data-filter-trigger
+					aria-expanded="false"
+					aria-controls="CollectionFiltersPanel-{{ section.id }}"
+				>
+					<span>Filter</span>
+
+					<span class="collection-filters__mobile-trigger-icon" aria-hidden="true">
+						<span></span>
+						<span></span>
+						<span></span>
+					</span>
+				</button>
+
+				<div
+					class="collection-filters__filters"
+					id="CollectionFiltersPanel-{{ section.id }}"
+					data-filter-panel
+				>
+
+					{%- for filter in collection.filters -%}
+
+						{%- unless filter.type == 'price_range' -%}
+
+							{%- assign has_active_values = false -%}
+
+							{%- if filter.active_values.size > 0 -%}
+								{%- assign has_active_values = true -%}
+							{%- endif -%}
+
+							<details
+								class="collection-filters__dropdown"
+								{% if has_active_values %}open{% endif %}
+							>
+
+								<summary class="collection-filters__dropdown-trigger">
+									<span>{{ filter.label }}</span>
+
+									<span class="collection-filters__dropdown-chevron" aria-hidden="true">
+										{{- 'icon-chev.svg' | inline_asset_content -}}
+									</span>
+								</summary>
+
+								<div class="collection-filters__dropdown-content">
+
+									{%- case filter.type -%}
+
+										{%- when 'boolean' -%}
+
+											{%- if filter.true_value != blank -%}
+												{%- assign filter_value = filter.true_value -%}
+
+												<label
+													class="collection-filters__option{% if filter_value.count == 0 and filter_value.active == false %} is-disabled{% endif %}"
+													for="Filter-{{ section.id }}-{{ forloop.index }}-true"
+												>
+													<input
+														type="checkbox"
+														id="Filter-{{ section.id }}-{{ forloop.index }}-true"
+														name="{{ filter_value.param_name }}"
+														value="{{ filter_value.value }}"
+														{% if filter_value.active %}checked{% endif %}
+														{% if filter_value.count == 0 and filter_value.active == false %}disabled{% endif %}
+														data-filter-input
+													>
+
+													<span class="collection-filters__option-label">
+														{{ filter_value.label }}
+													</span>
+
+													<span class="collection-filters__option-count">
+														({{- filter_value.count -}})
+													</span>
+												</label>
+											{%- endif -%}
+
+											{%- if filter.false_value != blank -%}
+												{%- assign filter_value = filter.false_value -%}
+
+												<label
+													class="collection-filters__option{% if filter_value.count == 0 and filter_value.active == false %} is-disabled{% endif %}"
+													for="Filter-{{ section.id }}-{{ forloop.index }}-false"
+												>
+													<input
+														type="checkbox"
+														id="Filter-{{ section.id }}-{{ forloop.index }}-false"
+														name="{{ filter_value.param_name }}"
+														value="{{ filter_value.value }}"
+														{% if filter_value.active %}checked{% endif %}
+														{% if filter_value.count == 0 and filter_value.active == false %}disabled{% endif %}
+														data-filter-input
+													>
+
+													<span class="collection-filters__option-label">
+														{{ filter_value.label }}
+													</span>
+
+													<span class="collection-filters__option-count">
+														{{ filter_value.count }}
+													</span>
+												</label>
+											{%- endif -%}
+
+										{%- when 'list' -%}
+
+											{%- for filter_value in filter.values -%}
+
+												<label
+													class="collection-filters__option{% if filter_value.count == 0 and filter_value.active == false %} is-disabled{% endif %}"
+													for="Filter-{{ section.id }}-{{ filter.param_name | handle }}-{{ forloop.index }}"
+												>
+													<input
+														type="checkbox"
+														id="Filter-{{ section.id }}-{{ filter.param_name | handle }}-{{ forloop.index }}"
+														name="{{ filter_value.param_name }}"
+														value="{{ filter_value.value }}"
+														{% if filter_value.active %}checked{% endif %}
+														{% if filter_value.count == 0 and filter_value.active == false %}disabled{% endif %}
+														data-filter-input
+													>
+
+													<span class="collection-filters__option-label">
+														{{ filter_value.label }}
+													</span>
+
+													<span class="collection-filters__option-count">
+														{{ filter_value.count }}
+													</span>
+												</label>
+
+											{%- endfor -%}
+
+									{%- endcase -%}
+
+								</div>
+
+							</details>
+
+						{%- endunless -%}
+
+					{%- endfor -%}
+
+					<details class="collection-filters__dropdown collection-filters__dropdown--price" data-price-dropdown>
+
+						<summary class="collection-filters__dropdown-trigger">
+							<span data-price-label>Price</span>
+
+							<span class="collection-filters__dropdown-chevron" aria-hidden="true">
+								{{- 'icon-chev.svg' | inline_asset_content -}}
+							</span>
+						</summary>
+
+						<div class="collection-filters__dropdown-content">
+
+							<button
+								type="button"
+								class="collection-filters__price-option button--reset"
+								data-price-option
+								data-price-min=""
+								data-price-max=""
+							>
+								All prices
+							</button>
+
+							{%- for i in (1..price_bracket_count) -%}
+
+								{%- liquid
+									assign min_price = i | minus: 1 | times: 50
+									assign max_price = i | times: 50
+									assign min_price_cents = min_price | times: 100
+									assign max_price_cents = max_price | times: 100
+								-%}
+
+								<button
+									type="button"
+									class="collection-filters__price-option button--reset"
+									data-price-option
+									data-price-min="{{ min_price }}"
+									data-price-max="{{ max_price }}"
+								>
+									{{ min_price_cents | money_without_trailing_zeros }}–{{ max_price_cents | money_without_trailing_zeros }}
+								</button>
+
+							{%- endfor -%}
+
+						</div>
+
+					</details>
+
+					<input
+						type="hidden"
+						name="filter.v.price.gte"
+						value="{% if price_filter.min_value.value != blank %}{{ price_filter.min_value.value | divided_by: 100.0 }}{% endif %}"
+						data-price-min-input
+					>
+
+					<input
+						type="hidden"
+						name="filter.v.price.lte"
+						value="{% if price_filter.max_value.value != blank %}{{ price_filter.max_value.value | divided_by: 100.0 }}{% endif %}"
+						data-price-max-input
+					>
+
+				</div>
+
+				<div class="collection-filters__sort collection-filters__sort--desktop">
+
+					<label
+						class="collection-filters__sort-label"
+						for="CollectionSort-{{ section.id }}"
+					>
+						Sort by
+					</label>
+
+					<div class="collection-filters__sort-select-wrap">
+						<select
+							class="collection-filters__sort-select"
+							id="CollectionSort-{{ section.id }}"
+							name="sort_by"
+							data-sort-select
+						>
+							{%- for option in collection.sort_options -%}
+								<option
+									value="{{ option.value }}"
+									{% if option.value == sort_by %}selected{% endif %}
+								>
+									{{ option.name }}
+								</option>
+							{%- endfor -%}
+						</select>
+
+						<span class="collection-filters__sort-chevron" aria-hidden="true">
+							{{- 'icon-chev.svg' | inline_asset_content -}}
+						</span>
+					</div>
+
+				</div>
+
+				<div class="collection-filters__sort collection-filters__sort--mobile">
+
+					<label
+						class="visually-hidden"
+						for="CollectionSortMobile-{{ section.id }}"
+					>
+						Sort products
+					</label>
+
+					<div class="collection-filters__sort-select-wrap">
+						<select
+							class="collection-filters__sort-select"
+							id="CollectionSortMobile-{{ section.id }}"
+							data-mobile-sort
+						>
+							{%- for option in collection.sort_options -%}
+								<option
+									value="{{ option.value }}"
+									{% if option.value == sort_by %}selected{% endif %}
+								>
+									{{ option.name }}
+								</option>
+							{%- endfor -%}
+						</select>
+
+						<span class="collection-filters__sort-chevron" aria-hidden="true">
+							{{- 'icon-chev.svg' | inline_asset_content -}}
+						</span>
+					</div>
+
+				</div>
+
+			</div>
+
+		</form>
+
+	</div>
+</section>
+
+{%- style -%}
+
+	#{{ section.id }} {
+		padding-top: {{ ss.padding-top }}px;
+		padding-bottom: {{ ss.padding-bottom }}px;
+	}
+
+	@media screen and (max-width: 767px) {
+
+		#{{ section.id }} {
+			padding-top: {{ ss.padding-top-m }}px;
+			padding-bottom: {{ ss.padding-bottom-m }}px;
+		}
+
+	}
+
+{%- endstyle -%}
+
+{% javascript %}
+
+	(() => {
+
+		const initialiseCollectionFilters = (container = document) => {
+
+			container
+				.querySelectorAll('[data-collection-filters]')
+				.forEach((section) => {
+
+					if (section.dataset.initialised === 'true') {
+						return;
+					}
+
+					const form = section.querySelector('[data-filter-form]');
+
+					if (!form) {
+						return;
+					}
+
+					const filterTrigger = section.querySelector('[data-filter-trigger]');
+					const filterPanel = section.querySelector('[data-filter-panel]');
+					const sortSelect = section.querySelector('[data-sort-select]');
+					const mobileSort = section.querySelector('[data-mobile-sort]');
+					const priceMinInput = section.querySelector('[data-price-min-input]');
+					const priceMaxInput = section.querySelector('[data-price-max-input]');
+					const priceLabel = section.querySelector('[data-price-label]');
+					const priceDropdown = section.querySelector('[data-price-dropdown]');
+
+					const submitFilters = () => {
+						form.requestSubmit();
+					};
+
+					section
+						.querySelectorAll('[data-filter-input]')
+						.forEach((input) => {
+							input.addEventListener('change', submitFilters);
+						});
+
+					if (sortSelect) {
+						sortSelect.addEventListener('change', submitFilters);
+					}
+
+					if (mobileSort && sortSelect) {
+
+						mobileSort.addEventListener('change', () => {
+							sortSelect.value = mobileSort.value;
+							submitFilters();
+						});
+
+					}
+
+					if (filterTrigger && filterPanel) {
+
+						filterTrigger.addEventListener('click', () => {
+
+							const isOpen = section.classList.toggle('is-filter-open');
+
+							filterTrigger.setAttribute(
+								'aria-expanded',
+								isOpen ? 'true' : 'false'
+							);
+
+						});
+
+					}
+
+					const currentUrl = new URL(window.location.href);
+
+					const currentPriceMin =
+						currentUrl.searchParams.get('filter.v.price.gte') || '';
+
+					const currentPriceMax =
+						currentUrl.searchParams.get('filter.v.price.lte') || '';
+
+					if (priceMinInput) {
+						priceMinInput.value = currentPriceMin;
+					}
+
+					if (priceMaxInput) {
+						priceMaxInput.value = currentPriceMax;
+					}
+
+					section
+						.querySelectorAll('[data-price-option]')
+						.forEach((option) => {
+
+							const optionMin = option.dataset.priceMin;
+							const optionMax = option.dataset.priceMax;
+
+							const isActive =
+								optionMin === currentPriceMin &&
+								optionMax === currentPriceMax;
+
+							option.classList.toggle('is-active', isActive);
+
+							option.setAttribute(
+								'aria-pressed',
+								isActive ? 'true' : 'false'
+							);
+
+							if (
+								isActive &&
+								priceLabel &&
+								optionMin !== '' &&
+								optionMax !== ''
+							) {
+								priceLabel.textContent = option.textContent.trim();
+							}
+
+							option.addEventListener('click', () => {
+
+								if (priceMinInput) {
+									priceMinInput.value = optionMin;
+								}
+
+								if (priceMaxInput) {
+									priceMaxInput.value = optionMax;
+								}
+
+								if (priceDropdown) {
+									priceDropdown.open = false;
+								}
+
+								submitFilters();
+
+							});
+
+						});
+
+					section.dataset.initialised = 'true';
+
+				});
+
+		};
+
+		initialiseCollectionFilters();
+
+		document.addEventListener(
+			'shopify:section:load',
+			(event) => initialiseCollectionFilters(event.target)
+		);
+
+	})();
+
+{% endjavascript %}
+
+{% schema %}
+{
+	"name": "Collection filters",
+	"tag": "section",
+	"class": "collection-filters-section",
+	"settings": [
+		{
+			"type": "header",
+			"content": "Padding (desktop)"
+		},
+		{
+			"type": "range",
+			"id": "padding-top",
+			"min": 0,
+			"max": 300,
+			"step": 5,
+			"label": "Padding top",
+			"default": 20
+		},
+		{
+			"type": "range",
+			"id": "padding-bottom",
+			"min": 0,
+			"max": 300,
+			"step": 5,
+			"label": "Padding bottom",
+			"default": 20
+		},
+		{
+			"type": "header",
+			"content": "Padding (mobile)"
+		},
+		{
+			"type": "range",
+			"id": "padding-top-m",
+			"min": 0,
+			"max": 300,
+			"step": 5,
+			"label": "Padding top",
+			"default": 20
+		},
+		{
+			"type": "range",
+			"id": "padding-bottom-m",
+			"min": 0,
+			"max": 300,
+			"step": 5,
+			"label": "Padding bottom",
+			"default": 20
+		}
+	],
+	"presets": [
+		{
+			"name": "Collection filters"
+		}
+	]
+}
+{% endschema %}
