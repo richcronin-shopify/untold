@@ -319,7 +319,7 @@
 					display: flex;
 					align-items: center;
 					justify-content: center;
-					width: 48px;
+					width: 40px;
 					height: 40px;
 					border: 1px solid var(--border-white);
 					margin-left: -1px;
@@ -353,7 +353,7 @@
 					.collection-filters__grid-view-icon {
 						display: grid;
 						grid-template-columns: repeat(var(--grid-columns), 3px);
-						gap: 3px;
+						gap: 2px;
 						align-items: center;
 						justify-content: center;
 
