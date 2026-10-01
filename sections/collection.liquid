@@ -167,28 +167,304 @@
 						return;
 					}
 
-					const grid = section.querySelector('[data-collection-grid]');
+					const grid = section.querySelector(
+						'[data-collection-grid]'
+					);
 
 					if (!grid) {
 						return;
 					}
+
 
 					if (section.dataset.paginationType !== 'infinite') {
 						section.dataset.initialised = 'true';
 						return;
 					}
 
-					const infinite = section.querySelector('[data-infinite-pagination]');
-					const sentinel = section.querySelector('[data-infinite-sentinel]');
-					const status = section.querySelector('[data-infinite-status]');
+
+					const infinite = section.querySelector(
+						'[data-infinite-pagination]'
+					);
+
+					const sentinel = section.querySelector(
+						'[data-infinite-sentinel]'
+					);
+
+					const status = section.querySelector(
+						'[data-infinite-status]'
+					);
+
 
 					if (!infinite || !sentinel) {
 						section.dataset.initialised = 'true';
 						return;
 					}
 
+
+					const getPageFromUrl = (url) => {
+
+						const parsedUrl = new URL(
+							url,
+							window.location.origin
+						);
+
+						return parseInt(
+							parsedUrl.searchParams.get('page') || '1',
+							10
+						);
+
+					};
+
+
+					const getBaseUrl = () => {
+
+						const url = new URL(window.location.href);
+
+						url.searchParams.delete('page');
+						url.hash = '';
+
+						return `${url.pathname}${url.search}`;
+
+					};
+
+
+					const storageKey =
+						`collection-state:${getBaseUrl()}`;
+
+
+					const initialPage = getPageFromUrl(
+						window.location.href
+					);
+
+					let highestPageLoaded = initialPage;
 					let isLoading = false;
 					let observer = null;
+
+
+					const updateUrl = (page) => {
+
+						const url = new URL(window.location.href);
+
+						if (page > 1) {
+							url.searchParams.set('page', page);
+						} else {
+							url.searchParams.delete('page');
+						}
+
+						window.history.replaceState(
+							{
+								...window.history.state,
+								page
+							},
+							'',
+							`${url.pathname}${url.search}${url.hash}`
+						);
+
+					};
+
+
+					const saveCollectionState = () => {
+
+						const state = {
+							scrollY: window.scrollY,
+							initialPage,
+							highestPageLoaded,
+							nextUrl: infinite.dataset.nextUrl || ''
+						};
+
+						sessionStorage.setItem(
+							storageKey,
+							JSON.stringify(state)
+						);
+
+					};
+
+
+					const getPageUrl = (page) => {
+
+						const url = new URL(
+							getBaseUrl(),
+							window.location.origin
+						);
+
+						if (page > 1) {
+							url.searchParams.set('page', page);
+						}
+
+						return `${url.pathname}${url.search}`;
+
+					};
+
+
+					const fetchPage = async (page) => {
+
+						const response = await fetch(
+							getPageUrl(page)
+						);
+
+						if (!response.ok) {
+							throw new Error(
+								`Unable to restore collection page ${page}: ${response.status}`
+							);
+						}
+
+						const html = await response.text();
+
+						const documentParser = new DOMParser();
+
+						const pageDocument = documentParser.parseFromString(
+							html,
+							'text/html'
+						);
+
+						const pageSection = pageDocument.getElementById(
+							section.dataset.sectionId
+						);
+
+						const pageGrid = pageSection?.querySelector(
+							'[data-collection-grid]'
+						);
+
+						if (!pageGrid) {
+							throw new Error(
+								`Unable to find collection grid for page ${page}.`
+							);
+						}
+
+						return Array.from(pageGrid.children);
+
+					};
+
+
+					const restoreCollectionState = async () => {
+
+						const navigation = performance
+							.getEntriesByType('navigation')[0];
+
+						if (navigation?.type !== 'back_forward') {
+							return false;
+						}
+
+
+						const storedState = sessionStorage.getItem(
+							storageKey
+						);
+
+						if (!storedState) {
+							return false;
+						}
+
+
+						let state;
+
+						try {
+
+							state = JSON.parse(storedState);
+
+						} catch (error) {
+
+							return false;
+
+						}
+
+
+						if (
+							!state.highestPageLoaded ||
+							!state.initialPage
+						) {
+							return false;
+						}
+
+
+						section.classList.add('is-restoring');
+
+
+						try {
+
+							const pages = [];
+
+							for (
+								let page = state.initialPage;
+								page <= state.highestPageLoaded;
+								page += 1
+							) {
+								pages.push(page);
+							}
+
+
+							const pageResults = await Promise.all(
+								pages.map((page) => fetchPage(page))
+							);
+
+
+							const fragment =
+								document.createDocumentFragment();
+
+
+							pageResults.forEach((items) => {
+
+								items.forEach((item) => {
+									fragment.appendChild(item);
+								});
+
+							});
+
+
+							grid.replaceChildren(fragment);
+
+
+							highestPageLoaded =
+								state.highestPageLoaded;
+
+
+							infinite.dataset.nextUrl =
+								state.nextUrl || '';
+
+
+							updateUrl(
+								state.highestPageLoaded
+							);
+
+
+							if (!infinite.dataset.nextUrl) {
+								sentinel.remove();
+							}
+
+
+							requestAnimationFrame(() => {
+
+								requestAnimationFrame(() => {
+
+									window.scrollTo(
+										0,
+										state.scrollY || 0
+									);
+
+									section.classList.remove(
+										'is-restoring'
+									);
+
+								});
+
+							});
+
+
+							return true;
+
+						} catch (error) {
+
+							console.error(error);
+
+							section.classList.remove(
+								'is-restoring'
+							);
+
+							return false;
+
+						}
+
+					};
+
 
 					const loadNextPage = async () => {
 
@@ -198,87 +474,149 @@
 							return;
 						}
 
+
 						isLoading = true;
-						section.classList.add('is-loading');
+
+						section.classList.add(
+							'is-loading'
+						);
+
 
 						if (status) {
-							status.textContent = 'Loading more products';
+							status.textContent =
+								'Loading more products';
 						}
+
 
 						try {
 
-							const response = await fetch(nextUrl);
+							const loadedPage =
+								getPageFromUrl(nextUrl);
+
+
+							const response = await fetch(
+								nextUrl
+							);
+
 
 							if (!response.ok) {
-								throw new Error(`Unable to load collection page: ${response.status}`);
+								throw new Error(
+									`Unable to load collection page: ${response.status}`
+								);
 							}
+
 
 							const html = await response.text();
 
-							const nextDocument = new DOMParser().parseFromString(
-								html,
-								'text/html'
-							);
+							const nextDocument =
+								new DOMParser().parseFromString(
+									html,
+									'text/html'
+								);
 
-							const nextSection = nextDocument.getElementById(
-								section.dataset.sectionId
-							);
 
-							const nextGrid = nextSection?.querySelector(
-								'[data-collection-grid]'
-							);
+							const nextSection =
+								nextDocument.getElementById(
+									section.dataset.sectionId
+								);
 
-							const nextInfinite = nextSection?.querySelector(
-								'[data-infinite-pagination]'
-							);
+
+							const nextGrid =
+								nextSection?.querySelector(
+									'[data-collection-grid]'
+								);
+
+
+							const nextInfinite =
+								nextSection?.querySelector(
+									'[data-infinite-pagination]'
+								);
+
 
 							if (!nextGrid) {
-								throw new Error('Unable to find the next collection grid.');
+								throw new Error(
+									'Unable to find the next collection grid.'
+								);
 							}
 
-							const newItems = Array.from(nextGrid.children);
+
+							const newItems = Array.from(
+								nextGrid.children
+							);
+
 
 							newItems.forEach((item) => {
 								grid.appendChild(item);
 							});
 
+
+							highestPageLoaded = loadedPage;
+
+
 							infinite.dataset.nextUrl =
 								nextInfinite?.dataset.nextUrl || '';
 
+
+							updateUrl(
+								loadedPage
+							);
+
+
 							if (status) {
-								status.textContent = `${newItems.length} more products loaded`;
+								status.textContent =
+									`${newItems.length} more products loaded`;
 							}
 
+
 							if (!infinite.dataset.nextUrl) {
+
 								observer?.disconnect();
 								sentinel.remove();
+
 							}
+
 
 						} catch (error) {
 
 							console.error(error);
 
+
 							if (status) {
-								status.textContent = 'Unable to load more products';
+								status.textContent =
+									'Unable to load more products';
 							}
+
 
 						} finally {
 
 							isLoading = false;
-							section.classList.remove('is-loading');
+
+							section.classList.remove(
+								'is-loading'
+							);
 
 						}
 
 					};
 
-					if ('IntersectionObserver' in window) {
+
+					const initialiseObserver = () => {
+
+						if (
+							!('IntersectionObserver' in window) ||
+							!sentinel.isConnected
+						) {
+							return;
+						}
+
 
 						observer = new IntersectionObserver(
 							(entries) => {
 
 								if (
 									entries.some(
-										(entry) => entry.isIntersecting
+										(entry) =>
+											entry.isIntersecting
 									)
 								) {
 									loadNextPage();
@@ -290,9 +628,44 @@
 							}
 						);
 
+
 						observer.observe(sentinel);
 
-					}
+					};
+
+
+					section.addEventListener(
+						'click',
+						(event) => {
+
+							const productLink =
+								event.target.closest(
+									'a[href*="/products/"]'
+								);
+
+							if (!productLink) {
+								return;
+							}
+
+							saveCollectionState();
+
+						}
+					);
+
+
+					window.addEventListener(
+						'pagehide',
+						saveCollectionState
+					);
+
+
+					restoreCollectionState()
+						.finally(() => {
+
+							initialiseObserver();
+
+						});
+
 
 					section.dataset.initialised = 'true';
 
@@ -300,11 +673,14 @@
 
 		};
 
+
 		initialiseMainCollections();
+
 
 		document.addEventListener(
 			'shopify:section:load',
-			(event) => initialiseMainCollections(event.target)
+			(event) =>
+				initialiseMainCollections(event.target)
 		);
 
 	})();
