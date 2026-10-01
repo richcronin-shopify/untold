@@ -302,6 +302,8 @@
 					display: grid;
 					grid-template-columns: 1fr 1fr 1fr;
 					min-width: 0;
+					border: 1px solid var(--border-white);
+					border-radius: 3px;
 
 					.product__quantity-button,
 					.product__quantity-input {
