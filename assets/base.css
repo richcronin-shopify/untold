@@ -1994,6 +1994,10 @@ button,
 		padding: 0;
 		margin: 0;
 
+		@media (max-width: 768px) {
+			gap: 5px;
+		}
+
 		.breadcrumbs__item {
 
 			font-family: var(--font-heading-family);
@@ -2014,6 +2018,9 @@ button,
 
 			.breadcrumbs__separator {
 				margin-right: 10px;
+				@media (max-width: 768px) {
+					margin-right: 5px;
+				}
 			}
 
 			.breadcrumbs__current {
