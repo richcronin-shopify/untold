@@ -267,11 +267,13 @@
 							min-width: 0;
 						}
 
+					}
+
+					.product__option-input  {
 						&:checked + .product__option-value {
 							border-color: var(--color-primary);
 							color: var(--color-primary);
 						}
-						
 					}
 				}
 			}
