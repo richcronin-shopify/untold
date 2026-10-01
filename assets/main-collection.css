@@ -72,7 +72,7 @@
 					grid-column: 1 / -1;
 					flex-direction: column;
 					align-items: stretch;
-					gap: 0;
+					gap: 6px;
 				}
 
 				.collection-filters__dropdown {
