@@ -1167,6 +1167,10 @@
 
 (() => {
 
+	let resumeScrollHandler = null;
+	let resumeTimer = null;
+
+
 	document.addEventListener('click', (event) => {
 
 		const trigger = event.target.closest(
@@ -1177,29 +1181,119 @@
 			return;
 		}
 
+
 		const target = document.querySelector(
-			'.collection--description'
+			'.collection-description, .collection--description'
 		);
 
 		if (!target) {
 			return;
 		}
 
+
+		const collectionSection = document.querySelector(
+			'[data-main-collection]'
+		);
+
+
+		collectionSection?.dispatchEvent(
+			new CustomEvent(
+				'collection:pause-infinite'
+			)
+		);
+
+
+		if (resumeScrollHandler) {
+
+			window.removeEventListener(
+				'scroll',
+				resumeScrollHandler
+			);
+
+			resumeScrollHandler = null;
+
+		}
+
+
+		if (resumeTimer) {
+			window.clearTimeout(resumeTimer);
+		}
+
+
 		const isMobile = window.matchMedia(
 			'(max-width: 767px)'
 		).matches;
 
-		const offset = isMobile ? 120 : 180;
+		const offset = isMobile
+			? 120
+			: 180;
+
 
 		const targetPosition =
 			target.getBoundingClientRect().top +
 			window.scrollY -
 			offset;
 
+
 		window.scrollTo({
 			top: targetPosition,
 			behavior: 'smooth'
 		});
+
+
+		resumeTimer = window.setTimeout(() => {
+
+			let lastScrollY = window.scrollY;
+
+
+			resumeScrollHandler = () => {
+
+				const currentScrollY =
+					window.scrollY;
+
+				const isScrollingUp =
+					currentScrollY < lastScrollY;
+
+				const descriptionTop =
+					target.getBoundingClientRect().top;
+
+
+				if (
+					isScrollingUp &&
+					descriptionTop > window.innerHeight
+				) {
+
+					collectionSection?.dispatchEvent(
+						new CustomEvent(
+							'collection:resume-infinite'
+						)
+					);
+
+
+					window.removeEventListener(
+						'scroll',
+						resumeScrollHandler
+					);
+
+					resumeScrollHandler = null;
+
+				}
+
+
+				lastScrollY = currentScrollY;
+
+			};
+
+
+			window.addEventListener(
+				'scroll',
+				resumeScrollHandler,
+				{
+					passive: true
+				}
+			);
+
+		}, 800);
 
 	});
 
