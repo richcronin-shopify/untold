@@ -49,6 +49,12 @@
 				aspect-ratio: 1 / 1;
 				overflow: hidden;
 				border-radius: 6px;
+				opacity: .6;
+				transition: .3s all;
+
+				&.is-active {
+					opacity: 1;
+				}
 
 				img {
 					display: block;
