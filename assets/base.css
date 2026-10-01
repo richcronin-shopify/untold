@@ -262,7 +262,8 @@ button,
 		text-transform: unset;
 	}
 
-	&:hover {
+	&:hover,
+	&:focus {
 		opacity: .8;
 	}
 
