@@ -173,24 +173,6 @@
 						return;
 					}
 
-					const forceOutOfStockLast =
-						section.dataset.forceOutOfStockLast === 'true';
-
-					const reorderOutOfStock = () => {
-
-						if (!forceOutOfStockLast) {
-							return;
-						}
-
-						Array
-							.from(grid.children)
-							.filter((item) => item.dataset.productAvailable === 'false')
-							.forEach((item) => grid.appendChild(item));
-
-					};
-
-					reorderOutOfStock();
-
 					if (section.dataset.paginationType !== 'infinite') {
 						section.dataset.initialised = 'true';
 						return;
@@ -232,10 +214,23 @@
 							}
 
 							const html = await response.text();
-							const nextDocument = new DOMParser().parseFromString(html, 'text/html');
-							const nextSection = nextDocument.getElementById(section.dataset.sectionId);
-							const nextGrid = nextSection?.querySelector('[data-collection-grid]');
-							const nextInfinite = nextSection?.querySelector('[data-infinite-pagination]');
+
+							const nextDocument = new DOMParser().parseFromString(
+								html,
+								'text/html'
+							);
+
+							const nextSection = nextDocument.getElementById(
+								section.dataset.sectionId
+							);
+
+							const nextGrid = nextSection?.querySelector(
+								'[data-collection-grid]'
+							);
+
+							const nextInfinite = nextSection?.querySelector(
+								'[data-infinite-pagination]'
+							);
 
 							if (!nextGrid) {
 								throw new Error('Unable to find the next collection grid.');
@@ -243,9 +238,9 @@
 
 							const newItems = Array.from(nextGrid.children);
 
-							newItems.forEach((item) => grid.appendChild(item));
-
-							reorderOutOfStock();
+							newItems.forEach((item) => {
+								grid.appendChild(item);
+							});
 
 							infinite.dataset.nextUrl =
 								nextInfinite?.dataset.nextUrl || '';
@@ -281,13 +276,17 @@
 						observer = new IntersectionObserver(
 							(entries) => {
 
-								if (entries.some((entry) => entry.isIntersecting)) {
+								if (
+									entries.some(
+										(entry) => entry.isIntersecting
+									)
+								) {
 									loadNextPage();
 								}
 
 							},
 							{
-								rootMargin: '400px 0px'
+								rootMargin: '150px 0px'
 							}
 						);
 
