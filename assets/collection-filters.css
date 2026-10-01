@@ -180,6 +180,7 @@
 
 				.collection-filters__sort-label {
 					flex-shrink: 0;
+					font-weight: 400;
 				}
 
 				.collection-filters__sort-select-wrap {
