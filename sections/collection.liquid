@@ -1,5 +1,8 @@
 {{- 'main-collection.css' | asset_url | stylesheet_tag -}}
 {%- assign ss = section.settings -%}
+{%- assign products_desktop = ss.products_desktop | plus: 0 -%}
+{%- assign products_tablet = ss.products_tablet | plus: 0 -%}
+{%- assign products_mobile = ss.products_mobile | plus: 0 -%}
 
 {%- liquid
 	assign sort_by = collection.sort_by | default: collection.default_sort_by
@@ -344,6 +347,93 @@
 						</span>
 					</div>
 
+				</div>
+
+ 
+				<div
+					class="collection-filters__grid-view collection-filters__grid-view--desktop"
+					role="group"
+					aria-label="Products per row"
+				>
+					{%- for columns in (3..5) -%}
+						<button
+							type="button"
+							class="collection-filters__grid-view-button button--reset{% if ss.products_desktop == columns %} is-active{% endif %}"
+							data-grid-toggle
+							data-grid-target="desktop"
+							data-grid-columns="{{ columns }}"
+							aria-label="Show {{ columns }} products per row"
+							aria-pressed="{% if ss.products_desktop == columns %}true{% else %}false{% endif %}"
+						>
+							<span
+								class="collection-filters__grid-view-icon"
+								style="--grid-columns: {{ columns }};"
+								aria-hidden="true"
+							>
+								{%- for i in (1..columns) -%}
+									<span></span>
+								{%- endfor -%}
+							</span>
+						</button>
+					{%- endfor -%}
+				</div>
+
+
+				<div
+					class="collection-filters__grid-view collection-filters__grid-view--tablet"
+					role="group"
+					aria-label="Products per row"
+				>
+					{%- for columns in (3..4) -%}
+						<button
+							type="button"
+							class="collection-filters__grid-view-button button--reset{% if products_tablet == columns %} is-active{% endif %}"
+							data-grid-toggle
+							data-grid-target="tablet"
+							data-grid-columns="{{ columns }}"
+							aria-label="Show {{ columns }} products per row"
+							aria-pressed="{% if products_tablet == columns %}true{% else %}false{% endif %}"
+						>
+							<span
+								class="collection-filters__grid-view-icon"
+								style="--grid-columns: {{ columns }};"
+								aria-hidden="true"
+							>
+								{%- for i in (1..columns) -%}
+									<span></span>
+								{%- endfor -%}
+							</span>
+						</button>
+					{%- endfor -%}
+				</div>
+
+
+				<div
+					class="collection-filters__grid-view collection-filters__grid-view--mobile"
+					role="group"
+					aria-label="Products per row"
+				>
+					{%- for columns in (1..2) -%}
+						<button
+							type="button"
+							class="collection-filters__grid-view-button button--reset{% if ss.products_mobile == columns %} is-active{% endif %}"
+							data-grid-toggle
+							data-grid-target="mobile"
+							data-grid-columns="{{ columns }}"
+							aria-label="Show {{ columns }} product{% if columns > 1 %}s{% endif %} per row"
+							aria-pressed="{% if ss.products_mobile == columns %}true{% else %}false{% endif %}"
+						>
+							<span
+								class="collection-filters__grid-view-icon"
+								style="--grid-columns: {{ columns }};"
+								aria-hidden="true"
+							>
+								{%- for i in (1..columns) -%}
+									<span></span>
+								{%- endfor -%}
+							</span>
+						</button>
+					{%- endfor -%}
 				</div>
 
 			</div>
@@ -1051,6 +1141,7 @@
 					const priceMaxInput = section.querySelector('[data-price-max-input]');
 					const priceOptions = section.querySelectorAll('[data-price-option]');
 					const priceDropdown = section.querySelector('[data-price-dropdown]');
+					const gridToggles = section.querySelectorAll('[data-grid-toggle]');
 
 					const normalisePrice = (value) => {
 
@@ -1274,6 +1365,48 @@
 
 					}
 
+					gridToggles.forEach((button) => {
+
+						button.addEventListener('click', () => {
+
+							const target = button.dataset.gridTarget;
+							const columns = button.dataset.gridColumns;
+
+							if (!target || !columns) {
+								return;
+							}
+
+							section.style.setProperty(
+								`--products-${target}`,
+								columns
+							);
+
+							section
+								.querySelectorAll(
+									`[data-grid-toggle][data-grid-target="${target}"]`
+								)
+								.forEach((toggle) => {
+
+									const isActive =
+										toggle === button;
+
+									toggle.classList.toggle(
+										'is-active',
+										isActive
+									);
+
+									toggle.setAttribute(
+										'aria-pressed',
+										isActive ? 'true' : 'false'
+									);
+
+								});
+
+						});
+
+					});
+
+
 					const currentUrl = new URL(window.location.href);
 
 					const currentPriceMin = priceMinInput
@@ -1341,6 +1474,54 @@
 
 		initialiseCollectionFilters();
 
+
+		if (!window.collectionFiltersOutsideClickInitialised) {
+
+			document.addEventListener(
+				'click',
+				(event) => {
+
+					document
+						.querySelectorAll(
+							'[data-collection-filters] .collection-filters__dropdown[open]'
+						)
+						.forEach((dropdown) => {
+
+							if (!dropdown.contains(event.target)) {
+								dropdown.removeAttribute('open');
+							}
+
+						});
+
+				}
+			);
+
+
+			document.addEventListener(
+				'keydown',
+				(event) => {
+
+					if (event.key !== 'Escape') {
+						return;
+					}
+
+					document
+						.querySelectorAll(
+							'[data-collection-filters] .collection-filters__dropdown[open]'
+						)
+						.forEach((dropdown) => {
+							dropdown.removeAttribute('open');
+						});
+
+				}
+			);
+
+
+			window.collectionFiltersOutsideClickInitialised = true;
+
+		}
+
+
 		document.addEventListener(
 			'shopify:section:load',
 			(event) => initialiseCollectionFilters(event.target)
@@ -1363,29 +1544,43 @@
 		{
 			"type": "range",
 			"id": "products_desktop",
-			"min": 2,
-			"max": 6,
+			"min": 3,
+			"max": 5,
 			"step": 1,
 			"label": "Products per row - desktop",
 			"default": 5
 		},
 		{
-			"type": "range",
+			"type": "select",
 			"id": "products_tablet",
-			"min": 2,
-			"max": 5,
-			"step": 1,
 			"label": "Products per row - tablet",
-			"default": 3
+			"options": [
+				{
+					"value": "3",
+					"label": "3"
+				},
+				{
+					"value": "4",
+					"label": "4"
+				}
+			],
+			"default": "3"
 		},
 		{
-			"type": "range",
+			"type": "select",
 			"id": "products_mobile",
-			"min": 1,
-			"max": 3,
-			"step": 1,
 			"label": "Products per row - mobile",
-			"default": 2
+			"options": [
+				{
+					"value": "1",
+					"label": "1"
+				},
+				{
+					"value": "2",
+					"label": "2"
+				}
+			],
+			"default": "2"
 		},
 		{
 			"type": "range",
