@@ -560,6 +560,12 @@
 
 		{%- endpaginate -%}
 
+		{% if collection.description %}
+			<div class="collection--description rte">
+				{{collection.description}}
+			</div>
+		{% endif %}
+
 	</div>
 </section>
 
