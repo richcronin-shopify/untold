@@ -261,6 +261,7 @@
 						cursor: pointer;
 						border: 1px solid var(--border-white);
 						border-radius: 3px;
+						transition: .3s all;
 
 						@media (max-width: 767px) {
 							flex: 1 1 0;
@@ -273,6 +274,7 @@
 						&:checked + .product__option-value {
 							border-color: var(--color-primary);
 							color: var(--color-primary);
+							background: var(--color-primary-reduced);
 						}
 					}
 				}
