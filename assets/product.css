@@ -433,6 +433,9 @@
 						height: 48px;
 						border: 1px solid var(--border-white);
 						border-radius: 3px;
+						padding: 0 20px;
+						background: transparent;
+						color: #fff;
 					}
 
 					.product__back-in-stock-button {
