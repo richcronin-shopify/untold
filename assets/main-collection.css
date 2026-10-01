@@ -369,6 +369,7 @@
 							height: 15px;
 							background: #fff;
 							border-radius: 100px
+							transition: .3s all;
 						}
 					}
 				}
