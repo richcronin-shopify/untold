@@ -35,6 +35,7 @@
 		align-items: center;
 		justify-content: center;
 		gap: 8px;
+		margin-top: 40px;
 
 		.main-collection__pagination-page,
 		.main-collection__pagination-arrow,
