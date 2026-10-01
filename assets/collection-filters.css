@@ -18,6 +18,7 @@
 
 			.collection-filters__count {
 				flex-shrink: 0;
+				font-weight: 400;
 
 				@media (max-width: 767px) {
 					grid-column: 1 / -1;
