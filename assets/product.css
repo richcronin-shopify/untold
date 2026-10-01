@@ -320,6 +320,7 @@
 						appearance: textfield;
 						background: transparent;
 						color: #fff;
+						border: none;
 						border-left: 1px solid var(--border-white);
 						border-right: 1px solid var(--border-white);
 
