@@ -62,11 +62,11 @@
             	width: 100%;
             }
             .collection-hero__title {
-            	width: 42%
+            	min-width: 42%
             	padding-right: 60px;
             }
             .collection-hero__description {
-            	width: 58%;
+            	min-width: 58%;
             }
 		}
 	}
