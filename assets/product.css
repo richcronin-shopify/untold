@@ -353,8 +353,10 @@
 							transform: translate(-50%, -50%) rotate(90deg);
 						}
 
-						&.product__quantity-button--plus {
-							
+						&.product__quantity-button--minus {
+							&::after {
+								display: none;
+							}
 						}
 
 					}
