@@ -35,7 +35,7 @@
         "products_mobile": 2,
         "products_per_page": 30,
         "pagination_type": "infinite",
-        "padding-top": 40,
+        "padding-top": 20,
         "padding-bottom": 40,
         "padding-top-m": 30,
         "padding-bottom-m": 30
