@@ -82,7 +82,9 @@
 		}
 
 		.main-collection__pagination-ellipsis {
-
+			border-color: var(--color-primary);
+			background: var(--color-primary-reduced);
+			color: var(--color-primary);
 		}
 
 	}
