@@ -177,6 +177,7 @@
 				flex-wrap: wrap;
 				gap: 10px;
 				font-family: var(--font-heading-family);
+				font-weight: 400;
 				.product__price-current {
 					font-size: 40px;
 				}
