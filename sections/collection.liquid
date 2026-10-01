@@ -418,12 +418,12 @@
 					{%- for columns in (1..2) -%}
 						<button
 							type="button"
-							class="collection-filters__grid-view-button button--reset{% if ss.products_mobile == columns %} is-active{% endif %}"
+							class="collection-filters__grid-view-button button--reset{% if products_mobile == columns %} is-active{% endif %}"
 							data-grid-toggle
 							data-grid-target="mobile"
 							data-grid-columns="{{ columns }}"
 							aria-label="Show {{ columns }} product{% if columns > 1 %}s{% endif %} per row"
-							aria-pressed="{% if ss.products_mobile == columns %}true{% else %}false{% endif %}"
+							aria-pressed="{% if products_mobile == columns %}true{% else %}false{% endif %}"
 						>
 							<span
 								class="collection-filters__grid-view-icon"
