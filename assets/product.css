@@ -190,6 +190,8 @@
 
 			.product__saving {
 				margin-top: 4px;
+				color: var(--color-primary);
+				font-weight: 400;
 			}
 		}
 
