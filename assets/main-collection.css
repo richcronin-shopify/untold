@@ -83,7 +83,9 @@
 
 		}
 
-		.main-collection__pagination-ellipsis {
+		.main-collection__pagination-ellipsis,
+		.main-collection__pagination-arrow:hover,
+		.main-collection__pagination-page:hover {
 			border-color: var(--color-primary);
 			background: var(--color-primary-reduced);
 			color: var(--color-primary);
