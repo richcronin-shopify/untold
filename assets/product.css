@@ -450,6 +450,8 @@
 			gap: 20px;
 			padding: 16px;
 			margin-top: 20px;
+			border-left: 1px solid var(--border-white);
+			border-right: 1px solid var(--border-white);
 
 			.product__points-icon {
 				display: flex;
