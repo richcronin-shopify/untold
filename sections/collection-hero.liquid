@@ -4,6 +4,7 @@
 {%- assign breadcrumbs = collection.metafields.custom.breadcrumbs.value -%}
 {%- assign short_description = collection.metafields.short.description -%}
 {%- assign hero_image = collection.metafields.hero.image.value -%}
+{%- assign sub_collections = collection.metafields.sub.collections.value -%}
 
 <section
 	class="collection-hero{% if hero_image != blank %} collection-hero--has-image{% endif %}"
@@ -38,6 +39,44 @@
 				{%- if collection.description != blank -%}
 					<span class="collection-hero__description-read-more">Read more.</span>
 				{%- endif -%}
+			</div>
+		{%- endif -%}
+
+		{%- if sub_collections != blank -%}
+			<div class="collection-hero__subcollections">
+
+				{%- for sub_collection in sub_collections -%}
+
+					<a
+						href="{{ sub_collection.url }}"
+						class="collection-hero__subcollection{% if sub_collection.handle contains 'sale' %} collection-hero__subcollection--sale{% endif %}"
+					>
+
+						{%- if sub_collection.image != blank -%}
+							<div class="collection-hero__subcollection-media">
+								{{
+									sub_collection.image
+									| image_url: width: 600
+									| image_tag:
+										class: 'collection-hero__subcollection-image',
+										loading: 'lazy',
+										widths: '200, 300, 400, 500, 600',
+										sizes: '(min-width: 990px) 200px, 40vw',
+										alt: sub_collection.image.alt | default: sub_collection.title
+								}}
+							</div>
+						{%- endif -%}
+
+						<div class="collection-hero__subcollection-content">
+							<p class="collection-hero__subcollection-title h5">
+								{{ sub_collection.title }}
+							</p>
+						</div>
+
+					</a>
+
+				{%- endfor -%}
+
 			</div>
 		{%- endif -%}
 
