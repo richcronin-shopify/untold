@@ -122,6 +122,10 @@
 				padding: 0 40px;
 			}
 
+			@media (max-width: 768px) {
+				padding: 0 16px;
+			}
+
 			.collection-hero__title,
 			.collection-hero__description {
 				max-width: 620px;
@@ -139,6 +143,9 @@
             flex-wrap: wrap;
             @media (max-width: 990px) {
             	padding: 130px 40px 20px;
+            }
+            @media (max-width: 768px) {
+            	padding: 130px 16px 20px;
             }
             .breadcrumbs {
             	width: 100%;
