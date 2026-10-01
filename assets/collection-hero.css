@@ -67,6 +67,7 @@
             }
             .collection-hero__description {
             	width: 58%;
+            	margin: 0;
             }
 		}
 	}
