@@ -534,8 +534,11 @@ button,
 				@media (max-width: 990px) {
 					position: absolute;
 					top: 50%;
-					left: 60px;
+					left: 80px;
 					transform: translate(0,-50%);
+					@media (max-width: 768px) {
+						left: 60px;
+					}
 				}
 
 			}
