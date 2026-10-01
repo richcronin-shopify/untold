@@ -1,7 +1,6 @@
 {{- 'collection-hero.css' | asset_url | stylesheet_tag -}}
 
 {%- assign ss = section.settings -%}
-{%- assign breadcrumbs = collection.metafields.custom.breadcrumbs.value -%}
 {%- assign short_description = collection.metafields.short.description -%}
 {%- assign hero_image = collection.metafields.hero.image.value -%}
 {%- assign sub_collections = collection.metafields.sub.collections.value -%}
@@ -13,7 +12,9 @@
 	{%- if hero_image != blank -%}
 		<div class="collection-hero__media">
 			{{
-				hero_image | image_url: width: 2400 | image_tag:
+				hero_image
+				| image_url: width: 2400
+				| image_tag:
 					class: 'collection-hero__image',
 					loading: 'eager',
 					fetchpriority: 'high',
@@ -22,7 +23,7 @@
 					alt: ''
 			}}
 		</div>
-	{%- endif -%} 
+	{%- endif -%}
 
 	<div class="collection-hero__content">
 
@@ -32,38 +33,71 @@
 			{{ collection.title }}
 		</h1>
 
-
 		{%- if short_description.value != blank -%}
 			<div class="collection-hero__description">
 				{{- short_description | metafield_tag -}}
+
 				{%- if collection.description != blank -%}
-					<span class="collection-hero__description-read-more">Read more.</span>
+					<span class="collection-hero__description-read-more">
+						Read more.
+					</span>
 				{%- endif -%}
 			</div>
 		{%- endif -%}
 
+
 		{%- if hero_image == blank -%}
+
 			{%- if sub_collections != blank -%}
 				<div class="collection-hero__subcollections">
 
-					{%- for sub_collection in sub_collections -%} 
+					{%- for sub_collection in sub_collections -%}
+
+						{%- liquid
+							assign first_available_product_image = blank
+
+							for sub_product in sub_collection.products
+								if sub_product.available and sub_product.featured_image != blank
+									assign first_available_product_image = sub_product.featured_image
+									break
+								endif
+							endfor
+
+							assign sub_collection_image = blank
+
+							if ss.subcollection_image_source == 'product'
+								assign sub_collection_image = first_available_product_image
+
+								if sub_collection_image == blank
+									assign sub_collection_image = sub_collection.image
+								endif
+							else
+								assign sub_collection_image = sub_collection.image
+
+								if sub_collection_image == blank
+									assign sub_collection_image = first_available_product_image
+								endif
+							endif
+
+							assign sub_collection_image_alt = sub_collection_image.alt | default: sub_collection.title
+						-%}
 
 						<a
 							href="{{ sub_collection.url }}"
 							class="collection-hero__subcollection{% if sub_collection.handle contains 'sale' %} collection-hero__subcollection--sale{% endif %}"
 						>
 
-							{%- if sub_collection.image != blank -%}
+							{%- if sub_collection_image != blank -%}
 								<div class="collection-hero__subcollection-media">
 									{{
-										sub_collection.image
+										sub_collection_image
 										| image_url: width: 600
 										| image_tag:
 											class: 'collection-hero__subcollection-image',
 											loading: 'lazy',
 											widths: '200, 300, 400, 500, 600',
 											sizes: '(min-width: 990px) 200px, 40vw',
-											alt: sub_collection.image.alt | default: sub_collection.title
+											alt: sub_collection_image_alt
 									}}
 								</div>
 							{%- endif -%}
@@ -80,6 +114,7 @@
 
 				</div>
 			{%- endif -%}
+
 		{%- endif -%}
 
 	</div>
@@ -100,9 +135,27 @@
 	"tag": "section",
 	"class": "collection-hero-section",
 	"settings": [
-
+		{
+			"type": "select",
+			"id": "subcollection_image_source",
+			"label": "Subcollection image source",
+			"options": [
+				{
+					"value": "collection",
+					"label": "Collection image"
+				},
+				{
+					"value": "product",
+					"label": "First available product image"
+				}
+			],
+			"default": "collection",
+			"info": "If the selected image source is unavailable, the alternative source will be used."
+		}
 	],
-	"templates": ["collection"],
+	"templates": [
+		"collection"
+	],
 	"presets": [
 		{
 			"name": "Collection hero"
