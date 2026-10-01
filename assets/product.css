@@ -377,8 +377,8 @@
 			align-items: center;
 			justify-content: flex-end;
 			gap: 7px;
-			margin-top: 8px;
 			width: 458px;
+			margin: 10px 0 0 auto;
 
 			@media (max-width: 767px) {
 				justify-content: center;
