@@ -177,7 +177,7 @@
 				flex-wrap: wrap;
 				gap: 10px;
 				font-family: var(--font-heading-family);
-				font-weight: 400;
+				font-weight: 500;
 				.product__price-current {
 					font-size: 40px;
 				}
@@ -191,7 +191,7 @@
 			.product__saving {
 				margin-top: 4px;
 				color: var(--color-primary);
-				font-weight: 400;
+				font-weight: 500;
 			}
 		}
 
