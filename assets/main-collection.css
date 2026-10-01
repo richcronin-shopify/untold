@@ -2,9 +2,9 @@
 
 .collection-filters {
 
-	margin-bottom: 20px;
-
 	.collection-filters__form {
+
+		margin-bottom: 20px;
 
 		.collection-filters__bar {
 			display: flex;
