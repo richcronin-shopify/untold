@@ -40,6 +40,7 @@
 					border: 1px solid var(--border-white);
 					border-radius: 3px;
 					height: 40px;
+					color: #fff;
 				}
 
 				.collection-filters__mobile-trigger-icon {
