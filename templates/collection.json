@@ -18,6 +18,7 @@
     },
     "collection_filters_gieayn": {
       "type": "collection-filters",
+      "disabled": true,
       "name": "Collection filters",
       "settings": {
         "padding-top": 20,
