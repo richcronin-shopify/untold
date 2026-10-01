@@ -53,6 +53,8 @@
 	&:not(.collection-hero--has-image) {
 		.collection-hero__content {
 			position: static;
+			width: 100%;
+            padding: 200px 60px 20px;
 		}
 	}
 
