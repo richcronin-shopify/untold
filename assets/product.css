@@ -176,8 +176,14 @@
 				align-items: baseline;
 				flex-wrap: wrap;
 				gap: 10px;
+				font-family: var(--font-heading-family);
 				.product__price-current {
 					font-size: 40px;
+				}
+				.product__price-compare {
+					font-size: 25px;
+					opacity: .6;
+					text-decoration: line-through;
 				}
 			}
 
