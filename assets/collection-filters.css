@@ -195,6 +195,7 @@
 						height: 40px;
 						padding: 0 10px;
 						line-height: 1;
+						min-width: 260px;
 					}
 
 					.collection-filters__sort-chevron {
