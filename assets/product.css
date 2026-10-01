@@ -148,6 +148,8 @@
 			text-transform: uppercase;
 			font-family: var(--font-heading-family);
 			font-weight: 400;
+			color: var(--color-primary);
+			font-size: 20px;
 		}
 
 		.product__title {
