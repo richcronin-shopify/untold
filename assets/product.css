@@ -95,6 +95,7 @@
 					width: 100%;
 					aspect-ratio: 1 / 1;
 					overflow: hidden;
+					border-radius: 6px;
 
 					@media (max-width: 989px) {
 						flex: 0 0 calc(100% - 40px);
