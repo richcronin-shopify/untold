@@ -69,6 +69,11 @@
 				padding: 10px;
 				transition: .3s all;
 
+				@media (max-width: 768px) {
+					width: 120px;
+					min-width: 120px;
+				}
+
 				&:hover {
 					border-color: var(--color-primary);
 				}
