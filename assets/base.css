@@ -2016,6 +2016,7 @@ button,
 			font-family: var(--font-heading-family);
 			text-transform: uppercase;
 			font-weight: 400;
+			font-size: 14px;
 
 			@media (max-width: 768px) {
 				font-size: 12px;
