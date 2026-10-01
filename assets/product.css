@@ -232,6 +232,7 @@
 			flex-direction: column;
 			gap: 18px;
 			margin-bottom: 20px;
+			border: none;
 
 			.product__option {
 				margin: 0;
