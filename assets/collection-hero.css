@@ -20,8 +20,6 @@
 
 	.collection-hero__content {
 
-		max-width: 620px;
-
 		.breadcrumbs {
 			margin: 0 0 30px 0;
 		}
@@ -46,6 +44,11 @@
 			position: absolute;
 			top: 200px;
 			left: 60px;
+
+			.collection-hero__title,
+			.collection-hero__description {
+				max-width: 620px;
+			}
 		}
 
 	}
