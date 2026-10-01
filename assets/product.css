@@ -28,6 +28,7 @@
 		grid-template-columns: 72px minmax(0, 1fr);
 		gap: 10px;
 		min-width: 0;
+		align-items: flex-start;
 
 		@media (max-width: 989px) {
 			display: block;
