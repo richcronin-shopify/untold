@@ -70,13 +70,15 @@
 			&.main-collection__pagination-arrow--prev {
 
 				svg {
-					transform: rotate(180deg);
+					transform: rotate(-90deg);
 				}
 
 			}
 
 			&.main-collection__pagination-arrow--next {
-
+				svg {
+					transform: rotate(-90deg);
+				}
 			}
 
 		}
