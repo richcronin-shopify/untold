@@ -213,7 +213,7 @@
 										{%- assign option_input_id = section.id | append: '-option-' | append: option.position | append: '-' | append: forloop.index0 -%}
 
 										<input
-											class="product__option-input visually-hidden"
+											class="product__option-input "
 											type="radio"
 											id="{{ option_input_id }}"
 											name="Option-{{ option.position }}-{{ section.id }}"
