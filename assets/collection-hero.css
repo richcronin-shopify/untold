@@ -96,6 +96,9 @@
 					.collection-hero__subcollection-title {
 						text-align: center;
 						margin: 10px 0 0 0;
+						@media (max-width: 768px) {
+							font-size: 16px;
+						}
 					}
 
 				}
