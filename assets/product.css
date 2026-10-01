@@ -337,7 +337,8 @@
 
 						position: relative;
 
-						&::before {
+						&::before,
+						&::after {
 							content: '';
 							position: absolute;
 							top: 50%;
@@ -346,6 +347,10 @@
 							width: 15px;
 							height: 1px;
 							background: #fff;
+						}
+
+						&::after {
+							transform: translate(-50%, -50%) rotate(90deg);
 						}
 
 					}
