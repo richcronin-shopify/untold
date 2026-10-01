@@ -375,7 +375,7 @@
 		.product__availability {
 			display: flex;
 			align-items: center;
-			justify-content: flex-end;
+			justify-content: center
 			gap: 7px;
 			width: 458px;
 			margin: 10px 0 0 auto;
