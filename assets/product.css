@@ -332,6 +332,20 @@
 							margin: 0;
 						}
 					}
+
+					.product__quantity-button {
+
+						position: relative;
+
+						&::before {
+							content: '';
+							position: absolute;
+							top: 50%;
+							left: 50%;
+							transform: translate(-50%, -50%);
+						}
+
+					}
 				}
 
 				.product__add-to-cart {
