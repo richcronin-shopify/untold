@@ -262,10 +262,9 @@
 
 					{%- endif -%}
 
-					<a
-						href="{{ collection.url }}"
-						class="collection-filters__clear-all"
-					>Clear all</a>
+					{%- if has_active_values -%}
+						<a href="{{ collection.url }}" class="collection-filters__clear-all">Clear all</a>
+					{%- endif -%}
 
 				</div>
 
