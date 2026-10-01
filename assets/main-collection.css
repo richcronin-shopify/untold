@@ -359,9 +359,10 @@
 
 						span {
 							display: block;
-							width: 3px;
-							height: 17px;
+							width: 2px;
+							height: 16px;
 							background: #fff;
+							border-radius: 100px
 						}
 					}
 				}
