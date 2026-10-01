@@ -84,7 +84,8 @@
 
 		}
 
-		.main-collection__pagination-ellipsis,
+		.is-current,
+		.main-collection__pagination-page:hover,
 		.main-collection__pagination-arrow:hover,
 		.main-collection__pagination-page:hover {
 			border-color: var(--color-primary);
