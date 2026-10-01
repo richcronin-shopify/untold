@@ -127,10 +127,17 @@
             .collection-hero__title {
             	width: 42%;
             	padding-right: 60px;
+            	@media (max-width: 990px) {
+            		widt: 100%;
+            		padding:0;
+            	}
             }
             .collection-hero__description {
             	width: 58%;
             	margin: 0;
+            	@media (max-width: 990px) {
+            		width: 100%;
+            	}
             }
 		}
 	}
