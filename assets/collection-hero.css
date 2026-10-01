@@ -124,7 +124,7 @@
 			}
 
 			@media (max-width: 768px) {
-				padding: 110px 16px 20px;
+				padding: 110px 16px 0;
 				position: static;
 			}
 
@@ -147,7 +147,7 @@
             	padding: 130px 40px 20px;
             }
             @media (max-width: 768px) {
-            	padding: 110px 16px 20px;
+            	padding: 110px 16px 0;
             }
             .breadcrumbs {
             	width: 100%;
