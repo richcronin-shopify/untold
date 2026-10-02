@@ -998,21 +998,28 @@
 
 					};
 
-					let productFormInView = true;
-
 					const stickyBreakpoint = window.matchMedia(
 						'(max-width: 767px)'
 					);
 
 					const updateStickyVisibility = () => {
 
-						if (!stickyAtc) {
+						if (
+							!stickyAtc ||
+							!productForm
+						) {
 							return;
 						}
 
+						const formRect =
+							productForm.getBoundingClientRect();
+
+						const hasScrolledPastForm =
+							formRect.bottom <= 0;
+
 						const isActive =
 							stickyBreakpoint.matches &&
-							!productFormInView;
+							hasScrolledPastForm;
 
 						stickyAtc.classList.toggle(
 							'is-active',
@@ -1023,32 +1030,16 @@
 
 					};
 
-					if (
-						productForm &&
-						stickyAtc &&
-						'IntersectionObserver' in window
-					) {
+					window.addEventListener(
+						'scroll',
+						updateStickyVisibility,
+						{ passive: true }
+					);
 
-						const productFormObserver =
-							new IntersectionObserver(
-								(entries) => {
-
-									const entry = entries[0];
-
-									productFormInView =
-										Boolean(entry?.isIntersecting);
-
-									updateStickyVisibility();
-
-								},
-								{
-									threshold: 0
-								}
-							);
-
-						productFormObserver.observe(productForm);
-
-					}
+					window.addEventListener(
+						'resize',
+						updateStickyVisibility
+					);
 
 					if (stickyBreakpoint.addEventListener) {
 						stickyBreakpoint.addEventListener(
