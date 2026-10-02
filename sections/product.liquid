@@ -273,16 +273,11 @@
 							{%- for paired_product in paired_colours -%}
 
 								{%- liquid
-									assign colour_label = paired_product.title
+									assign colour_label = paired_product.metafields.colour.label.value
 
-									for paired_option in paired_product.options_with_values
-										assign paired_option_name = paired_option.name | downcase
-
-										if paired_option_name == 'colour' or paired_option_name == 'color'
-											assign colour_label = paired_option.values.first.name
-											break
-										endif
-									endfor
+									if colour_label == blank
+										assign colour_label = paired_product.title
+									endif
 								-%}
 
 								<a

@@ -384,6 +384,14 @@
 				.product__paired-colour {
 					width: 120px;
 					min-width: 120px;
+					.product__paired-colour-image {
+						img {
+
+						}
+					}
+					.product__paired-colour-label {
+
+					}
 				}
 			}
 
