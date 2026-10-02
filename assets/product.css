@@ -709,6 +709,21 @@
 			border-radius: 8px;
 		}
 
+		.swiper-slider__arrow {
+			
+			position: absolute;
+			top: 50%;
+			transform: translate(-50%, 0);
+
+			&.swiper-slider__arrow--prev {
+				left: 0;
+			}
+
+			&.swiper-slider__arrow--next {
+				right: 0;
+			}
+		}
+
 	}
 
 }
