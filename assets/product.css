@@ -583,7 +583,13 @@
 				padding: 16px;
 				&.rte {
 
-					
+					h1, h2, h3, h4 {
+						font-size: 22px;
+					}
+
+					h5, h6 {
+						font-size: 18px;
+					}
 
 				}
 			}
