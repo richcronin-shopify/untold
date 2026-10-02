@@ -40,7 +40,7 @@
 		}
 
 		@media (max-width: 767px) {
-			margin: 0 -26px 30px;
+			margin: 0 -16px 30px;
 		}
 
 		.product__media-thumbnails {
@@ -137,7 +137,7 @@
 						@media (max-width: 989px) {
 							display: none;
 						}
-						
+
 						span {
 							position: absolute;
 							bottom: 20px;
