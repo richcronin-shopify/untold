@@ -323,51 +323,56 @@
 
 					{% form 'customer', id: back_in_stock_form_id, class: 'product__back-in-stock-form' %}
 
-						<input
-							type="hidden"
-							name="contact[tags]"
-							value="product:{{ product.id }}"
-						>
-
-						<label
-							class="product__back-in-stock-label"
-							for="BackInStockEmail-{{ section.id }}"
-						>
-							Remind me when back in stock
-						</label>
-
-						<div class="product__back-in-stock-fields">
-							<input
-								type="email"
-								id="BackInStockEmail-{{ section.id }}"
-								class="product__back-in-stock-input"
-								name="contact[email]"
-								value="{% if customer %}{{ customer.email }}{% else %}{{ form.email }}{% endif %}"
-								placeholder="Email address"
-								autocomplete="email"
-								aria-required="true"
-								{% if form.errors %}
-									aria-invalid="true"
-									aria-describedby="BackInStockError-{{ section.id }}"
-								{% endif %}
-								required
-							>
-
-							<button type="submit" class="product__back-in-stock-button button">
-								Remind me
-							</button>
-						</div>
-
-						{%- if form.errors -%}
-							<div class="product__back-in-stock-message product__back-in-stock-message--error" id="BackInStockError-{{ section.id }}">
-								{{ form.errors | default_errors }}
-							</div>
-						{%- endif -%}
-
 						{%- if form.posted_successfully? -%}
+							
 							<div class="product__back-in-stock-message product__back-in-stock-message--success" tabindex="-1" autofocus>
 								Thanks — we'll keep your email against this product.
 							</div>
+
+						{%- else -%}
+
+							<input
+								type="hidden"
+								name="contact[tags]"
+								value="product:{{ product.id }}"
+							>
+
+							<label
+								class="product__back-in-stock-label"
+								for="BackInStockEmail-{{ section.id }}"
+							>
+								Remind me when back in stock
+							</label>
+
+							<div class="product__back-in-stock-fields">
+								<input
+									type="email"
+									id="BackInStockEmail-{{ section.id }}"
+									class="product__back-in-stock-input"
+									name="contact[email]"
+									value="{% if customer %}{{ customer.email }}{% else %}{{ form.email }}{% endif %}"
+									placeholder="Email address"
+									autocomplete="email"
+									aria-required="true"
+									{% if form.errors %}
+										aria-invalid="true"
+										aria-describedby="BackInStockError-{{ section.id }}"
+									{% endif %}
+									required
+								>
+
+								<button type="submit" class="product__back-in-stock-button button">
+									Remind me
+								</button>
+							</div>
+
+							{%- if form.errors -%}
+								<div class="product__back-in-stock-message product__back-in-stock-message--error" id="BackInStockError-{{ section.id }}">
+									{{ form.errors | default_errors }}
+								</div>
+							{%- endif -%}
+
+						
 						{%- endif -%}
 
 					{% endform %}
