@@ -55,10 +55,100 @@
         "padding-top-m": 30,
         "padding-bottom-m": 30
       }
+    },
+    "brand_slider_hL7tdW": {
+      "type": "brand-slider",
+      "blocks": {
+        "brand_gFXUiV": {
+          "type": "brand",
+          "settings": {
+            "image": "shopify://shop_images/image_20.png",
+            "max_image_width": 110,
+            "brand_name": "CULT",
+            "url": ""
+          }
+        },
+        "brand_79hWdy": {
+          "type": "brand",
+          "settings": {
+            "image": "shopify://shop_images/image_23.png",
+            "max_image_width": 180,
+            "brand_name": "Tall Order",
+            "url": ""
+          }
+        },
+        "brand_br3Tbq": {
+          "type": "brand",
+          "settings": {
+            "image": "shopify://shop_images/image_21.png",
+            "max_image_width": 180,
+            "brand_name": "Kink BMX",
+            "url": ""
+          }
+        },
+        "brand_BkhqL8": {
+          "type": "brand",
+          "settings": {
+            "image": "shopify://shop_images/image_24.png",
+            "max_image_width": 180,
+            "brand_name": "Tribal",
+            "url": ""
+          }
+        },
+        "brand_hy6BEk": {
+          "type": "brand",
+          "settings": {
+            "image": "shopify://shop_images/image_22.png",
+            "max_image_width": 180,
+            "brand_name": "Primo",
+            "url": ""
+          }
+        },
+        "brand_QVkTrr": {
+          "type": "brand",
+          "settings": {
+            "image": "shopify://shop_images/image_25.png",
+            "max_image_width": 180,
+            "brand_name": "Federal",
+            "url": ""
+          }
+        },
+        "brand_brYnXa": {
+          "type": "brand",
+          "settings": {
+            "image": "shopify://shop_images/image_22.png",
+            "max_image_width": 180,
+            "brand_name": "Primo",
+            "url": ""
+          }
+        }
+      },
+      "block_order": [
+        "brand_gFXUiV",
+        "brand_79hWdy",
+        "brand_br3Tbq",
+        "brand_BkhqL8",
+        "brand_hy6BEk",
+        "brand_QVkTrr",
+        "brand_brYnXa"
+      ],
+      "name": "Brand slider",
+      "settings": {
+        "title": "Shop by brand",
+        "enable_carousel": true,
+        "brands_desktop": 6,
+        "brands_tablet": 4,
+        "brands_mobile": 3,
+        "padding-top": 40,
+        "padding-bottom": 40,
+        "padding-top-m": 30,
+        "padding-bottom-m": 30
+      }
     }
   },
   "order": [
     "main",
-    "pdp_releated_products_X7ffze"
+    "pdp_releated_products_X7ffze",
+    "brand_slider_hL7tdW"
   ]
 }
