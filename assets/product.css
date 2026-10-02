@@ -133,6 +133,8 @@
 						right: 20px;
 						svg {
 							transform: rotate(45deg);
+							width: 14px;
+							height: unset;
 							path {
 								stroke: #000;
 							}
