@@ -123,12 +123,14 @@
 
 				@media (max-width: 989px) {
 					position: absolute;
-					right: 32px;
-					bottom: 12px;
+					right: 20px;
+					bottom: 10px;
 					display: flex;
 					align-items: center;
 					gap: 3px;
 					z-index: 2;
+					background: var(--color-black-reduced);
+					border-radius: 14px;
 				}
 			}
 		}
