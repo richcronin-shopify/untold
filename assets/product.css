@@ -715,6 +715,7 @@
 			top: 50%;
 			transform: translate(0, -50%);
 			z-index: 2;
+			background: var(--color-black);
 
 			&.swiper-slider__arrow--prev {
 				left: 0;
