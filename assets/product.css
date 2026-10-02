@@ -129,8 +129,9 @@
 					.product__media-zoom {
 						position: absolute;
 						z-index: 2;
-						bottom: 20px;
-						right: 20px;
+						bottom: 0;
+						right: 0;
+						padding: 20px;
 						svg {
 							transform: rotate(45deg);
 							width: 11px;
