@@ -693,6 +693,10 @@
 	z-index: 999;
 	display: none;
 
+	@media (max-width: 989px) {
+		height: 100dvh;
+	}
+
 	&.is-open {
 		display: block;
 	}
