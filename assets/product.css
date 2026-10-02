@@ -391,11 +391,12 @@
 						overflow: hidden;
 						width: 100%;
 						aspect-ratio: 1/1;
+						position: relative;
 						img {
 							position: absolute;
 							top: 50%;
 							left: 0;
-							transform: translate(-50%, 0);
+							transform: translate(0, -50%);
 							height: unset;
 							aspect-ratio: 1/1;
 							width: 200%;
