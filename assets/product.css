@@ -417,6 +417,7 @@
 				display: flex;
 				flex-direction: column;
 				gap: 10px;
+				outline: none;
 
 				.product__back-in-stock-message {
 					text-align: center;
