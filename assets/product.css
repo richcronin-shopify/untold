@@ -781,6 +781,10 @@
 		.product__sticky-atc-button {
 			width: 100%;
 			text-align: center;
+			&[disabled] {
+				background: var(--color-error);
+				color: #fff;
+			}
 		}
 
 		&.is-active {
