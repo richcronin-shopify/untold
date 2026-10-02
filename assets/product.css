@@ -761,3 +761,19 @@
 	}
 
 }
+
+.product__sticky-atc {
+
+	display: none;
+
+	@media (max-width: 767px) {	
+	
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		background:  var(--color-black);
+
+	}
+
+}
