@@ -334,7 +334,15 @@
 							<input
 								type="hidden"
 								name="contact[tags]"
-								value="product:{{ product.id }}"
+								value="product:{{ product.id }},variant_id:{{ current_variant.id }}"
+								data-back-in-stock-tags
+							>
+
+							<input
+								type="hidden"
+								name="return_to"
+								value="{{ product.url }}?variant={{ current_variant.id }}"
+								data-back-in-stock-return
 							>
 
 							<label
@@ -544,6 +552,14 @@
 						'[data-back-in-stock]'
 					);
 
+					const backInStockTags = section.querySelector(
+						'[data-back-in-stock-tags]'
+					);
+
+					const backInStockReturn = section.querySelector(
+						'[data-back-in-stock-return]'
+					);
+
 					const pointsElements = section.querySelectorAll(
 						'[data-product-points]'
 					);
@@ -686,6 +702,11 @@
 							backInStockElement.hidden = variant.available;
 						}
 
+						if (backInStockTags) {
+							backInStockTags.value =
+								`product:${section.dataset.productId},variant_id:${variant.id}`;
+						}
+
 						if (availabilityElement) {
 							availabilityElement.classList.toggle(
 								'product__availability--sold-out',
@@ -703,6 +724,11 @@
 
 						const url = new URL(window.location.href);
 						url.searchParams.set('variant', variant.id);
+
+						if (backInStockReturn) {
+							backInStockReturn.value =
+								`${url.pathname}${url.search}${url.hash}`;
+						}
 
 						window.history.replaceState(
 							window.history.state,
