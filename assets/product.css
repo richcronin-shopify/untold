@@ -352,6 +352,9 @@
 
 					&:hover {
 						border-color: #fff;
+						.product__quantity-input {
+							border-color: #fff;
+						}
 					}
 
 					.product__quantity-button,
@@ -373,6 +376,7 @@
 						font-weight: 500;
 						border-left: 1px solid var(--border-white);
 						border-right: 1px solid var(--border-white);
+						transition: .3s all;
 
 						&::-webkit-inner-spin-button,
 						&::-webkit-outer-spin-button {
