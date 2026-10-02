@@ -716,6 +716,7 @@
 			top: auto;
 			left: 0;
 			bottom: 0;
+			transform: translate(0, 0);
 		}
 
 		.product__media-modal-close {
