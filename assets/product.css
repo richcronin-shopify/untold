@@ -544,6 +544,9 @@
 
 		.product__accordion {
 			margin-top: 14px;
+			border: 1px solid var(--border-white);
+			border-radius: 3px;
+
 
 			& + .product__accordion {
 				margin-top: 10px;
