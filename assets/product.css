@@ -595,8 +595,15 @@
 						width: 100%;
 						border: 1px solid var(--border-white);
 						font-size: 14px;
+						border-radius: 3px;
 						tr {
 							font-weight: 400;
+						}
+						td {
+
+						}
+						tr, td {
+							border: 1px solid var(--border-white);
 						}
 					}
 
