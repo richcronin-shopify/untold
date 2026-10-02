@@ -402,6 +402,7 @@
 							aspect-ratio: 1/1;
 							width: 200%;
 							max-width: 200%;
+							transition: .3s all;
 						}
 					}
 					.product__paired-colour-label {
@@ -411,6 +412,13 @@
 						font-size: 14px;
 						display: block;
 						margin: 3px 0 0 0;
+					}
+					&:hover {
+						.product__paired-colour-image {
+							img {
+								width: 100%;
+							}
+						}
 					}
 				}
 			}
