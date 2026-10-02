@@ -317,33 +317,28 @@
 
 				<div
 					class="product__back-in-stock"
+					id="BackInStock-{{ section.id }}"
 					data-back-in-stock
 					{% if current_variant.available %}hidden{% endif %}
 				>
 
 					{% form 'customer', id: back_in_stock_form_id, class: 'product__back-in-stock-form' %}
 
-						{%- if form.posted_successfully? -%}
-							
-							<div class="product__back-in-stock-message product__back-in-stock-message--success" tabindex="-1" autofocus>
-								Thanks — we'll keep your email against this product.
-							</div>
+						<input
+							type="hidden"
+							name="contact[tags]"
+							value="product:{{ product.id }},variant_id:{{ current_variant.id }}"
+							data-back-in-stock-tags
+						>
 
-						{%- else -%}
+						<input
+							type="hidden"
+							name="return_to"
+							value="{{ product.url }}?variant={{ current_variant.id }}&back_in_stock_success=1#BackInStock-{{ section.id }}"
+							data-back-in-stock-return
+						>
 
-							<input
-								type="hidden"
-								name="contact[tags]"
-								value="product:{{ product.id }},variant_id:{{ current_variant.id }}"
-								data-back-in-stock-tags
-							>
-
-							<input
-								type="hidden"
-								name="return_to"
-								value="{{ product.url }}?variant={{ current_variant.id }}"
-								data-back-in-stock-return
-							>
+						<div data-back-in-stock-form-content>
 
 							<label
 								class="product__back-in-stock-label"
@@ -380,8 +375,16 @@
 								</div>
 							{%- endif -%}
 
-						
-						{%- endif -%}
+						</div>
+
+						<div
+							class="product__back-in-stock-message product__back-in-stock-message--success"
+							data-back-in-stock-success
+							tabindex="-1"
+							hidden
+						>
+							Thanks — we'll keep your email against this product.
+						</div>
 
 					{% endform %}
 
@@ -560,6 +563,14 @@
 						'[data-back-in-stock-return]'
 					);
 
+					const backInStockFormContent = section.querySelector(
+						'[data-back-in-stock-form-content]'
+					);
+
+					const backInStockSuccess = section.querySelector(
+						'[data-back-in-stock-success]'
+					);
+
 					const pointsElements = section.querySelectorAll(
 						'[data-product-points]'
 					);
@@ -613,6 +624,30 @@
 						return moneyFormatter.format(amount);
 
 					};
+
+					const currentPageUrl = new URL(window.location.href);
+					const backInStockSubmitted =
+						currentPageUrl.searchParams.get('back_in_stock_success') === '1';
+
+					if (
+						backInStockSubmitted &&
+						backInStockElement &&
+						!backInStockElement.hidden
+					) {
+
+						if (backInStockFormContent) {
+							backInStockFormContent.hidden = true;
+						}
+
+						if (backInStockSuccess) {
+							backInStockSuccess.hidden = false;
+
+							requestAnimationFrame(() => {
+								backInStockSuccess.focus();
+							});
+						}
+
+					}
 
 					const updatePoints = (variant) => {
 
@@ -702,6 +737,14 @@
 							backInStockElement.hidden = variant.available;
 						}
 
+						if (backInStockFormContent) {
+							backInStockFormContent.hidden = false;
+						}
+
+						if (backInStockSuccess) {
+							backInStockSuccess.hidden = true;
+						}
+
 						if (backInStockTags) {
 							backInStockTags.value =
 								`product:${section.dataset.productId},variant_id:${variant.id}`;
@@ -724,10 +767,21 @@
 
 						const url = new URL(window.location.href);
 						url.searchParams.set('variant', variant.id);
+						url.searchParams.delete('back_in_stock_success');
+						url.hash = '';
 
 						if (backInStockReturn) {
+							const returnUrl = new URL(url.href);
+
+							returnUrl.searchParams.set(
+								'back_in_stock_success',
+								'1'
+							);
+
+							returnUrl.hash = `BackInStock-${section.id}`;
+
 							backInStockReturn.value =
-								`${url.pathname}${url.search}${url.hash}`;
+								`${returnUrl.pathname}${returnUrl.search}${returnUrl.hash}`;
 						}
 
 						window.history.replaceState(
