@@ -396,6 +396,9 @@
 							top: 50%;
 							left: 0;
 							transform: translate(-50%, 0);
+							height: unset;
+							aspect-ratio: 1/1;
+							width: 200%;
 						}
 					}
 					.product__paired-colour-label {
