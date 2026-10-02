@@ -305,6 +305,7 @@
 						border: 1px solid var(--border-white);
 						border-radius: 3px;
 						transition: .3s all;
+						font-weight: 400;
 
 						@media (max-width: 767px) {
 							flex: 1 1 0;
