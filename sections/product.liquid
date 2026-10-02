@@ -494,6 +494,25 @@
 
 	</div>
 
+	<div
+		class="product__sticky-atc"
+		data-product-sticky-atc
+		hidden
+	>
+		<button
+			type="button"
+			class="product__sticky-atc-button button"
+			data-product-sticky-button
+			{% unless current_variant.available %}disabled{% endunless %}
+		>
+			{%- if current_variant.available -%}
+				Add to Basket
+			{%- else -%}
+				Sold Out - Notify me
+			{%- endif -%}
+		</button>
+	</div>
+
 	{%- if ss.show_image_zoom -%}
 
 		<div
@@ -637,8 +656,20 @@
 						'[data-product-klarna-price]'
 					);
 
+					const productForm = section.querySelector(
+						'[data-product-form]'
+					);
+
 					const purchaseElement = section.querySelector(
 						'[data-product-purchase]'
+					);
+
+					const stickyAtc = section.querySelector(
+						'[data-product-sticky-atc]'
+					);
+
+					const stickyButton = section.querySelector(
+						'[data-product-sticky-button]'
 					);
 
 					const availabilityElement = section.querySelector(
@@ -859,6 +890,18 @@
 							purchaseElement.hidden = !variant.available;
 						}
 
+						if (stickyButton) {
+							stickyButton.textContent = variant.available
+								? 'Add to Basket'
+								: 'Sold Out - Notify me';
+
+							stickyButton.disabled = !variant.available;
+
+							stickyButton.style.pointerEvents = variant.available
+								? ''
+								: 'none';
+						}
+
 						if (backInStockElement) {
 							backInStockElement.hidden = variant.available;
 						}
@@ -954,6 +997,147 @@
 						});
 
 					};
+
+					let productFormInView = true;
+
+					const stickyBreakpoint = window.matchMedia(
+						'(max-width: 767px)'
+					);
+
+					const updateStickyVisibility = () => {
+
+						if (!stickyAtc) {
+							return;
+						}
+
+						const isActive =
+							stickyBreakpoint.matches &&
+							!productFormInView;
+
+						stickyAtc.classList.toggle(
+							'is-active',
+							isActive
+						);
+
+						stickyAtc.hidden = !isActive;
+
+					};
+
+					if (
+						productForm &&
+						stickyAtc &&
+						'IntersectionObserver' in window
+					) {
+
+						const productFormObserver =
+							new IntersectionObserver(
+								(entries) => {
+
+									const entry = entries[0];
+
+									productFormInView =
+										Boolean(entry?.isIntersecting);
+
+									updateStickyVisibility();
+
+								},
+								{
+									threshold: 0
+								}
+							);
+
+						productFormObserver.observe(productForm);
+
+					}
+
+					if (stickyBreakpoint.addEventListener) {
+						stickyBreakpoint.addEventListener(
+							'change',
+							updateStickyVisibility
+						);
+					} else {
+						stickyBreakpoint.addListener(
+							updateStickyVisibility
+						);
+					}
+
+					if (stickyButton) {
+
+						const initialVariant = getSelectedVariant();
+
+						if (initialVariant) {
+							stickyButton.textContent =
+								initialVariant.available
+									? 'Add to Basket'
+									: 'Sold Out - Notify me';
+
+							stickyButton.disabled =
+								!initialVariant.available;
+
+							stickyButton.style.pointerEvents =
+								initialVariant.available
+									? ''
+									: 'none';
+						}
+
+					}
+
+					if (stickyAtc) {
+
+						stickyAtc.addEventListener(
+							'click',
+							() => {
+
+								if (!stickyBreakpoint.matches) {
+									return;
+								}
+
+								const variant = getSelectedVariant();
+
+								if (!variant) {
+									return;
+								}
+
+								if (!variant.available) {
+
+									if (backInStockElement) {
+
+										backInStockElement.scrollIntoView({
+											behavior: 'smooth',
+											block: 'center'
+										});
+
+										const emailInput =
+											backInStockElement.querySelector(
+												'input[type="email"]'
+											);
+
+										if (emailInput) {
+											window.setTimeout(
+												() => emailInput.focus({
+													preventScroll: true
+												}),
+												400
+											);
+										}
+
+									}
+
+									return;
+
+								}
+
+								if (productForm) {
+									productForm.requestSubmit();
+								}
+
+							}
+						);
+
+					}
+
+					updateStickyVisibility();
+
 
 					optionInputs.forEach((input) => {
 
