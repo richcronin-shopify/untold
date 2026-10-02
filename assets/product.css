@@ -131,6 +131,9 @@
 					z-index: 2;
 					background: var(--color-black-reduced);
 					border-radius: 14px;
+					font-size: 12px;
+					font-weight: 500;
+					font-family: var(--font-heading-family);
 				}
 			}
 		}
