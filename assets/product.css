@@ -512,6 +512,11 @@
 					}
 				}
 
+				.product__back-in-stock-label {
+					display: block;
+					margin: 0 0 6px 0;
+				}
+
 				.product__back-in-stock-fields {
 					display: grid;
 					grid-template-columns: minmax(0, 1fr) auto;
