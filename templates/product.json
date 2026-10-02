@@ -43,8 +43,8 @@
       "name": "Related Products",
       "settings": {
         "title": "You may also like",
-        "collection": "bestsellers",
-        "product_limit": 20,
+        "collection": "",
+        "product_limit": 6,
         "show_view_all": true,
         "enable_carousel": true,
         "products_desktop": 5,
