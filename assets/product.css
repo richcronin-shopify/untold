@@ -98,7 +98,9 @@
 						display: none;
 					}
 					&[data-image-count="1"] {
-						
+						.product__media-item {
+							flex: 0 0 calc(100% - 16px);
+						}
 					}
 				}
 
