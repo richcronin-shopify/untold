@@ -260,6 +260,67 @@
 
 				{%- endunless -%}
 
+				{%- assign paired_colours = product.metafields.paired.colour.value -%}
+
+				{%- if paired_colours != blank -%}
+
+					<div class="product__paired-colours">
+
+						<div class="product__paired-colours-label">
+							Colour:
+						</div>
+
+						<div class="product__paired-colours-list">
+
+							{%- for paired_product in paired_colours -%}
+
+								{%- liquid
+									assign colour_label = paired_product.title
+
+									for paired_option in paired_product.options_with_values
+										assign paired_option_name = paired_option.name | downcase
+
+										if paired_option_name == 'colour' or paired_option_name == 'color'
+											assign colour_label = paired_option.values.first.name
+											break
+										endif
+									endfor
+								-%}
+
+								<a
+									href="{{ paired_product.url }}"
+									class="product__paired-colour{% if paired_product.id == product.id %} is-active{% endif %}"
+									{% if paired_product.id == product.id %}aria-current="page"{% endif %}
+								>
+
+									<span class="product__paired-colour-image">
+										{%- if paired_product.featured_image != blank -%}
+											{{
+												paired_product.featured_image
+												| image_url: width: 320
+												| image_tag:
+													loading: 'lazy',
+													widths: '120, 180, 240, 320',
+													sizes: '120px',
+													alt: paired_product.featured_image.alt
+											}}
+										{%- endif -%}
+									</span>
+
+									<span class="product__paired-colour-label">
+										{{ colour_label }}
+									</span>
+
+								</a>
+
+							{%- endfor -%}
+
+						</div>
+
+					</div>
+
+				{%- endif -%}
+
 				{% form 'product', product, id: product_form_id, class: 'product__form', data-product-form: '' %}
 
 					<input
