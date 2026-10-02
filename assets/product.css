@@ -129,15 +129,16 @@
 					.product__media-zoom {
 						position: absolute;
 						z-index: 2;
-						bottom: 0;
-						right: 0;
-						padding: 20px;
-						svg {
-							transform: rotate(45deg);
-							width: 11px;
-							height: unset;
-							path {
-								stroke: #000;
+						top: 0;
+						left: 0;
+						span {
+							svg {
+								transform: rotate(45deg);
+								width: 11px;
+								height: unset;
+								path {
+									stroke: #000;
+								}
 							}
 						}
 					}
