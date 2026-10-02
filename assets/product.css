@@ -392,7 +392,10 @@
 						width: 100%;
 						aspect-ratio: 1/1;
 						img {
-
+							position: absolute;
+							top: 50%;
+							left: 0;
+							transform: translate(-50%, 0);
 						}
 					}
 					.product__paired-colour-label {
