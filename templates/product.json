@@ -37,9 +37,28 @@
         "delivery_returns_label": "Delivery & Returns",
         "delivery_returns": "<p>Delivery & Returns info</p>"
       }
+    },
+    "pdp_releated_products_X7ffze": {
+      "type": "pdp-releated-products",
+      "name": "Related Products",
+      "settings": {
+        "title": "You may also like",
+        "collection": "bestsellers",
+        "product_limit": 20,
+        "show_view_all": true,
+        "enable_carousel": true,
+        "products_desktop": 5,
+        "products_tablet": "3",
+        "products_mobile": "2",
+        "padding-top": 40,
+        "padding-bottom": 40,
+        "padding-top-m": 30,
+        "padding-bottom-m": 30
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "pdp_releated_products_X7ffze"
   ]
 }
