@@ -565,6 +565,9 @@
 
 				.product__accordion-icon {
 					flex: 0 0 auto;
+					svg {
+						
+					}
 				}
 			}
 
