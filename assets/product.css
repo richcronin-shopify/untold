@@ -421,6 +421,9 @@
 
 				.product__back-in-stock-message {
 					text-align: center;
+					margin: 40px 0;
+					outline: none;
+					border: none;
 					&.product__back-in-stock-message--success {
 						color: var(--color-primary);
 					}
