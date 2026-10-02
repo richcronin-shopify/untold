@@ -391,6 +391,7 @@
 
 			@media (max-width: 767px) {
 				justify-content: center;
+				width: 100%;
 			}
 
 			.product__availability-icon {
