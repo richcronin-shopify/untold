@@ -418,6 +418,16 @@
 				flex-direction: column;
 				gap: 10px;
 
+				.product__back-in-stock-message {
+					text-align: center;
+					&.product__back-in-stock-message--success {
+						color: var(--color-primary);
+					}
+					&.product__back-in-stock-message--error {
+						color: var(--color-error);
+					}
+				}
+
 				.product__back-in-stock-fields {
 					display: grid;
 					grid-template-columns: minmax(0, 1fr) auto;
