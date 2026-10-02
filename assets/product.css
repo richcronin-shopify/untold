@@ -752,6 +752,10 @@
 			background: var(--color-black);
 			border-radius: 4px;
 
+			@media (max-width: 989px) {
+				display: none;
+			}
+
 			&.swiper-slider__arrow--prev {
 				left: 10px;
 			}
