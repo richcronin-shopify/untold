@@ -773,6 +773,12 @@
 		left: 0;
 		width: 100%;
 		background:  var(--color-black);
+		padding: 16px;
+
+		.product__sticky-atc-button {
+			width: 100%;
+			text-align: center;
+		}
 
 	}
 
