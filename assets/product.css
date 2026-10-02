@@ -783,6 +783,7 @@
 			text-align: center;
 			&[disabled] {
 				background: var(--color-error);
+				border-color: var(--color-error);
 				color: #fff;
 			}
 		}
