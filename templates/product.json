@@ -144,11 +144,71 @@
         "padding-top-m": 30,
         "padding-bottom-m": 30
       }
+    },
+    "collection_grid_MAMVmT": {
+      "type": "collection-grid",
+      "blocks": {
+        "collection_3Xgjwb": {
+          "type": "collection",
+          "settings": {
+            "collection": "complete-bikes",
+            "image": "shopify://shop_images/complet-bikes.jpg",
+            "title": "Complete Bikes"
+          }
+        },
+        "collection_CJ4yK4": {
+          "type": "collection",
+          "settings": {
+            "collection": "frames",
+            "image": "shopify://shop_images/frames_99457d6c-7c1b-43f0-a4d8-7d76fac3a0de.jpg",
+            "title": ""
+          }
+        },
+        "collection_UiqWM6": {
+          "type": "collection",
+          "settings": {
+            "collection": "wheels",
+            "image": "shopify://shop_images/wheels.jpg",
+            "title": ""
+          }
+        },
+        "collection_pHWyLb": {
+          "type": "collection",
+          "settings": {
+            "collection": "all-products",
+            "image": "shopify://shop_images/parts.jpg",
+            "title": "Parts"
+          }
+        },
+        "collection_xpKdet": {
+          "type": "collection",
+          "settings": {
+            "collection": "backpacks",
+            "image": "shopify://shop_images/sale.jpg",
+            "title": "Sale"
+          }
+        }
+      },
+      "block_order": [
+        "collection_3Xgjwb",
+        "collection_CJ4yK4",
+        "collection_UiqWM6",
+        "collection_pHWyLb",
+        "collection_xpKdet"
+      ],
+      "name": "Collection grid",
+      "settings": {
+        "padding-top": 0,
+        "padding-bottom": 0,
+        "padding-top-m": 0,
+        "padding-bottom-m": 0
+      }
     }
   },
   "order": [
     "main",
     "pdp_releated_products_X7ffze",
-    "brand_slider_hL7tdW"
+    "brand_slider_hL7tdW",
+    "collection_grid_MAMVmT"
   ]
 }
