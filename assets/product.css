@@ -687,6 +687,10 @@
 	z-index: 999;
 	display: none;
 
+	&.is-open {
+		display: block;
+	}
+
 	.product__media-modal-dialog {
 
 		width: 1100px;
@@ -700,6 +704,10 @@
 		border: 1px solid var(--border-white);
 		padding: 40px;
 		border-radius: 6px;
+
+		.product__media-modal-swiper {
+			border-radius: 8px;
+		}
 
 	}
 
