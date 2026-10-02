@@ -713,6 +713,9 @@
 
 		@media (max-width: 989px) {
 			padding: 16px;
+			top: auto;
+			left: 0;
+			bottom: 0;
 		}
 
 		.product__media-modal-close {
