@@ -137,6 +137,7 @@
 							position: absolute;
 							bottom: 20px;
 							right: 20px;
+							transition: .3s all;
 							svg {
 								transform: rotate(45deg);
 								width: 11px;
@@ -144,6 +145,12 @@
 								path {
 									stroke: #000;
 								}
+							}
+						}
+						&:hover {
+							span {
+								bottom: 26px;
+								right: 26px;
 							}
 						}
 					}
