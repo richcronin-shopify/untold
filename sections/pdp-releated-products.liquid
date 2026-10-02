@@ -2,129 +2,113 @@
 {%- assign ss = section.settings -%}
 
 {%- liquid
-	assign display_products = blank
+	assign related_products = product.metafields['shopify--discovery--product_recommendation'].related_products.value
+	assign display_products = related_products
 	assign using_fallback_collection = false
 
-	if recommendations.performed? and recommendations.products_count > 0
-		assign display_products = recommendations.products
-	elsif recommendations.performed? and recommendations.intent == 'related' and ss.collection != blank
+	if display_products == blank and ss.collection != blank
 		assign display_products = ss.collection.products
 		assign using_fallback_collection = true
 	endif
 -%}
 
-<section
-	class="product-recommendations"
-	id="{{ section.id }}"
-	data-product-recommendations
-	data-section-id="{{ section.id }}"
-	data-recommendations-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ ss.product_limit }}"
->
-	<div data-recommendations-result>
+{%- if display_products != blank -%}
 
-		{%- if display_products != blank -%}
+	<section
+		class="product-slider product-recommendations{% unless ss.enable_carousel %} product-slider--grid{% endunless %}"
+		id="{{ section.id }}"
+		data-product-slider
+		data-carousel="{{ ss.enable_carousel }}"
+		data-products-desktop="{{ ss.products_desktop }}"
+		data-products-tablet="{{ ss.products_tablet }}"
+		data-products-mobile="{{ ss.products_mobile }}"
+	>
+		<div class="container">
 
-			<div
-				class="product-slider{% unless ss.enable_carousel %} product-slider--grid{% endunless %}"
-				data-product-slider
-				data-carousel="{{ ss.enable_carousel }}"
-				data-products-desktop="{{ ss.products_desktop }}"
-				data-products-tablet="{{ ss.products_tablet }}"
-				data-products-mobile="{{ ss.products_mobile }}"
-			>
-				<div class="container">
+			<div class="product-slider__header">
 
-					<div class="product-slider__header">
+				{%- if ss.title != blank -%}
+					<h2 class="product-slider__title h5">
+						{{ ss.title }}
+					</h2>
+				{%- endif -%}
 
-						{%- if ss.title != blank -%}
-							<h2 class="product-slider__title h5">
-								{{ ss.title }}
-							</h2>
-						{%- endif -%}
+				<div class="product-slider__controls">
 
-						<div class="product-slider__controls">
+					{%- if ss.show_view_all and using_fallback_collection and ss.collection != blank -%}
+						<a href="{{ ss.collection.url }}" class="product-slider__view-all">
+							View all
+						</a>
+					{%- endif -%}
 
-							{%- if ss.show_view_all and using_fallback_collection and ss.collection != blank -%}
-								<a
-									href="{{ ss.collection.url }}"
-									class="product-slider__view-all"
-								>
-									View all
-								</a>
-							{%- endif -%}
+					{%- if ss.enable_carousel -%}
+						<div class="product-slider__navigation">
 
-							{%- if ss.enable_carousel -%}
-								<div class="product-slider__navigation">
+							<button
+								type="button"
+								class="swiper-slider__arrow swiper-slider__arrow--prev button--reset"
+								aria-label="Previous products"
+							>
+								{{- 'icon-long-arrow.svg' | inline_asset_content -}}
+							</button>
 
-									<button
-										type="button"
-										class="swiper-slider__arrow swiper-slider__arrow--prev button--reset"
-										aria-label="Previous products"
-									>
-										{{- 'icon-long-arrow.svg' | inline_asset_content -}}
-									</button>
-
-									<button
-										type="button"
-										class="swiper-slider__arrow swiper-slider__arrow--next button--reset"
-										aria-label="Next products"
-									>
-										{{- 'icon-long-arrow.svg' | inline_asset_content -}}
-									</button>
-
-								</div>
-							{%- endif -%}
+							<button
+								type="button"
+								class="swiper-slider__arrow swiper-slider__arrow--next button--reset"
+								aria-label="Next products"
+							>
+								{{- 'icon-long-arrow.svg' | inline_asset_content -}}
+							</button>
 
 						</div>
-
-					</div>
-
-					<div class="{% if ss.enable_carousel %}swiper product-slider__swiper{% else %}product-slider__grid{% endif %}">
-
-						<div class="{% if ss.enable_carousel %}swiper-wrapper{% else %}product-slider__items{% endif %}">
-
-							{%- assign rendered_products = 0 -%}
-
-							{%- for recommended_product in display_products -%}
-
-								{%- unless recommended_product.id == product.id -%}
-
-									<div class="product-slider__item{% if ss.enable_carousel %} swiper-slide{% endif %}">
-										{% render 'product-card', product: recommended_product %}
-									</div>
-
-									{%- assign rendered_products = rendered_products | plus: 1 -%}
-
-									{%- if rendered_products >= ss.product_limit -%}
-										{%- break -%}
-									{%- endif -%}
-
-								{%- endunless -%}
-
-							{%- endfor -%}
-
-						</div>
-
-						{%- if ss.enable_carousel -%}
-							<div class="product-slider__pagination swiper-pagination"></div>
-						{%- endif -%}
-
-					</div>
+					{%- endif -%}
 
 				</div>
+
 			</div>
 
-		{%- endif -%}
+			<div class="{% if ss.enable_carousel %}swiper product-slider__swiper{% else %}product-slider__grid{% endif %}">
 
-	</div>
-</section>
+				<div class="{% if ss.enable_carousel %}swiper-wrapper{% else %}product-slider__items{% endif %}">
+
+					{%- assign rendered_products = 0 -%}
+
+					{%- for recommended_product in display_products -%}
+
+						{%- unless recommended_product.id == product.id -%}
+
+							<div class="product-slider__item{% if ss.enable_carousel %} swiper-slide{% endif %}">
+								{% render 'product-card', product: recommended_product %}
+							</div>
+
+							{%- assign rendered_products = rendered_products | plus: 1 -%}
+
+							{%- if rendered_products >= ss.product_limit -%}
+								{%- break -%}
+							{%- endif -%}
+
+						{%- endunless -%}
+
+					{%- endfor -%}
+
+				</div>
+
+				{%- if ss.enable_carousel -%}
+					<div class="product-slider__pagination swiper-pagination"></div>
+				{%- endif -%}
+
+			</div>
+
+		</div>
+	</section>
+
+{%- endif -%}
 
 {%- style -%}
 
 	#{{ section.id }} {
 		padding-top: {{ ss.padding-top }}px;
 		padding-bottom: {{ ss.padding-bottom }}px;
-
 		--products-desktop: {{ ss.products_desktop }};
 		--products-tablet: {{ ss.products_tablet }};
 		--products-mobile: {{ ss.products_mobile }};
@@ -145,13 +129,13 @@
 
 	(() => {
 
-		const initialiseProductSliders = (container = document) => {
+		const initialiseProductSliders = () => {
 
 			if (typeof Swiper === 'undefined') {
 				return;
 			}
 
-			container
+			document
 				.querySelectorAll('[data-product-slider]')
 				.forEach((section) => {
 
@@ -171,22 +155,13 @@
 					}
 
 					const productsDesktop =
-						parseInt(
-							section.dataset.productsDesktop,
-							10
-						) || 5;
+						parseInt(section.dataset.productsDesktop, 10) || 5;
 
 					const productsTablet =
-						parseInt(
-							section.dataset.productsTablet,
-							10
-						) || 3;
+						parseInt(section.dataset.productsTablet, 10) || 3;
 
 					const productsMobile =
-						parseInt(
-							section.dataset.productsMobile,
-							10
-						) || 2;
+						parseInt(section.dataset.productsMobile, 10) || 2;
 
 					const previousButton = section.querySelector(
 						'.swiper-slider__arrow--prev'
@@ -203,9 +178,7 @@
 					new Swiper(swiperElement, {
 
 						slidesPerView: productsMobile,
-
 						spaceBetween: 10,
-
 						watchOverflow: true,
 
 						navigation: previousButton && nextButton
@@ -224,15 +197,12 @@
 							: false,
 
 						breakpoints: {
-
 							768: {
 								slidesPerView: productsTablet
 							},
-
 							990: {
 								slidesPerView: productsDesktop
 							}
-
 						},
 
 						a11y: {
@@ -250,127 +220,16 @@
 
 		};
 
-
-		const fetchRecommendationSection = async (
-			section,
-			intent
-		) => {
-
-			const url = new URL(
-				section.dataset.recommendationsUrl,
-				window.location.origin
-			);
-
-			url.searchParams.set('intent', intent);
-
-			const response = await fetch(url.toString());
-
-			if (!response.ok) {
-				return null;
-			}
-
-			const text = await response.text();
-			const html = new DOMParser().parseFromString(
-				text,
-				'text/html'
-			);
-
-			return html.querySelector(
-				'[data-recommendations-result]'
-			);
-
-		};
-
-
-		const initialiseProductRecommendations = (container = document) => {
-
-			container
-				.querySelectorAll('[data-product-recommendations]')
-				.forEach(async (section) => {
-
-					if (
-						section.dataset.recommendationsInitialised === 'true'
-					) {
-						return;
-					}
-
-					section.dataset.recommendationsInitialised = 'true';
-
-					const target = section.querySelector(
-						'[data-recommendations-result]'
-					);
-
-					if (!target) {
-						return;
-					}
-
-					try {
-
-						let result = await fetchRecommendationSection(
-							section,
-							'complementary'
-						);
-
-						let slider = result?.querySelector(
-							'[data-product-slider]'
-						);
-
-						if (!slider) {
-
-							result = await fetchRecommendationSection(
-								section,
-								'related'
-							);
-
-							slider = result?.querySelector(
-								'[data-product-slider]'
-							);
-
-						}
-
-						if (!result || !slider) {
-							section.hidden = true;
-							return;
-						}
-
-						target.innerHTML = result.innerHTML;
-
-						initialiseProductSliders(target);
-
-					} catch (error) {
-
-						console.error(
-							'Product recommendations failed to load.',
-							error
-						);
-
-						section.hidden = true;
-
-					}
-
-				});
-
-		};
-
-
-		initialiseProductRecommendations();
 		initialiseProductSliders();
-
 
 		window.addEventListener(
 			'load',
-			() => initialiseProductSliders()
+			initialiseProductSliders
 		);
-
 
 		document.addEventListener(
 			'shopify:section:load',
-			(event) => {
-
-				initialiseProductRecommendations(event.target);
-				initialiseProductSliders(event.target);
-
-			}
+			initialiseProductSliders
 		);
 
 	})();
@@ -396,16 +255,16 @@
 			"type": "collection",
 			"id": "collection",
 			"label": "Fallback collection",
-			"info": "Used when no complementary or related recommendations are returned."
+			"info": "Used when the product has no related products set in Search & Discovery."
 		},
 		{
 			"type": "range",
 			"id": "product_limit",
 			"min": 1,
-			"max": 10,
+			"max": 50,
 			"step": 1,
 			"label": "Maximum products",
-			"default": 10
+			"default": 20
 		},
 		{
 			"type": "checkbox",
@@ -434,18 +293,9 @@
 			"id": "products_tablet",
 			"label": "Products shown on tablet",
 			"options": [
-				{
-					"value": "2",
-					"label": "2"
-				},
-				{
-					"value": "3",
-					"label": "3"
-				},
-				{
-					"value": "4",
-					"label": "4"
-				}
+				{"value": "2", "label": "2"},
+				{"value": "3", "label": "3"},
+				{"value": "4", "label": "4"}
 			],
 			"default": "3"
 		},
@@ -454,14 +304,8 @@
 			"id": "products_mobile",
 			"label": "Products shown on mobile",
 			"options": [
-				{
-					"value": "1",
-					"label": "1"
-				},
-				{
-					"value": "2",
-					"label": "2"
-				}
+				{"value": "1", "label": "1"},
+				{"value": "2", "label": "2"}
 			],
 			"default": "2"
 		},
