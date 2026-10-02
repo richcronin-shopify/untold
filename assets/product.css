@@ -711,6 +711,10 @@
 		padding: 40px;
 		border-radius: 6px;
 
+		@media (max-width: 989px) {
+			padding: 16px;
+		}
+
 		.product__media-modal-close {
 
 			position: absolute;
