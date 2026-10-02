@@ -775,6 +775,7 @@
 		background:  var(--color-black);
 		padding: 16px;
 		display: block;
+		transition: .3s all;
 
 		.product__sticky-atc-button {
 			width: 100%;
