@@ -769,15 +769,20 @@
 	@media (max-width: 767px) {	
 	
 		position: fixed;
-		bottom: 0;
+		bottom: -60px;
 		left: 0;
 		width: 100%;
 		background:  var(--color-black);
 		padding: 16px;
+		display: block;
 
 		.product__sticky-atc-button {
 			width: 100%;
 			text-align: center;
+		}
+
+		&.is-active {
+			bottom: 0;
 		}
 
 	}
