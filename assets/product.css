@@ -581,6 +581,11 @@
 
 			.product__accordion-content {
 				padding: 16px;
+				&.rte {
+
+					
+
+				}
 			}
 
 			&[open] {
