@@ -99,7 +99,7 @@
 					}
 					&[data-image-count="1"] {
 						.product__media-item {
-							flex: 0 0 calc(100% - 16px);
+							flex: 0 0 calc(100% - 40px);
 						}
 					}
 				}
@@ -107,6 +107,11 @@
 				@media (max-width: 767px) {
 					scroll-padding-left: 16px;
 					padding-left: 16px;
+					&[data-image-count="1"] {
+						.product__media-item {
+							flex: 0 0 calc(100% - 16px);
+						}
+					}
 				}
 
 				.product__media-item {
