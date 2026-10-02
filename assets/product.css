@@ -371,6 +371,17 @@
 			}
 		}
 
+		.product__paired-colours {
+
+			.product__paired-colours-label {
+
+				margin: 0 0 10px 0;
+                font-weight: 400;
+
+			}
+
+		}
+
 
 		/* Purchase */
 
