@@ -37,39 +37,9 @@
         "delivery_returns_label": "Delivery & Returns",
         "delivery_returns": "<p>Delivery & Returns info</p>"
       }
-    },
-    "product_component_YrT9ER": {
-      "type": "product-component",
-      "blocks": {
-        "product_bUaAGe": {
-          "type": "product",
-          "settings": {
-            "product": ""
-          }
-        }
-      },
-      "block_order": [
-        "product_bUaAGe"
-      ],
-      "name": "Product slider",
-      "settings": {
-        "title": "You May Also Like",
-        "collection": "",
-        "product_limit": 10,
-        "show_view_all": true,
-        "enable_carousel": true,
-        "products_desktop": 5,
-        "products_tablet": 3,
-        "products_mobile": 2,
-        "padding-top": 100,
-        "padding-bottom": 40,
-        "padding-top-m": 0,
-        "padding-bottom-m": 20
-      }
     }
   },
   "order": [
-    "main",
-    "product_component_YrT9ER"
+    "main"
   ]
 }

@@ -1,0 +1,403 @@
+{{- 'product-slider.css' | asset_url | stylesheet_tag -}}
+{%- assign ss = section.settings -%}
+
+{%- liquid
+	assign complementary_products = product.metafields['shopify--discovery--product_recommendation'].complementary_products.value
+	assign related_products = product.metafields['shopify--discovery--product_recommendation'].related_products.value
+
+	assign recommendation_products = complementary_products
+	assign recommendation_source = 'complementary'
+
+	if recommendation_products == blank
+		assign recommendation_products = related_products
+		assign recommendation_source = 'related'
+	endif
+
+	if recommendation_products == blank and ss.collection != blank
+		assign recommendation_products = ss.collection.products
+		assign recommendation_source = 'collection'
+	endif
+-%}
+
+{%- if recommendation_products != blank -%}
+
+	<section
+		class="product-slider product-recommendations{% unless ss.enable_carousel %} product-slider--grid{% endunless %}"
+		id="{{ section.id }}"
+		data-product-slider
+		data-carousel="{{ ss.enable_carousel }}"
+		data-products-desktop="{{ ss.products_desktop }}"
+		data-products-tablet="{{ ss.products_tablet }}"
+		data-products-mobile="{{ ss.products_mobile }}"
+	>
+		<div class="container">
+
+			<div class="product-slider__header">
+
+				{%- if ss.title != blank -%}
+					<h2 class="product-slider__title h5">
+						{{ ss.title }}
+					</h2>
+				{%- endif -%}
+
+				<div class="product-slider__controls">
+
+					{%- if ss.show_view_all and recommendation_source == 'collection' and ss.collection != blank -%}
+						<a
+							href="{{ ss.collection.url }}"
+							class="product-slider__view-all"
+						>
+							View all
+						</a>
+					{%- endif -%}
+
+					{%- if ss.enable_carousel -%}
+						<div class="product-slider__navigation">
+
+							<button
+								type="button"
+								class="swiper-slider__arrow swiper-slider__arrow--prev button--reset"
+								aria-label="Previous products"
+							>
+								{{- 'icon-long-arrow.svg' | inline_asset_content -}}
+							</button>
+
+							<button
+								type="button"
+								class="swiper-slider__arrow swiper-slider__arrow--next button--reset"
+								aria-label="Next products"
+							>
+								{{- 'icon-long-arrow.svg' | inline_asset_content -}}
+							</button>
+
+						</div>
+					{%- endif -%}
+
+				</div>
+
+			</div>
+
+			<div class="{% if ss.enable_carousel %}swiper product-slider__swiper{% else %}product-slider__grid{% endif %}">
+
+				<div class="{% if ss.enable_carousel %}swiper-wrapper{% else %}product-slider__items{% endif %}">
+
+					{%- assign rendered_products = 0 -%}
+
+					{%- for recommended_product in recommendation_products -%}
+
+						{%- unless recommended_product.id == product.id -%}
+
+							<div class="product-slider__item{% if ss.enable_carousel %} swiper-slide{% endif %}">
+								{% render 'product-card', product: recommended_product %}
+							</div>
+
+							{%- assign rendered_products = rendered_products | plus: 1 -%}
+
+							{%- if rendered_products >= ss.product_limit -%}
+								{%- break -%}
+							{%- endif -%}
+
+						{%- endunless -%}
+
+					{%- endfor -%}
+
+				</div>
+
+				{%- if ss.enable_carousel -%}
+					<div class="product-slider__pagination swiper-pagination"></div>
+				{%- endif -%}
+
+			</div>
+
+		</div>
+	</section>
+
+{%- endif -%}
+
+{%- style -%}
+
+	#{{ section.id }} {
+		padding-top: {{ ss.padding-top }}px;
+		padding-bottom: {{ ss.padding-bottom }}px;
+
+		--products-desktop: {{ ss.products_desktop }};
+		--products-tablet: {{ ss.products_tablet }};
+		--products-mobile: {{ ss.products_mobile }};
+	}
+
+	@media screen and (max-width: 750px) {
+
+		#{{ section.id }} {
+			padding-top: {{ ss.padding-top-m }}px;
+			padding-bottom: {{ ss.padding-bottom-m }}px;
+		}
+
+	}
+
+{%- endstyle -%}
+
+{% javascript %}
+
+	(() => {
+
+		const initialiseProductSliders = () => {
+
+			if (typeof Swiper === 'undefined') {
+				return;
+			}
+
+			document
+				.querySelectorAll('[data-product-slider]')
+				.forEach((section) => {
+
+					if (
+						section.dataset.carousel !== 'true' ||
+						section.dataset.initialised === 'true'
+					) {
+						return;
+					}
+
+					const swiperElement = section.querySelector(
+						'.product-slider__swiper'
+					);
+
+					if (!swiperElement) {
+						return;
+					}
+
+					const productsDesktop =
+						parseInt(
+							section.dataset.productsDesktop,
+							10
+						) || 5;
+
+					const productsTablet =
+						parseInt(
+							section.dataset.productsTablet,
+							10
+						) || 3;
+
+					const productsMobile =
+						parseInt(
+							section.dataset.productsMobile,
+							10
+						) || 2;
+
+					const previousButton = section.querySelector(
+						'.swiper-slider__arrow--prev'
+					);
+
+					const nextButton = section.querySelector(
+						'.swiper-slider__arrow--next'
+					);
+
+					const pagination = section.querySelector(
+						'.product-slider__pagination'
+					);
+
+					new Swiper(swiperElement, {
+
+						slidesPerView: productsMobile,
+
+						spaceBetween: 10,
+
+						watchOverflow: true,
+
+						navigation: previousButton && nextButton
+							? {
+								prevEl: previousButton,
+								nextEl: nextButton
+							}
+							: false,
+
+						pagination: pagination
+							? {
+								el: pagination,
+								clickable: true,
+								bulletElement: 'button'
+							}
+							: false,
+
+						breakpoints: {
+
+							768: {
+								slidesPerView: productsTablet
+							},
+
+							990: {
+								slidesPerView: productsDesktop
+							}
+
+						},
+
+						a11y: {
+							enabled: true,
+							prevSlideMessage: 'Previous products',
+							nextSlideMessage: 'Next products',
+							paginationBulletMessage: 'Go to product group {{index}}'
+						}
+
+					});
+
+					section.dataset.initialised = 'true';
+
+				});
+
+		};
+
+		initialiseProductSliders();
+
+		window.addEventListener(
+			'load',
+			initialiseProductSliders
+		);
+
+		document.addEventListener(
+			'shopify:section:load',
+			initialiseProductSliders
+		);
+
+	})();
+
+{% endjavascript %}
+
+{% schema %}
+{
+	"name": "You may also like",
+	"tag": "section",
+	"class": "product-recommendations-section",
+	"enabled_on": {
+		"templates": ["product"]
+	},
+	"settings": [
+		{
+			"type": "text",
+			"id": "title",
+			"label": "Title",
+			"default": "You may also like"
+		},
+		{
+			"type": "collection",
+			"id": "collection",
+			"label": "Fallback collection",
+			"info": "Used when the product has no complementary or related products."
+		},
+		{
+			"type": "range",
+			"id": "product_limit",
+			"min": 1,
+			"max": 50,
+			"step": 1,
+			"label": "Maximum products",
+			"default": 20
+		},
+		{
+			"type": "checkbox",
+			"id": "show_view_all",
+			"default": true,
+			"label": "Show view all",
+			"info": "Only shown when the fallback collection is being used."
+		},
+		{
+			"type": "checkbox",
+			"id": "enable_carousel",
+			"default": true,
+			"label": "Enable carousel"
+		},
+		{
+			"type": "range",
+			"id": "products_desktop",
+			"min": 2,
+			"max": 6,
+			"step": 1,
+			"label": "Products shown on desktop",
+			"default": 5
+		},
+		{
+			"type": "select",
+			"id": "products_tablet",
+			"label": "Products shown on tablet",
+			"options": [
+				{
+					"value": "2",
+					"label": "2"
+				},
+				{
+					"value": "3",
+					"label": "3"
+				},
+				{
+					"value": "4",
+					"label": "4"
+				}
+			],
+			"default": "3"
+		},
+		{
+			"type": "select",
+			"id": "products_mobile",
+			"label": "Products shown on mobile",
+			"options": [
+				{
+					"value": "1",
+					"label": "1"
+				},
+				{
+					"value": "2",
+					"label": "2"
+				}
+			],
+			"default": "2"
+		},
+		{
+			"type": "header",
+			"content": "Padding (desktop)"
+		},
+		{
+			"type": "range",
+			"id": "padding-top",
+			"min": 0,
+			"max": 300,
+			"step": 5,
+			"label": "Padding top",
+			"default": 40
+		},
+		{
+			"type": "range",
+			"id": "padding-bottom",
+			"min": 0,
+			"max": 300,
+			"step": 5,
+			"label": "Padding bottom",
+			"default": 40
+		},
+		{
+			"type": "header",
+			"content": "Padding (mobile)"
+		},
+		{
+			"type": "range",
+			"id": "padding-top-m",
+			"min": 0,
+			"max": 300,
+			"step": 5,
+			"label": "Padding top",
+			"default": 30
+		},
+		{
+			"type": "range",
+			"id": "padding-bottom-m",
+			"min": 0,
+			"max": 300,
+			"step": 5,
+			"label": "Padding bottom",
+			"default": 30
+		}
+	],
+	"presets": [
+		{
+			"name": "You may also like"
+		}
+	]
+}
+{% endschema %}
