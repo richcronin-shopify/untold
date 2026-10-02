@@ -670,7 +670,7 @@
 						`collection-state:${getBaseUrl()}`;
 
 
-					const initialPage = getPageFromUrl(
+					let initialPage = getPageFromUrl(
 						window.location.href
 					);
 
@@ -886,6 +886,15 @@
 							});
 
 							grid.replaceChildren(fragment);
+
+							/*
+							 * Preserve the original first page after a restore.
+							 * Without this, returning from a PDP on ?page=3
+							 * re-initialises initialPage as 3, and the next
+							 * saved state forgets that pages 1–2 were loaded.
+							 */
+							initialPage =
+								state.initialPage;
 
 							highestPageLoaded =
 								state.highestPageLoaded;
