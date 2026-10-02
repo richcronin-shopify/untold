@@ -416,7 +416,7 @@
 					&:hover {
 						.product__paired-colour-image {
 							img {
-								width: 100%;
+								width: 150%;
 							}
 						}
 					}
