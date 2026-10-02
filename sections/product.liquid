@@ -60,6 +60,8 @@
 
 						<div class="product__media-list" data-product-media-list>
 
+							{%- assign modal_image_index = 0 -%}
+
 							{%- for media in product.media -%}
 
 								<div
@@ -95,6 +97,22 @@
 														alt: media.preview_image.alt
 												}}
 											{%- endif -%}
+
+											{%- if ss.show_image_zoom -%}
+												<button
+													type="button"
+													class="product__media-zoom button--reset"
+													data-product-media-zoom
+													data-modal-image-index="{{ modal_image_index }}"
+													aria-label="Open image {{ modal_image_index | plus: 1 }} in gallery"
+												>
+													<span aria-hidden="true">
+														{{- 'icon-close.svg' | inline_asset_content -}}
+													</span>
+												</button>
+											{%- endif -%}
+
+											{%- assign modal_image_index = modal_image_index | plus: 1 -%}
 
 										{%- when 'video', 'external_video' -%}
 
@@ -476,6 +494,82 @@
 
 	</div>
 
+	{%- if ss.show_image_zoom -%}
+
+		<div
+			class="product__media-modal"
+			data-product-media-modal
+			role="dialog"
+			aria-modal="true"
+			aria-label="{{ product.title | escape }} image gallery"
+			hidden
+		>
+
+			<div class="product__media-modal-backdrop" data-product-media-modal-close></div>
+
+			<div class="product__media-modal-dialog">
+
+				<button
+					type="button"
+					class="product__media-modal-close button--reset"
+					data-product-media-modal-close
+					aria-label="Close image gallery"
+				>
+					{{- 'icon-close.svg' | inline_asset_content -}}
+				</button>
+
+				<div class="swiper product__media-modal-swiper" data-product-media-modal-swiper>
+
+					<div class="swiper-wrapper">
+
+						{%- for media in product.media -%}
+
+							{%- if media.media_type == 'image' -%}
+
+								<div class="swiper-slide product__media-modal-slide">
+									{{
+										media.preview_image
+										| image_url: width: 2400
+										| image_tag:
+											loading: 'lazy',
+											widths: '900, 1200, 1600, 2000, 2400',
+											sizes: '100vw',
+											alt: media.preview_image.alt
+									}}
+								</div>
+
+							{%- endif -%}
+
+						{%- endfor -%}
+
+					</div>
+
+					<button
+						type="button"
+						class="swiper-slider__arrow swiper-slider__arrow--prev button--reset"
+						aria-label="Previous image"
+					>
+						{{- 'icon-long-arrow.svg' | inline_asset_content -}}
+					</button>
+
+					<button
+						type="button"
+						class="swiper-slider__arrow swiper-slider__arrow--next button--reset"
+						aria-label="Next image"
+					>
+						{{- 'icon-long-arrow.svg' | inline_asset_content -}}
+					</button>
+
+					<div class="product__media-modal-pagination swiper-pagination"></div>
+
+				</div>
+
+			</div>
+
+		</div>
+
+	{%- endif -%}
+
 	<script type="application/json" data-product-variants>
 		{{ product.variants | json }}
 	</script>
@@ -605,6 +699,34 @@
 
 					const mediaCurrent = section.querySelector(
 						'[data-product-media-current]'
+					);
+
+					const mediaZoomButtons = section.querySelectorAll(
+						'[data-product-media-zoom]'
+					);
+
+					const mediaModal = section.querySelector(
+						'[data-product-media-modal]'
+					);
+
+					const mediaModalSwiperElement = section.querySelector(
+						'[data-product-media-modal-swiper]'
+					);
+
+					const mediaModalCloseButtons = section.querySelectorAll(
+						'[data-product-media-modal-close]'
+					);
+
+					const mediaModalPrevious = mediaModal?.querySelector(
+						'.swiper-slider__arrow--prev'
+					);
+
+					const mediaModalNext = mediaModal?.querySelector(
+						'.swiper-slider__arrow--next'
+					);
+
+					const mediaModalPagination = mediaModal?.querySelector(
+						'.product__media-modal-pagination'
 					);
 
 					const currency =
@@ -877,6 +999,160 @@
 
 					}
 
+					let mediaModalSwiper = null;
+					let lastMediaModalTrigger = null;
+
+					const mediaModalBreakpoint = window.matchMedia(
+						'(max-width: 767px)'
+					);
+
+					const updateMediaModalControls = () => {
+
+						if (mediaModalPrevious) {
+							mediaModalPrevious.hidden = mediaModalBreakpoint.matches;
+						}
+
+						if (mediaModalNext) {
+							mediaModalNext.hidden = mediaModalBreakpoint.matches;
+						}
+
+						if (mediaModalPagination) {
+							mediaModalPagination.hidden = !mediaModalBreakpoint.matches;
+						}
+
+					};
+
+					const initialiseMediaModalSwiper = () => {
+
+						if (
+							mediaModalSwiper ||
+							!mediaModalSwiperElement ||
+							typeof Swiper === 'undefined'
+						) {
+							return;
+						}
+
+						mediaModalSwiper = new Swiper(
+							mediaModalSwiperElement,
+							{
+								slidesPerView: 1,
+								spaceBetween: 0,
+								watchOverflow: true,
+
+								navigation: mediaModalPrevious && mediaModalNext
+									? {
+										prevEl: mediaModalPrevious,
+										nextEl: mediaModalNext
+									}
+									: false,
+
+								pagination: mediaModalPagination
+									? {
+										el: mediaModalPagination,
+										clickable: true,
+										bulletElement: 'button'
+									}
+									: false,
+
+								a11y: {
+									enabled: true,
+									prevSlideMessage: 'Previous image',
+									nextSlideMessage: 'Next image',
+									paginationBulletMessage: 'Go to image {{index}}'
+								}
+							}
+						);
+
+					};
+
+					const openMediaModal = (index, trigger) => {
+
+						if (!mediaModal) {
+							return;
+						}
+
+						lastMediaModalTrigger = trigger || null;
+						mediaModal.hidden = false;
+						mediaModal.classList.add('is-open');
+
+						document.documentElement.classList.add(
+							'product-media-modal-open'
+						);
+
+						updateMediaModalControls();
+						initialiseMediaModalSwiper();
+
+						if (mediaModalSwiper) {
+							mediaModalSwiper.update();
+							mediaModalSwiper.slideTo(index, 0);
+						}
+
+						const closeButton = mediaModal.querySelector(
+							'.product__media-modal-close'
+						);
+
+						if (closeButton) {
+							requestAnimationFrame(() => closeButton.focus());
+						}
+
+					};
+
+					const closeMediaModal = () => {
+
+						if (!mediaModal || mediaModal.hidden) {
+							return;
+						}
+
+						mediaModal.classList.remove('is-open');
+						mediaModal.hidden = true;
+
+						document.documentElement.classList.remove(
+							'product-media-modal-open'
+						);
+
+						if (lastMediaModalTrigger) {
+							lastMediaModalTrigger.focus();
+						}
+
+					};
+
+					mediaZoomButtons.forEach((button) => {
+						button.addEventListener('click', () => {
+							openMediaModal(
+								Number(button.dataset.modalImageIndex || 0),
+								button
+							);
+						});
+					});
+
+					mediaModalCloseButtons.forEach((button) => {
+						button.addEventListener('click', closeMediaModal);
+					});
+
+					document.addEventListener('keydown', (event) => {
+						if (
+							event.key === 'Escape' &&
+							mediaModal &&
+							!mediaModal.hidden
+						) {
+							closeMediaModal();
+						}
+					});
+
+					updateMediaModalControls();
+
+					if (mediaModalBreakpoint.addEventListener) {
+						mediaModalBreakpoint.addEventListener(
+							'change',
+							updateMediaModalControls
+						);
+					} else {
+						mediaModalBreakpoint.addListener(
+							updateMediaModalControls
+						);
+					}
+
+
 					const setActiveMedia = (index) => {
 
 						const safeIndex = Math.max(
@@ -995,6 +1271,12 @@
 {
 	"name": "Product",
 	"settings": [
+		{
+			"type": "checkbox",
+			"id": "show_image_zoom",
+			"label": "Enable image modal",
+			"default": true
+		},
 		{
 			"type": "checkbox",
 			"id": "show_klarna",
