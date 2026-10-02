@@ -348,6 +348,11 @@
 					min-width: 0;
 					border: 1px solid var(--border-white);
 					border-radius: 3px;
+					transition: .3s all;
+
+					&:hover {
+						border-color: #fff;
+					}
 
 					.product__quantity-button,
 					.product__quantity-input {
