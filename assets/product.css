@@ -594,6 +594,10 @@
 					table {
 						width: 100%;
 						border: 1px solid var(--border-white);
+						font-size: 14px;
+						tr {
+							font-weight: 400;
+						}
 					}
 
 				}
