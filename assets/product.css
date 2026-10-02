@@ -593,7 +593,7 @@
 
 					table {
 						width: 100%;
-						border: 1px solid var(--border-white);
+						border-collapse: collapse;
 						font-size: 14px;
 						border-radius: 3px;
 						tr {
@@ -604,6 +604,7 @@
 						}
 						tr, td {
 							border: 1px solid var(--border-white);
+							padding: 8px;
 						}
 					}
 
