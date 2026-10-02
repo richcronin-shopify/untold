@@ -149,9 +149,6 @@
 					justify-content: center;
 				}
 
-				@media (max-width: 768px) {
-					
-				}
 			}
 		}
 	}
@@ -215,11 +212,17 @@
 				font-weight: 500;
 				.product__price-current {
 					font-size: 40px;
+					@media (max-width: 768px) {
+						font-size: 34px;
+					}
 				}
 				.product__price-compare {
 					font-size: 25px;
 					opacity: .6;
 					text-decoration: line-through;
+					@media (max-width: 768px) {
+						font-size: 19px;
+					}
 				}
 			}
 
