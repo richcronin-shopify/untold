@@ -849,49 +849,14 @@
 						);
 
 						/*
-						 * Only restore when we're returning to the page
-						 * that infinite scroll had previously reached.
-						 *
-						 * This prevents an old stored state from being
-						 * restored when someone deliberately navigates
-						 * back to page 1.
+						 * Only restore when the browser has returned to the
+						 * highest page reached by infinite scroll.
 						 */
 						if (currentPage !== state.highestPageLoaded) {
 							return false;
 						}
 
 						section.classList.add('is-restoring');
-
-						try {
-
-						if (!storedState) {
-							return false;
-						}
-
-
-						let state;
-
-						try {
-
-							state = JSON.parse(storedState);
-
-						} catch (error) {
-
-							return false;
-
-						}
-
-
-						if (
-							!state.highestPageLoaded ||
-							!state.initialPage
-						) {
-							return false;
-						}
-
-
-						section.classList.add('is-restoring');
-
 
 						try {
 
@@ -905,15 +870,12 @@
 								pages.push(page);
 							}
 
-
 							const pageResults = await Promise.all(
 								pages.map((page) => fetchPage(page))
 							);
 
-
 							const fragment =
 								document.createDocumentFragment();
-
 
 							pageResults.forEach((items) => {
 
@@ -923,27 +885,21 @@
 
 							});
 
-
 							grid.replaceChildren(fragment);
-
 
 							highestPageLoaded =
 								state.highestPageLoaded;
 
-
 							infinite.dataset.nextUrl =
 								state.nextUrl || '';
-
 
 							updateUrl(
 								state.highestPageLoaded
 							);
 
-
 							if (!infinite.dataset.nextUrl) {
 								sentinel.remove();
 							}
-
 
 							requestAnimationFrame(() => {
 
@@ -961,7 +917,6 @@
 								});
 
 							});
-
 
 							return true;
 
