@@ -817,17 +817,52 @@
 
 					const restoreCollectionState = async () => {
 
-						const navigation = performance
-							.getEntriesByType('navigation')[0];
-
-						if (navigation?.type !== 'back_forward') {
-							return false;
-						}
-
-
 						const storedState = sessionStorage.getItem(
 							storageKey
 						);
+
+						if (!storedState) {
+							return false;
+						}
+
+						let state;
+
+						try {
+
+							state = JSON.parse(storedState);
+
+						} catch (error) {
+
+							return false;
+
+						}
+
+						if (
+							!state.highestPageLoaded ||
+							!state.initialPage
+						) {
+							return false;
+						}
+
+						const currentPage = getPageFromUrl(
+							window.location.href
+						);
+
+						/*
+						 * Only restore when we're returning to the page
+						 * that infinite scroll had previously reached.
+						 *
+						 * This prevents an old stored state from being
+						 * restored when someone deliberately navigates
+						 * back to page 1.
+						 */
+						if (currentPage !== state.highestPageLoaded) {
+							return false;
+						}
+
+						section.classList.add('is-restoring');
+
+						try {
 
 						if (!storedState) {
 							return false;
