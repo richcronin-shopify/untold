@@ -140,6 +140,7 @@
 							transition: .2s all;
 							svg {
 								transform: rotate(45deg);
+								transform-origin: bottom right;
 								transition: .4s all;
 								width: 11px;
 								height: unset;
