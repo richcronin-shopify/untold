@@ -1537,10 +1537,7 @@ button,
 			&.product-card__availability--sold-out {
 				.product-card__availability-inner {
 					.product-card__availability-dot {
-						color: var(--color-error);
-					}
-					span:not(.product-card__availability-dot) {
-						color: var(--color-error);
+						background: var(--color-error);
 					}
 				}
 			}
