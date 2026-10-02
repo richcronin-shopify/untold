@@ -133,7 +133,7 @@
 
 				@media (max-width: 989px) {
 					position: absolute;
-					right: 20px;
+					right: 50px;
 					bottom: 10px;
 					display: flex;
 					align-items: center;
@@ -147,6 +147,10 @@
 					height: 30px;
 					width: 54px;
 					justify-content: center;
+				}
+
+				@media (max-width: 768px) {
+					
 				}
 			}
 		}
