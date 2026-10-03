@@ -210,6 +210,9 @@
 					href="{{ routes.cart_url }}"
 					class="site-header__control site-header__control--cart"
 					aria-label="Cart, {{ cart.item_count }} {% if cart.item_count == 1 %}item{% else %}items{% endif %}"
+					aria-haspopup="dialog"
+					aria-expanded="false"
+					data-cart-drawer-open
 				>
 					{{- 'icon-cart.svg' | inline_asset_content -}}
 

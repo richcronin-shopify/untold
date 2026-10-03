@@ -13,41 +13,15 @@
   "sections": {
     "header": {
       "type": "header",
-      "blocks": {
-        "announcement_Gmcxrj": {
-          "type": "announcement",
-          "settings": {
-            "title": "EARN POINTS ON EVERY ORDER",
-            "url": ""
-          }
-        },
-        "announcement_hMJGCQ": {
-          "type": "announcement",
-          "settings": {
-            "title": "free delivery on orders over £100*",
-            "url": "shopify://collections/all-products"
-          }
-        },
-        "announcement_V3w8YC": {
-          "type": "announcement",
-          "settings": {
-            "title": "30-DAY RETURNS",
-            "url": "shopify://pages/returns-policy"
-          }
-        }
-      },
-      "block_order": [
-        "announcement_Gmcxrj",
-        "announcement_hMJGCQ",
-        "announcement_V3w8YC"
-      ],
-      "settings": {
-        "menu": "main-menu",
-        "mobile_footer_menu": "mobile-footer"
-      }
+      "settings": {}
+    },
+    "cart_drawer": {
+      "type": "cart-drawer",
+      "settings": {}
     }
   },
   "order": [
-    "header"
+    "header",
+    "cart_drawer"
   ]
 }
