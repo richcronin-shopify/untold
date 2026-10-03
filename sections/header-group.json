@@ -13,11 +13,56 @@
   "sections": {
     "header": {
       "type": "header",
-      "settings": {}
+      "blocks": {
+        "announcement_J9yAtB": {
+          "type": "announcement",
+          "settings": {
+            "title": "EARN POINTS ON EVERY ORDER",
+            "url": ""
+          }
+        },
+        "announcement_7crK3Q": {
+          "type": "announcement",
+          "settings": {
+            "title": "free delivery on orders over £100*",
+            "url": ""
+          }
+        },
+        "announcement_DyQCfq": {
+          "type": "announcement",
+          "settings": {
+            "title": "30-DAY RETURNS",
+            "url": "shopify://policies/refund-policy"
+          }
+        }
+      },
+      "block_order": [
+        "announcement_J9yAtB",
+        "announcement_7crK3Q",
+        "announcement_DyQCfq"
+      ],
+      "settings": {
+        "menu": "main-menu",
+        "mobile_footer_menu": "mobile-footer"
+      }
     },
     "cart_drawer": {
       "type": "cart-drawer",
-      "settings": {}
+      "settings": {
+        "title": "Your Cart",
+        "free_delivery_threshold": 100,
+        "free_delivery_label": "FREE UK Delivery",
+        "free_delivery_unlocked_label": "You've unlocked FREE UK Delivery",
+        "show_points": true,
+        "points_per_pound": 1,
+        "points_text": "Earn [points] Untold points with this order",
+        "points_subtext": "Create an account to collect and redeem points.",
+        "subtotal_label": "Subtotal",
+        "checkout_label": "Checkout",
+        "empty_cart_text": "Your cart is empty",
+        "empty_cart_button_label": "Explore products",
+        "empty_cart_url": ""
+      }
     }
   },
   "order": [
