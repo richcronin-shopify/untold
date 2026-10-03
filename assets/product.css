@@ -782,6 +782,8 @@
 		border: 1px solid var(--border-white);
 		padding: 40px;
 		border-radius: 6px;
+		max-height: 100dvh;
+		overflow: auto;
 
 		.product__media-modal-close {
 
