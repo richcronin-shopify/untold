@@ -790,8 +790,29 @@
 				return;
 			}
 
-			new CartDrawer(element);
+			const cartDrawer = new CartDrawer(element);
+
 			element.dataset.initialised = 'true';
+
+			let shouldOpenCartDrawer = false;
+
+			try {
+				shouldOpenCartDrawer =
+					sessionStorage.getItem('open-cart-drawer') === 'true';
+
+				if (shouldOpenCartDrawer) {
+					sessionStorage.removeItem('open-cart-drawer');
+				}
+			} catch (error) {
+				console.error(error);
+			}
+
+			if (shouldOpenCartDrawer) {
+				cartDrawer
+					.refresh()
+					.catch((error) => console.error(error))
+					.finally(() => cartDrawer.open());
+			}
 
 		};
 
