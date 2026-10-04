@@ -61,13 +61,13 @@
 			}
 
 			.collection-hero__subcollection {
-				width: 200px;
-				min-width: 200px;
+				width: 160px;
+				min-width: 160px;
 				border: 1px solid var(--border-white);
 				border-radius: 4px;
 				overflow: hidden;
 				background: #151515;
-				padding: 10px;
+				padding: 5px;
 				transition: .3s all;
 
 				@media (max-width: 768px) {
