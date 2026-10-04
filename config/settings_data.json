@@ -13,6 +13,7 @@
     "foreground_color": "#FFFFFF",
     "input_corner_radius": 0,
     "search_popular_collection": "popular-products",
+    "fallback_img_sub_collection_image": "shopify://shop_images/no-image.jpg",
     "content_for_index": [],
     "blocks": {
       "15683396631634586217": {
