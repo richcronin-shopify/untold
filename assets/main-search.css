@@ -1,0 +1,88 @@
+.main-search {
+	.main-search__header {
+		max-width: 900px;
+		margin: 0 auto 50px;
+		text-align: center;
+
+		@media screen and (max-width: 767px) {
+			margin-bottom: 35px;
+		}
+	}
+
+	.main-search__title {
+		margin: 0 0 25px;
+	}
+
+	.main-search__form {
+		display: flex;
+		gap: 10px;
+		width: 100%;
+
+		@media screen and (max-width: 767px) {
+			gap: 8px;
+		}
+	}
+
+	.main-search__input {
+		min-width: 0;
+		width: 100%;
+		min-height: 50px;
+		padding: 0 18px;
+		border: 1px solid var(--color-black-reduced);
+		border-radius: 0;
+		background: var(--color-white);
+		color: var(--color-black);
+		font: inherit;
+
+		&:focus-visible {
+			outline: 2px solid var(--color-primary);
+			outline-offset: 2px;
+		}
+	}
+
+	.main-search__submit {
+		flex: 0 0 auto;
+		min-width: 130px;
+
+		@media screen and (max-width: 767px) {
+			min-width: auto;
+			padding-inline: 20px;
+		}
+	}
+
+	.main-search__toolbar {
+		display: flex;
+		align-items: center;
+		gap: 20px;
+		margin-bottom: 30px;
+
+		.main-search__sort-form {
+			margin-left: auto;
+		}
+
+		@media screen and (max-width: 989px) {
+			gap: 15px;
+		}
+
+		@media screen and (max-width: 767px) {
+			flex-wrap: wrap;
+			margin-bottom: 20px;
+
+			.main-search__sort-form {
+				order: 3;
+				width: 100%;
+				margin-left: 0;
+			}
+
+			.collection-filters__sort {
+				width: 100%;
+			}
+		}
+	}
+
+	.main-search__empty {
+		max-width: 700px;
+		margin: 40px auto 0;
+		text-align: center;
+	}
+}
