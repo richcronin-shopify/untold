@@ -132,6 +132,10 @@ body {
 			}
 		}
 	}
+
+	&.template-page {
+		padding-top: 200px;
+	}
 }
 
 /* Typography */
