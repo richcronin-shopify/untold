@@ -151,6 +151,17 @@
 	      "label": "Show availability"
 	    }
 	  ]
+	},
+
+	{
+	  "name": "Collection",
+	  "settings": [
+	    {
+	      "type": "image_picker",
+	      "id": "fallback_img_sub_collection_image",
+	      "label": "Fallback for 'sub_collection_image'"
+	    }
+	  ]
 	}
 
 ]
