@@ -1,0 +1,617 @@
+{{- 'main-collection.css' | asset_url | stylesheet_tag -}}
+{{- 'main-search.css' | asset_url | stylesheet_tag -}}
+
+{%- assign ss = section.settings -%}
+{%- assign products_desktop = ss.products_desktop | plus: 0 -%}
+{%- assign products_tablet = ss.products_tablet | plus: 0 -%}
+{%- assign products_mobile = ss.products_mobile | plus: 0 -%}
+{%- assign sort_by = search.sort_by | default: search.default_sort_by -%}
+
+<section
+	class="main-collection main-search"
+	id="{{ section.id }}"
+	data-main-search
+	data-section-id="{{ section.id }}"
+	data-pagination-type="{{ ss.pagination_type }}"
+>
+	<div class="container">
+
+		<div class="main-search__header">
+			<h1 class="main-search__title {{ ss.heading_size }}">
+				{{- ss.title -}}
+			</h1>
+
+			<form
+				class="main-search__form"
+				action="{{ routes.search_url }}"
+				method="get"
+				role="search"
+			>
+				<label class="visually-hidden" for="SearchInput-{{ section.id }}">
+					Search products
+				</label>
+
+				<input
+					class="main-search__input"
+					id="SearchInput-{{ section.id }}"
+					type="search"
+					name="q"
+					value="{{ search.terms | escape }}"
+					placeholder="Search products"
+					autocomplete="off"
+				>
+
+				<input type="hidden" name="type" value="product">
+				<input type="hidden" name="options[prefix]" value="last">
+
+				<button class="main-search__submit button" type="submit">
+					Search
+				</button>
+			</form>
+		</div>
+
+		{%- if search.performed -%}
+
+			{%- if search.results_count > 0 -%}
+
+				<div class="main-search__toolbar">
+					<div class="collection-filters__count">
+						{{ search.results_count }} {% if search.results_count == 1 %}Product{% else %}Products{% endif %}
+					</div>
+
+					<form
+						class="main-search__sort-form"
+						action="{{ routes.search_url }}"
+						method="get"
+						data-search-sort-form
+					>
+						<input type="hidden" name="q" value="{{ search.terms | escape }}">
+						<input type="hidden" name="type" value="product">
+						<input type="hidden" name="options[prefix]" value="last">
+
+						<div class="collection-filters__sort collection-filters__sort--desktop">
+							<label
+								class="collection-filters__sort-label"
+								for="SearchSort-{{ section.id }}"
+							>
+								Sort by
+							</label>
+
+							<div class="collection-filters__sort-select-wrap">
+								<select
+									class="collection-filters__sort-select"
+									id="SearchSort-{{ section.id }}"
+									name="sort_by"
+									data-search-sort
+								>
+									{%- for option in search.sort_options -%}
+										<option
+											value="{{ option.value }}"
+											{% if option.value == sort_by %}selected{% endif %}
+										>
+											{{ option.name }}
+										</option>
+									{%- endfor -%}
+								</select>
+
+								<span class="collection-filters__sort-chevron" aria-hidden="true">
+									{{- 'icon-chev.svg' | inline_asset_content -}}
+								</span>
+							</div>
+						</div>
+					</form>
+
+					<div
+						class="collection-filters__grid-view collection-filters__grid-view--desktop"
+						role="group"
+						aria-label="Products per row"
+					>
+						{%- for columns in (3..5) -%}
+							<button
+								type="button"
+								class="collection-filters__grid-view-button button--reset{% if products_desktop == columns %} is-active{% endif %}"
+								data-grid-toggle
+								data-grid-target="desktop"
+								data-grid-columns="{{ columns }}"
+								aria-label="Show {{ columns }} products per row"
+								aria-pressed="{% if products_desktop == columns %}true{% else %}false{% endif %}"
+							>
+								<span
+									class="collection-filters__grid-view-icon"
+									style="--grid-columns: {{ columns }};"
+									aria-hidden="true"
+								>
+									{%- for i in (1..columns) -%}<span></span>{%- endfor -%}
+								</span>
+							</button>
+						{%- endfor -%}
+					</div>
+
+					<div
+						class="collection-filters__grid-view collection-filters__grid-view--tablet"
+						role="group"
+						aria-label="Products per row"
+					>
+						{%- for columns in (3..4) -%}
+							<button
+								type="button"
+								class="collection-filters__grid-view-button button--reset{% if products_tablet == columns %} is-active{% endif %}"
+								data-grid-toggle
+								data-grid-target="tablet"
+								data-grid-columns="{{ columns }}"
+								aria-label="Show {{ columns }} products per row"
+								aria-pressed="{% if products_tablet == columns %}true{% else %}false{% endif %}"
+							>
+								<span
+									class="collection-filters__grid-view-icon"
+									style="--grid-columns: {{ columns }};"
+									aria-hidden="true"
+								>
+									{%- for i in (1..columns) -%}<span></span>{%- endfor -%}
+								</span>
+							</button>
+						{%- endfor -%}
+					</div>
+
+					<div
+						class="collection-filters__grid-view collection-filters__grid-view--mobile"
+						role="group"
+						aria-label="Products per row"
+					>
+						{%- for columns in (1..2) -%}
+							<button
+								type="button"
+								class="collection-filters__grid-view-button button--reset{% if products_mobile == columns %} is-active{% endif %}"
+								data-grid-toggle
+								data-grid-target="mobile"
+								data-grid-columns="{{ columns }}"
+								aria-label="Show {{ columns }} product{% if columns > 1 %}s{% endif %} per row"
+								aria-pressed="{% if products_mobile == columns %}true{% else %}false{% endif %}"
+							>
+								<span
+									class="collection-filters__grid-view-icon"
+									style="--grid-columns: {{ columns }};"
+									aria-hidden="true"
+								>
+									{%- for i in (1..columns) -%}<span></span>{%- endfor -%}
+								</span>
+							</button>
+						{%- endfor -%}
+					</div>
+				</div>
+
+				{%- paginate search.results by ss.products_per_page -%}
+
+					<div class="main-collection__items" data-search-grid>
+						{%- for item in search.results -%}
+							{%- if item.object_type == 'product' -%}
+								<div class="main-collection__item">
+									{% render 'product-card', product: item %}
+								</div>
+							{%- endif -%}
+						{%- endfor -%}
+					</div>
+
+					{%- if paginate.pages > 1 -%}
+
+						{%- if ss.pagination_type == 'standard' -%}
+							<nav class="main-collection__pagination" aria-label="Search results pagination">
+								{%- if paginate.previous -%}
+									<a
+										href="{{ paginate.previous.url }}"
+										class="main-collection__pagination-arrow main-collection__pagination-arrow--prev"
+										aria-label="Previous page"
+									>
+										{{- 'icon-chev.svg' | inline_asset_content -}}
+									</a>
+								{%- endif -%}
+
+								{%- for part in paginate.parts -%}
+									{%- if part.is_link -%}
+										<a href="{{ part.url }}" class="main-collection__pagination-page">
+											{{ part.title }}
+										</a>
+									{%- elsif part.title == paginate.current_page -%}
+										<span class="main-collection__pagination-page is-current" aria-current="page">
+											{{ part.title }}
+										</span>
+									{%- else -%}
+										<span class="main-collection__pagination-ellipsis">{{ part.title }}</span>
+									{%- endif -%}
+								{%- endfor -%}
+
+								{%- if paginate.next -%}
+									<a
+										href="{{ paginate.next.url }}"
+										class="main-collection__pagination-arrow main-collection__pagination-arrow--next"
+										aria-label="Next page"
+									>
+										{{- 'icon-chev.svg' | inline_asset_content -}}
+									</a>
+								{%- endif -%}
+							</nav>
+						{%- else -%}
+							<div
+								class="main-collection__infinite"
+								data-search-infinite
+								data-next-url="{{ paginate.next.url | default: '' }}"
+							>
+								<div
+									class="main-collection__infinite-sentinel"
+									data-search-sentinel
+									aria-hidden="true"
+								></div>
+
+								<p
+									class="main-collection__infinite-status visually-hidden"
+									data-search-status
+									role="status"
+									aria-live="polite"
+								></p>
+
+								<noscript>
+									<nav class="main-collection__pagination" aria-label="Search results pagination">
+										{{ paginate | default_pagination }}
+									</nav>
+								</noscript>
+							</div>
+						{%- endif -%}
+
+					{%- endif -%}
+
+				{%- endpaginate -%}
+
+			{%- else -%}
+
+				<div class="main-search__empty rte">
+					{{- ss.no_results_message -}}
+				</div>
+
+			{%- endif -%}
+
+		{%- endif -%}
+
+	</div>
+</section>
+
+{%- style -%}
+	#{{ section.id }} {
+		padding-top: {{ ss.padding_top }}px;
+		padding-bottom: {{ ss.padding_bottom }}px;
+		--products-desktop: {{ ss.products_desktop }};
+		--products-tablet: {{ ss.products_tablet }};
+		--products-mobile: {{ ss.products_mobile }};
+	}
+
+	@media screen and (max-width: 767px) {
+		#{{ section.id }} {
+			padding-top: {{ ss.padding_top_mobile }}px;
+			padding-bottom: {{ ss.padding_bottom_mobile }}px;
+		}
+	}
+{%- endstyle -%}
+
+{% javascript %}
+	(() => {
+
+		const initialiseMainSearch = (container = document) => {
+
+			container
+				.querySelectorAll('[data-main-search]')
+				.forEach((section) => {
+
+					if (section.dataset.mainSearchInitialised === 'true') {
+						return;
+					}
+
+					/*
+					 * Keep the search page product-only even if another search form
+					 * elsewhere on the theme links here without type=product.
+					 */
+					const currentUrl = new URL(window.location.href);
+
+					if (
+						currentUrl.searchParams.get('q') &&
+						currentUrl.searchParams.get('type') !== 'product'
+					) {
+						currentUrl.searchParams.set('type', 'product');
+						window.location.replace(
+							`${currentUrl.pathname}${currentUrl.search}${currentUrl.hash}`
+						);
+						return;
+					}
+
+					const sortForm = section.querySelector('[data-search-sort-form]');
+					const sortSelect = section.querySelector('[data-search-sort]');
+					const gridToggles = section.querySelectorAll('[data-grid-toggle]');
+
+					if (sortForm && sortSelect) {
+						sortSelect.addEventListener('change', () => sortForm.requestSubmit());
+					}
+
+					gridToggles.forEach((button) => {
+						button.addEventListener('click', () => {
+
+							const target = button.dataset.gridTarget;
+							const columns = button.dataset.gridColumns;
+
+							if (!target || !columns) {
+								return;
+							}
+
+							section.style.setProperty(`--products-${target}`, columns);
+
+							section
+								.querySelectorAll(
+									`[data-grid-toggle][data-grid-target="${target}"]`
+								)
+								.forEach((toggle) => {
+
+									const isActive = toggle === button;
+
+									toggle.classList.toggle('is-active', isActive);
+									toggle.setAttribute(
+										'aria-pressed',
+										isActive ? 'true' : 'false'
+									);
+
+								});
+
+						});
+					});
+
+					if (section.dataset.paginationType === 'infinite') {
+
+						const grid = section.querySelector('[data-search-grid]');
+						const infinite = section.querySelector('[data-search-infinite]');
+						const sentinel = section.querySelector('[data-search-sentinel]');
+						const status = section.querySelector('[data-search-status]');
+
+						if (grid && infinite && sentinel && 'IntersectionObserver' in window) {
+
+							let isLoading = false;
+
+							const observer = new IntersectionObserver(
+								(entries) => {
+
+									if (
+										isLoading ||
+										!entries.some((entry) => entry.isIntersecting)
+									) {
+										return;
+									}
+
+									const nextUrl = infinite.dataset.nextUrl;
+
+									if (!nextUrl) {
+										observer.disconnect();
+										return;
+									}
+
+									isLoading = true;
+
+									if (status) {
+										status.textContent = 'Loading more products';
+									}
+
+									fetch(nextUrl)
+										.then((response) => {
+											if (!response.ok) {
+												throw new Error(`Unable to load search results: ${response.status}`);
+											}
+											return response.text();
+										})
+										.then((html) => {
+
+											const nextDocument = new DOMParser().parseFromString(
+												html,
+												'text/html'
+											);
+
+											const nextSection = nextDocument.getElementById(
+												section.dataset.sectionId
+											);
+
+											const nextGrid = nextSection?.querySelector('[data-search-grid]');
+											const nextInfinite = nextSection?.querySelector('[data-search-infinite]');
+
+											if (!nextGrid) {
+												throw new Error('Unable to find the next search result grid.');
+											}
+
+											const newItems = Array.from(nextGrid.children);
+
+											newItems.forEach((item) => grid.appendChild(item));
+
+											infinite.dataset.nextUrl = nextInfinite?.dataset.nextUrl || '';
+
+											if (status) {
+												status.textContent = `${newItems.length} more products loaded`;
+											}
+
+											if (!infinite.dataset.nextUrl) {
+												observer.disconnect();
+												sentinel.remove();
+											}
+
+										})
+										.catch((error) => {
+											console.error(error);
+
+											if (status) {
+												status.textContent = 'Unable to load more products';
+											}
+										})
+										.finally(() => {
+											isLoading = false;
+										});
+
+								},
+								{
+									rootMargin: '150px 0px'
+								}
+							);
+
+							observer.observe(sentinel);
+						}
+					}
+
+					section.dataset.mainSearchInitialised = 'true';
+
+				});
+
+		};
+
+		initialiseMainSearch();
+
+		document.addEventListener(
+			'shopify:section:load',
+			(event) => initialiseMainSearch(event.target)
+		);
+
+	})();
+{% endjavascript %}
+
+{% schema %}
+{
+	"name": "Main search",
+	"tag": "section",
+	"class": "main-search-section",
+	"settings": [
+		{
+			"type": "header",
+			"content": "Search heading"
+		},
+		{
+			"type": "text",
+			"id": "title",
+			"label": "Title",
+			"default": "Search"
+		},
+		{
+			"type": "select",
+			"id": "heading_size",
+			"label": "Title size",
+			"options": [
+				{ "value": "h1", "label": "H1" },
+				{ "value": "h2", "label": "H2" },
+				{ "value": "h3", "label": "H3" },
+				{ "value": "h4", "label": "H4" },
+				{ "value": "h5", "label": "H5" },
+				{ "value": "h6", "label": "H6" }
+			],
+			"default": "h1"
+		},
+		{
+			"type": "inline_richtext",
+			"id": "no_results_message",
+			"label": "No results message",
+			"default": "Sorry, no products matched your search. Try another search term."
+		},
+		{
+			"type": "header",
+			"content": "Product grid"
+		},
+		{
+			"type": "range",
+			"id": "products_desktop",
+			"min": 3,
+			"max": 5,
+			"step": 1,
+			"label": "Products per row - desktop",
+			"default": 5
+		},
+		{
+			"type": "select",
+			"id": "products_tablet",
+			"label": "Products per row - tablet",
+			"options": [
+				{ "value": "3", "label": "3" },
+				{ "value": "4", "label": "4" }
+			],
+			"default": "3"
+		},
+		{
+			"type": "select",
+			"id": "products_mobile",
+			"label": "Products per row - mobile",
+			"options": [
+				{ "value": "1", "label": "1" },
+				{ "value": "2", "label": "2" }
+			],
+			"default": "2"
+		},
+		{
+			"type": "range",
+			"id": "products_per_page",
+			"min": 4,
+			"max": 50,
+			"step": 1,
+			"label": "Products per page",
+			"default": 20
+		},
+		{
+			"type": "select",
+			"id": "pagination_type",
+			"label": "Pagination type",
+			"options": [
+				{ "value": "standard", "label": "Standard pagination" },
+				{ "value": "infinite", "label": "Infinite pagination" }
+			],
+			"default": "standard"
+		},
+		{
+			"type": "header",
+			"content": "Padding (desktop)"
+		},
+		{
+			"type": "range",
+			"id": "padding_top",
+			"min": 0,
+			"max": 300,
+			"step": 5,
+			"label": "Padding top",
+			"default": 40
+		},
+		{
+			"type": "range",
+			"id": "padding_bottom",
+			"min": 0,
+			"max": 300,
+			"step": 5,
+			"label": "Padding bottom",
+			"default": 40
+		},
+		{
+			"type": "header",
+			"content": "Padding (mobile)"
+		},
+		{
+			"type": "range",
+			"id": "padding_top_mobile",
+			"min": 0,
+			"max": 300,
+			"step": 5,
+			"label": "Padding top",
+			"default": 30
+		},
+		{
+			"type": "range",
+			"id": "padding_bottom_mobile",
+			"min": 0,
+			"max": 300,
+			"step": 5,
+			"label": "Padding bottom",
+			"default": 30
+		}
+	],
+	"templates": [
+		"search"
+	],
+	"presets": [
+		{
+			"name": "Main search"
+		}
+	]
+}
+{% endschema %}
