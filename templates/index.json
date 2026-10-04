@@ -289,7 +289,7 @@
         "font_size": 2,
         "text": "<p>We bring together trusted BMX bikes, frames and parts from the best brands in the scene. Honest advice, dependable service and real support before and after your order.</p>",
         "button_label": "Our story",
-        "button_url": "shopify://pages/brands-we-stock",
+        "button_url": "shopify://pages/our-story",
         "padding-top": 0,
         "padding-bottom": 0,
         "padding-top-m": 0,
