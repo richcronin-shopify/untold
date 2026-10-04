@@ -100,6 +100,19 @@
 											alt: sub_collection_image_alt
 									}}
 								</div>
+							{%- else - %}
+								<div class="collection-hero__subcollection-media">
+									{{
+										settings.fallback_img_sub_collection_image
+										| image_url: width: 600
+										| image_tag:
+											class: 'collection-hero__subcollection-image',
+											loading: 'lazy',
+											widths: '200, 300, 400, 500, 600',
+											sizes: '(min-width: 990px) 200px, 40vw',
+											alt: settings.fallback_img_sub_collection_image.alt
+									}}
+								</div>
 							{%- endif -%}
 
 							<div class="collection-hero__subcollection-content">
