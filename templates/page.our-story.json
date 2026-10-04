@@ -11,6 +11,7 @@
   "sections": {
     "main": {
       "type": "page",
+      "disabled": true,
       "settings": {}
     },
     "image_with_usps_gLG8V9": {
@@ -53,9 +54,9 @@
         "heading": "Rider owned. Rider approved.",
         "heading_tag": 2,
         "font_size": 2,
-        "text": "<p>We bring together trusted BMX bikes, frames and parts from the best brands in the scene. Honest advice, dependable service and real support before and after your order.</p>",
-        "button_label": "Our story",
-        "button_url": "shopify://pages/brands-we-stock",
+        "text": "<p>Untold BMX is built around the idea that every rider, bike and spot has a story worth discovering.</p><p>We’re here for the riders putting in the hours, the builds that come together part by part, the local scenes that keep BMX moving, and the products that earn their place through real use.</p><p>More than just a BMX store, Untold is about the culture around riding — the people, places and stories that don’t always get seen.</p><p><strong>Every rider has an untold story.</strong></p>",
+        "button_label": "",
+        "button_url": "",
         "padding-top": 0,
         "padding-bottom": 0,
         "padding-top-m": 0,
