@@ -27,6 +27,7 @@
           "settings": {
             "wheel_size": "12\"",
             "image": "shopify://shop_images/image_50.png",
+            "image_width": 100,
             "age": "2–4 years",
             "height_metric": "60–90 cm",
             "height_imperial": "2'0\"–3'0\"",
@@ -38,6 +39,7 @@
           "settings": {
             "wheel_size": "14\"",
             "image": "shopify://shop_images/image_51.png",
+            "image_width": 125,
             "age": "3–5 years",
             "height_metric": "80–100 cm",
             "height_imperial": "2'8\"–3'4\"",
@@ -49,6 +51,7 @@
           "settings": {
             "wheel_size": "16\"",
             "image": "shopify://shop_images/image_52.png",
+            "image_width": 145,
             "age": "5–7 years",
             "height_metric": "90–110 cm",
             "height_imperial": "3'0\"–3'8\"",
@@ -60,6 +63,7 @@
           "settings": {
             "wheel_size": "18\"",
             "image": "shopify://shop_images/image_54.png",
+            "image_width": 165,
             "age": "7–11 years",
             "height_metric": "105–135 cm",
             "height_imperial": "3'6\"–4'6\"",
@@ -71,6 +75,7 @@
           "settings": {
             "wheel_size": "20\"",
             "image": "shopify://shop_images/image_53.png",
+            "image_width": 240,
             "age": "11+ years / adult",
             "height_metric": "120 cm+",
             "height_imperial": "4'0\"+",
@@ -91,7 +96,7 @@
         "intro": "<p>Use our size guide to find the BMX that best suits the rider.</p>",
         "button_intro": "<p>Still can’t find what you’re looking for?<br/>Please contact us below</p>",
         "button_label": "Contact us",
-        "button_link": ""
+        "button_link": "shopify://pages/contact"
       }
     }
   },
