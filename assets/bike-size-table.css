@@ -69,8 +69,10 @@
 
 			}
 
-			&:last-child {
-				border-bottom: 0;
+			@media (min-width: 767px) {
+				&:last-child {
+					border-bottom: 0;
+				}
 			}
 
 			.bmx-size-table__cell {
