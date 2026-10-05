@@ -30,84 +30,88 @@
 		</nav>
 	{%- endif -%}
 
-	<div class="container">
+	{%- unless ss.nav_only -%}
 
-		<div class="page__inner">
+		<div class="container">
 
-			<header class="page__header">
-				<h1 class="page__title h2">
-					{{ page.title }}
-				</h1>
+			<div class="page__inner">
 
-				{%- if has_faqs and page.content != blank -%}
-					<div class="page__intro rte">
-						{{ page.content }}
-					</div>
-				{%- endif -%}
-			</header>
+				<header class="page__header">
+					<h1 class="page__title h2">
+						{{ page.title }}
+					</h1>
 
-			{%- if has_faqs -%}
-
-				<div class="page__faqs">
-
-					{%- for block in section.blocks -%}
-						{%- assign bs = block.settings -%}
-
-						{%- if bs.question != blank -%}
-							<details class="page__faq" {{ block.shopify_attributes }}>
-
-								<summary class="page__faq-trigger">
-									<span class="page__faq-question">
-										{{ bs.question }}
-									</span>
-
-									<span class="page__faq-icon" aria-hidden="true"></span>
-								</summary>
-
-								{%- if bs.answer != blank -%}
-									<div class="page__faq-content rte">
-										{{ bs.answer }}
-									</div>
-								{%- endif -%}
-
-							</details>
-						{%- endif -%}
-
-					{%- endfor -%}
-
-				</div>
-
-			{%- elsif page.content != blank -%}
-
-				<div class="page__content rte">
-					{{ page.content }}
-				</div>
-
-			{%- endif -%}
-
-			{%- if ss.button_intro != blank or ss.button_label != blank -%}
-
-				<div class="page__cta">
-
-					{%- if ss.button_intro != blank -%}
-						<div class="page__cta-intro">
-							{{ ss.button_intro }}
+					{%- if has_faqs and page.content != blank -%}
+						<div class="page__intro rte">
+							{{ page.content }}
 						</div>
 					{%- endif -%}
+				</header>
 
-					{%- if ss.button_label != blank and ss.button_link != blank -%}
-						<a href="{{ ss.button_link }}" class="button button--outline page__cta-button">
-							{{ ss.button_label }}
-						</a>
-					{%- endif -%}
+				{%- if has_faqs -%}
 
-				</div>
+					<div class="page__faqs">
 
-			{%- endif -%}
+						{%- for block in section.blocks -%}
+							{%- assign bs = block.settings -%}
+
+							{%- if bs.question != blank -%}
+								<details class="page__faq" {{ block.shopify_attributes }}>
+
+									<summary class="page__faq-trigger">
+										<span class="page__faq-question">
+											{{ bs.question }}
+										</span>
+
+										<span class="page__faq-icon" aria-hidden="true"></span>
+									</summary>
+
+									{%- if bs.answer != blank -%}
+										<div class="page__faq-content rte">
+											{{ bs.answer }}
+										</div>
+									{%- endif -%}
+
+								</details>
+							{%- endif -%}
+
+						{%- endfor -%}
+
+					</div>
+
+				{%- elsif page.content != blank -%}
+
+					<div class="page__content rte">
+						{{ page.content }}
+					</div>
+
+				{%- endif -%}
+
+				{%- if ss.button_intro != blank or ss.button_label != blank -%}
+
+					<div class="page__cta">
+
+						{%- if ss.button_intro != blank -%}
+							<div class="page__cta-intro">
+								{{ ss.button_intro }}
+							</div>
+						{%- endif -%}
+
+						{%- if ss.button_label != blank and ss.button_link != blank -%}
+							<a href="{{ ss.button_link }}" class="button button--outline page__cta-button">
+								{{ ss.button_label }}
+							</a>
+						{%- endif -%}
+
+					</div>
+
+				{%- endif -%}
+
+			</div>
 
 		</div>
 
-	</div>
+	{%- endunless -%}
 
 </section>
 
