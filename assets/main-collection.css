@@ -532,34 +532,36 @@
 				padding: 0 0 20px;
 
 				.collection-filters__dropdown {
+					display: block;
 					width: 100%;
 					min-width: 0;
 					height: auto;
 					min-height: 52px;
-					display: block;
 					padding: 0;
 					border: 0;
 					border-bottom: 1px solid var(--border-white);
 					border-radius: 0;
 
+					/* Important: don't turn details into a flex container */
 					&[open] {
 						display: block;
 					}
 
 					.collection-filters__dropdown-trigger {
+						width: auto;
 						min-height: 52px;
 						padding: 0 20px;
 					}
 
 					.collection-filters__dropdown-content {
 						position: static;
+						width: auto;
 						min-width: 0;
-						width: 100%;
 						max-height: none;
+						padding: 14px 20px 18px;
 						border: 0;
 						border-top: 1px solid var(--border-white);
 						border-radius: 0;
-						padding: 14px 20px 18px;
 						overflow: visible;
 						box-sizing: border-box;
 					}
