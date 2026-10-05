@@ -548,7 +548,7 @@
 
 
 					.collection-filters__dropdown-trigger {
-
+						height: 50px;
 					}
 
 					.collection-filters__dropdown-content {
