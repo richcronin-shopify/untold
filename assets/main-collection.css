@@ -546,6 +546,12 @@
 					flex-direction: column;
 					height: unset;
 
+					&[open] {
+						.collection-filters__dropdown-content {
+							display: flex;
+						}
+					}
+
 
 					.collection-filters__dropdown-trigger {
 						height: 50px;
