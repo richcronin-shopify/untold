@@ -125,8 +125,9 @@
 					}
 
 					.bmx-size-table__image {
-						width: 180px;
+						width: var(--bike-image-width, 180px);
 						max-width: 60%;
+						flex-shrink: 0;
 
 						img {
 							display: block;
