@@ -9,17 +9,22 @@
  */
 {
   "sections": {
-    "main": {
-      "type": "page",
+    "contact_form_kmxmqw": {
+      "type": "contact-form",
+      "name": "Contact page",
       "settings": {
+        "nav_only": false,
         "navigation": "in-page-menu",
-        "button_intro": "<p>Still can’t find what you’re looking for?<br/>Please contact us below</p>",
-        "button_label": "Contact us",
-        "button_link": "shopify://pages/contact"
+        "form_title": "",
+        "submit_label": "Send message",
+        "success_message": "Thanks for getting in touch. We’ll get back to you as soon as possible.",
+        "button_intro": "",
+        "button_label": "",
+        "button_link": ""
       }
     }
   },
   "order": [
-    "main"
+    "contact_form_kmxmqw"
   ]
 }
