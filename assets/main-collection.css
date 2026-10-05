@@ -536,7 +536,6 @@
 					width: 100%;
 					min-width: 0;
 					height: auto;
-					min-height: 52px;
 					padding: 0;
 					border: 0;
 					border-bottom: 1px solid var(--border-white);
@@ -550,7 +549,7 @@
 					.collection-filters__dropdown-trigger {
 						width: auto;
 						padding: 0 20px;
-						height: unset;
+						height: 52px;
 					}
 
 					.collection-filters__dropdown-content {
