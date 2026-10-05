@@ -617,8 +617,12 @@ html.collection-filter-drawer-open body {
 .main-collection {
 
 	&.is-restoring {
-		visibility: hidden;
-	}
+	&.is-restore-pending,
+		&.is-restoring {
+			.main-collection__items {
+				visibility: hidden;
+			}
+		}
 
 	.main-collection__items {
 		display: grid;
