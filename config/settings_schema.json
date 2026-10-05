@@ -4,8 +4,8 @@
     "theme_name": "Skeleton",
     "theme_version": "0.1.0",
     "theme_author": "Shopify",
-    "theme_documentation_url": "https:\/\/help.shopify.com\/manual\/online-store\/themes",
-    "theme_support_url": "https:\/\/support.shopify.com\/"
+    "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
+    "theme_support_url": "https://support.shopify.com/"
   },
   {
     "name": "t:general.typography",
@@ -80,88 +80,115 @@
       }
     ]
   },
-
   {
-	  "name": "Search",
-	  "settings": [
-	    {
-	      "type": "checkbox",
-	      "id": "enable_search",
-	      "default": true,
-	      "label": "Enable search"
-	    },
-	    {
-	      "type": "text",
-	      "id": "search_title",
-	      "default": "Search",
-	      "label": "Title"
-	    },
-	    {
-	      "type": "text",
-	      "id": "search_placeholder",
-	      "default": "What are you looking for?",
-	      "label": "Search placeholder"
-	    },
-	    {
-	      "type": "text",
-	      "id": "search_trending",
-	      "default": "Frames, S&M, Front Wheels, Grips, Tyres",
-	      "label": "Trending searches",
-	      "info": "Separate searches with commas."
-	    },
-	    {
-	      "type": "collection",
-	      "id": "search_popular_collection",
-	      "label": "Popular products collection"
-	    },
-	    {
-	      "type": "checkbox",
-	      "id": "search_show_collections",
-	      "default": true,
-	      "label": "Show collection results"
-	    },
-	    {
-	      "type": "checkbox",
-	      "id": "search_show_pages",
-	      "default": true,
-	      "label": "Show page results"
-	    }
-	  ]
-	},
-
-	{
-	  "name": "Product cards",
-	  "settings": [
-	    {
-	      "type": "checkbox",
-	      "id": "product_card_second_image",
-	      "default": true,
-	      "label": "Show second image on hover"
-	    },
-	    {
-	      "type": "checkbox",
-	      "id": "product_card_show_vendor",
-	      "default": true,
-	      "label": "Show vendor"
-	    },
-	    {
-	      "type": "checkbox",
-	      "id": "product_card_show_availability",
-	      "default": true,
-	      "label": "Show availability"
-	    }
-	  ]
-	},
-
-	{
-	  "name": "Collection",
-	  "settings": [
-	    {
-	      "type": "image_picker",
-	      "id": "fallback_img_sub_collection_image",
-	      "label": "Fallback for 'sub_collection_image'"
-	    }
-	  ]
-	}
-
+    "name": "Search",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enable_search",
+        "default": true,
+        "label": "Enable search"
+      },
+      {
+        "type": "text",
+        "id": "search_title",
+        "default": "Search",
+        "label": "Title"
+      },
+      {
+        "type": "text",
+        "id": "search_placeholder",
+        "default": "What are you looking for?",
+        "label": "Search placeholder"
+      },
+      {
+        "type": "text",
+        "id": "search_trending",
+        "default": "Frames, S&M, Front Wheels, Grips, Tyres",
+        "label": "Trending searches",
+        "info": "Separate searches with commas."
+      },
+      {
+        "type": "collection",
+        "id": "search_popular_collection",
+        "label": "Popular products collection"
+      },
+      {
+        "type": "checkbox",
+        "id": "search_show_collections",
+        "default": true,
+        "label": "Show collection results"
+      },
+      {
+        "type": "checkbox",
+        "id": "search_show_pages",
+        "default": true,
+        "label": "Show page results"
+      }
+    ]
+  },
+  {
+    "name": "Product cards",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "product_card_second_image",
+        "default": true,
+        "label": "Show second image on hover"
+      },
+      {
+        "type": "checkbox",
+        "id": "product_card_show_vendor",
+        "default": true,
+        "label": "Show vendor"
+      },
+      {
+        "type": "checkbox",
+        "id": "product_card_show_availability",
+        "default": true,
+        "label": "Show availability"
+      }
+    ]
+  },
+  {
+    "name": "Collection",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "fallback_img_sub_collection_image",
+        "label": "Fallback for 'sub_collection_image'"
+      }
+    ]
+  },
+  {
+    "name": "Policy pages",
+    "settings": [
+      {
+        "type": "link_list",
+        "id": "policy_navigation",
+        "label": "Top navigation"
+      },
+      {
+        "type": "header",
+        "content": "Contact button"
+      },
+      {
+        "type": "richtext",
+        "id": "policy_button_intro",
+        "label": "Button intro text",
+        "default": "<p>Still can\u2019t find what you\u2019re looking for?<br>Please contact us below</p>"
+      },
+      {
+        "type": "text",
+        "id": "policy_button_label",
+        "label": "Button label",
+        "default": "Contact us"
+      },
+      {
+        "type": "url",
+        "id": "policy_button_link",
+        "label": "Button link"
+      }
+    ]
+  }
 ]
