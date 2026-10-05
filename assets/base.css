@@ -2063,3 +2063,194 @@ button,
 	}
 
 }
+
+
+/* Policy pages */
+
+.policy-page {
+
+	.policy-page__navigation {
+		border-bottom: 1px solid var(--border-white);
+
+		.container {
+			@media (max-width: 767px) {
+				padding-right: 0;
+			}
+		}
+
+		.policy-page__navigation-list {
+			display: flex;
+			align-items: stretch;
+			justify-content: center;
+			gap: 0;
+			margin: 0;
+			padding: 0;
+			list-style: none;
+
+			@media (max-width: 767px) {
+				justify-content: flex-start;
+				overflow-x: auto;
+				scrollbar-width: none;
+
+				&::-webkit-scrollbar {
+					display: none;
+				}
+			}
+
+			.policy-page__navigation-item {
+				flex-shrink: 0;
+			}
+
+			.policy-page__navigation-link {
+				position: relative;
+				display: flex;
+				align-items: center;
+				height: 60px;
+				padding: 0 22px;
+				font-family: var(--font-heading-family);
+				font-size: var(--xxs);
+				font-weight: 500;
+				text-transform: uppercase;
+				color: rgb(from var(--color-white) r g b / 45%);
+				transition: .3s all;
+
+				@media (max-width: 767px) {
+					height: 52px;
+					padding: 0 16px;
+				}
+
+				&::after {
+					content: '';
+					position: absolute;
+					left: 0;
+					right: 0;
+					bottom: -1px;
+					height: 1px;
+					background: var(--color-white);
+					transform: scaleX(0);
+					transition: .3s transform;
+				}
+
+				&:hover,
+				&:focus,
+				&.is-active {
+					color: var(--color-white);
+				}
+
+				&.is-active {
+					&::after {
+						transform: scaleX(1);
+					}
+				}
+			}
+		}
+	}
+
+	.shopify-policy__container {
+		width: 960px;
+		max-width: calc(100% - 40px) !important;
+		margin: 0 auto;
+		padding: 70px 0 0;
+
+		@media (max-width: 767px) {
+			max-width: calc(100% - 32px) !important;
+			padding-top: 45px;
+		}
+	}
+
+	.shopify-policy__title {
+		margin: 0 0 35px;
+		text-align: center;
+
+		@media (max-width: 767px) {
+			margin-bottom: 25px;
+		}
+
+		h1 {
+			margin: 0;
+		}
+	}
+
+	.shopify-policy__body {
+		font-size: var(--xxs);
+		line-height: 1.55;
+
+		p {
+			margin-bottom: 26px;
+			line-height: inherit;
+
+			&:last-child {
+				margin-bottom: 0;
+			}
+		}
+
+		h2,
+		h3,
+		h4,
+		h5,
+		h6 {
+			margin: 30px 0 20px;
+			font-family: var(--font-body-family);
+			font-size: var(--xxs);
+			line-height: 1.4;
+			font-weight: 500;
+			text-transform: none;
+		}
+
+		ul,
+		ol {
+			margin: 0 0 26px;
+			padding-left: 22px;
+		}
+
+		li {
+			margin-bottom: 6px;
+		}
+
+		a {
+			color: var(--color-primary);
+			text-decoration: underline;
+			text-underline-offset: 2px;
+		}
+
+		table {
+			width: 100%;
+			border-collapse: collapse;
+			margin: 25px 0;
+		}
+
+		th,
+		td {
+			padding: 12px;
+			border: 1px solid var(--border-white);
+			text-align: left;
+			vertical-align: top;
+		}
+	}
+
+	.policy-page__cta {
+		width: 960px;
+		max-width: 100%;
+		margin: 70px auto 0;
+		padding-bottom: 70px;
+		text-align: center;
+
+		@media (max-width: 767px) {
+			margin-top: 50px;
+			padding-bottom: 50px;
+		}
+
+		.policy-page__cta-intro {
+			margin-bottom: 18px;
+			line-height: 1.45;
+
+			p {
+				margin-bottom: 0;
+			}
+		}
+
+		.policy-page__cta-button {
+			min-width: 200px;
+		}
+	}
+}
