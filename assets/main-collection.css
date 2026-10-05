@@ -550,7 +550,9 @@
 					}
 
 					.collection-filters__dropdown-content {
-
+						position: static;
+						transform: translate(0,0);
+						border-radius: 0;
 					}
 				}
 
