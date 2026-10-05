@@ -23,13 +23,13 @@
 
   </head>
 
-   <body class="template-{{ template.name | handleize }}">
-    {% sections 'header-group' %}
-
-    {%- assign is_policy_page = false -%}
+  	{%- assign is_policy_page = false -%}
     {%- if request.path contains '/policies/' -%}
-      {%- assign is_policy_page = true -%}
+    	{%- assign is_policy_page = true -%}
     {%- endif -%}
+
+   <body class="template-{{ template.name | handleize }} template-{% if is_policy_page %}policy{% endif %}">
+    {% sections 'header-group' %}
 
     {%- if is_policy_page -%}
 
