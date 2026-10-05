@@ -543,8 +543,7 @@
 					border-radius: 0;
 
 					&[open] {
-						display: flex;
-						flex-direction: column;
+						display: block;
 					}
 
 					.collection-filters__dropdown-trigger {
