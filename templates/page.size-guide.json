@@ -11,12 +11,11 @@
   "sections": {
     "main": {
       "type": "page",
-      "disabled": true,
       "settings": {
         "navigation": "in-page-menu",
-        "button_intro": "<p>Still can’t find what you’re looking for?<br/>Please contact us below</p>",
-        "button_label": "Contact us",
-        "button_link": "shopify://pages/contact"
+        "button_intro": "",
+        "button_label": "",
+        "button_link": ""
       }
     },
     "bike_size_table_kTHqAj": {
@@ -96,7 +95,11 @@
         "intro": "<p>Use our size guide to find the BMX that best suits the rider.</p>",
         "button_intro": "<p>Still can’t find what you’re looking for?<br/>Please contact us below</p>",
         "button_label": "Contact us",
-        "button_link": "shopify://pages/contact"
+        "button_link": "shopify://pages/contact",
+        "padding-top": 60,
+        "padding-bottom": 60,
+        "padding-top-m": 40,
+        "padding-bottom-m": 40
       }
     }
   },
