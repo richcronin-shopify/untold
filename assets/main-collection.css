@@ -519,7 +519,7 @@
 
 			.collection-filters__drawer-close {
 				svg {
-					
+
 				}
 			}
 		}
@@ -623,6 +623,7 @@ html.collection-filter-drawer-open body {
 				visibility: hidden;
 			}
 		}
+	}
 
 	.main-collection__items {
 		display: grid;
