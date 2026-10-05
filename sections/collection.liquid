@@ -692,11 +692,19 @@
 					);
 
 					if (!grid) {
+						section.classList.remove(
+							'is-restore-pending'
+						);
+
 						return;
 					}
 
 
 					if (section.dataset.paginationType !== 'infinite') {
+						section.classList.remove(
+							'is-restore-pending'
+						);
+
 						section.dataset.mainCollectionInitialised = 'true';
 						return;
 					}
@@ -716,6 +724,10 @@
 
 
 					if (!infinite || !sentinel) {
+						section.classList.remove(
+							'is-restore-pending'
+						);
+
 						section.dataset.mainCollectionInitialised = 'true';
 						return;
 					}
@@ -1222,6 +1234,10 @@
 
 					restoreCollectionState()
 						.finally(() => {
+
+							section.classList.remove(
+								'is-restore-pending'
+							);
 
 							initialiseObserver();
 
