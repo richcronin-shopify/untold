@@ -12,6 +12,7 @@
     "main": {
       "type": "page",
       "settings": {
+        "nav_only": true,
         "navigation": "in-page-menu",
         "button_intro": "",
         "button_label": "",
