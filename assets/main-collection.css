@@ -562,7 +562,7 @@
 						border-radius: 0;
 						overflow: visible;
 						box-sizing: border-box;
-						gap: 0;
+						gap: 10px;
 					}
 				}
 
