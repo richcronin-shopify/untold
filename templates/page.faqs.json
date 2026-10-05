@@ -11,7 +11,48 @@
   "sections": {
     "main": {
       "type": "page",
-      "settings": {}
+      "blocks": {
+        "faq_7UYWDC": {
+          "type": "faq",
+          "settings": {
+            "question": "Who is UNTOLD?",
+            "answer": "<p>Add your answer here.</p>"
+          }
+        },
+        "faq_AmaF3C": {
+          "type": "faq",
+          "settings": {
+            "question": "Who is UNTOLD?",
+            "answer": "<p>Add your answer here.</p>"
+          }
+        },
+        "faq_qJEWHX": {
+          "type": "faq",
+          "settings": {
+            "question": "Who is UNTOLD?",
+            "answer": "<p>Add your answer here.</p>"
+          }
+        },
+        "faq_4R7hzM": {
+          "type": "faq",
+          "settings": {
+            "question": "Who is UNTOLD?",
+            "answer": "<p>Add your answer here.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_7UYWDC",
+        "faq_AmaF3C",
+        "faq_qJEWHX",
+        "faq_4R7hzM"
+      ],
+      "settings": {
+        "navigation": "",
+        "button_intro": "<p>Still can’t find what you’re looking for?<br/>Please contact us below</p>",
+        "button_label": "Contact us",
+        "button_link": "shopify://pages/contact"
+      }
     }
   },
   "order": [
