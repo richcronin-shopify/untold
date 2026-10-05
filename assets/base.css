@@ -2110,7 +2110,7 @@ button,
 				height: 60px;
 				padding: 0 22px;
 				font-family: var(--font-heading-family);
-				font-size: var(--xxs);
+				font-size: var(--xs);
 				font-weight: 500;
 				text-transform: uppercase;
 				color: rgb(from var(--color-white) r g b / 45%);
