@@ -549,7 +549,6 @@
 
 					.collection-filters__dropdown-trigger {
 						width: auto;
-						min-height: 52px;
 						padding: 0 20px;
 						height: unset;
 					}
