@@ -616,12 +616,10 @@ html.collection-filter-drawer-open body {
 
 .main-collection {
 
-	&.is-restoring {
 	&.is-restore-pending,
-		&.is-restoring {
-			.main-collection__items {
-				visibility: hidden;
-			}
+	&.is-restoring {
+		.main-collection__items {
+			visibility: hidden;
 		}
 	}
 
