@@ -21,6 +21,9 @@
 
 	.bmx-size-table__table {
 		border: 1px solid var(--border-white);
+		@media (max-width: 767px) {
+			border: none;
+		}
 	}
 
 	.bmx-size-table__head,
