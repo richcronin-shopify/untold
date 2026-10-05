@@ -155,6 +155,24 @@
 	</div>
 </section>
 
+{%- style -%}
+
+	#{{ section.id }} {
+		padding-top: {{ ss.padding-top }}px;
+		padding-bottom: {{ ss.padding-bottom }}px;
+	}
+
+	@media screen and (max-width: 767px) {
+
+		#{{ section.id }} {
+			padding-top: {{ ss.padding-top-m }}px;
+			padding-bottom: {{ ss.padding-bottom-m }}px;
+		}
+
+	}
+
+{%- endstyle -%}
+
 {% schema %}
 {
 	"name": "BMX size table",
