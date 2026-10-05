@@ -510,7 +510,6 @@
 			justify-content: space-between;
 			gap: 20px;
 			padding: 20px;
-			border-bottom: 1px solid var(--border-white);
 			flex-shrink: 0;
 
 			.collection-filters__drawer-title {
