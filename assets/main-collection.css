@@ -542,6 +542,7 @@
 					border: none;
 					border-bottom: 1px solid var(--border-white);
 					border-radius: 0;
+					padding: 0;
 
 
 					.collection-filters__dropdown-trigger {
