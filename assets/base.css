@@ -2255,3 +2255,7 @@ button,
 		}
 	}
 }
+
+.shopify-policy__title {
+	font-size: var(--h2);
+}
