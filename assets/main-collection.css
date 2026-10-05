@@ -529,51 +529,40 @@
 				gap: 0;
 				width: 100%;
 				overflow-y: auto;
-				padding: 0 20px 20px;
-
-				@media (max-width: 989px) {
-					display: flex;
-					grid-column: auto;
-				}
+				padding: 0 0 20px;
 
 				.collection-filters__dropdown {
-
 					width: 100%;
-					border: none;
+					min-width: 0;
+					height: auto;
+					min-height: 52px;
+					display: block;
+					padding: 0;
+					border: 0;
 					border-bottom: 1px solid var(--border-white);
 					border-radius: 0;
-					padding: 0;
-					flex-direction: column;
-					height: unset;
-
-					&[open] {
-						.collection-filters__dropdown-content {
-							display: flex;
-						}
-					}
-
 
 					.collection-filters__dropdown-trigger {
-						height: 50px;
+						min-height: 52px;
+						padding: 0 20px;
 					}
 
 					.collection-filters__dropdown-content {
 						position: static;
-						transform: translate(0,0);
-						border-radius: 0;
-						max-height: unset;
-						min-width: 100%;
+						min-width: 0;
 						width: 100%;
-						flex: 1;
-						overflow: visible;
-						border: none;
-						background: transparent;
+						max-height: none;
+						border: 0;
 						border-top: 1px solid var(--border-white);
+						border-radius: 0;
+						padding: 14px 20px 18px;
+						overflow: visible;
+						box-sizing: border-box;
 					}
 				}
 
 				.collection-filters__clear-all {
-					margin: 20px 0 0;
+					margin: 20px;
 					align-self: flex-start;
 				}
 			}
