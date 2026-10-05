@@ -542,6 +542,11 @@
 					border-bottom: 1px solid var(--border-white);
 					border-radius: 0;
 
+					&[open] {
+						display: flex;
+						flex-direction: column;
+					}
+
 					.collection-filters__dropdown-trigger {
 						min-height: 52px;
 						padding: 0 20px;
