@@ -2256,7 +2256,8 @@ button,
 	}
 }
 
-.shopify-policy__title {
+.shopify-policy__title,
+.shopify-policy__body {
 	h1 {
 		font-size: var(--h2);
 	}
