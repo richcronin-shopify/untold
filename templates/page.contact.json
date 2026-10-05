@@ -1,0 +1,25 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "page",
+      "settings": {
+        "navigation": "in-page-menu",
+        "button_intro": "<p>Still can’t find what you’re looking for?<br/>Please contact us below</p>",
+        "button_label": "Contact us",
+        "button_link": "shopify://pages/contact"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
