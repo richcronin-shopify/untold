@@ -63,7 +63,10 @@
 								{%- endif -%}
 
 								{%- if bs.image != blank -%}
-									<div class="bmx-size-table__image">
+									<div
+										class="bmx-size-table__image"
+										style="--bike-image-width: {{ bs.image_width }}px;"
+									>
 										{{
 											bs.image
 											| image_url: width: 500
