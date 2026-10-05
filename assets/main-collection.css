@@ -518,13 +518,9 @@
 			}
 
 			.collection-filters__drawer-close {
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				width: 40px;
-				height: 40px;
-				font-size: 28px;
-				line-height: 1;
+				svg {
+					
+				}
 			}
 		}
 
