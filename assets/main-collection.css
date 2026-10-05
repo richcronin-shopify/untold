@@ -138,7 +138,7 @@
 					display: flex;
 					align-items: center;
 					min-width: 160px;
-					
+
 
 					/*@media (max-width: 989px) {
 						width: 100%;
@@ -538,33 +538,17 @@
 				grid-column: auto;
 			}
 
-			/*.collection-filters__dropdown {
-				width: 100%;
-				min-width: 0;
-				height: auto;
-				min-height: 52px;
-				display: block;
-				padding: 0;
-				border: 0;
-				border-bottom: 1px solid var(--border-white);
-				border-radius: 0;
+			.collection-filters__dropdown {
+
 
 				.collection-filters__dropdown-trigger {
-					min-height: 52px;
+
 				}
 
 				.collection-filters__dropdown-content {
-					position: static;
-					min-width: 0;
-					width: 100%;
-					max-height: none;
-					border: 0;
-					border-top: 1px solid var(--border-white);
-					border-radius: 0;
-					padding: 14px 0 18px;
-					overflow: visible;
+
 				}
-			}*/
+			}
 
 			.collection-filters__clear-all {
 				margin: 20px 0 0;
