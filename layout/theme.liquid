@@ -23,10 +23,69 @@
 
   </head>
 
-  <body class="template-{{ template.name | handleize }}">
+   <body class="template-{{ template.name | handleize }}">
     {% sections 'header-group' %}
 
-    {{ content_for_layout }}
+    {%- assign is_policy_page = false -%}
+    {%- if request.path contains '/policies/' -%}
+      {%- assign is_policy_page = true -%}
+    {%- endif -%}
+
+    {%- if is_policy_page -%}
+
+      <div class="policy-page">
+
+        {%- if settings.policy_navigation != blank and settings.policy_navigation.links.size > 0 -%}
+          <nav class="policy-page__navigation" aria-label="Policy navigation">
+            <div class="container">
+
+              <ul class="policy-page__navigation-list" role="list">
+                {%- for link in settings.policy_navigation.links -%}
+                  <li class="policy-page__navigation-item">
+                    <a
+                      href="{{ link.url }}"
+                      class="policy-page__navigation-link{% if link.current %} is-active{% endif %}"
+                      {% if link.current %}aria-current="page"{% endif %}
+                    >
+                      {{ link.title }}
+                    </a>
+                  </li>
+                {%- endfor -%}
+              </ul>
+
+            </div>
+          </nav>
+        {%- endif -%}
+
+        {{ content_for_layout }}
+
+        {%- if settings.policy_button_intro != blank or settings.policy_button_label != blank -%}
+          <div class="container">
+            <div class="policy-page__cta">
+
+              {%- if settings.policy_button_intro != blank -%}
+                <div class="policy-page__cta-intro">
+                  {{ settings.policy_button_intro }}
+                </div>
+              {%- endif -%}
+
+              {%- if settings.policy_button_label != blank and settings.policy_button_link != blank -%}
+                <a href="{{ settings.policy_button_link }}" class="button button--outline policy-page__cta-button">
+                  {{ settings.policy_button_label }}
+                </a>
+              {%- endif -%}
+
+            </div>
+          </div>
+        {%- endif -%}
+
+      </div>
+
+    {%- else -%}
+
+      {{ content_for_layout }}
+
+    {%- endif -%}
 
     {% sections 'footer-group' %}
 
