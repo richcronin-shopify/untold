@@ -1,0 +1,459 @@
+{%- assign ss = section.settings -%}
+{{- 'main-page.css' | asset_url | stylesheet_tag -}}
+{%- assign has_faqs = false -%}
+
+{%- if section.blocks.size > 0 -%}
+	{%- assign has_faqs = true -%}
+{%- endif -%}
+
+<section class="page contact-page{% if has_faqs %} page--faqs{% endif %}" id="{{ section.id }}">
+
+	{%- if ss.navigation != blank and ss.navigation.links.size > 0 -%}
+		<nav class="page__navigation" aria-label="Page navigation">
+			<div class="container">
+
+				<ul class="page__navigation-list" role="list">
+					{%- for link in ss.navigation.links -%}
+						<li class="page__navigation-item">
+							<a
+								href="{{ link.url }}"
+								class="page__navigation-link{% if link.current %} is-active{% endif %}"
+								{% if link.current %}aria-current="page"{% endif %}
+							>
+								{{ link.title }}
+							</a>
+						</li>
+					{%- endfor -%}
+				</ul>
+
+			</div>
+		</nav>
+	{%- endif -%}
+
+	{%- unless ss.nav_only -%}
+
+		<div class="container">
+
+			<div class="page__inner">
+
+				<header class="page__header">
+					<h1 class="page__title h2">
+						{{ page.title }}
+					</h1>
+
+					{%- if has_faqs and page.content != blank -%}
+						<div class="page__intro rte">
+							{{ page.content }}
+						</div>
+					{%- endif -%}
+				</header>
+
+				{%- if has_faqs -%}
+
+					<div class="page__faqs">
+
+						{%- for block in section.blocks -%}
+							{%- assign bs = block.settings -%}
+
+							{%- if bs.question != blank -%}
+								<details class="page__faq" {{ block.shopify_attributes }}>
+
+									<summary class="page__faq-trigger">
+										<span class="page__faq-question">
+											{{ bs.question }}
+										</span>
+
+										<span class="page__faq-icon" aria-hidden="true"></span>
+									</summary>
+
+									{%- if bs.answer != blank -%}
+										<div class="page__faq-content rte">
+											{{ bs.answer }}
+										</div>
+									{%- endif -%}
+
+								</details>
+							{%- endif -%}
+
+						{%- endfor -%}
+
+					</div>
+
+				{%- elsif page.content != blank -%}
+
+					<div class="page__content rte">
+						{{ page.content }}
+					</div>
+
+				{%- endif -%}
+
+				<div class="contact-page__form-wrap">
+
+					{%- if ss.form_title != blank -%}
+						<h2 class="contact-page__form-title h3">
+							{{ ss.form_title }}
+						</h2>
+					{%- endif -%}
+
+					{%- form 'contact', class: 'contact-page__form' -%}
+
+						{%- if form.posted_successfully? -%}
+							<div class="contact-page__form-message contact-page__form-message--success" role="status" tabindex="-1">
+								{{ ss.success_message }}
+							</div>
+						{%- endif -%}
+
+						{%- if form.errors -%}
+							<div class="contact-page__form-message contact-page__form-message--error" role="alert" tabindex="-1">
+								{{ form.errors | default_errors }}
+							</div>
+						{%- endif -%}
+
+						<div class="contact-page__fields">
+
+							<div class="contact-page__field">
+								<label for="ContactFormName-{{ section.id }}">
+									Full name<span aria-hidden="true">*</span>
+								</label>
+
+								<input
+									type="text"
+									id="ContactFormName-{{ section.id }}"
+									name="contact[name]"
+									value="{% if form.name %}{{ form.name | escape }}{% endif %}"
+									autocomplete="name"
+									required
+								>
+							</div>
+
+							<div class="contact-page__field">
+								<label for="ContactFormPhone-{{ section.id }}">
+									Contact number
+								</label>
+
+								<input
+									type="tel"
+									id="ContactFormPhone-{{ section.id }}"
+									name="contact[phone]"
+									value="{% if form.phone %}{{ form.phone | escape }}{% endif %}"
+									autocomplete="tel"
+								>
+							</div>
+
+							<div class="contact-page__field">
+								<label for="ContactFormEmail-{{ section.id }}">
+									Contact email<span aria-hidden="true">*</span>
+								</label>
+
+								<input
+									type="email"
+									id="ContactFormEmail-{{ section.id }}"
+									name="contact[email]"
+									value="{% if form.email %}{{ form.email | escape }}{% endif %}"
+									autocomplete="email"
+									autocorrect="off"
+									autocapitalize="off"
+									required
+								>
+							</div>
+
+							<div class="contact-page__field">
+								<label for="ContactFormSubject-{{ section.id }}">
+									Subject<span aria-hidden="true">*</span>
+								</label>
+
+								<div class="contact-page__select-wrap">
+									<select
+										id="ContactFormSubject-{{ section.id }}"
+										name="contact[subject]"
+										required
+									>
+										<option value="" disabled{% unless form.subject %} selected{% endunless %}>
+											Select a subject
+										</option>
+										<option value="General enquiry"{% if form.subject == 'General enquiry' %} selected{% endif %}>
+											General enquiry
+										</option>
+										<option value="Order question"{% if form.subject == 'Order question' %} selected{% endif %}>
+											Order question
+										</option>
+										<option value="Question about a product"{% if form.subject == 'Question about a product' %} selected{% endif %}>
+											Question about a product
+										</option>
+									</select>
+
+									<span class="contact-page__select-icon" aria-hidden="true">
+										{{- 'icon-chev.svg' | inline_asset_content -}}
+									</span>
+								</div>
+							</div>
+
+							<div class="contact-page__field contact-page__field--full">
+								<label for="ContactFormMessage-{{ section.id }}">
+									Message<span aria-hidden="true">*</span>
+								</label>
+
+								<textarea
+									id="ContactFormMessage-{{ section.id }}"
+									name="contact[body]"
+									rows="8"
+									required
+								>{% if form.body %}{{ form.body | escape }}{% endif %}</textarea>
+							</div>
+
+						</div>
+
+						<div class="contact-page__actions">
+							<button type="submit" class="button">
+								{{ ss.submit_label }}
+							</button>
+						</div>
+
+					{%- endform -%}
+
+				</div>
+
+				{%- if ss.button_intro != blank or ss.button_label != blank -%}
+
+					<div class="page__cta">
+
+						{%- if ss.button_intro != blank -%}
+							<div class="page__cta-intro">
+								{{ ss.button_intro }}
+							</div>
+						{%- endif -%}
+
+						{%- if ss.button_label != blank and ss.button_link != blank -%}
+							<a href="{{ ss.button_link }}" class="button button--outline page__cta-button">
+								{{ ss.button_label }}
+							</a>
+						{%- endif -%}
+
+					</div>
+
+				{%- endif -%}
+
+			</div>
+
+		</div>
+
+	{%- endunless -%}
+
+</section>
+
+{% stylesheet %}
+
+	.contact-page {
+
+		.contact-page__form-wrap {
+			width: 735px;
+			max-width: 100%;
+			margin: 50px auto 0;
+
+			.contact-page__form-title {
+				margin-bottom: 25px;
+				text-align: center;
+			}
+
+			.contact-page__form-message {
+				margin-bottom: 25px;
+				padding: 14px 16px;
+				border: 1px solid var(--border-white);
+
+				&.contact-page__form-message--success {
+					border-color: var(--color-primary);
+				}
+
+				&.contact-page__form-message--error {
+					border-color: var(--color-error);
+				}
+
+				ul {
+					margin: 0;
+					padding-left: 20px;
+				}
+			}
+
+			.contact-page__fields {
+				display: grid;
+				grid-template-columns: repeat(2, minmax(0, 1fr));
+				gap: 20px;
+
+				@media (max-width: 767px) {
+					grid-template-columns: 1fr;
+					gap: 16px;
+				}
+
+				.contact-page__field {
+					display: flex;
+					flex-direction: column;
+					gap: 8px;
+
+					&.contact-page__field--full {
+						grid-column: 1 / -1;
+					}
+
+					label {
+						font-size: 14px;
+					}
+
+					input,
+					select,
+					textarea {
+						width: 100%;
+						border: 1px solid var(--border-white);
+						border-radius: 3px;
+						background: transparent;
+						color: var(--color-white);
+						font-family: var(--font-body-family);
+						font-size: 16px;
+					}
+
+					input,
+					select {
+						height: 48px;
+						padding: 0 14px;
+					}
+
+					textarea {
+						min-height: 180px;
+						padding: 14px;
+						resize: vertical;
+					}
+
+					input:focus,
+					select:focus,
+					textarea:focus {
+						outline: 1px solid var(--color-primary);
+						outline-offset: 1px;
+						border-color: var(--color-primary);
+					}
+
+					.contact-page__select-wrap {
+						position: relative;
+
+						select {
+							appearance: none;
+							-webkit-appearance: none;
+							padding-right: 45px;
+
+							option {
+								background: var(--color-black);
+								color: var(--color-white);
+							}
+						}
+
+						.contact-page__select-icon {
+							position: absolute;
+							top: 50%;
+							right: 15px;
+							display: flex;
+							transform: translateY(-50%);
+							pointer-events: none;
+
+							svg {
+								display: block;
+							}
+						}
+					}
+				}
+			}
+
+			.contact-page__actions {
+				margin-top: 25px;
+
+				.button {
+					min-width: 200px;
+				}
+			}
+		}
+	}
+
+{% endstylesheet %}
+
+{% schema %}
+{
+	"name": "Contact page",
+	"settings": [
+		{
+			"type": "checkbox",
+			"id": "nav_only",
+			"default": false,
+			"label": "Nav only"
+		},
+		{
+			"type": "link_list",
+			"id": "navigation",
+			"label": "Top navigation"
+		},
+		{
+			"type": "header",
+			"content": "Contact form"
+		},
+		{
+			"type": "text",
+			"id": "form_title",
+			"label": "Form title",
+			"default": "Send us a message"
+		},
+		{
+			"type": "text",
+			"id": "submit_label",
+			"label": "Submit button label",
+			"default": "Send message"
+		},
+		{
+			"type": "inline_richtext",
+			"id": "success_message",
+			"label": "Success message",
+			"default": "Thanks for getting in touch. We’ll get back to you as soon as possible."
+		},
+		{
+			"type": "header",
+			"content": "Contact button"
+		},
+		{
+			"type": "richtext",
+			"id": "button_intro",
+			"label": "Button intro text",
+			"default": "<p>Still can’t find what you’re looking for?<br>Please contact us below</p>"
+		},
+		{
+			"type": "text",
+			"id": "button_label",
+			"label": "Button label",
+			"default": "Contact us"
+		},
+		{
+			"type": "url",
+			"id": "button_link",
+			"label": "Button link"
+		}
+	],
+	"blocks": [
+		{
+			"type": "faq",
+			"name": "FAQ",
+			"settings": [
+				{
+					"type": "text",
+					"id": "question",
+					"label": "Question",
+					"default": "Who is UNTOLD?"
+				},
+				{
+					"type": "richtext",
+					"id": "answer",
+					"label": "Answer",
+					"default": "<p>Add your answer here.</p>"
+				}
+			]
+		}
+	],
+	"presets": [
+		{
+			"name": "Contact page"
+		}
+	]
+}
+{% endschema %}
