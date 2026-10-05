@@ -543,6 +543,7 @@
 					border-bottom: 1px solid var(--border-white);
 					border-radius: 0;
 					padding: 0;
+					flex-direction: column;
 
 
 					.collection-filters__dropdown-trigger {
