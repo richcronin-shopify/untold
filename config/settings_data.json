@@ -14,6 +14,8 @@
     "input_corner_radius": 0,
     "search_popular_collection": "bestsellers",
     "fallback_img_sub_collection_image": "shopify://shop_images/no-image.jpg",
+    "policy_navigation": "in-page-menu",
+    "policy_button_link": "shopify://pages/contact",
     "content_for_index": [],
     "blocks": {
       "15683396631634586217": {
