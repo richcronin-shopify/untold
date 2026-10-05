@@ -7,13 +7,30 @@
 {%- liquid
 	assign sort_by = collection.sort_by | default: collection.default_sort_by
 	assign price_filter = blank
+	assign filter_count = collection.filters.size
+	assign active_filter_count = 0
+	assign use_filter_drawer = false
+	assign has_active_filters = false
+
+	if filter_count > 2
+		assign use_filter_drawer = true
+	endif
 
 	for filter in collection.filters
+		assign active_filter_count = active_filter_count | plus: filter.active_values.size
+
 		if filter.type == 'price_range'
 			assign price_filter = filter
-			break
+
+			if filter.min_value.value != blank or filter.max_value.value != blank
+				assign active_filter_count = active_filter_count | plus: 1
+			endif
 		endif
 	endfor
+
+	if active_filter_count > 0
+		assign has_active_filters = true
+	endif
 
 	assign price_bracket_count = 20
 
@@ -50,24 +67,84 @@
 					{{ collection.products_count }} {% if collection.products_count == 1 %}Product{% else %}Products{% endif %}
 				</div>
 
-				<button
-					type="button"
-					class="collection-filters__mobile-trigger button--reset"
-					data-filter-trigger
-					aria-expanded="false"
-					aria-controls="CollectionFiltersPanel-{{ section.id }}"
-				>
-					<span>Filter</span>
+				{%- if use_filter_drawer -%}
 
-					<span class="collection-filters__mobile-trigger-icon" aria-hidden="true">
-						<span></span>
-						<span></span>
-						<span></span>
-					</span>
-				</button>
+					<button
+						type="button"
+						class="collection-filters__drawer-trigger button--reset"
+						data-filter-trigger
+						aria-expanded="false"
+						aria-controls="CollectionFiltersDrawer-{{ section.id }}"
+					>
+						<span>
+							Filter{% if active_filter_count > 0 %} ({{ active_filter_count }}){% endif %}
+						</span>
+
+						<span class="collection-filters__drawer-trigger-icon" aria-hidden="true">
+							<span></span>
+							<span></span>
+							<span></span>
+						</span>
+					</button>
+
+					<div
+						class="collection-filters__drawer"
+						id="CollectionFiltersDrawer-{{ section.id }}"
+						data-filter-drawer
+						aria-hidden="true"
+						inert
+					>
+						<button
+							type="button"
+							class="collection-filters__drawer-overlay button--reset"
+							data-filter-drawer-close
+							aria-label="Close filters"
+						></button>
+
+						<div
+							class="collection-filters__drawer-panel"
+							data-filter-drawer-panel
+							role="dialog"
+							aria-modal="true"
+							aria-labelledby="CollectionFiltersDrawerTitle-{{ section.id }}"
+						>
+							<div class="collection-filters__drawer-header">
+								<p class="collection-filters__drawer-title h4" id="CollectionFiltersDrawerTitle-{{ section.id }}">
+									Filters
+								</p>
+
+								<button
+									type="button"
+									class="collection-filters__drawer-close button--reset"
+									data-filter-drawer-close
+									aria-label="Close filters"
+								>
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+
+				{%- else -%}
+
+					<button
+						type="button"
+						class="collection-filters__mobile-trigger button--reset"
+						data-filter-trigger
+						aria-expanded="false"
+						aria-controls="CollectionFiltersPanel-{{ section.id }}"
+					>
+						<span>Filter</span>
+
+						<span class="collection-filters__mobile-trigger-icon" aria-hidden="true">
+							<span></span>
+							<span></span>
+							<span></span>
+						</span>
+					</button>
+
+				{%- endif -%}
 
 				<div
-					class="collection-filters__filters"
+					class="collection-filters__filters{% if use_filter_drawer %} collection-filters__filters--drawer{% endif %}"
 					id="CollectionFiltersPanel-{{ section.id }}"
 					data-filter-panel
 				>
@@ -76,15 +153,15 @@
 
 						{%- unless filter.type == 'price_range' -%}
 
-							{%- assign has_active_values = false -%}
+							{%- assign filter_has_active_values = false -%}
 
 							{%- if filter.active_values.size > 0 -%}
-								{%- assign has_active_values = true -%}
+								{%- assign filter_has_active_values = true -%}
 							{%- endif -%}
 
 							<details
 								class="collection-filters__dropdown"
-								{% if has_active_values %}open{% endif %}
+								{% if filter_has_active_values %}open{% endif %}
 							>
 
 								<summary class="collection-filters__dropdown-trigger">
@@ -275,7 +352,7 @@
 
 					{%- endif -%}
 
-					{%- if has_active_values -%}
+					{%- if has_active_filters -%}
 						<a
 							href="{{ collection.url }}?sort_by={{ sort_by | url_encode }}"
 							class="collection-filters__clear-all"
@@ -285,6 +362,11 @@
 					{%- endif -%}
 
 				</div>
+
+				{%- if use_filter_drawer -%}
+						</div>
+					</div>
+				{%- endif -%}
 
 				<div class="collection-filters__sort collection-filters__sort--desktop">
 
@@ -1318,6 +1400,9 @@
 
 					const filterTrigger = section.querySelector('[data-filter-trigger]');
 					const filterPanel = section.querySelector('[data-filter-panel]');
+					const filterDrawer = section.querySelector('[data-filter-drawer]');
+					const filterDrawerPanel = section.querySelector('[data-filter-drawer-panel]');
+					const filterDrawerCloseButtons = section.querySelectorAll('[data-filter-drawer-close]');
 					const sortSelect = section.querySelector('[data-sort-select]');
 					const mobileSort = section.querySelector('[data-mobile-sort]');
 					const priceMinInput = section.querySelector('[data-price-min-input]');
@@ -1533,9 +1618,52 @@
 
 					}
 
+					const openFilterDrawer = () => {
+
+						if (!filterDrawer) {
+							return;
+						}
+
+						section.classList.add('is-filter-drawer-open');
+						filterDrawer.setAttribute('aria-hidden', 'false');
+						filterDrawer.inert = false;
+						filterTrigger?.setAttribute('aria-expanded', 'true');
+						document.documentElement.classList.add('collection-filter-drawer-open');
+
+						requestAnimationFrame(() => {
+							filterDrawerPanel
+								?.querySelector('[data-filter-drawer-close]')
+								?.focus();
+						});
+
+					};
+
+					const closeFilterDrawer = (restoreFocus = true) => {
+
+						if (!filterDrawer) {
+							return;
+						}
+
+						section.classList.remove('is-filter-drawer-open');
+						filterDrawer.setAttribute('aria-hidden', 'true');
+						filterDrawer.inert = true;
+						filterTrigger?.setAttribute('aria-expanded', 'false');
+						document.documentElement.classList.remove('collection-filter-drawer-open');
+
+						if (restoreFocus) {
+							filterTrigger?.focus();
+						}
+
+					};
+
 					if (filterTrigger && filterPanel) {
 
 						filterTrigger.addEventListener('click', () => {
+
+							if (filterDrawer) {
+								openFilterDrawer();
+								return;
+							}
 
 							const isOpen = section.classList.toggle('is-filter-open');
 
@@ -1543,6 +1671,43 @@
 								'aria-expanded',
 								isOpen ? 'true' : 'false'
 							);
+
+						});
+
+					}
+
+					filterDrawerCloseButtons.forEach((button) => {
+						button.addEventListener('click', () => closeFilterDrawer());
+					});
+
+					if (filterDrawer) {
+
+						filterDrawer.addEventListener('keydown', (event) => {
+
+							if (event.key !== 'Tab') {
+								return;
+							}
+
+							const focusableElements = Array.from(
+								filterDrawer.querySelectorAll(
+									'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), details > summary, [tabindex]:not([tabindex="-1"])'
+								)
+							).filter((element) => element.offsetParent !== null);
+
+							if (!focusableElements.length) {
+								return;
+							}
+
+							const firstElement = focusableElements[0];
+							const lastElement = focusableElements[focusableElements.length - 1];
+
+							if (event.shiftKey && document.activeElement === firstElement) {
+								event.preventDefault();
+								lastElement.focus();
+							} else if (!event.shiftKey && document.activeElement === lastElement) {
+								event.preventDefault();
+								firstElement.focus();
+							}
 
 						});
 
@@ -1686,6 +1851,16 @@
 
 					if (event.key !== 'Escape') {
 						return;
+					}
+
+					const openDrawer = document.querySelector(
+						'[data-filter-drawer][aria-hidden="false"]'
+					);
+
+					if (openDrawer) {
+						openDrawer
+							.querySelector('[data-filter-drawer-close]')
+							?.click();
 					}
 
 					document
