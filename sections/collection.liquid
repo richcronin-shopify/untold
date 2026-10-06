@@ -153,128 +153,149 @@
 
 						{%- unless filter.type == 'price_range' -%}
 
-							{%- assign filter_has_active_values = false -%}
+							{%- liquid
+								assign filter_has_active_values = false
+								assign filter_option_count = 0
 
-							{%- if filter.active_values.size > 0 -%}
-								{%- assign filter_has_active_values = true -%}
+								if filter.active_values.size > 0
+									assign filter_has_active_values = true
+								endif
+
+								case filter.type
+									when 'list'
+										assign filter_option_count = filter.values.size
+
+									when 'boolean'
+										if filter.true_value != blank
+											assign filter_option_count = filter_option_count | plus: 1
+										endif
+
+										if filter.false_value != blank
+											assign filter_option_count = filter_option_count | plus: 1
+										endif
+								endcase
+							-%}
+
+							{%- if filter_option_count > 1 -%}
+
+								<details
+									class="collection-filters__dropdown"
+									{% if filter_has_active_values %}open{% endif %}
+								>
+
+									<summary class="collection-filters__dropdown-trigger">
+										<span>{{ filter.label }}</span>
+
+										<span class="collection-filters__dropdown-chevron" aria-hidden="true">
+											{{- 'icon-chev.svg' | inline_asset_content -}}
+										</span>
+									</summary>
+
+									<div class="collection-filters__dropdown-content">
+
+										{%- case filter.type -%}
+
+											{%- when 'boolean' -%}
+
+												{%- if filter.true_value != blank -%}
+													{%- assign filter_value = filter.true_value -%}
+
+													<label
+														class="collection-filters__option{% if filter_value.count == 0 and filter_value.active == false %} is-disabled{% endif %}"
+														for="Filter-{{ section.id }}-{{ forloop.index }}-true"
+													>
+														<input
+															class="collection-filters__checkbox-input"
+															type="checkbox"
+															id="Filter-{{ section.id }}-{{ forloop.index }}-true"
+															name="{{ filter_value.param_name }}"
+															value="{{ filter_value.value }}"
+															{% if filter_value.active %}checked{% endif %}
+															{% if filter_value.count == 0 and filter_value.active == false %}disabled{% endif %}
+															data-filter-input
+														>
+
+														<span class="collection-filters__checkbox" aria-hidden="true"></span>
+
+														<span class="collection-filters__option-label">
+															{{ filter_value.label }}
+														</span>
+
+														<span class="collection-filters__option-count">
+															({{- filter_value.count -}})
+														</span>
+													</label>
+												{%- endif -%}
+
+												{%- if filter.false_value != blank -%}
+													{%- assign filter_value = filter.false_value -%}
+
+													<label
+														class="collection-filters__option{% if filter_value.count == 0 and filter_value.active == false %} is-disabled{% endif %}"
+														for="Filter-{{ section.id }}-{{ forloop.index }}-false"
+													>
+														<input
+															class="collection-filters__checkbox-input"
+															type="checkbox"
+															id="Filter-{{ section.id }}-{{ forloop.index }}-false"
+															name="{{ filter_value.param_name }}"
+															value="{{ filter_value.value }}"
+															{% if filter_value.active %}checked{% endif %}
+															{% if filter_value.count == 0 and filter_value.active == false %}disabled{% endif %}
+															data-filter-input
+														>
+
+														<span class="collection-filters__checkbox" aria-hidden="true"></span>
+
+														<span class="collection-filters__option-label">
+															{{ filter_value.label }}
+														</span>
+
+														<span class="collection-filters__option-count">
+															({{- filter_value.count -}})
+														</span>
+													</label>
+												{%- endif -%}
+
+											{%- when 'list' -%}
+
+												{%- for filter_value in filter.values -%}
+
+													<label
+														class="collection-filters__option{% if filter_value.count == 0 and filter_value.active == false %} is-disabled{% endif %}"
+														for="Filter-{{ section.id }}-{{ filter.param_name | handle }}-{{ forloop.index }}"
+													>
+														<input
+															class="collection-filters__checkbox-input"
+															type="checkbox"
+															id="Filter-{{ section.id }}-{{ filter.param_name | handle }}-{{ forloop.index }}"
+															name="{{ filter_value.param_name }}"
+															value="{{ filter_value.value }}"
+															{% if filter_value.active %}checked{% endif %}
+															{% if filter_value.count == 0 and filter_value.active == false %}disabled{% endif %}
+															data-filter-input
+														>
+
+														<span class="collection-filters__checkbox" aria-hidden="true"></span>
+
+														<span class="collection-filters__option-label">
+															{{ filter_value.label }}
+														</span>
+
+														<span class="collection-filters__option-count">
+															({{- filter_value.count -}})
+														</span>
+													</label>
+
+												{%- endfor -%}
+
+										{%- endcase -%}
+
+									</div>
+
+								</details>
+
 							{%- endif -%}
-
-							<details
-								class="collection-filters__dropdown"
-								{% if filter_has_active_values %}open{% endif %}
-							>
-
-								<summary class="collection-filters__dropdown-trigger">
-									<span>{{ filter.label }}</span>
-
-									<span class="collection-filters__dropdown-chevron" aria-hidden="true">
-										{{- 'icon-chev.svg' | inline_asset_content -}}
-									</span>
-								</summary>
-
-								<div class="collection-filters__dropdown-content">
-
-									{%- case filter.type -%}
-
-										{%- when 'boolean' -%}
-
-											{%- if filter.true_value != blank -%}
-												{%- assign filter_value = filter.true_value -%}
-
-												<label
-													class="collection-filters__option{% if filter_value.count == 0 and filter_value.active == false %} is-disabled{% endif %}"
-													for="Filter-{{ section.id }}-{{ forloop.index }}-true"
-												>
-													<input
-														class="collection-filters__checkbox-input"
-														type="checkbox"
-														id="Filter-{{ section.id }}-{{ forloop.index }}-true"
-														name="{{ filter_value.param_name }}"
-														value="{{ filter_value.value }}"
-														{% if filter_value.active %}checked{% endif %}
-														{% if filter_value.count == 0 and filter_value.active == false %}disabled{% endif %}
-														data-filter-input
-													>
-
-													<span class="collection-filters__checkbox" aria-hidden="true"></span>
-
-													<span class="collection-filters__option-label">
-														{{ filter_value.label }}
-													</span>
-
-													<span class="collection-filters__option-count">
-														({{- filter_value.count -}})
-													</span>
-												</label>
-											{%- endif -%}
-
-											{%- if filter.false_value != blank -%}
-												{%- assign filter_value = filter.false_value -%}
-
-												<label
-													class="collection-filters__option{% if filter_value.count == 0 and filter_value.active == false %} is-disabled{% endif %}"
-													for="Filter-{{ section.id }}-{{ forloop.index }}-false"
-												>
-													<input
-														class="collection-filters__checkbox-input"
-														type="checkbox"
-														id="Filter-{{ section.id }}-{{ forloop.index }}-false"
-														name="{{ filter_value.param_name }}"
-														value="{{ filter_value.value }}"
-														{% if filter_value.active %}checked{% endif %}
-														{% if filter_value.count == 0 and filter_value.active == false %}disabled{% endif %}
-														data-filter-input
-													>
-
-													<span class="collection-filters__checkbox" aria-hidden="true"></span>
-
-													<span class="collection-filters__option-label">
-														{{ filter_value.label }}
-													</span>
-
-													<span class="collection-filters__option-count">
-														({{- filter_value.count -}})
-													</span>
-												</label>
-											{%- endif -%}
-
-										{%- when 'list' -%}
-
-											{%- for filter_value in filter.values -%}
-
-												<label
-													class="collection-filters__option{% if filter_value.count == 0 and filter_value.active == false %} is-disabled{% endif %}"
-													for="Filter-{{ section.id }}-{{ filter.param_name | handle }}-{{ forloop.index }}"
-												>
-													<input
-														class="collection-filters__checkbox-input"
-														type="checkbox"
-														id="Filter-{{ section.id }}-{{ filter.param_name | handle }}-{{ forloop.index }}"
-														name="{{ filter_value.param_name }}"
-														value="{{ filter_value.value }}"
-														{% if filter_value.active %}checked{% endif %}
-														{% if filter_value.count == 0 and filter_value.active == false %}disabled{% endif %}
-														data-filter-input
-													>
-
-													<span class="collection-filters__checkbox" aria-hidden="true"></span>
-
-													<span class="collection-filters__option-label">
-														{{ filter_value.label }}
-													</span>
-
-													<span class="collection-filters__option-count">
-														({{- filter_value.count -}})
-													</span>
-												</label>
-
-											{%- endfor -%}
-
-									{%- endcase -%}
-
-								</div>
-
-							</details>
 
 						{%- endunless -%}
 
