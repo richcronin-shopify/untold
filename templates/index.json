@@ -376,7 +376,7 @@
       "settings": {
         "title": "Shop by brand",
         "enable_carousel": true,
-        "brands_desktop": 6,
+        "brands_desktop": 7,
         "brands_tablet": 4,
         "brands_mobile": 3,
         "padding-top": 40,
