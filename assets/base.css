@@ -2278,9 +2278,11 @@ button,
 	border: 1px solid var(--border-white) !important;
 	box-shadow: none !important;
 	h2, 
-	button {
+	button,
+	h3,
+	label {
 		font-family: var(--font-heading-family) !important;
-		font-weight: 400 !important;
+		font-weight: 500 !important;
 	}
 }
 
@@ -2296,7 +2298,7 @@ button,
 
 	#shopify-pc__banner__body-title {
 		font-family: var(--font-heading-family) !important;
-		font-weight: 400 !important;
+		font-weight: 500 !important;
 	}
 
 	p {
