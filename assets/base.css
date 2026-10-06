@@ -2315,6 +2315,11 @@ button,
 			font-size: 14px !important;
 			padding: 4px 10px !important;
 		}
+		&.shopify-pc__banner__btn-decline {
+			background: transparent !important;
+			color: var(--color-primary) !important;
+			border-color: var(--color-primary) !important;
+		}
 	}
 
 	#shopify-pc__banner__body-title {
