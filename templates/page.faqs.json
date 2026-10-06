@@ -97,7 +97,14 @@
           "type": "faq",
           "settings": {
             "question": "Cassette or freecoaster, what's the difference?",
-            "answer": "<p>Add your answer here.</p>"
+            "answer": "<p>A <strong>cassette hub</strong> engages when you pedal backwards, so your cranks rotate when rolling fakie. They feel direct, responsive and are a popular all-round option.</p><p>A <strong>freecoaster hub</strong> lets you roll backwards without the cranks moving, making fakies and technical street tricks easier. The trade-off is a little more slack before the hub engages when you pedal forward.</p>"
+          }
+        },
+        "faq_Cei8Kf": {
+          "type": "faq",
+          "settings": {
+            "question": "Do complete bikes arrive ready to ride?",
+            "answer": "<p>Each BMX differs slightly with how it's packaged so please reach out to us before purchasing if you need full assembly.</p>"
           }
         }
       },
@@ -114,7 +121,8 @@
         "faq_heading_iq9x7t",
         "faq_zV4gyk",
         "faq_Y6RtCz",
-        "faq_JnTFaw"
+        "faq_JnTFaw",
+        "faq_Cei8Kf"
       ],
       "settings": {
         "nav_only": false,
