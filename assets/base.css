@@ -122,26 +122,8 @@ html {
 body {
   	margin: 0;
 
-  	.site-header {
-		.site-header__main {
-			background: transparent;
-			transition: .3s all;
-			&:hover {
-				background: var(--color-black);
-			}
-		}
-	}
-	
   	&.template-index {
-		/*.site-header {
-			.site-header__main {
-				background: transparent;
-				transition: .3s all;
-				&:hover {
-					background: var(--color-black);
-				}
-			}
-		}*/
+
 	}
 	&.scrolled {
 		.site-header {
@@ -474,6 +456,11 @@ button,
 		background: var(--color-black);
 		display: flex;
 		align-items: center;
+		background: transparent;
+		transition: .3s all;
+		&:hover {
+			background: var(--color-black);
+		}
 
 		@media (max-width: 990px) {
 			height: 68px;
