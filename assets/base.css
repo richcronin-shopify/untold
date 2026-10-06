@@ -68,6 +68,12 @@ html {
   
   scroll-behavior: smooth;
 
+  &.cart-drawer-open {
+  	shopify-chat {
+  		display: none !important;
+  	}
+  }
+
   &.menu-open {
 
   	overflow: hidden;
