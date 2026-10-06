@@ -45,6 +45,60 @@
             "question": "Can I change or cancel my order after I've paid?",
             "answer": "<p>If you change your mind after you have placed an order please reach out to us ASAP.</p>"
           }
+        },
+        "faq_heading_CR3txp": {
+          "type": "faq_heading",
+          "settings": {
+            "title": "Returns"
+          }
+        },
+        "faq_qdMEKh": {
+          "type": "faq",
+          "settings": {
+            "question": "What's your returns policy?",
+            "answer": "<p>30 days, unused, in the original packaging.&nbsp;</p>"
+          }
+        },
+        "faq_QBcBqb": {
+          "type": "faq",
+          "settings": {
+            "question": "Who pays for return postage, and how long do refunds take?",
+            "answer": "<p>Customer pays, refunds take up to 14 working days.</p>"
+          }
+        },
+        "faq_xPcqMM": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I swap something for a different size or colour?",
+            "answer": "<p>If you change your mind after you have placed an order please reach out to us ASAP.</p>"
+          }
+        },
+        "faq_heading_iq9x7t": {
+          "type": "faq_heading",
+          "settings": {
+            "title": "Products and sizing"
+          }
+        },
+        "faq_zV4gyk": {
+          "type": "faq",
+          "settings": {
+            "question": "What size BMX do I need?",
+            "answer": "<p>More information on choosing the correct BMX size can be found on our <a href=\"/pages/bmx-bike-size-guide\" title=\"Size Guide\">BMX size guide page here</a>.</p>"
+          }
+        },
+        "faq_Y6RtCz": {
+          "type": "faq",
+          "settings": {
+            "question": "What brands do you stock?",
+            "answer": "<p>We stock a range of carefully selected brand, more information can be found on our <a href=\"/pages/brands-we-stock\" title=\"Brands we're stocking\">brand page here</a>.</p>"
+          }
+        },
+        "faq_JnTFaw": {
+          "type": "faq",
+          "settings": {
+            "question": "Cassette or freecoaster, what's the difference?",
+            "answer": "<p>Add your answer here.</p>"
+          }
         }
       },
       "block_order": [
@@ -52,7 +106,15 @@
         "faq_7UYWDC",
         "faq_AmaF3C",
         "faq_qJEWHX",
-        "faq_4R7hzM"
+        "faq_4R7hzM",
+        "faq_heading_CR3txp",
+        "faq_qdMEKh",
+        "faq_QBcBqb",
+        "faq_xPcqMM",
+        "faq_heading_iq9x7t",
+        "faq_zV4gyk",
+        "faq_Y6RtCz",
+        "faq_JnTFaw"
       ],
       "settings": {
         "nav_only": false,
