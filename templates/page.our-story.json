@@ -12,7 +12,13 @@
     "main": {
       "type": "page",
       "disabled": true,
-      "settings": {}
+      "settings": {
+        "nav_only": false,
+        "navigation": "",
+        "button_intro": "<p>Still can’t find what you’re looking for?<br>Please contact us below</p>",
+        "button_label": "Contact us",
+        "button_link": ""
+      }
     },
     "image_with_usps_gLG8V9": {
       "type": "image-with-usps",
@@ -62,10 +68,70 @@
         "padding-top-m": 0,
         "padding-bottom-m": 0
       }
+    },
+    "collection_grid_HNBrQj": {
+      "type": "collection-grid",
+      "blocks": {
+        "collection_8rnnEt": {
+          "type": "collection",
+          "settings": {
+            "collection": "complete-bikes",
+            "image": "shopify://shop_images/complet-bikes.jpg",
+            "title": "Complete Bikes"
+          }
+        },
+        "collection_VdYRrX": {
+          "type": "collection",
+          "settings": {
+            "collection": "frames",
+            "image": "shopify://shop_images/frames_99457d6c-7c1b-43f0-a4d8-7d76fac3a0de.jpg",
+            "title": ""
+          }
+        },
+        "collection_ngJBGB": {
+          "type": "collection",
+          "settings": {
+            "collection": "wheels",
+            "image": "shopify://shop_images/wheels.jpg",
+            "title": ""
+          }
+        },
+        "collection_VQmDaQ": {
+          "type": "collection",
+          "settings": {
+            "collection": "parts",
+            "image": "shopify://shop_images/parts.jpg",
+            "title": "Parts"
+          }
+        },
+        "collection_FHGYiY": {
+          "type": "collection",
+          "settings": {
+            "collection": "sale",
+            "image": "shopify://shop_images/sale.jpg",
+            "title": "Sale"
+          }
+        }
+      },
+      "block_order": [
+        "collection_8rnnEt",
+        "collection_VdYRrX",
+        "collection_ngJBGB",
+        "collection_VQmDaQ",
+        "collection_FHGYiY"
+      ],
+      "name": "Collection grid",
+      "settings": {
+        "padding-top": 50,
+        "padding-bottom": 0,
+        "padding-top-m": 0,
+        "padding-bottom-m": 0
+      }
     }
   },
   "order": [
     "main",
-    "image_with_usps_gLG8V9"
+    "image_with_usps_gLG8V9",
+    "collection_grid_HNBrQj"
   ]
 }
