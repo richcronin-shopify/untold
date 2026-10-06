@@ -2298,7 +2298,7 @@ button,
 	box-shadow: none !important;
 
 	@media (max-width: 767px) {
-
+		padding: 20px 16px !important;
 	}
 	
 	button {
