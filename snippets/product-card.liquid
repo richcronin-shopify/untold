@@ -54,7 +54,7 @@
 								height: 800,
 								widths: '300, 400, 500, 600, 800',
 								sizes: '(min-width: 990px) 25vw, 50vw',
-								alt: secondary_image.alt
+								alt: ''
 					-}}
 
 				{%- endif -%}
@@ -64,7 +64,18 @@
 		{%- else -%}
 
 			<div class="product-card__placeholder">
-				{{- 'product-1' | placeholder_svg_tag -}}
+				{{-
+					settings.fallback_img_sub_collection_image
+					| image_url: width: 800
+					| image_tag:
+						class: 'product-card__image product-card__image--primary',
+						loading: 'lazy',
+						width: 800,
+						height: 800,
+						widths: '300, 400, 500, 600, 800',
+						sizes: '(min-width: 990px) 25vw, 50vw',
+						alt: settings.fallback_img_sub_collection_image.alt
+				-}}
 			</div>
 
 		{%- endif -%}
@@ -133,18 +144,22 @@
 				"
 			>
 
-				<span
-					class="product-card__availability-dot"
-					aria-hidden="true"
-				></span>
+				<div class="product-card__availability-inner">
 
-				<span>
-					{%- if card_product.available -%}
-						In Stock
-					{%- else -%}
-						Sold Out
-					{%- endif -%}
-				</span>
+					<span
+						class="product-card__availability-dot"
+						aria-hidden="true"
+					></span>
+
+					<span>
+						{%- if card_product.available -%}
+							In Stock
+						{%- else -%}
+							Sold Out
+						{%- endif -%}
+					</span>
+
+				</div>
 
 			</div>
 
