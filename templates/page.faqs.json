@@ -15,29 +15,29 @@
         "faq_7UYWDC": {
           "type": "faq",
           "settings": {
-            "question": "Who is UNTOLD?",
-            "answer": "<p>Add your answer here.</p>"
+            "question": "Do you offer free delivery?",
+            "answer": "<p>Yes! Free UK delivery on orders over £200</p>"
           }
         },
         "faq_AmaF3C": {
           "type": "faq",
           "settings": {
-            "question": "Who is UNTOLD?",
-            "answer": "<p>Add your answer here.</p>"
+            "question": "Do you ship internationally?",
+            "answer": "<p>No, unfortunately we only ship within the UK for now.</p>"
           }
         },
         "faq_qJEWHX": {
           "type": "faq",
           "settings": {
-            "question": "Who is UNTOLD?",
-            "answer": "<p>Add your answer here.</p>"
+            "question": "How long will my order take?",
+            "answer": "<p>All orders are shipped via Royal Mail 48 or DPD (for heavier, bulkier items). Please allow up to 4 business days in some cases for handling and postal delays.</p>"
           }
         },
         "faq_4R7hzM": {
           "type": "faq",
           "settings": {
-            "question": "Who is UNTOLD?",
-            "answer": "<p>Add your answer here.</p>"
+            "question": "Can I change or cancel my order after I've paid?",
+            "answer": "<p>If you change your mind after you have placed an order please reach out to us ASAP.</p>"
           }
         }
       },
