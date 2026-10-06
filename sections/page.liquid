@@ -59,7 +59,7 @@
 										{%- endif -%}
 
 										<div class="page__faq-group" {{ block.shopify_attributes }}>
-											<h2 class="page__faq-group-title h2">
+											<h2 class="page__faq-group-title h4">
 												{{ bs.title }}
 											</h2>
 
@@ -133,23 +133,6 @@
 	{%- endunless -%}
 
 </section>
-
-{% stylesheet %}
-
-	.page__faq-group {
-		margin-top: 45px;
-
-		&:first-child {
-			margin-top: 0;
-		}
-
-		.page__faq-group-title {
-			margin: 0 0 20px;
-			text-align: left;
-		}
-	}
-
-{% endstylesheet %}
 
 {% schema %}
 {

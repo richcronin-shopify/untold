@@ -12,6 +12,12 @@
     "main": {
       "type": "page",
       "blocks": {
+        "faq_heading_JtJHKe": {
+          "type": "faq_heading",
+          "settings": {
+            "title": "Orders and delivery"
+          }
+        },
         "faq_7UYWDC": {
           "type": "faq",
           "settings": {
@@ -42,6 +48,7 @@
         }
       },
       "block_order": [
+        "faq_heading_JtJHKe",
         "faq_7UYWDC",
         "faq_AmaF3C",
         "faq_qJEWHX",
