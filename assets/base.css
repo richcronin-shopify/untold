@@ -2305,7 +2305,7 @@ button,
 	.shopify-pc__banner__btns {
 		@media (max-width: 767px) {
 			flex-direction: row !important;
-			gap: 3px !important;
+			gap: 6px !important;
 		}
 	}
 	
