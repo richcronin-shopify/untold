@@ -2283,6 +2283,7 @@ button,
 	label {
 		font-family: var(--font-heading-family) !important;
 		font-weight: 500 !important;
+		text-transform: uppercase;
 	}
 }
 
