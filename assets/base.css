@@ -121,8 +121,19 @@ html {
 
 body {
   	margin: 0;
+
+  	.site-header {
+		.site-header__main {
+			background: transparent;
+			transition: .3s all;
+			&:hover {
+				background: var(--color-black);
+			}
+		}
+	}
+	
   	&.template-index {
-		.site-header {
+		/*.site-header {
 			.site-header__main {
 				background: transparent;
 				transition: .3s all;
@@ -130,7 +141,7 @@ body {
 					background: var(--color-black);
 				}
 			}
-		}
+		}*/
 	}
 	&.scrolled {
 		.site-header {
