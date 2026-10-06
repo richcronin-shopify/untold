@@ -24,7 +24,7 @@
         "announcement_7crK3Q": {
           "type": "announcement",
           "settings": {
-            "title": "free delivery on orders over £100*",
+            "title": "free delivery on orders over £200*",
             "url": ""
           }
         },
@@ -50,7 +50,7 @@
       "type": "cart-drawer",
       "settings": {
         "title": "Your Cart",
-        "free_delivery_threshold": 100,
+        "free_delivery_threshold": 200,
         "free_delivery_label": "FREE UK Delivery",
         "free_delivery_unlocked_label": "You've unlocked FREE UK Delivery",
         "show_points": true,

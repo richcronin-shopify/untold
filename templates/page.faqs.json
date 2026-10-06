@@ -48,6 +48,7 @@
         "faq_4R7hzM"
       ],
       "settings": {
+        "nav_only": false,
         "navigation": "in-page-menu",
         "button_intro": "<p>Still can’t find what you’re looking for?<br/>Please contact us below</p>",
         "button_label": "Contact us",
