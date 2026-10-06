@@ -106,6 +106,40 @@
             "question": "Do complete bikes arrive ready to ride?",
             "answer": "<p>Each BMX differs slightly with how it's packaged so please reach out to us before purchasing if you need full assembly.</p>"
           }
+        },
+        "faq_heading_NRPiy9": {
+          "type": "faq_heading",
+          "settings": {
+            "title": "Payments, warranty and contact"
+          }
+        },
+        "faq_zCJUTJ": {
+          "type": "faq",
+          "settings": {
+            "question": "What payment methods do you take?",
+            "answer": "<p>Apple and Google Pay, Klarna, Clearpay, PayPal along with all main card vendors.</p>"
+          }
+        },
+        "faq_9nwQPN": {
+          "type": "faq",
+          "settings": {
+            "question": "How do UNTOLD points work?",
+            "answer": "<p>Untold Points are our loyalty rewards — you earn <strong>1 point for every £1 you spend</strong>. Your points build up as you shop and can be redeemed against future purchases, giving you a little back every time you ride with us.</p>"
+          }
+        },
+        "faq_MjNdPX": {
+          "type": "faq",
+          "settings": {
+            "question": "How does warranty work?",
+            "answer": "<p>Add your answer here.</p>"
+          }
+        },
+        "faq_7zB36q": {
+          "type": "faq",
+          "settings": {
+            "question": "How do I get in touch, and when are you open?",
+            "answer": "<p>You can reach out by using the live chat at the bottom right or contact us via the <a href=\"/pages/contact\" title=\"Contact\">contact page here</a>.</p>"
+          }
         }
       },
       "block_order": [
@@ -122,7 +156,12 @@
         "faq_zV4gyk",
         "faq_Y6RtCz",
         "faq_JnTFaw",
-        "faq_Cei8Kf"
+        "faq_Cei8Kf",
+        "faq_heading_NRPiy9",
+        "faq_zCJUTJ",
+        "faq_9nwQPN",
+        "faq_MjNdPX",
+        "faq_7zB36q"
       ],
       "settings": {
         "nav_only": false,
