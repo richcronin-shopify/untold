@@ -2284,8 +2284,13 @@ button,
 		font-family: var(--font-heading-family) !important;
 	}
 
+	.shopify-pc__banner__body-title {
+		font-family: var(--font-heading-family) !important;
+		font-weight: 400 !important;
+	}
+
 	p {
 		font-size: 14px !important;
 	}
-	
+
 }
