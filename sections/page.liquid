@@ -11,35 +11,25 @@
 	{%- if ss.navigation != blank and ss.navigation.links.size > 0 -%}
 		<nav class="page__navigation" aria-label="Page navigation">
 			<div class="container">
-
 				<ul class="page__navigation-list" role="list">
 					{%- for link in ss.navigation.links -%}
 						<li class="page__navigation-item">
-							<a
-								href="{{ link.url }}"
-								class="page__navigation-link{% if link.current %} is-active{% endif %}"
-								{% if link.current %}aria-current="page"{% endif %}
-							>
+							<a href="{{ link.url }}" class="page__navigation-link{% if link.current %} is-active{% endif %}" {% if link.current %}aria-current="page"{% endif %}>
 								{{ link.title }}
 							</a>
 						</li>
 					{%- endfor -%}
 				</ul>
-
 			</div>
 		</nav>
 	{%- endif -%}
 
 	{%- unless ss.nav_only -%}
-
 		<div class="container">
-
 			<div class="page__inner">
 
 				<header class="page__header">
-					<h1 class="page__title h2">
-						{{ page.title }}
-					</h1>
+					<h1 class="page__title h2">{{ page.title }}</h1>
 
 					{%- if has_faqs and page.content != blank -%}
 						<div class="page__intro rte">
@@ -52,30 +42,63 @@
 
 					<div class="page__faqs">
 
+						{%- assign faq_group_open = false -%}
+
 						{%- for block in section.blocks -%}
 							{%- assign bs = block.settings -%}
 
-							{%- if bs.question != blank -%}
-								<details class="page__faq" {{ block.shopify_attributes }}>
+							{%- case block.type -%}
 
-									<summary class="page__faq-trigger">
-										<span class="page__faq-question">
-											{{ bs.question }}
-										</span>
+								{%- when 'faq_heading' -%}
 
-										<span class="page__faq-icon" aria-hidden="true"></span>
-									</summary>
+									{%- if bs.title != blank -%}
 
-									{%- if bs.answer != blank -%}
-										<div class="page__faq-content rte">
-											{{ bs.answer }}
-										</div>
+										{%- if faq_group_open -%}
+												</div>
+											</div>
+										{%- endif -%}
+
+										<div class="page__faq-group" {{ block.shopify_attributes }}>
+											<h2 class="page__faq-group-title h2">
+												{{ bs.title }}
+											</h2>
+
+											<div class="page__faq-group-items">
+
+										{%- assign faq_group_open = true -%}
+
 									{%- endif -%}
 
-								</details>
-							{%- endif -%}
+								{%- when 'faq' -%}
+
+									{%- if bs.question != blank -%}
+										<details class="page__faq" {{ block.shopify_attributes }}>
+
+											<summary class="page__faq-trigger">
+												<span class="page__faq-question">
+													{{ bs.question }}
+												</span>
+
+												<span class="page__faq-icon" aria-hidden="true"></span>
+											</summary>
+
+											{%- if bs.answer != blank -%}
+												<div class="page__faq-content rte">
+													{{ bs.answer }}
+												</div>
+											{%- endif -%}
+
+										</details>
+									{%- endif -%}
+
+							{%- endcase -%}
 
 						{%- endfor -%}
+
+						{%- if faq_group_open -%}
+								</div>
+							</div>
+						{%- endif -%}
 
 					</div>
 
@@ -88,7 +111,6 @@
 				{%- endif -%}
 
 				{%- if ss.button_intro != blank or ss.button_label != blank -%}
-
 					<div class="page__cta">
 
 						{%- if ss.button_intro != blank -%}
@@ -104,16 +126,30 @@
 						{%- endif -%}
 
 					</div>
-
 				{%- endif -%}
 
 			</div>
-
 		</div>
-
 	{%- endunless -%}
 
 </section>
+
+{% stylesheet %}
+
+	.page__faq-group {
+		margin-top: 45px;
+
+		&:first-child {
+			margin-top: 0;
+		}
+
+		.page__faq-group-title {
+			margin: 0 0 20px;
+			text-align: left;
+		}
+	}
+
+{% endstylesheet %}
 
 {% schema %}
 {
@@ -153,6 +189,18 @@
 		}
 	],
 	"blocks": [
+		{
+			"type": "faq_heading",
+			"name": "FAQ Heading",
+			"settings": [
+				{
+					"type": "text",
+					"id": "title",
+					"label": "Heading",
+					"default": "General"
+				}
+			]
+		},
 		{
 			"type": "faq",
 			"name": "FAQ",
