@@ -155,7 +155,7 @@
         "collection_Tx6Urx": {
           "type": "collection",
           "settings": {
-            "collection": "all-products",
+            "collection": "parts",
             "image": "shopify://shop_images/parts.jpg",
             "title": "Parts"
           }
@@ -163,7 +163,7 @@
         "collection_NLazNy": {
           "type": "collection",
           "settings": {
-            "collection": "backpacks",
+            "collection": "sale",
             "image": "shopify://shop_images/sale.jpg",
             "title": "Sale"
           }
