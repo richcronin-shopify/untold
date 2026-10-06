@@ -72,6 +72,10 @@ html {
 
   	overflow: hidden;
 
+  	shopify-chat {
+  		display: none !important;
+  	}
+
   	body {
   		overflow: hidden;
 
