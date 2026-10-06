@@ -2309,6 +2309,9 @@ button,
 	
 	button {
 		font-family: var(--font-heading-family) !important;
+		@media (max-width: 767px) {
+			margin: 0 !important;
+		}
 	}
 
 	#shopify-pc__banner__body-title {
