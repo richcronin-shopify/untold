@@ -2274,6 +2274,16 @@ button,
 	}
 }
 
+#shopify-pc__prefs__dialog {
+	border: 1px solid var(--border-white) !important;
+	box-shadow: none !important;
+	h2, 
+	button {
+		font-family: var(--font-heading-family) !important;
+		font-weight: 400 !important;
+	}
+}
+
 .shopify-pc__banner__dialog {
 	
 	border-top: 1px solid var(--border-white) !important;
