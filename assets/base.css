@@ -2273,3 +2273,7 @@ button,
 		font-size: var(--h2);
 	}
 }
+
+.shopify-pc__banner__dialog button {
+	font-family: var(--font-heading-family) !important;
+}
