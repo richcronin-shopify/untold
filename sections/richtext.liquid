@@ -1,0 +1,369 @@
+{% assign ss = section.settings %}
+{% assign hasBtns = false %}
+
+{% if section.blocks.size > 0 %}
+	{{ 'section-rich-text.css' | asset_url | stylesheet_tag }}
+
+	<section class="section-rich-text" id="{{section.id}}">
+		
+		<div class="container">
+
+			<div class="content {{ ss.text_alignment }} {{ss.text_align}} {% if ss.enable_fw %}enable_fw{% endif %}"> 
+
+				{% for block in section.blocks %}
+
+					{% assign bs = block.settings %}
+
+					{% case block.type %}
+
+						{% when 'heading' %}
+
+						{% if bs.title != blank %}
+							<h{{bs.heading_tag}} class="h{{bs.font_size}} block-title" data-block="block-{{block.id}}">{{ bs.title }}</h{{bs.heading_tag}}>
+						{% endif %}
+
+						{% when 'subtitle' %}
+
+						{% if bs.title != blank %}
+							<div class="rte block-subtitle" data-block="block-{{block.id}}">
+								<p class="text-note">{{bs.title}}</p>
+							</div>
+						{% endif %}
+
+						{% when 'richtext' %}
+
+						{% if bs.richtext != blank %}
+							<div class="rte block-richtext" data-block="block-{{block.id}}">{{bs.richtext}}</div>
+						{% endif %}
+
+						{% when 'btn' %}
+						{% if bs.url != blank and bs.title != blank %}
+							<div class="btn-flex">
+								{% render 'button', url: bs.url, style: bs.style, label: bs.title %}
+							</div>
+						{% endif %}
+
+						{% when 'testimonial' %}
+
+						<div class="block block-testimonial" data-scroll-to="id-{{block.id}}">
+							{% if bs.testimonial != blank %}
+								<blockquote>
+									{{ bs.testimonial }}
+								</blockquote>
+							{% endif %}
+
+							{% if bs.name != blank %}
+								<div class="note">
+									<span class="text-note">{{ bs.name }}</span>
+								</div>
+							{% endif %}
+						</div>
+
+						{% when 'image' %}
+
+						{% if bs.image != blank %}
+							<div class="block block-image" data-scroll-to="id-{{block.id}}">
+								{% render 'image', image: bs.image %}		
+							</div>
+						{% endif %}
+
+					{% endcase %}
+
+				{% endfor %}
+				
+
+			</div>
+
+		</div>
+
+	</section>
+
+	{% style %}
+
+		#{{section.id}} {
+			padding-top: {{ss.padding-top}}px;
+			padding-bottom: {{ss.padding-bottom}}px;
+			{% if ss.bg_color != blank %}
+				background: {{ss.bg_color}};
+			{% endif %}
+			{% if ss.enable_top_border %}
+				border-top: 1px solid {{ss.border_color}};
+			{% endif %}
+			{% if ss.enable_bottom_border %}
+				border-bottom: 1px solid {{ss.border_color}};
+			{% endif %}
+
+		}
+
+		{% if ss.text_color != blank %}
+			#{{section.id}} *:not(.button) {
+				color: {{ss.text_color}};
+			}
+		{% endif %}
+
+		@media screen and (max-width: 750px) {
+
+			#{{section.id}} {
+				padding-top: {{ss.padding-top-m}}px;
+				padding-bottom: {{ss.padding-bottom-m}}px;
+			}
+
+		}
+
+	{% endstyle %}
+
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Richtext",
+
+    "settings": [
+
+        {
+			"type": "paragraph",
+			"content": "NOTE: When updating this page the customiser will break temporarily until you save the changes. This is due to the use of third party scripts and the page needing to reload before new data has been rendered. No customers will see this."
+		},
+		{
+            "type": "color",
+            "id": "bg_color",
+            "label": "Background colour",
+            "default": "#FFFFFF"
+        },
+        {
+            "type": "color",
+            "id": "text_color",
+            "label": "Text colour",
+            "default": "#1F140A"
+        },
+        {
+            "type": "header",
+            "content": "Content"
+        },
+        {
+			"type": "checkbox",
+			"id": "enable_fw",
+			"default": false,
+			"label": "Enable full width?"
+		},
+		{
+            "type": "select",
+            "id": "text_alignment",
+            "options": [
+                { "value": "content-align-left", "label": "Left"},
+                { "value": "content-align-center", "label": "Center"},
+                { "value": "content-align-right", "label": "Right"}
+            ],
+            "label": "Text position"
+        },
+        {
+            "type": "select",
+            "id": "text_align",
+            "options": [
+                { "value": "text-align-left", "label": "Left"},
+                { "value": "text-align-center", "label": "Center"},
+                { "value": "text-align-right", "label": "Right"}
+            ],
+            "label": "Text alignment"
+        },
+		{
+            "type": "header",
+            "content": "Borders"
+        },
+        {
+			"type": "checkbox",
+			"id": "enable_top_border",
+			"default": false,
+			"label": "Top border"
+		},
+		{
+			"type": "checkbox",
+			"id": "enable_bottom_border",
+			"default": false,
+			"label": "Bottom border"
+		},
+		{
+            "type": "color",
+            "id": "border_color",
+            "label": "Border colour"
+        },
+		{
+            "type": "header",
+            "content": "Padding (desktop)"
+        },
+		{
+            "type": "range",
+            "id": "padding-top",
+            "min": 0,
+            "max": 300,
+            "step": 5,
+            "label": "Padding top",
+            "default": 0
+        },
+        {
+            "type": "range",
+            "id": "padding-bottom",
+            "min": 0,
+            "max": 300,
+            "step": 5,
+            "label": "Padding bottom",
+            "default": 0
+        },
+        {
+            "type": "header",
+            "content": "Padding (mobile)"
+        },
+		{
+            "type": "range",
+            "id": "padding-top-m",
+            "min": 0,
+            "max": 300,
+            "step": 5,
+            "label": "Padding top",
+            "default": 0
+        },
+        {
+            "type": "range",
+            "id": "padding-bottom-m",
+            "min": 0,
+            "max": 300,
+            "step": 5,
+            "label": "Padding bottom-m",
+            "default": 0
+        }
+        
+    ],
+
+    "blocks": [
+     
+        {
+            "type": "heading",
+            "name": "Heading",
+            "settings": [
+                
+		        {
+		            "type": "range",
+		            "id": "heading_tag",
+		            "min": 1,
+		            "max": 6,
+		            "step": 1,
+		            "label": "Title heading tag",
+		            "info": "Header tags, also known as heading tags, are used to separate headings and subheadings on a webpage. They rank in order of importance, from H1 to H6, with H1s usually being the title. Header tags improve the readability and SEO of a webpage.",
+		            "default": 6
+		        },
+		        {
+		            "type": "range",
+		            "id": "font_size",
+		            "min": 1,
+		            "max": 6,
+		            "step": 1,
+		            "label": "Font size",
+		            "info": "1 being the largest. 6 being the smallest.",
+		            "default": 4
+		        },
+		        {
+		            "type": "textarea",
+		            "id": "title",
+		            "label": "Title"
+		        }
+
+            ]
+
+        },
+
+        {
+            "type": "richtext",
+            "name": "Richtext",
+            "settings": [
+                
+		        {
+		            "type": "richtext",
+		            "id": "richtext",
+		            "label": "Richtext"
+		        }
+
+            ]
+
+        },
+
+        {
+            "type": "subtitle",
+            "name": "Subtitle",
+            "settings": [
+                
+		        {
+		            "type": "text",
+		            "id": "title",
+		            "label": "Subtitle"
+		        }
+
+            ]
+
+        },
+
+        {
+            "type": "btn",
+            "name": "Button",
+            "settings": [
+                
+		        {
+		            "type": "text",
+		            "id": "title",
+		            "label": "Label"
+		        },
+		        {
+		            "type": "url",
+		            "id": "url",
+		            "label": "URL"
+		        }
+
+
+            ]
+
+        },
+
+        {
+            "type": "testimonial",
+            "name": "Testimonial",
+            "settings": [
+                
+		        {
+		            "type": "textarea",
+		            "id": "testimonial",
+		            "label": "Testimonial"
+		        },
+		        {
+		            "type": "text",
+		            "id": "name",
+		            "label": "Name"
+		        }
+
+            ]
+
+        },
+
+        {
+            "type": "image",
+            "name": "Image",
+            "settings": [
+                
+		        {
+		            "type": "image_picker",
+		            "id": "image",
+		            "label": "Image"
+		        }
+
+            ]
+
+        }
+
+    ],
+
+    "presets" : [
+        {
+            "name": "Richtext"
+        }
+    ]
+
+  }
+{% endschema %}
