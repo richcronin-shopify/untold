@@ -1,0 +1,178 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "page",
+      "blocks": {
+        "faq_heading_JtJHKe": {
+          "type": "faq_heading",
+          "settings": {
+            "title": "Orders and delivery"
+          }
+        },
+        "faq_7UYWDC": {
+          "type": "faq",
+          "settings": {
+            "question": "Do you offer free delivery?",
+            "answer": "<p>Yes! Free UK delivery on orders over £200</p>"
+          }
+        },
+        "faq_AmaF3C": {
+          "type": "faq",
+          "settings": {
+            "question": "Do you ship internationally?",
+            "answer": "<p>No, unfortunately we only ship within the UK for now.</p>"
+          }
+        },
+        "faq_qJEWHX": {
+          "type": "faq",
+          "settings": {
+            "question": "How long will my order take?",
+            "answer": "<p>All orders are shipped via Royal Mail 48 or DPD (for heavier, bulkier items). Please allow up to 4 business days in some cases for handling and postal delays.</p>"
+          }
+        },
+        "faq_4R7hzM": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I change or cancel my order after I've paid?",
+            "answer": "<p>If you change your mind after you have placed an order please reach out to us ASAP.</p>"
+          }
+        },
+        "faq_heading_CR3txp": {
+          "type": "faq_heading",
+          "settings": {
+            "title": "Returns"
+          }
+        },
+        "faq_qdMEKh": {
+          "type": "faq",
+          "settings": {
+            "question": "What's your returns policy?",
+            "answer": "<p>30 days, unused, in the original packaging.&nbsp;</p>"
+          }
+        },
+        "faq_QBcBqb": {
+          "type": "faq",
+          "settings": {
+            "question": "Who pays for return postage, and how long do refunds take?",
+            "answer": "<p>Customer pays, refunds take up to 14 working days.</p>"
+          }
+        },
+        "faq_xPcqMM": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I swap something for a different size or colour?",
+            "answer": "<p>If you change your mind after you have placed an order please reach out to us ASAP.</p>"
+          }
+        },
+        "faq_heading_iq9x7t": {
+          "type": "faq_heading",
+          "settings": {
+            "title": "Products and sizing"
+          }
+        },
+        "faq_zV4gyk": {
+          "type": "faq",
+          "settings": {
+            "question": "What size BMX do I need?",
+            "answer": "<p>More information on choosing the correct BMX size can be found on our <a href=\"/pages/bmx-bike-size-guide\" title=\"Size Guide\">BMX size guide page here</a>.</p>"
+          }
+        },
+        "faq_Y6RtCz": {
+          "type": "faq",
+          "settings": {
+            "question": "What brands do you stock?",
+            "answer": "<p>We stock a range of carefully selected brand, more information can be found on our <a href=\"/pages/brands-we-stock\" title=\"Brands we're stocking\">brand page here</a>.</p>"
+          }
+        },
+        "faq_JnTFaw": {
+          "type": "faq",
+          "settings": {
+            "question": "Cassette or freecoaster, what's the difference?",
+            "answer": "<p>A <strong>cassette hub</strong> engages when you pedal backwards, so your cranks rotate when rolling fakie. They feel direct, responsive and are a popular all-round option.</p><p>A <strong>freecoaster hub</strong> lets you roll backwards without the cranks moving, making fakies and technical street tricks easier. The trade-off is a little more slack before the hub engages when you pedal forward.</p>"
+          }
+        },
+        "faq_Cei8Kf": {
+          "type": "faq",
+          "settings": {
+            "question": "Do complete bikes arrive ready to ride?",
+            "answer": "<p>Each BMX differs slightly with how it's packaged so please reach out to us before purchasing if you need full assembly.</p>"
+          }
+        },
+        "faq_heading_NRPiy9": {
+          "type": "faq_heading",
+          "settings": {
+            "title": "Payments, warranty and contact"
+          }
+        },
+        "faq_zCJUTJ": {
+          "type": "faq",
+          "settings": {
+            "question": "What payment methods do you take?",
+            "answer": "<p>Apple and Google Pay, Klarna, Clearpay, PayPal along with all main card vendors.</p>"
+          }
+        },
+        "faq_9nwQPN": {
+          "type": "faq",
+          "settings": {
+            "question": "How do UNTOLD points work?",
+            "answer": "<p>Untold Points are our loyalty rewards — you earn <strong>1 point for every £1 you spend</strong>. Your points build up as you shop and can be redeemed against future purchases, giving you a little back every time you ride with us.</p>"
+          }
+        },
+        "faq_MjNdPX": {
+          "type": "faq",
+          "settings": {
+            "question": "How does warranty work?",
+            "answer": "<p>All warranty queries should come through us first. Just email our support team with the details and we’ll help assess the issue, then work directly with the relevant distributor or brand to get it resolved for you.</p>"
+          }
+        },
+        "faq_7zB36q": {
+          "type": "faq",
+          "settings": {
+            "question": "How do I get in touch, and when are you open?",
+            "answer": "<p>You can reach out by using the live chat at the bottom right or contact us via the <a href=\"/pages/contact\" title=\"Contact\">contact page here</a>.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_heading_JtJHKe",
+        "faq_7UYWDC",
+        "faq_AmaF3C",
+        "faq_qJEWHX",
+        "faq_4R7hzM",
+        "faq_heading_CR3txp",
+        "faq_qdMEKh",
+        "faq_QBcBqb",
+        "faq_xPcqMM",
+        "faq_heading_iq9x7t",
+        "faq_zV4gyk",
+        "faq_Y6RtCz",
+        "faq_JnTFaw",
+        "faq_Cei8Kf",
+        "faq_heading_NRPiy9",
+        "faq_zCJUTJ",
+        "faq_9nwQPN",
+        "faq_MjNdPX",
+        "faq_7zB36q"
+      ],
+      "settings": {
+        "nav_only": false,
+        "navigation": "in-page-menu",
+        "button_intro": "<p>Still can’t find what you’re looking for?<br/>Please contact us below</p>",
+        "button_label": "Contact us",
+        "button_link": "shopify://pages/contact"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
