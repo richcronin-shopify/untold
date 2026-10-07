@@ -85,12 +85,6 @@
 			padding-bottom: {{ss.padding-bottom}}px;
 		}
 
-		{% if ss.text_color != blank %}
-			#{{section.id}} *:not(.button) {
-				color: {{ss.text_color}};
-			}
-		{% endif %}
-
 		@media screen and (max-width: 750px) {
 
 			#{{section.id}} {
@@ -115,12 +109,6 @@
 			"content": "NOTE: When updating this page the customiser will break temporarily until you save the changes. This is due to the use of third party scripts and the page needing to reload before new data has been rendered. No customers will see this."
 		},
         {
-            "type": "color",
-            "id": "text_color",
-            "label": "Text colour",
-            "default": "#FFFFFF"
-        },
-        {
             "type": "header",
             "content": "Content"
         },
@@ -134,22 +122,6 @@
             ],
             "label": "Text alignment"
         },
-		{
-            "type": "header",
-            "content": "Borders"
-        },
-        {
-			"type": "checkbox",
-			"id": "enable_top_border",
-			"default": false,
-			"label": "Top border"
-		},
-		{
-			"type": "checkbox",
-			"id": "enable_bottom_border",
-			"default": false,
-			"label": "Bottom border"
-		},
 		{
             "type": "color",
             "id": "border_color",
