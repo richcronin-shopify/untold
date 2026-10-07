@@ -617,7 +617,7 @@
 			padding: 10px;
 			margin-top: 20px;
 			border-radius: 3px;
-			border: 1px solid var(--color-primary);
+			border: 1px solid var(--color-primary-reduced);
 
 			.product__points-icon {
 				display: flex;
