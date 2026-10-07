@@ -14,9 +14,9 @@
       "settings": {
         "nav_only": false,
         "navigation": "in-page-menu",
-        "button_intro": "<p>Still can’t find what you’re looking for?<br/>Please contact us below</p>",
-        "button_label": "Contact us",
-        "button_link": "shopify://pages/contact"
+        "button_intro": "<p>Seen enough? Explore our products.</p>",
+        "button_label": "Start shopping",
+        "button_link": "/collections"
       }
     }
   },
