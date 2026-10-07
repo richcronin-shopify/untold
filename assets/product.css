@@ -731,6 +731,10 @@
 						text-deocration: underline;
 					}
 
+					ol, ul {
+						padding: 0 0 16px 20px;
+					}
+
 				}
 			}
 
