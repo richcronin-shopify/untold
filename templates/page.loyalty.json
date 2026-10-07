@@ -169,12 +169,29 @@
         "padding-top-m": 0,
         "padding-bottom-m": 0
       }
+    },
+    "brand_slider_MipHqi": {
+      "type": "brand-slider",
+      "name": "Brand slider",
+      "settings": {
+        "title": "Shop by brand",
+        "enable_carousel": true,
+        "max_image_width": 120,
+        "brands_desktop": 7,
+        "brands_tablet": 4,
+        "brands_mobile": 3,
+        "padding-top": 40,
+        "padding-bottom": 40,
+        "padding-top-m": 30,
+        "padding-bottom-m": 30
+      }
     }
   },
   "order": [
     "main",
     "image_with_usps_Lf8djr",
     "usp_grid_riem8B",
-    "collection_grid_Y4jncK"
+    "collection_grid_Y4jncK",
+    "brand_slider_MipHqi"
   ]
 }
