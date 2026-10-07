@@ -11,6 +11,7 @@
   "sections": {
     "main": {
       "type": "page",
+      "disabled": true,
       "settings": {
         "nav_only": false,
         "navigation": "in-page-menu",
@@ -18,9 +19,47 @@
         "button_label": "Start shopping",
         "button_link": "/collections"
       }
+    },
+    "image_with_usps_Lf8djr": {
+      "type": "image-with-usps",
+      "blocks": {
+        "usp_xKRmX4": {
+          "type": "usp",
+          "settings": {
+            "title": "£1 Spend",
+            "description": "= 1 point"
+          }
+        },
+        "usp_TH7TWh": {
+          "type": "usp",
+          "settings": {
+            "title": "100 Points",
+            "description": "= £5 Off"
+          }
+        }
+      },
+      "block_order": [
+        "usp_xKRmX4",
+        "usp_TH7TWh"
+      ],
+      "name": "Image with USPs",
+      "settings": {
+        "desktop_image": "shopify://shop_images/spotlight.jpg",
+        "heading": "join untold rewards",
+        "heading_tag": 2,
+        "font_size": 1,
+        "text": "<p>Create an account to start earning points on every purchase. Redeem your points for money off future orders.</p>",
+        "button_label": "Our story",
+        "button_url": "",
+        "padding-top": 20,
+        "padding-bottom": 20,
+        "padding-top-m": 0,
+        "padding-bottom-m": 0
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "image_with_usps_Lf8djr"
   ]
 }
