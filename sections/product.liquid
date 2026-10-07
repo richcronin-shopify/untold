@@ -480,7 +480,7 @@
 							assign points_text = block.settings.text | replace: '[points]', points_earned
 						-%}
 
-						<div
+						<a href="{{ block.settings.link }}"
 							class="product__points"
 							data-product-points
 							data-points-per-pound="{{ points_per_pound }}"
@@ -516,7 +516,7 @@
 								{%- endif -%}
 							</div>
 
-						</div>
+						</a>
 
 					{%- elsif block.type == 'size_guide' and show_size_guide -%}
 
@@ -1630,6 +1630,11 @@
 					"id": "subtext",
 					"label": "Subtext",
 					"default": "Create an account to collect and redeem points."
+				},
+				{
+					"type": "url",
+					"id": "link",
+					"label": "Link"
 				}
 			]
 		},
