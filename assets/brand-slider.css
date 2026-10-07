@@ -39,7 +39,7 @@
 		.swiper-slide {
 			height: auto;
 			display: flex;
-			margin: 0;
+			margin: 0 !important;
 		}
 
 	}
