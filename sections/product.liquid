@@ -8,11 +8,19 @@
 {%- liquid
 	assign current_on_sale = false
 	assign current_saving = 0
+	assign show_size_guide = false
 
 	if current_variant.compare_at_price > current_variant.price
 		assign current_on_sale = true
 		assign current_saving = current_variant.compare_at_price | minus: current_variant.price
 	endif
+
+	for product_collection in product.collections
+		if product_collection.handle == 'complete-bikes'
+			assign show_size_guide = true
+			break
+		endif
+	endfor
 -%}
 
 <section
@@ -482,13 +490,14 @@
 
 							<div class="product__points-icon" aria-hidden="true">
 								{%- if block.settings.icon != blank -%}
+									{%- assign icon_style = 'max-width: ' | append: block.settings.max_image_width | append: 'px; width: 100%; height: auto;' -%}
 									{{
 										block.settings.icon
 										| image_url: width: 240
 										| image_tag:
 											loading: 'lazy',
 											alt: '',
-											style: 'max-width: ' | append: block.settings.max_image_width | append: 'px; width: 100%; height: auto;'
+											style: icon_style
 									}}
 								{%- elsif block.settings.icon_text != blank -%}
 									<span>{{ block.settings.icon_text }}</span>
@@ -509,7 +518,7 @@
 
 						</div>
 
-					{%- elsif block.type == 'size_guide' and product.type == 'Complete bikes' -%}
+					{%- elsif block.type == 'size_guide' and show_size_guide -%}
 
 						<div
 							class="product__points product__points--size-guide"
@@ -518,13 +527,14 @@
 
 							<div class="product__points-icon" aria-hidden="true">
 								{%- if block.settings.icon != blank -%}
+									{%- assign icon_style = 'max-width: ' | append: block.settings.max_image_width | append: 'px; width: 100%; height: auto;' -%}
 									{{
 										block.settings.icon
 										| image_url: width: 240
 										| image_tag:
 											loading: 'lazy',
 											alt: '',
-											style: 'max-width: ' | append: block.settings.max_image_width | append: 'px; width: 100%; height: auto;'
+											style: icon_style
 									}}
 								{%- elsif block.settings.icon_text != blank -%}
 									<span>{{ block.settings.icon_text }}</span>
