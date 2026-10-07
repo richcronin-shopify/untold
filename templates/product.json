@@ -20,11 +20,10 @@
           "type": "size_guide",
           "settings": {
             "icon": "shopify://shop_images/icon-size.svg",
-            "max_image_width": 30,
+            "max_image_width": 25,
             "icon_text": "",
             "title": "Not sure which size is right?",
             "subtext": "Check our Bike Size Help Guide for detailed measurements and fitting advice.",
-            "link_label": "View size guide",
             "link": "shopify://pages/bmx-bike-size-guide"
           }
         },
@@ -36,7 +35,8 @@
             "max_image_width": 40,
             "icon_text": "",
             "text": "Earn [points] Untold points with this product",
-            "subtext": "Create an account to collect and redeem points."
+            "subtext": "Create an account to collect and redeem points.",
+            "link": "shopify://pages/loyalty"
           }
         }
       },
