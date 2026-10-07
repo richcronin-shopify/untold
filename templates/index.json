@@ -319,7 +319,7 @@
           "type": "card",
           "settings": {
             "image": "shopify://shop_images/shop-by-height.jpg",
-            "icon": "shopify://shop_images/icon-height.svg",
+            "icon": "shopify://shop_images/icon-size.svg",
             "title": "Shop by height",
             "description": "Find the right frame size",
             "url": "shopify://collections/chains"
