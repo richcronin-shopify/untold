@@ -322,7 +322,7 @@
             "icon": "shopify://shop_images/icon-size.svg",
             "title": "Shop by height",
             "description": "Find the right frame size",
-            "url": "shopify://collections/chains"
+            "url": "shopify://pages/bmx-bike-size-guide"
           }
         },
         "card_HhjRXp": {
@@ -332,7 +332,7 @@
             "icon": "shopify://shop_images/icon-age.svg",
             "title": "Shop by age",
             "description": "Perfect picks for younger riders",
-            "url": "shopify://collections/chains"
+            "url": "shopify://pages/bmx-bike-size-guide"
           }
         },
         "card_Q4CJDK": {
