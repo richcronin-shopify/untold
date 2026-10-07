@@ -520,7 +520,7 @@
 
 					{%- elsif block.type == 'size_guide' and show_size_guide -%}
 
-						<div
+						<a href="{{ block.settings.link }}"
 							class="product__points product__points--size-guide"
 							{{ block.shopify_attributes }}
 						>
@@ -555,16 +555,7 @@
 								{%- endif -%}
 							</div>
 
-							{%- if block.settings.link != blank and block.settings.link_label != blank -%}
-								<a
-									href="{{ block.settings.link }}"
-									class="product__size-guide-link"
-								>
-									{{ block.settings.link_label }}
-								</a>
-							{%- endif -%}
-
-						</div>
+						</a>
 
 					{%- endif -%}
 
