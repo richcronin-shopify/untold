@@ -95,6 +95,7 @@
 						display: block;
 						width: auto;
 						max-width: 23px;
+						width: 23px;
 						height: auto;
 						@media (max-width: 767px) {
 							width: 22px;
