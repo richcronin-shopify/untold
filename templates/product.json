@@ -20,6 +20,7 @@
           "type": "size_guide",
           "settings": {
             "icon": "shopify://shop_images/icon-size.svg",
+            "max_image_width": 30,
             "icon_text": "",
             "title": "Not sure which size is right?",
             "subtext": "Check our Bike Size Help Guide for detailed measurements and fitting advice.",
@@ -32,6 +33,7 @@
           "settings": {
             "points_per_pound": 1,
             "icon": "shopify://shop_images/untold-points.png",
+            "max_image_width": 50,
             "icon_text": "",
             "text": "Earn [points] Untold points with this product",
             "subtext": "Create an account to collect and redeem points."
