@@ -27,6 +27,7 @@
           "settings": {
             "wheel_size": "12\"",
             "image": "shopify://shop_images/image_50.png",
+            "url": "shopify://collections/12-inch",
             "image_width": 100,
             "age": "2–4 years",
             "height_metric": "60–90 cm",
@@ -39,6 +40,7 @@
           "settings": {
             "wheel_size": "14\"",
             "image": "shopify://shop_images/image_51.png",
+            "url": "shopify://collections/14-inch",
             "image_width": 125,
             "age": "3–5 years",
             "height_metric": "80–100 cm",
@@ -51,6 +53,7 @@
           "settings": {
             "wheel_size": "16\"",
             "image": "shopify://shop_images/image_52.png",
+            "url": "shopify://collections/16-inch",
             "image_width": 145,
             "age": "5–7 years",
             "height_metric": "90–110 cm",
@@ -63,6 +66,7 @@
           "settings": {
             "wheel_size": "18\"",
             "image": "shopify://shop_images/image_54.png",
+            "url": "shopify://collections/18-inch",
             "image_width": 165,
             "age": "7–11 years",
             "height_metric": "105–135 cm",
@@ -75,6 +79,7 @@
           "settings": {
             "wheel_size": "20\"",
             "image": "shopify://shop_images/image_53.png",
+            "url": "shopify://collections/20-inch",
             "image_width": 200,
             "age": "11+ years / adult",
             "height_metric": "120 cm+",
