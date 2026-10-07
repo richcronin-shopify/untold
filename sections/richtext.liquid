@@ -8,7 +8,7 @@
 		
 		<div class="container">
 
-			<div class="content {{ ss.text_alignment }} {{ss.text_align}} {% if ss.enable_fw %}enable_fw{% endif %}"> 
+			<div class="content {{ss.text_align}}"> 
 
 				{% for block in section.blocks %}
 
@@ -139,22 +139,6 @@
         {
             "type": "header",
             "content": "Content"
-        },
-        {
-			"type": "checkbox",
-			"id": "enable_fw",
-			"default": false,
-			"label": "Enable full width?"
-		},
-		{
-            "type": "select",
-            "id": "text_alignment",
-            "options": [
-                { "value": "content-align-left", "label": "Left"},
-                { "value": "content-align-center", "label": "Center"},
-                { "value": "content-align-right", "label": "Right"}
-            ],
-            "label": "Text position"
         },
         {
             "type": "select",
