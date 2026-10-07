@@ -94,7 +94,6 @@
           "type": "collection",
           "settings": {
             "collection": "brakes",
-            "image": "shopify://shop_images/subrosa-bmx-ramp-decal-1.jpg",
             "title": ""
           }
         },
@@ -102,7 +101,6 @@
           "type": "collection",
           "settings": {
             "collection": "cranks",
-            "image": "shopify://shop_images/subrosa-bmx-ramp-decal-1.jpg",
             "title": ""
           }
         },
