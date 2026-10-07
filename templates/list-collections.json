@@ -17,6 +17,37 @@
         "grid_gap": 10
       }
     },
+    "richtext_PMrMR8": {
+      "type": "richtext",
+      "blocks": {
+        "heading_yK7Cxz": {
+          "type": "heading",
+          "settings": {
+            "heading_tag": 1,
+            "font_size": 2,
+            "title": "All Products"
+          }
+        },
+        "richtext_CzjTKK": {
+          "type": "richtext",
+          "settings": {
+            "richtext": "<p>We bring together trusted BMX bikes, frames and parts from the best brands in the scene. Honest advice, dependable service and real support before and after your order.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_yK7Cxz",
+        "richtext_CzjTKK"
+      ],
+      "name": "Richtext",
+      "settings": {
+        "text_align": "text-align-center",
+        "padding-top": 20,
+        "padding-bottom": 40,
+        "padding-top-m": 10,
+        "padding-bottom-m": 30
+      }
+    },
     "collection_grid_EKeHPf": {
       "type": "collection-grid",
       "blocks": {
@@ -79,6 +110,7 @@
   },
   "order": [
     "main",
+    "richtext_PMrMR8",
     "collection_grid_EKeHPf"
   ]
 }
