@@ -375,8 +375,16 @@
 			}
 
 			.product__paired-colours-list {
+				
 				display: flex;
 				gap: 10px;
+				overflow: auto;
+				scrollbar-width: none;
+
+				&::-webkit-scrollbar {
+					display: none;
+				}
+
 				.product__paired-colour {
 					width: 100px;
 					min-width: 100px;
