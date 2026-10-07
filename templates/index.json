@@ -302,8 +302,8 @@
       "settings": {
         "title": "Shop by brand",
         "enable_carousel": true,
-        "max_image_width": 150,
-        "brands_desktop": 8,
+        "max_image_width": 120,
+        "brands_desktop": 7,
         "brands_tablet": 4,
         "brands_mobile": 3,
         "padding-top": 40,
