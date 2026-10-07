@@ -647,6 +647,11 @@
 					font-size: 12px;
 				}
 			}
+
+			.product__size-guide-link {
+				color: var(--color-primary);
+				text-decoration: underlinel
+			}
 		}
 
 
