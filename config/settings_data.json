@@ -71,6 +71,14 @@
         "type": "shopify://apps/judge-me-reviews/blocks/judgeme_core/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
         "disabled": false,
         "settings": {}
+      },
+      "5493738229337669960": {
+        "type": "shopify://apps/bon-loyalty/blocks/app-embed/63496a04-c097-48d1-8c11-475aec24b12e",
+        "disabled": false,
+        "settings": {
+          "type": "fade",
+          "duration": 2
+        }
       }
     }
   }
