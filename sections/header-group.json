@@ -55,7 +55,7 @@
         "free_delivery_unlocked_label": "You've unlocked FREE UK Delivery",
         "show_points": true,
         "points_per_pound": 1,
-        "points_icon": "shopify://shop_images/untold-points.png",
+        "points_icon": "shopify://shop_images/icon-points.svg",
         "points_text": "Earn [points] Untold points with this order",
         "points_subtext": "Create an account to collect and redeem points.",
         "subtotal_label": "Subtotal",
