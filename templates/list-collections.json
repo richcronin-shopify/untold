@@ -90,6 +90,28 @@
             "image": "shopify://shop_images/sale.jpg",
             "title": "Sale"
           }
+        },
+        "collection_a3gyRU": {
+          "type": "collection",
+          "settings": {
+            "collection": "bars",
+            "title": ""
+          }
+        },
+        "collection_ijVXRJ": {
+          "type": "collection",
+          "settings": {
+            "collection": "brakes",
+            "title": ""
+          }
+        },
+        "collection_MF6CHf": {
+          "type": "collection",
+          "settings": {
+            "collection": "cranks",
+            "image": "shopify://shop_images/subrosa-bmx-ramp-decal-1.jpg",
+            "title": ""
+          }
         }
       },
       "block_order": [
@@ -97,7 +119,10 @@
         "collection_8Ngmtg",
         "collection_NHp9fN",
         "collection_KXmRJx",
-        "collection_jCbyAR"
+        "collection_jCbyAR",
+        "collection_a3gyRU",
+        "collection_ijVXRJ",
+        "collection_MF6CHf"
       ],
       "name": "Collection grid",
       "settings": {
