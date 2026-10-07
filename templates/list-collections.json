@@ -11,10 +11,74 @@
   "sections": {
     "main": {
       "type": "collections",
-      "settings": {}
+      "disabled": true,
+      "settings": {
+        "grid_item_width": "collections--full",
+        "grid_gap": 10
+      }
+    },
+    "collection_grid_EKeHPf": {
+      "type": "collection-grid",
+      "blocks": {
+        "collection_afNYqJ": {
+          "type": "collection",
+          "settings": {
+            "collection": "complete-bikes",
+            "image": "shopify://shop_images/complet-bikes.jpg",
+            "title": "Complete Bikes"
+          }
+        },
+        "collection_8Ngmtg": {
+          "type": "collection",
+          "settings": {
+            "collection": "frames",
+            "image": "shopify://shop_images/frames_99457d6c-7c1b-43f0-a4d8-7d76fac3a0de.jpg",
+            "title": ""
+          }
+        },
+        "collection_NHp9fN": {
+          "type": "collection",
+          "settings": {
+            "collection": "wheels",
+            "image": "shopify://shop_images/wheels.jpg",
+            "title": ""
+          }
+        },
+        "collection_KXmRJx": {
+          "type": "collection",
+          "settings": {
+            "collection": "parts",
+            "image": "shopify://shop_images/parts.jpg",
+            "title": "Parts"
+          }
+        },
+        "collection_jCbyAR": {
+          "type": "collection",
+          "settings": {
+            "collection": "sale",
+            "image": "shopify://shop_images/sale.jpg",
+            "title": "Sale"
+          }
+        }
+      },
+      "block_order": [
+        "collection_afNYqJ",
+        "collection_8Ngmtg",
+        "collection_NHp9fN",
+        "collection_KXmRJx",
+        "collection_jCbyAR"
+      ],
+      "name": "Collection grid",
+      "settings": {
+        "padding-top": 0,
+        "padding-bottom": 0,
+        "padding-top-m": 0,
+        "padding-bottom-m": 0
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "collection_grid_EKeHPf"
   ]
 }
