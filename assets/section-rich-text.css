@@ -32,6 +32,16 @@
 
 		}
 
+		.block-image {
+
+			img {
+
+				display: block;
+
+			}
+
+		}
+
 	}
 
 }
