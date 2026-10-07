@@ -39,6 +39,7 @@
 		.swiper-slide {
 			height: auto;
 			display: flex;
+			margin: 0;
 		}
 
 	}
@@ -68,7 +69,7 @@
 			.brand-slider__logo {
 				display: block;
 				width: 100%;
-				max-width: 160px;
+				max-width: var(--brand-logo-max-width);
 				height: auto;
 				object-fit: contain;
 			}
