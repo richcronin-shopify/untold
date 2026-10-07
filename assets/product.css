@@ -618,6 +618,11 @@
 			margin-top: 20px;
 			border-radius: 3px;
 			border: 1px solid var(--color-primary-reduced);
+			transition: .3s all;
+
+			&:hover {
+				border-color: var(--color-primary);
+			}
 
 			.product__points-icon {
 				display: flex;
