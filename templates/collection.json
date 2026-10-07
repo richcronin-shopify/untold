@@ -47,7 +47,7 @@
           "settings": {
             "image": "shopify://shop_images/icon-delivery.svg",
             "title": "free delivery",
-            "description": "On orders over £100",
+            "description": "On orders over £200",
             "url": ""
           }
         },
@@ -86,84 +86,11 @@
     },
     "brand_slider_emVjVm": {
       "type": "brand-slider",
-      "blocks": {
-        "brand_wDkiWb": {
-          "type": "brand",
-          "settings": {
-            "image": "shopify://shop_images/image_20.png",
-            "max_image_width": 110,
-            "brand_name": "CULT",
-            "url": ""
-          }
-        },
-        "brand_3kLpRF": {
-          "type": "brand",
-          "settings": {
-            "image": "shopify://shop_images/image_23.png",
-            "max_image_width": 180,
-            "brand_name": "Tall Order",
-            "url": ""
-          }
-        },
-        "brand_BzgDmd": {
-          "type": "brand",
-          "settings": {
-            "image": "shopify://shop_images/image_21.png",
-            "max_image_width": 180,
-            "brand_name": "Kink BMX",
-            "url": ""
-          }
-        },
-        "brand_9HrqM4": {
-          "type": "brand",
-          "settings": {
-            "image": "shopify://shop_images/image_24.png",
-            "max_image_width": 180,
-            "brand_name": "Tribal",
-            "url": ""
-          }
-        },
-        "brand_EMH8NL": {
-          "type": "brand",
-          "settings": {
-            "image": "shopify://shop_images/image_22.png",
-            "max_image_width": 180,
-            "brand_name": "Primo",
-            "url": ""
-          }
-        },
-        "brand_iHQWKx": {
-          "type": "brand",
-          "settings": {
-            "image": "shopify://shop_images/image_25.png",
-            "max_image_width": 180,
-            "brand_name": "Federal",
-            "url": ""
-          }
-        },
-        "brand_dkmW4b": {
-          "type": "brand",
-          "settings": {
-            "image": "shopify://shop_images/image_22.png",
-            "max_image_width": 180,
-            "brand_name": "Primo",
-            "url": ""
-          }
-        }
-      },
-      "block_order": [
-        "brand_wDkiWb",
-        "brand_3kLpRF",
-        "brand_BzgDmd",
-        "brand_9HrqM4",
-        "brand_EMH8NL",
-        "brand_iHQWKx",
-        "brand_dkmW4b"
-      ],
       "name": "Brand slider",
       "settings": {
         "title": "Shop by brand",
         "enable_carousel": true,
+        "max_image_width": 180,
         "brands_desktop": 6,
         "brands_tablet": 4,
         "brands_mobile": 3,
