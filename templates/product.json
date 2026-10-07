@@ -50,7 +50,7 @@
         "show_klarna": true,
         "product_description_label": "Product Description",
         "delivery_returns_label": "Delivery & Returns",
-        "delivery_returns": "<p><strong>UK delivery</strong></p><ul><li>Small items (grips, chains, pedals, parts): Royal Mail Tracked 48, £8</li><li>Larger items (tyres, wheels, rims, bars, frames): DPD, £12</li><li><strong>Free UK delivery on orders over £200</strong></li></ul><p>We currently deliver to the UK only.</p><p><strong>Returns</strong><br/>Unused items can be returned within 30 days of delivery. See our <a href=\"/policies/shipping-policy\" title=\"Shipping Policy\">Shipping policy</a> and <a href=\"/policies/refund-policy\" title=\"Refund Policy\">Refund policy</a> for full details.</p>"
+        "delivery_returns": "<p><strong>Delivery: </strong>We currently deliver to the UK only.</p><ul><li>Small items (grips, chains, pedals, parts): Royal Mail Tracked 48, £8</li><li>Larger items (tyres, wheels, rims, bars, frames): DPD, £12</li><li><strong>Free UK delivery on orders over £200</strong></li></ul><p><strong>Returns: </strong>Unused items can be returned within 30 days of delivery. See our <a href=\"/policies/shipping-policy\" title=\"Shipping Policy\">Shipping policy</a> and <a href=\"/policies/refund-policy\" title=\"Refund Policy\">Refund policy</a> for full details.</p>"
       }
     },
     "pdp_releated_products_X7ffze": {
