@@ -83,18 +83,11 @@
             "title": "Parts"
           }
         },
-        "collection_jCbyAR": {
-          "type": "collection",
-          "settings": {
-            "collection": "sale",
-            "image": "shopify://shop_images/sale.jpg",
-            "title": "Sale"
-          }
-        },
         "collection_a3gyRU": {
           "type": "collection",
           "settings": {
             "collection": "bars",
+            "image": "shopify://shop_images/subrosa-bmx-ramp-decal-1.jpg",
             "title": ""
           }
         },
@@ -102,6 +95,7 @@
           "type": "collection",
           "settings": {
             "collection": "brakes",
+            "image": "shopify://shop_images/subrosa-bmx-ramp-decal-1.jpg",
             "title": ""
           }
         },
@@ -112,6 +106,35 @@
             "image": "shopify://shop_images/subrosa-bmx-ramp-decal-1.jpg",
             "title": ""
           }
+        },
+        "collection_y4QB8B": {
+          "type": "collection",
+          "settings": {
+            "collection": "drivetrain",
+            "title": ""
+          }
+        },
+        "collection_t3m6UN": {
+          "type": "collection",
+          "settings": {
+            "collection": "forks",
+            "title": ""
+          }
+        },
+        "collection_jCbyAR": {
+          "type": "collection",
+          "settings": {
+            "collection": "sale",
+            "image": "shopify://shop_images/sale.jpg",
+            "title": "Sale"
+          }
+        },
+        "collection_BdMCJM": {
+          "type": "collection",
+          "settings": {
+            "collection": "",
+            "title": ""
+          }
         }
       },
       "block_order": [
@@ -119,10 +142,13 @@
         "collection_8Ngmtg",
         "collection_NHp9fN",
         "collection_KXmRJx",
-        "collection_jCbyAR",
         "collection_a3gyRU",
         "collection_ijVXRJ",
-        "collection_MF6CHf"
+        "collection_MF6CHf",
+        "collection_y4QB8B",
+        "collection_t3m6UN",
+        "collection_jCbyAR",
+        "collection_BdMCJM"
       ],
       "name": "Collection grid",
       "settings": {
