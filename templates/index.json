@@ -339,10 +339,10 @@
           "type": "card",
           "settings": {
             "image": "shopify://shop_images/shop-by-style.jpg",
-            "icon": "shopify://shop_images/icon-star_9722ab4a-a2ac-40ed-9b4d-8696858b930e.svg",
-            "title": "Shop by riding style",
-            "description": "Street, park or trails",
-            "url": "shopify://collections/brakes"
+            "icon": "shopify://shop_images/icon-cs.svg",
+            "title": "Still need help?",
+            "description": "Get in touch today",
+            "url": "shopify://pages/contact"
           }
         }
       },
