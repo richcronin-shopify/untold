@@ -5,7 +5,7 @@
 	<div class="container">
 
 		{%- if ss.title != blank or ss.intro != blank -%}
-			<div class="bmx-size-table__header">
+			<a href="{{ ss.url }}" class="bmx-size-table__header">
 
 				{%- if ss.title != blank -%}
 					<h2 class="bmx-size-table__title h2">
@@ -19,7 +19,7 @@
 					</div>
 				{%- endif -%}
 
-			</div>
+			</a>
 		{%- endif -%}
 
 		<div class="bmx-size-table__table">
