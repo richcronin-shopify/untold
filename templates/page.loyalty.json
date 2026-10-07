@@ -56,10 +56,65 @@
         "padding-top-m": 0,
         "padding-bottom-m": 0
       }
+    },
+    "usp_grid_riem8B": {
+      "type": "usp-grid",
+      "blocks": {
+        "usp_BExAwV": {
+          "type": "usp",
+          "settings": {
+            "image": "shopify://shop_images/icon-star.svg",
+            "title": "Rider owned",
+            "description": "Real riders. Real service.",
+            "url": ""
+          }
+        },
+        "usp_BYDm7A": {
+          "type": "usp",
+          "settings": {
+            "image": "shopify://shop_images/icon-delivery.svg",
+            "title": "free delivery",
+            "description": "On orders over £200",
+            "url": ""
+          }
+        },
+        "usp_WTUt8q": {
+          "type": "usp",
+          "settings": {
+            "image": "shopify://shop_images/icon-secure.svg",
+            "title": "Secure payments",
+            "description": "Klarna, Clearpay, Paypal & More",
+            "url": ""
+          }
+        },
+        "usp_4qaRGC": {
+          "type": "usp",
+          "settings": {
+            "image": "shopify://shop_images/icon-cs.svg",
+            "title": "need help?",
+            "description": "Chat with our team today",
+            "url": "shopify://pages/contact"
+          }
+        }
+      },
+      "block_order": [
+        "usp_BExAwV",
+        "usp_BYDm7A",
+        "usp_WTUt8q",
+        "usp_4qaRGC"
+      ],
+      "name": "USP bar",
+      "settings": {
+        "padding-top": 45,
+        "padding-bottom": 60,
+        "padding-top-m": 20,
+        "padding-bottom-m": 20
+      }
     }
   },
   "order": [
     "main",
-    "image_with_usps_Lf8djr"
+    "image_with_usps_Lf8djr",
+    "usp_grid_riem8B"
   ]
 }
