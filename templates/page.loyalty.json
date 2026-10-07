@@ -26,21 +26,29 @@
         "usp_xKRmX4": {
           "type": "usp",
           "settings": {
-            "title": "£1 Spend",
-            "description": "= 1 point"
+            "title": "Spend",
+            "description": "Earn 1 point for every £1 you spend."
           }
         },
         "usp_TH7TWh": {
           "type": "usp",
           "settings": {
-            "title": "100 Points",
-            "description": "= £5 Off"
+            "title": "Collect",
+            "description": "Your points add up with every order."
+          }
+        },
+        "usp_6xepVE": {
+          "type": "usp",
+          "settings": {
+            "title": "Redeem",
+            "description": "100 points gets you £5 off your next purchase."
           }
         }
       },
       "block_order": [
         "usp_xKRmX4",
-        "usp_TH7TWh"
+        "usp_TH7TWh",
+        "usp_6xepVE"
       ],
       "name": "Image with USPs",
       "settings": {
