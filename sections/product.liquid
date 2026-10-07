@@ -484,10 +484,11 @@
 								{%- if block.settings.icon != blank -%}
 									{{
 										block.settings.icon
-										| image_url: width: 120
+										| image_url: width: 240
 										| image_tag:
 											loading: 'lazy',
-											alt: ''
+											alt: '',
+											style: 'max-width: ' | append: block.settings.max_image_width | append: 'px; width: 100%; height: auto;'
 									}}
 								{%- elsif block.settings.icon_text != blank -%}
 									<span>{{ block.settings.icon_text }}</span>
@@ -508,7 +509,7 @@
 
 						</div>
 
-					{%- elsif block.type == 'size_guide' -%}
+					{%- elsif block.type == 'size_guide' and product.type == 'Complete bikes' -%}
 
 						<div
 							class="product__points product__points--size-guide"
@@ -519,10 +520,11 @@
 								{%- if block.settings.icon != blank -%}
 									{{
 										block.settings.icon
-										| image_url: width: 120
+										| image_url: width: 240
 										| image_tag:
 											loading: 'lazy',
-											alt: ''
+											alt: '',
+											style: 'max-width: ' | append: block.settings.max_image_width | append: 'px; width: 100%; height: auto;'
 									}}
 								{%- elsif block.settings.icon_text != blank -%}
 									<span>{{ block.settings.icon_text }}</span>
@@ -1600,6 +1602,16 @@
 					"label": "Icon"
 				},
 				{
+					"type": "range",
+					"id": "max_image_width",
+					"min": 20,
+					"max": 120,
+					"step": 5,
+					"unit": "px",
+					"label": "Icon max width",
+					"default": 50
+				},
+				{
 					"type": "text",
 					"id": "icon_text",
 					"label": "Fallback icon text",
@@ -1629,6 +1641,16 @@
 					"type": "image_picker",
 					"id": "icon",
 					"label": "Icon"
+				},
+				{
+					"type": "range",
+					"id": "max_image_width",
+					"min": 20,
+					"max": 120,
+					"step": 5,
+					"unit": "px",
+					"label": "Icon max width",
+					"default": 50
 				},
 				{
 					"type": "text",
