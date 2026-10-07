@@ -141,14 +141,14 @@
 		.collection-hero__content {
 			position: static;
 			width: 100%;
-            padding: 0 60px 20px;
+            padding: 200px 60px 20px;
             display: flex;
             flex-wrap: wrap;
             @media (max-width: 990px) {
-            	padding: 0 40px 20px;
+            	padding: 130px 40px 20px;
             }
             @media (max-width: 768px) {
-            	padding: 0 16px;
+            	padding: 110px 16px 0;
             }
             .breadcrumbs {
             	width: 100%;
