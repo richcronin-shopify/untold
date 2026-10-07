@@ -133,7 +133,7 @@ body {
 		}
 	}
 
-	&:not(.template-index) {
+	&:not(.template-index):not(.template-collection) {
 		padding-top: 160px;
 		@media (max-width: 767px) {
 			padding-top: 120px;
