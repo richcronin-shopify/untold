@@ -508,6 +508,52 @@
 
 						</div>
 
+					{%- elsif block.type == 'size_guide' -%}
+
+						<div
+							class="product__points product__points--size-guide"
+							{{ block.shopify_attributes }}
+						>
+
+							<div class="product__points-icon" aria-hidden="true">
+								{%- if block.settings.icon != blank -%}
+									{{
+										block.settings.icon
+										| image_url: width: 120
+										| image_tag:
+											loading: 'lazy',
+											alt: ''
+									}}
+								{%- elsif block.settings.icon_text != blank -%}
+									<span>{{ block.settings.icon_text }}</span>
+								{%- endif -%}
+							</div>
+
+							<div class="product__points-content">
+								{%- if block.settings.title != blank -%}
+									<div class="product__points-title">
+										{{ block.settings.title }}
+									</div>
+								{%- endif -%}
+
+								{%- if block.settings.subtext != blank -%}
+									<div class="product__points-subtext">
+										{{ block.settings.subtext }}
+									</div>
+								{%- endif -%}
+							</div>
+
+							{%- if block.settings.link != blank and block.settings.link_label != blank -%}
+								<a
+									href="{{ block.settings.link }}"
+									class="product__size-guide-link"
+								>
+									{{ block.settings.link_label }}
+								</a>
+							{%- endif -%}
+
+						</div>
+
 					{%- endif -%}
 
 				{%- endfor -%}
@@ -1571,6 +1617,47 @@
 					"id": "subtext",
 					"label": "Subtext",
 					"default": "Create an account to collect and redeem points."
+				}
+			]
+		},
+		{
+			"type": "size_guide",
+			"name": "Bike size guide",
+			"limit": 1,
+			"settings": [
+				{
+					"type": "image_picker",
+					"id": "icon",
+					"label": "Icon"
+				},
+				{
+					"type": "text",
+					"id": "icon_text",
+					"label": "Fallback icon text",
+					"default": "↔"
+				},
+				{
+					"type": "text",
+					"id": "title",
+					"label": "Title",
+					"default": "Not sure which size is right?"
+				},
+				{
+					"type": "inline_richtext",
+					"id": "subtext",
+					"label": "Subtext",
+					"default": "Check our Bike Size Help Guide for detailed measurements and fitting advice."
+				},
+				{
+					"type": "text",
+					"id": "link_label",
+					"label": "Link label",
+					"default": "View size guide"
+				},
+				{
+					"type": "url",
+					"id": "link",
+					"label": "Link"
 				}
 			]
 		}
