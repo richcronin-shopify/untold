@@ -7,10 +7,7 @@
 
 		&.text-align-center {
 			margin: 0 auto;
-		}
-
-		&.text-align-right {
-			margin: 0 0 0 auto;
+			text-align: center;
 		}
 
 		.block-title {

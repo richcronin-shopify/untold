@@ -41,7 +41,7 @@
       ],
       "name": "Richtext",
       "settings": {
-        "text_align": "text-align-center",
+        "text_align": "text-align-left",
         "padding-top": 20,
         "padding-bottom": 40,
         "padding-top-m": 10,
