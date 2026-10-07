@@ -83,16 +83,6 @@
 		#{{section.id}} {
 			padding-top: {{ss.padding-top}}px;
 			padding-bottom: {{ss.padding-bottom}}px;
-			{% if ss.bg_color != blank %}
-				background: {{ss.bg_color}};
-			{% endif %}
-			{% if ss.enable_top_border %}
-				border-top: 1px solid {{ss.border_color}};
-			{% endif %}
-			{% if ss.enable_bottom_border %}
-				border-bottom: 1px solid {{ss.border_color}};
-			{% endif %}
-
 		}
 
 		{% if ss.text_color != blank %}
@@ -124,12 +114,6 @@
 			"type": "paragraph",
 			"content": "NOTE: When updating this page the customiser will break temporarily until you save the changes. This is due to the use of third party scripts and the page needing to reload before new data has been rendered. No customers will see this."
 		},
-		{
-            "type": "color",
-            "id": "bg_color",
-            "label": "Background colour",
-            "default": "#FFFFFF"
-        },
         {
             "type": "color",
             "id": "text_color",
