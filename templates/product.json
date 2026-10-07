@@ -16,6 +16,17 @@
           "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
           "settings": {}
         },
+        "size_guide_fddUjr": {
+          "type": "size_guide",
+          "settings": {
+            "icon": "shopify://shop_images/icon-height_ebc6b142-9008-42e3-a0a0-0c390be4cde5.svg",
+            "icon_text": "",
+            "title": "Not sure which size is right?",
+            "subtext": "Check our Bike Size Help Guide for detailed measurements and fitting advice.",
+            "link_label": "View size guide",
+            "link": "shopify://pages/bmx-bike-size-guide"
+          }
+        },
         "points_VfQeEP": {
           "type": "points",
           "settings": {
@@ -29,9 +40,11 @@
       },
       "block_order": [
         "judge_me_reviews_preview_badge_mVpT3d",
+        "size_guide_fddUjr",
         "points_VfQeEP"
       ],
       "settings": {
+        "show_image_zoom": true,
         "show_klarna": true,
         "product_description_label": "Product Description",
         "delivery_returns_label": "Delivery & Returns",
@@ -58,84 +71,11 @@
     },
     "brand_slider_hL7tdW": {
       "type": "brand-slider",
-      "blocks": {
-        "brand_gFXUiV": {
-          "type": "brand",
-          "settings": {
-            "image": "shopify://shop_images/image_20.png",
-            "max_image_width": 110,
-            "brand_name": "CULT",
-            "url": ""
-          }
-        },
-        "brand_79hWdy": {
-          "type": "brand",
-          "settings": {
-            "image": "shopify://shop_images/image_23.png",
-            "max_image_width": 180,
-            "brand_name": "Tall Order",
-            "url": ""
-          }
-        },
-        "brand_br3Tbq": {
-          "type": "brand",
-          "settings": {
-            "image": "shopify://shop_images/image_21.png",
-            "max_image_width": 180,
-            "brand_name": "Kink BMX",
-            "url": ""
-          }
-        },
-        "brand_BkhqL8": {
-          "type": "brand",
-          "settings": {
-            "image": "shopify://shop_images/image_24.png",
-            "max_image_width": 180,
-            "brand_name": "Tribal",
-            "url": ""
-          }
-        },
-        "brand_hy6BEk": {
-          "type": "brand",
-          "settings": {
-            "image": "shopify://shop_images/image_22.png",
-            "max_image_width": 180,
-            "brand_name": "Primo",
-            "url": ""
-          }
-        },
-        "brand_QVkTrr": {
-          "type": "brand",
-          "settings": {
-            "image": "shopify://shop_images/image_25.png",
-            "max_image_width": 180,
-            "brand_name": "Federal",
-            "url": ""
-          }
-        },
-        "brand_brYnXa": {
-          "type": "brand",
-          "settings": {
-            "image": "shopify://shop_images/image_22.png",
-            "max_image_width": 180,
-            "brand_name": "Primo",
-            "url": ""
-          }
-        }
-      },
-      "block_order": [
-        "brand_gFXUiV",
-        "brand_79hWdy",
-        "brand_br3Tbq",
-        "brand_BkhqL8",
-        "brand_hy6BEk",
-        "brand_QVkTrr",
-        "brand_brYnXa"
-      ],
       "name": "Brand slider",
       "settings": {
         "title": "Shop by brand",
         "enable_carousel": true,
+        "max_image_width": 180,
         "brands_desktop": 6,
         "brands_tablet": 4,
         "brands_mobile": 3,
