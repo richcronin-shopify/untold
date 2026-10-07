@@ -52,6 +52,9 @@
 					@media (max-width: 767px) {
 						font-size: 14px;
 					}
+					a {
+						color: var(--color-primary);
+					}
 				}
 
 				.image-with-usps__button-wrapper {
