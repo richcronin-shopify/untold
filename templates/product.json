@@ -32,8 +32,8 @@
           "type": "points",
           "settings": {
             "points_per_pound": 1,
-            "icon": "shopify://shop_images/untold-points.png",
-            "max_image_width": 50,
+            "icon": "shopify://shop_images/icon-points.svg",
+            "max_image_width": 40,
             "icon_text": "",
             "text": "Earn [points] Untold points with this product",
             "subtext": "Create an account to collect and redeem points."
