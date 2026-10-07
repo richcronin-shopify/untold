@@ -54,7 +54,7 @@
         "padding-top": 20,
         "padding-bottom": 20,
         "padding-top-m": 0,
-        "padding-bottom-m": 0
+        "padding-bottom-m": 30
       }
     },
     "usp_grid_riem8B": {
@@ -108,7 +108,7 @@
         "padding-top": 45,
         "padding-bottom": 60,
         "padding-top-m": 20,
-        "padding-bottom-m": 20
+        "padding-bottom-m": 30
       }
     },
     "collection_grid_Y4jncK": {
