@@ -28,7 +28,7 @@
 		visibility: hidden;
 
 		@media (max-width: 990px) {
-			padding: 20px 0;
+			padding: 20px 0 40px;
 		}
 
 		&.swiper-initialized {
