@@ -11,14 +11,7 @@
 		}
 
 		.brand-slider__navigation {
-			display: flex;
-			align-items: center;
-			gap: 8px;
-
-			@media (max-width: 990px) {
-				display: none;
-			}
-
+			display: none;
 		}
 
 	}
