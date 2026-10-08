@@ -282,8 +282,7 @@
       ],
       "name": "Image with USPs",
       "settings": {
-        "desktop_image": "shopify://shop_images/spotlight.jpg",
-        "mobile_image": "shopify://shop_images/rider-owned-m.jpg",
+        "desktop_image": "shopify://shop_images/bmx-shoot.png",
         "heading": "Rider owned. Rider approved.",
         "heading_tag": 2,
         "font_size": 2,
