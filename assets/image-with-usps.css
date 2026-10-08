@@ -16,10 +16,15 @@
 
 			width: 50%;
 			margin-right: -60px;
+			
+			@media (max-width: 990px) {
+				margin-right: -40px;
+			}
 
 			@media (max-width: 767px) {
 				width: 100%;
 				order: -1;
+				margin: 0;
 			}
 
 			picture {
