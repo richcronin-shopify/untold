@@ -10,10 +10,6 @@
 			margin: 0;
 		}
 
-		.brand-slider__navigation {
-			display: none;
-		}
-
 	}
 
 	.brand-slider__swiper {
@@ -79,12 +75,6 @@
 			}
 
 		}
-
-	}
-
-	.brand-slider__pagination {
-
-		display: none;
 
 	}
 
