@@ -170,60 +170,42 @@
 
           const brandSwiper = new Swiper(swiperElement, {
 
-            slidesPerView: brandsMobile,
+			  slidesPerView: brandsMobile,
 
-            spaceBetween: 60,
+			  spaceBetween: 60,
 
-            speed: 7000,
+			  speed: 7000,
 
-            loop: true,
+			  loop: true,
 
-            watchOverflow: true,
+			  watchOverflow: true,
 
-            allowTouchMove: true,
+			  allowTouchMove: true,
 
-            autoplay: {
-              delay: 0,
-              disableOnInteraction: false,
-              pauseOnMouseEnter: false
-            },
+			  autoplay: {
+			    delay: 0,
+			    disableOnInteraction: false,
+			    pauseOnMouseEnter: false
+			  },
 
-            navigation: previousButton && nextButton
-              ? {
-                  prevEl: previousButton,
-                  nextEl: nextButton
-                }
-              : false,
+			  breakpoints: {
 
-            pagination: pagination
-              ? {
-                  el: pagination,
-                  clickable: true,
-                  bulletElement: 'button'
-                }
-              : false,
+			    768: {
+			      slidesPerView: brandsTablet
+			    },
 
-            breakpoints: {
+			    990: {
+			      slidesPerView: brandsDesktop
+			    }
 
-              768: {
-                slidesPerView: brandsTablet
-              },
+			  },
 
-              990: {
-                slidesPerView: brandsDesktop
-              }
+			  a11y: {
+			    enabled: true,
+			    slideLabelMessage: '{{index}} of {{slidesLength}}'
+			  }
 
-            },
-
-            a11y: {
-              enabled: true,
-              prevSlideMessage: 'Previous brands',
-              nextSlideMessage: 'Next brands',
-              paginationBulletMessage: 'Go to brand group {{index}}',
-              slideLabelMessage: '{{index}} of {{slidesLength}}'
-            }
-
-          });
+			});
 
           const pauseAutoplay = () => {
 
