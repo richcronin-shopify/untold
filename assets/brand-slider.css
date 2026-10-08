@@ -31,14 +31,6 @@
 			padding: 20px 0 40px;
 		}
 
-		@media (max-width: 767px) {
-
-		    .swiper-wrapper {
-		      transition-timing-function: linear !important;
-		    }
-
-		  }
-
 		&.swiper-initialized {
 			opacity: 1;
 			visibility: visible;
@@ -46,6 +38,7 @@
 
 		.swiper-wrapper {
 			align-items: stretch;
+			transition-timing-function: linear !important;
 		}
 
 		.swiper-slide {
