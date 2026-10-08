@@ -22,28 +22,6 @@
         </h2>
       {%- endif -%}
 
-      {%- if ss.enable_carousel -%}
-        <div class="brand-slider__navigation">
-
-          <button
-            type="button"
-            class="swiper-slider__arrow swiper-slider__arrow--prev button--reset"
-            aria-label="Previous brands"
-          >
-            {{- 'icon-long-arrow.svg' | inline_asset_content -}}
-          </button>
-
-          <button
-            type="button"
-            class="swiper-slider__arrow swiper-slider__arrow--next button--reset"
-            aria-label="Next brands"
-          >
-            {{- 'icon-long-arrow.svg' | inline_asset_content -}}
-          </button>
-
-        </div>
-      {%- endif -%}
-
     </div>
 
     <div class="{% if ss.enable_carousel %}swiper brand-slider__swiper{% else %}brand-slider__grid{% endif %}">
