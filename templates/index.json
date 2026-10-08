@@ -221,7 +221,7 @@
       "settings": {
         "title": "Ride now. Pay your way.",
         "description": "Interest-free options available at checkout",
-        "button_label": "Learn more",
+        "button_label": "",
         "button_url": "shopify://pages/terms-conditions",
         "padding-top": 50,
         "padding-bottom": 40,
