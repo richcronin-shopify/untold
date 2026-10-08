@@ -78,6 +78,33 @@
 
 	}
 
+	.brand-slider__pagination {
+
+		display: none;
+
+		@media (max-width: 990px) {
+
+			display: flex;
+			justify-content: center;
+			margin: 40px 0 0 0;
+
+			.swiper-pagination-bullet {
+				width: 20px;
+				height: 3px;
+				margin: 0 3px !important;
+				border-radius: 0;
+				background: var(--color-primary);
+				opacity: .3;
+			}
+
+			.swiper-pagination-bullet-active {
+				opacity: 1;
+			}
+
+		}
+
+	}
+
 	@media (max-width: 989px) {
 
 		.brand-slider__grid {
@@ -92,34 +119,10 @@
 
 	@media (max-width: 767px) {
 
-		.brand-slider__header {
-
-			.brand-slider__title {
-
-			}
-
-			.brand-slider__navigation {
-
-			}
-
-		}
-
 		.brand-slider__grid {
 
 			.brand-slider__items {
 				grid-template-columns: repeat(var(--brands-mobile), minmax(0, 1fr));
-			}
-
-		}
-
-		.brand-slider__item {
-
-			.brand-slider__link {
-
-				.brand-slider__logo {
-
-				}
-
 			}
 
 		}
