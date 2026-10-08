@@ -15,6 +15,7 @@
 		.image-with-usps__media {
 
 			width: 50%;
+			margin-right: -60px;
 
 			@media (max-width: 767px) {
 				width: 100%;
