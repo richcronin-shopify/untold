@@ -196,52 +196,60 @@
 
           new Swiper(swiperElement, {
 
-            slidesPerView: brandsMobile,
+			  slidesPerView: brandsMobile,
 
-            spaceBetween: 60,
+			  slidesPerGroup: brandsMobile,
 
-            watchOverflow: true,
+			  spaceBetween: 60,
 
-            navigation: previousButton && nextButton
-              ? {
-                  prevEl: previousButton,
-                  nextEl: nextButton
-                }
-              : false,
+			  watchOverflow: true,
 
-            pagination: pagination
-              ? {
-                  el: pagination,
-                  clickable: true,
-                  bulletElement: 'button'
-                }
-              : false,
+			  autoplay: {
+			    delay: 3000,
+			    disableOnInteraction: false,
+			    pauseOnMouseEnter: true
+			  },
 
-            breakpoints: {
+			  navigation: previousButton && nextButton
+			    ? {
+			        prevEl: previousButton,
+			        nextEl: nextButton
+			      }
+			    : false,
 
-              768: {
-                slidesPerView: brandsTablet
-              },
+			  pagination: pagination
+			    ? {
+			        el: pagination,
+			        clickable: true,
+			        bulletElement: 'button'
+			      }
+			    : false,
 
-              990: {
-                slidesPerView: brandsDesktop
-              }
+			  breakpoints: {
 
-            },
+			    768: {
+			      slidesPerView: brandsTablet,
+			      slidesPerGroup: 1,
+			      autoplay: false
+			    },
 
-            a11y: {
-              enabled: true,
-              prevSlideMessage: 'Previous brands',
-              nextSlideMessage: 'Next brands',
-              paginationBulletMessage: 'Go to brand group {{index}}',
-              slideLabelMessage: '{{index}} of {{slidesLength}}'
-            }
+			    990: {
+			      slidesPerView: brandsDesktop,
+			      slidesPerGroup: 1,
+			      autoplay: false
+			    }
 
-          });
+			  },
 
-          section.dataset.initialised = 'true';
+			  a11y: {
+			    enabled: true,
+			    prevSlideMessage: 'Previous brands',
+			    nextSlideMessage: 'Next brands',
+			    paginationBulletMessage: 'Go to brand group {{index}}',
+			    slideLabelMessage: '{{index}} of {{slidesLength}}'
+			  }
 
-        });
+			});
 
     };
 
