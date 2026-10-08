@@ -194,62 +194,112 @@
             '.brand-slider__pagination'
           );
 
-			new Swiper(swiperElement, {
+          const brandSwiper = new Swiper(swiperElement, {
 
-			  slidesPerView: brandsMobile,
+            slidesPerView: brandsMobile,
 
-			  spaceBetween: 60,
+            spaceBetween: 60,
 
-			  speed: 7000,
+            speed: 7000,
 
-			  loop: true,
+            loop: true,
 
-			  watchOverflow: true,
+            watchOverflow: true,
 
-			  allowTouchMove: true,
+            allowTouchMove: true,
 
-			  autoplay: {
-			    delay: 0,
-			    disableOnInteraction: false,
-			    pauseOnMouseEnter: true
-			  },
+            autoplay: {
+              delay: 0,
+              disableOnInteraction: false,
+              pauseOnMouseEnter: false
+            },
 
-			  navigation: previousButton && nextButton
-			    ? {
-			        prevEl: previousButton,
-			        nextEl: nextButton
-			      }
-			    : false,
+            navigation: previousButton && nextButton
+              ? {
+                  prevEl: previousButton,
+                  nextEl: nextButton
+                }
+              : false,
 
-			  pagination: pagination
-			    ? {
-			        el: pagination,
-			        clickable: true,
-			        bulletElement: 'button'
-			      }
-			    : false,
+            pagination: pagination
+              ? {
+                  el: pagination,
+                  clickable: true,
+                  bulletElement: 'button'
+                }
+              : false,
 
-			  breakpoints: {
+            breakpoints: {
 
-			    768: {
-			      slidesPerView: brandsTablet
-			    },
+              768: {
+                slidesPerView: brandsTablet
+              },
 
-			    990: {
-			      slidesPerView: brandsDesktop
-			    }
+              990: {
+                slidesPerView: brandsDesktop
+              }
 
-			  },
+            },
 
-			  a11y: {
-			    enabled: true,
-			    prevSlideMessage: 'Previous brands',
-			    nextSlideMessage: 'Next brands',
-			    paginationBulletMessage: 'Go to brand group {{index}}',
-			    slideLabelMessage: '{{index}} of {{slidesLength}}'
-			  }
+            a11y: {
+              enabled: true,
+              prevSlideMessage: 'Previous brands',
+              nextSlideMessage: 'Next brands',
+              paginationBulletMessage: 'Go to brand group {{index}}',
+              slideLabelMessage: '{{index}} of {{slidesLength}}'
+            }
 
-			});
+          });
+
+          const pauseAutoplay = () => {
+
+            if (!brandSwiper.autoplay) {
+              return;
+            }
+
+            if (typeof brandSwiper.autoplay.pause === 'function') {
+              brandSwiper.autoplay.pause();
+              return;
+            }
+
+            brandSwiper.autoplay.stop();
+
+          };
+
+          const resumeAutoplay = () => {
+
+            if (!brandSwiper.autoplay) {
+              return;
+            }
+
+            if (typeof brandSwiper.autoplay.resume === 'function') {
+              brandSwiper.autoplay.resume();
+              return;
+            }
+
+            brandSwiper.autoplay.start();
+
+          };
+
+          swiperElement.addEventListener(
+            'mouseenter',
+            pauseAutoplay
+          );
+
+          swiperElement.addEventListener(
+            'mouseleave',
+            resumeAutoplay
+          );
+
+          swiperElement.addEventListener(
+            'focusin',
+            pauseAutoplay
+          );
+
+          swiperElement.addEventListener(
+            'focusout',
+            resumeAutoplay
+          );
 
           section.dataset.initialised = 'true';
 
