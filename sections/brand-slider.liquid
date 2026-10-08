@@ -194,7 +194,7 @@
             '.brand-slider__pagination'
           );
 
-          new Swiper(swiperElement, {
+			new Swiper(swiperElement, {
 
 			  slidesPerView: brandsMobile,
 
@@ -250,6 +250,10 @@
 			  }
 
 			});
+
+          section.dataset.initialised = 'true';
+
+        });
 
     };
 
