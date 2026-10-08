@@ -194,6 +194,10 @@
             '.brand-slider__pagination'
           );
 
+          	const isMobile = window.matchMedia(
+		  		'(max-width: 767px)'
+			).matches;
+
 			new Swiper(swiperElement, {
 
 			  slidesPerView: brandsMobile,
