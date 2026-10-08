@@ -293,7 +293,7 @@
         "padding-top": 0,
         "padding-bottom": 0,
         "padding-top-m": 0,
-        "padding-bottom-m": 0
+        "padding-bottom-m": 20
       }
     },
     "brand_slider_CBWDTy": {
@@ -309,7 +309,7 @@
         "padding-top": 40,
         "padding-bottom": 40,
         "padding-top-m": 30,
-        "padding-bottom-m": 30
+        "padding-bottom-m": 40
       }
     },
     "multicolumn_zU8AgG": {
