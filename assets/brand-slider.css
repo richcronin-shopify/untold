@@ -22,7 +22,7 @@
 		padding-top: 20px;
 
 		@media (max-width: 990px) {
-			padding: 20px 0 40px;
+			padding: 20px 0;
 		}
 
 		&.swiper-initialized {
