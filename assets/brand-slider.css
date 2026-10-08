@@ -15,8 +15,8 @@
 			align-items: center;
 			gap: 8px;
 
-			.swiper-slider__arrow {
-
+			@media (max-width: 990px) {
+				display: none;
 			}
 
 		}
