@@ -102,11 +102,11 @@
 
         {%- endfor -%}
 
-        {%- if ss.enable_carousel -%}
-	    	<div class="brand-slider__pagination swiper-pagination"></div>
-	  	{%- endif -%}
-
       </div>
+
+      {%- if ss.enable_carousel -%}
+        <div class="brand-slider__pagination swiper-pagination"></div>
+      {%- endif -%}
 
     </div>
 
@@ -118,6 +118,7 @@
   #{{ section.id }} {
     padding-top: {{ ss.padding-top }}px;
     padding-bottom: {{ ss.padding-bottom }}px;
+
     --brands-desktop: {{ ss.brands_desktop }};
     --brands-tablet: {{ ss.brands_tablet }};
     --brands-mobile: {{ ss.brands_mobile }};
@@ -189,6 +190,10 @@
             '.swiper-slider__arrow--next'
           );
 
+          const pagination = section.querySelector(
+            '.brand-slider__pagination'
+          );
+
           new Swiper(swiperElement, {
 
             slidesPerView: brandsMobile,
@@ -201,6 +206,14 @@
               ? {
                   prevEl: previousButton,
                   nextEl: nextButton
+                }
+              : false,
+
+            pagination: pagination
+              ? {
+                  el: pagination,
+                  clickable: true,
+                  bulletElement: 'button'
                 }
               : false,
 
@@ -220,6 +233,7 @@
               enabled: true,
               prevSlideMessage: 'Previous brands',
               nextSlideMessage: 'Next brands',
+              paginationBulletMessage: 'Go to brand group {{index}}',
               slideLabelMessage: '{{index}} of {{slidesLength}}'
             }
 
