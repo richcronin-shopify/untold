@@ -46,7 +46,7 @@
 			overflow: auto;
 			scrollbar-width: none;
 			-ms-overflow-style: none;
-			width: 100%;
+			width: calc(100% + 120px);
 			&::-webkit-scrollbar {
 				display: none;
 			}
@@ -54,9 +54,11 @@
 			@media (max-width: 990px) {
 				margin: 30px -40px 0;
 				padding: 0 40px;
+				width: calc(100% + 80px);
 				@media (max-width: 768px) {
 					margin: 30px -16px 0;
 					padding: 0 16px;
+					width: calc(100% + 32px);
 				}
 			}
 
