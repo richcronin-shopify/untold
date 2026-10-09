@@ -2352,7 +2352,7 @@ button,
 		display: inline-block;
 		transition: .3s all;
 		margin: 0 auto;
-		display: inline-block;
+		display: block;
 
 		@media (max-width: 767px) {
 			font-size: 18px;
