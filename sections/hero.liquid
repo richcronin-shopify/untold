@@ -18,6 +18,7 @@
 				{%- assign bs = block.settings -%}
 
 				{%- liquid
+					assign video = bs.video
 					assign desktop_image = bs.image_desktop
 					assign mobile_image = bs.image_mobile
 
@@ -49,7 +50,25 @@
 					{{ block.shopify_attributes }}
 				>
 
-					{%- if desktop_image != blank -%}
+					{%- if video != blank -%}
+
+						<div class="hero-slider__media hero-slider__media--video">
+
+							{{
+								video
+								| video_tag:
+									class: 'hero-slider__video',
+									autoplay: true,
+									loop: true,
+									muted: true,
+									controls: false,
+									playsinline: true,
+									preload: 'metadata'
+							}}
+
+						</div>
+
+					{%- elsif desktop_image != blank -%}
 
 						<div class="hero-slider__media">
 
@@ -106,9 +125,9 @@
 
 								{%- if bs.heading != blank -%}
 
-									<h{{bs.heading_tag}} class="h{{bs.font_size}} hero-slider__heading">
+									<h{{ bs.heading_tag }} class="h{{ bs.font_size }} hero-slider__heading">
 										{{ bs.heading }}
-									</h{{bs.heading_tag}}>
+									</h{{ bs.heading_tag }}>
 
 								{%- endif -%}
 
@@ -248,6 +267,37 @@
 					);
 
 
+					const syncSlideVideos = (swiper) => {
+
+						swiper.slides.forEach((slide, index) => {
+
+							slide
+								.querySelectorAll('.hero-slider__video')
+								.forEach((video) => {
+
+									video.muted = true;
+
+									if (index === swiper.activeIndex) {
+
+										const playPromise = video.play();
+
+										if (playPromise) {
+											playPromise.catch(() => {});
+										}
+
+									} else {
+
+										video.pause();
+
+									}
+
+								});
+
+						});
+
+					};
+
+
 					new Swiper(swiperElement, {
 
 						slidesPerView: 1,
@@ -283,6 +333,18 @@
 
 						a11y: {
 							enabled: true
+						},
+
+						on: {
+
+							init(swiper) {
+								syncSlideVideos(swiper);
+							},
+
+							slideChange(swiper) {
+								syncSlideVideos(swiper);
+							}
+
 						}
 
 					});
@@ -355,6 +417,12 @@
 			"name": "Slide",
 			"settings": [
 				{
+					"type": "video",
+					"id": "video",
+					"label": "Video",
+					"info": "When selected, the video replaces the desktop and mobile images. The same video is used on all screen sizes and plays automatically, muted and looped."
+				},
+				{
 					"type": "image_picker",
 					"id": "image_desktop",
 					"label": "Desktop image"
@@ -377,25 +445,25 @@
 					"default": "Kink Feral Frame Drop"
 				},
 				{
-		            "type": "range",
-		            "id": "heading_tag",
-		            "min": 1,
-		            "max": 6,
-		            "step": 1,
-		            "label": "Title heading tag",
-		            "info": "Header tags, also known as heading tags, are used to separate headings and subheadings on a webpage. They rank in order of importance, from H1 to H6, with H1s usually being the title. Header tags improve the readability and SEO of a webpage.",
-		            "default": 6
-		        },
-		        {
-		            "type": "range",
-		            "id": "font_size",
-		            "min": 1,
-		            "max": 6,
-		            "step": 1,
-		            "label": "Font size",
-		            "info": "1 being the largest. 6 being the smallest.",
-		            "default": 4
-		        },
+					"type": "range",
+					"id": "heading_tag",
+					"min": 1,
+					"max": 6,
+					"step": 1,
+					"label": "Title heading tag",
+					"info": "Header tags, also known as heading tags, are used to separate headings and subheadings on a webpage. They rank in order of importance, from H1 to H6, with H1s usually being the title. Header tags improve the readability and SEO of a webpage.",
+					"default": 6
+				},
+				{
+					"type": "range",
+					"id": "font_size",
+					"min": 1,
+					"max": 6,
+					"step": 1,
+					"label": "Font size",
+					"info": "1 being the largest. 6 being the smallest.",
+					"default": 4
+				},
 				{
 					"type": "inline_richtext",
 					"id": "text",
@@ -414,15 +482,15 @@
 					"label": "Button link"
 				},
 				{
-		            "type": "select",
-		            "id": "button_style",
-		            "options": [
-		                { "value": "button", "label": "Filled"},
-		                { "value": "button button--outline", "label": "Outline"}
-		            ],
-		            "label": "Button style",
-		            "default": "button"
-		        }
+					"type": "select",
+					"id": "button_style",
+					"options": [
+						{ "value": "button", "label": "Filled"},
+						{ "value": "button button--outline", "label": "Outline"}
+					],
+					"label": "Button style",
+					"default": "button"
+				}
 			]
 		}
 	],
