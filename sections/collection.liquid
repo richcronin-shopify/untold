@@ -1848,7 +1848,20 @@
 
 
 					if (priceDropdown) {
-						//loadPriceCounts();
+
+						priceDropdown.addEventListener(
+							'toggle',
+							() => {
+
+								if (!priceDropdown.open) {
+									return;
+								}
+
+								loadPriceCounts();
+
+							}
+						);
+
 					}
 
 					section.dataset.collectionFiltersInitialised = 'true';
