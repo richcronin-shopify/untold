@@ -57,6 +57,7 @@
 			left: 0;
 			height: 100%;
 			width: 60%;
+			pointer-events: none;
 		}
 
 	}
