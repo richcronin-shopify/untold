@@ -29,7 +29,6 @@
         },
         "slide_3WnhVN": {
           "type": "slide",
-          "disabled": true,
           "settings": {
             "image_desktop": "shopify://shop_images/hero.jpg",
             "image_mobile": "shopify://shop_images/hero-m_f514fa21-16d4-4818-80b3-a190a5745bf0.jpg",
