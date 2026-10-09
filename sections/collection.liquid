@@ -3,8 +3,16 @@
 {%- assign products_desktop = ss.products_desktop | plus: 0 -%}
 {%- assign products_tablet = ss.products_tablet | plus: 0 -%}
 {%- assign products_mobile = ss.products_mobile | plus: 0 -%}
+{%- assign hero_image = collection.metafields.hero.image.value -%}
+{%- assign sub_collections = collection.metafields.sub.collections.value -%}
 
 {%- liquid
+	assign prioritise_first_product = false
+
+	if hero_image == blank and sub_collections == blank
+		assign prioritise_first_product = true
+	endif
+
 	assign sort_by = collection.sort_by | default: collection.default_sort_by
 	assign price_filter = blank
 	assign filter_count = collection.filters.size
@@ -41,7 +49,13 @@
 	if price_bracket_count < 1
 		assign price_bracket_count = 1
 	endif
+
+	if price_bracket_count > 20
+		assign price_bracket_count = 20
+	endif
 -%}
+
+{%- capture product_image_sizes -%}(min-width: 990px) {{ 100.0 | divided_by: products_desktop }}vw, (min-width: 768px) {{ 100.0 | divided_by: products_tablet }}vw, {{ 100.0 | divided_by: products_mobile }}vw{%- endcapture -%}
 
 <section
 	class="main-collection collection-filters{% if ss.pagination_type == 'infinite' %} is-restore-pending{% endif %}"
@@ -554,7 +568,13 @@
 					{%- for product in collection.products -%}
 
 						<div class="main-collection__item">
-							{% render 'product-card', product: product, card_index: forloop.index %}
+							{% render
+								'product-card',
+								product: product,
+								card_index: forloop.index,
+								prioritise_image: prioritise_first_product,
+								image_sizes: product_image_sizes
+							%}
 						</div>
 
 					{%- endfor -%}
