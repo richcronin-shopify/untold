@@ -53,7 +53,7 @@
 
 		@media (max-width: 990px) {
 			height: auto;
-			aspect-ratio: unset;
+			aspect-ratio: 1/1;
 		}
 	}
 
