@@ -46,8 +46,6 @@
 
 	.hero-slider__media--video {
 
-		position: relative;
-
 		.hero-slider__media--video-overlay {
 			background: red;
 			position: absolute;
