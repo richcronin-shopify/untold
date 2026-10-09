@@ -1,7 +1,6 @@
 {%- liquid
 	assign card_product = product
 	assign card_index = card_index | default: 0
-	assign image_sizes = image_sizes | default: '(min-width: 990px) 25vw, 50vw'
 
 	assign primary_image = card_product.featured_image
 	assign secondary_image = card_product.images[1]
@@ -21,7 +20,7 @@
 	assign primary_image_loading = 'lazy'
 	assign primary_image_fetchpriority = 'auto'
 
-	if card_index == 1 and prioritise_image
+	if card_index == 1
 		assign primary_image_loading = 'eager'
 		assign primary_image_fetchpriority = 'high'
 	endif
@@ -49,7 +48,7 @@
 							width: 800,
 							height: 800,
 							widths: '300, 400, 500, 600, 800',
-							sizes: image_sizes,
+							sizes: '(min-width: 990px) 25vw, 50vw',
 							alt: primary_image.alt
 				-}}
 
@@ -65,7 +64,7 @@
 								width: 800,
 								height: 800,
 								widths: '300, 400, 500, 600, 800',
-								sizes: image_sizes,
+								sizes: '(min-width: 990px) 25vw, 50vw',
 								alt: ''
 					-}}
 
@@ -86,7 +85,7 @@
 							width: 800,
 							height: 800,
 							widths: '300, 400, 500, 600, 800',
-							sizes: image_sizes,
+							sizes: '(min-width: 990px) 25vw, 50vw',
 							alt: settings.fallback_img_sub_collection_image.alt
 				-}}
 			</div>
