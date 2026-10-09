@@ -44,6 +44,16 @@
 		}
 	}
 
+	.hero-slider__media--video {
+
+		position: relative;
+
+		.hero-slider__media--video-overlay {
+
+		}
+
+	}
+
 	.hero-slider__video {
 		display: block;
 		width: 100%;
