@@ -58,6 +58,16 @@
 			height: 100%;
 			width: 60%;
 			pointer-events: none;
+			@media (max-width: 990px) {
+				width: 100%;
+				top: auto;
+				bottom: 0;
+				background: linear-gradient(
+				  to top,
+				  var(--color-black) 0%,
+				  rgba(0, 0, 0, 0) 100%
+				);
+			}
 		}
 
 	}
