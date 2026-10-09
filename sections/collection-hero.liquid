@@ -64,6 +64,10 @@
 									if first_available_product_image == blank and sub_product.featured_image != blank
 										assign first_available_product_image = sub_product.featured_image
 									endif
+
+									if first_available_product_image != blank
+										break
+									endif
 								endif
 							endfor
 
