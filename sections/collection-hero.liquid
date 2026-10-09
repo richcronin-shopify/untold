@@ -49,6 +49,9 @@
 		{%- if hero_image == blank -%}
 
 			{%- if sub_collections != blank -%}
+
+				{%- assign subcollection_render_index = 0 -%}
+
 				<div class="collection-hero__subcollections">
 
 					{%- for sub_collection in sub_collections -%}
@@ -56,16 +59,21 @@
 						{%- liquid
 							assign has_available_products = false
 							assign first_available_product_image = blank
+							assign needs_product_image = false
+
+							if ss.subcollection_image_source == 'product' or sub_collection.image == blank
+								assign needs_product_image = true
+							endif
 
 							for sub_product in sub_collection.products
 								if sub_product.available
 									assign has_available_products = true
 
-									if first_available_product_image == blank and sub_product.featured_image != blank
+									if needs_product_image and first_available_product_image == blank and sub_product.featured_image != blank
 										assign first_available_product_image = sub_product.featured_image
 									endif
 
-									if first_available_product_image != blank
+									if needs_product_image == false or first_available_product_image != blank
 										break
 									endif
 								endif
@@ -92,6 +100,17 @@
 
 						{%- if has_available_products -%}
 
+							{%- liquid
+								assign subcollection_render_index = subcollection_render_index | plus: 1
+								assign subcollection_loading = 'lazy'
+								assign subcollection_fetchpriority = 'auto'
+
+								if subcollection_render_index == 1
+									assign subcollection_loading = 'eager'
+									assign subcollection_fetchpriority = 'high'
+								endif
+							-%}
+
 							<a
 								href="{{ sub_collection.url }}"
 								class="collection-hero__subcollection{% if sub_collection.handle contains 'sale' %} collection-hero__subcollection--sale{% endif %}"
@@ -104,7 +123,8 @@
 											| image_url: width: 600
 											| image_tag:
 												class: 'collection-hero__subcollection-image',
-												loading: 'lazy',
+												loading: subcollection_loading,
+												fetchpriority: subcollection_fetchpriority,
 												widths: '200, 300, 400, 500, 600',
 												sizes: '(min-width: 990px) 200px, 40vw',
 												alt: sub_collection_image_alt
@@ -117,7 +137,8 @@
 											| image_url: width: 600
 											| image_tag:
 												class: 'collection-hero__subcollection-image',
-												loading: 'lazy',
+												loading: subcollection_loading,
+												fetchpriority: subcollection_fetchpriority,
 												widths: '200, 300, 400, 500, 600',
 												sizes: '(min-width: 990px) 200px, 40vw',
 												alt: settings.fallback_img_sub_collection_image.alt
