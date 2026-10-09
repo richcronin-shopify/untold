@@ -8,7 +8,7 @@
 
 	.hero-slider__slide {
 		position: relative;
-		aspect-ratio: 1/0.5;
+		aspect-ratio: 1/0.55;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
@@ -37,7 +37,7 @@
 		width: 100%;
 		height: auto;
 		object-fit: cover;
-		aspect-ratio: 1/0.5;
+		aspect-ratio: 1/0.55;
 
 		@media (max-width: 990px) {
 			aspect-ratio: 1/.8;
