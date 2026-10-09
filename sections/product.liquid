@@ -1073,6 +1073,8 @@
 							)
 						);
 
+						updateStickyVisibility();
+
 					};
 
 					const getSelectedVariant = () => {
@@ -1114,15 +1116,45 @@
 							return;
 						}
 
-						const formRect =
-							productForm.getBoundingClientRect();
+						const variant = getSelectedVariant();
 
-						const hasScrolledPastForm =
-							formRect.bottom <= 0;
+						if (!variant) {
+							stickyAtc.classList.remove('is-active');
+							stickyAtc.hidden = true;
+
+							document.documentElement.classList.remove(
+								'sticky-atc-active'
+							);
+
+							return;
+						}
+
+						let hasScrolledPastTrigger = false;
+
+						if (
+							!variant.available &&
+							backInStockFormContent
+						) {
+
+							const backInStockRect =
+								backInStockFormContent.getBoundingClientRect();
+
+							hasScrolledPastTrigger =
+								backInStockRect.bottom <= 0;
+
+						} else {
+
+							const formRect =
+								productForm.getBoundingClientRect();
+
+							hasScrolledPastTrigger =
+								formRect.bottom <= 0;
+
+						}
 
 						const isActive =
 							stickyBreakpoint.matches &&
-							hasScrolledPastForm;
+							hasScrolledPastTrigger;
 
 						stickyAtc.classList.toggle(
 							'is-active',
@@ -1131,16 +1163,9 @@
 
 						stickyAtc.hidden = !isActive;
 
-						stickyAtc.classList.toggle(
-						  'is-active',
-						  isActive
-						);
-
-						stickyAtc.hidden = !isActive;
-
 						document.documentElement.classList.toggle(
-						  'sticky-atc-active',
-						  isActive
+							'sticky-atc-active',
+							isActive
 						);
 
 					};
