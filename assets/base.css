@@ -74,6 +74,14 @@ html {
   	}
   }
 
+  &.sticky-atc-active {
+
+	  shopify-chat {
+	    display: none !important;
+	  }
+
+	}
+
   &.menu-open {
 
   	overflow: hidden;
