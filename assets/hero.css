@@ -40,7 +40,7 @@
 		aspect-ratio: 1/0.6;
 
 		@media (max-width: 990px) {
-			aspect-ratio: unset;
+			aspect-ratio: 1/1;
 		}
 	}
 
