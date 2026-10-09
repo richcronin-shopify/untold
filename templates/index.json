@@ -282,8 +282,8 @@
       ],
       "name": "Image with USPs",
       "settings": {
-        "desktop_image": "shopify://shop_images/bmx-spotlight.jpg",
-        "mobile_image": "shopify://shop_images/bmx-shoot-m.jpg",
+        "desktop_image": "shopify://shop_images/bmx-spotlight.webp",
+        "mobile_image": "shopify://shop_images/bmx-shoot-m.webp",
         "heading": "Rider owned. Rider approved.",
         "heading_tag": 2,
         "font_size": 2,
@@ -318,7 +318,7 @@
         "card_hM3HHX": {
           "type": "card",
           "settings": {
-            "image": "shopify://shop_images/shop-by-height.jpg",
+            "image": "shopify://shop_images/shop-by-height.webp",
             "icon": "shopify://shop_images/icon-size.svg",
             "title": "Shop by height",
             "description": "Find the right frame size",
@@ -328,7 +328,7 @@
         "card_HhjRXp": {
           "type": "card",
           "settings": {
-            "image": "shopify://shop_images/shop-by-age.jpg",
+            "image": "shopify://shop_images/shop-by-age_7b768789-5126-4e6d-9c76-f944cc272e05.jpg",
             "icon": "shopify://shop_images/icon-age.svg",
             "title": "Shop by age",
             "description": "Perfect picks for younger riders",
@@ -338,7 +338,7 @@
         "card_Q4CJDK": {
           "type": "card",
           "settings": {
-            "image": "shopify://shop_images/shop-by-style.jpg",
+            "image": "shopify://shop_images/shop-by-style.webp",
             "icon": "shopify://shop_images/icon-cs.svg",
             "title": "Still need help?",
             "description": "Get in touch today",
