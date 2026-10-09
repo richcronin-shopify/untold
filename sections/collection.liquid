@@ -554,7 +554,7 @@
 					{%- for product in collection.products -%}
 
 						<div class="main-collection__item">
-							{% render 'product-card', product: product %}
+							{% render 'product-card', product: product, card_index: forloop.index %}
 						</div>
 
 					{%- endfor -%}
