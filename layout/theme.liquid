@@ -93,9 +93,10 @@
 		src="{{ 'base.min.js' | asset_url }}"
 		defer
 	></script>
-	<script
-		src="{{ 'swiper-bundle.min.js' | asset_url }}"
-		defer
-	></script>
+	{%- if template.name == 'index' or template.name == 'product' -%}
+		<script src="{{ 'swiper-bundle.min.js' | asset_url }}"></script>
+	{%- else -%}
+		<script src="{{ 'swiper-bundle.min.js' | asset_url }}" defer></script>
+	{%- endif -%}
   </body>
 </html>
