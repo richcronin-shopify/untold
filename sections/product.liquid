@@ -1131,6 +1131,18 @@
 
 						stickyAtc.hidden = !isActive;
 
+						stickyAtc.classList.toggle(
+						  'is-active',
+						  isActive
+						);
+
+						stickyAtc.hidden = !isActive;
+
+						document.documentElement.classList.toggle(
+						  'sticky-atc-active',
+						  isActive
+						);
+
 					};
 
 					window.addEventListener(
