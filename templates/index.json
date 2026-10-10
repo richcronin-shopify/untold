@@ -189,7 +189,7 @@
       "name": "Product slider",
       "settings": {
         "title": "Best sellers",
-        "collection": "frames",
+        "collection": "bestsellers",
         "product_limit": 10,
         "show_view_all": true,
         "enable_carousel": true,
