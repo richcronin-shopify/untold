@@ -366,63 +366,10 @@
     },
     "product_component_aiiB9b": {
       "type": "product-component",
-      "blocks": {
-        "product_GRQ4e7": {
-          "type": "product",
-          "settings": {
-            "product": "cult-devotion-26-bike-black-22"
-          }
-        },
-        "product_Y8VPTX": {
-          "type": "product",
-          "settings": {
-            "product": "alienation-bmx-rim-tape-pair-black"
-          }
-        },
-        "product_hExcVD": {
-          "type": "product",
-          "settings": {
-            "product": "alienation-deviant-18-bmx-rim-gloss-black-36-hole"
-          }
-        },
-        "product_BHRJLR": {
-          "type": "product",
-          "settings": {
-            "product": "alienation-felon-rim-purple-36-hole"
-          }
-        },
-        "product_NwRTMN": {
-          "type": "product",
-          "settings": {
-            "product": "alienation-mite-tcs-rim-black-28-hole"
-          }
-        },
-        "product_QQNPB7": {
-          "type": "product",
-          "settings": {
-            "product": "backyard-bars-black-9"
-          }
-        },
-        "product_acPXxn": {
-          "type": "product",
-          "settings": {
-            "product": "cult-ic-sect-v4-18-forks-28mm-rake-black-10mm-3-8"
-          }
-        }
-      },
-      "block_order": [
-        "product_GRQ4e7",
-        "product_Y8VPTX",
-        "product_hExcVD",
-        "product_BHRJLR",
-        "product_NwRTMN",
-        "product_QQNPB7",
-        "product_acPXxn"
-      ],
       "name": "Product slider",
       "settings": {
         "title": "Best sellers",
-        "collection": "",
+        "collection": "new-in",
         "product_limit": 20,
         "show_view_all": true,
         "enable_carousel": true,
