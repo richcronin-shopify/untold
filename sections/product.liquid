@@ -21,6 +21,12 @@
 			break
 		endif
 	endfor
+	assign vendor = product.vendor
+	for tag in product.tags
+		if tag contains 'vendor:'
+			assign vendor = tag | remove: 'vendor:'
+		endif
+	endfor
 -%}
 
 <section
@@ -154,9 +160,9 @@
 
 			<div class="product__info{% unless current_variant.available %} product__info--sold-out{% endunless %}">
 
-				{%- if product.vendor != blank -%}
+				{%- if vendor != blank -%}
 					<div class="product__vendor">
-						{{ product.vendor }}
+						{{ vendor }}
 					</div>
 				{%- endif -%}
 
