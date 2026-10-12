@@ -27,7 +27,7 @@
 	assign vendor = card_product.vendor
 	for tag in card_product.tags
 		if tag contains 'vendor:'
-			assign vendor = tag | remove: 'vendor'
+			assign vendor = tag | remove: 'vendor:'
 		endif
 	endfor
 -%}
