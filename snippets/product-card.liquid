@@ -24,6 +24,12 @@
 		assign primary_image_loading = 'eager'
 		assign primary_image_fetchpriority = 'high'
 	endif
+	assign vendor = card_product.vendor
+	for tag in card_product.tags
+		if tag contains 'vendor:'
+			assign vendor = tag | remove: 'vendor'
+		endif
+	endfor
 -%}
 
 <a
@@ -97,10 +103,10 @@
 
 	<div class="product-card__content">
 
-		{%- if settings.product_card_show_vendor and card_product.vendor != blank -%}
+		{%- if settings.product_card_show_vendor and vendor != blank -%}
 
 			<div class="product-card__vendor">
-				{{- card_product.vendor -}}
+				{{- vendor -}}
 			</div>
 
 		{%- endif -%}
