@@ -184,6 +184,24 @@
         "padding-bottom-m": 0
       }
     },
+    "product_component_aiiB9b": {
+      "type": "product-component",
+      "name": "Product slider",
+      "settings": {
+        "title": "New In",
+        "collection": "new-in",
+        "product_limit": 20,
+        "show_view_all": true,
+        "enable_carousel": true,
+        "products_desktop": 5,
+        "products_tablet": 3,
+        "products_mobile": 2,
+        "padding-top": 40,
+        "padding-bottom": 40,
+        "padding-top-m": 30,
+        "padding-bottom-m": 30
+      }
+    },
     "product_component_QLzHta": {
       "type": "product-component",
       "name": "Product slider",
@@ -363,35 +381,17 @@
         "padding-top-m": 0,
         "padding-bottom-m": 30
       }
-    },
-    "product_component_aiiB9b": {
-      "type": "product-component",
-      "name": "Product slider",
-      "settings": {
-        "title": "New In",
-        "collection": "new-in",
-        "product_limit": 20,
-        "show_view_all": true,
-        "enable_carousel": true,
-        "products_desktop": 5,
-        "products_tablet": 3,
-        "products_mobile": 2,
-        "padding-top": 40,
-        "padding-bottom": 40,
-        "padding-top-m": 30,
-        "padding-bottom-m": 30
-      }
     }
   },
   "order": [
     "hero_XdJJ7X",
     "usp_grid_giqUqR",
     "collection_grid_ydaH7n",
-    "product_component_QLzHta",
+    "product_component_aiiB9b",
     "payment_icons_74q9MM",
     "image_with_usps_KeYf6t",
     "brand_slider_CBWDTy",
     "multicolumn_zU8AgG",
-    "product_component_aiiB9b"
+    "product_component_QLzHta"
   ]
 }
