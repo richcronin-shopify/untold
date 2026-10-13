@@ -368,7 +368,7 @@
       "type": "product-component",
       "name": "Product slider",
       "settings": {
-        "title": "Best sellers",
+        "title": "New In",
         "collection": "new-in",
         "product_limit": 20,
         "show_view_all": true,
