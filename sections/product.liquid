@@ -486,43 +486,47 @@
 							assign points_text = block.settings.text | replace: '[points]', points_earned
 						-%}
 
-						<a href="{{ block.settings.link }}"
-							class="product__points"
-							data-product-points
-							data-points-per-pound="{{ points_per_pound }}"
-							data-points-template="{{ block.settings.text | escape }}"
-							{{ block.shopify_attributes }}
-						>
+						{%- unless product.type == 'gift-card' -%}
 
-							<div class="product__points-icon" aria-hidden="true">
-								{%- if block.settings.icon != blank -%}
-									{%- assign icon_style = 'max-width: ' | append: block.settings.max_image_width | append: 'px; width: 100%; height: auto;' -%}
-									{{
-										block.settings.icon
-										| image_url: width: 240
-										| image_tag:
-											loading: 'lazy',
-											alt: '',
-											style: icon_style
-									}}
-								{%- elsif block.settings.icon_text != blank -%}
-									<span>{{ block.settings.icon_text }}</span>
-								{%- endif -%}
-							</div>
+							<a href="{{ block.settings.link }}"
+								class="product__points"
+								data-product-points
+								data-points-per-pound="{{ points_per_pound }}"
+								data-points-template="{{ block.settings.text | escape }}"
+								{{ block.shopify_attributes }}
+							>
 
-							<div class="product__points-content">
-								<div class="product__points-title" data-product-points-text>
-									{{ points_text }}
+								<div class="product__points-icon" aria-hidden="true">
+									{%- if block.settings.icon != blank -%}
+										{%- assign icon_style = 'max-width: ' | append: block.settings.max_image_width | append: 'px; width: 100%; height: auto;' -%}
+										{{
+											block.settings.icon
+											| image_url: width: 240
+											| image_tag:
+												loading: 'lazy',
+												alt: '',
+												style: icon_style
+										}}
+									{%- elsif block.settings.icon_text != blank -%}
+										<span>{{ block.settings.icon_text }}</span>
+									{%- endif -%}
 								</div>
 
-								{%- if block.settings.subtext != blank -%}
-									<div class="product__points-subtext">
-										{{ block.settings.subtext }}
+								<div class="product__points-content">
+									<div class="product__points-title" data-product-points-text>
+										{{ points_text }}
 									</div>
-								{%- endif -%}
-							</div>
 
-						</a>
+									{%- if block.settings.subtext != blank -%}
+										<div class="product__points-subtext">
+											{{ block.settings.subtext }}
+										</div>
+									{%- endif -%}
+								</div>
+
+							</a>
+
+						{%- endunless -%}
 
 					{%- elsif block.type == 'size_guide' and show_size_guide -%}
 
