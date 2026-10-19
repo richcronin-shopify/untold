@@ -29,6 +29,7 @@
         },
         "points_VfQeEP": {
           "type": "points",
+          "disabled": true,
           "settings": {
             "points_per_pound": 1,
             "icon": "shopify://shop_images/icon-points.svg",
