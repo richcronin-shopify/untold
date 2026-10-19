@@ -153,15 +153,12 @@
 
             // Optional trackpad/mouse-wheel horizontal scrolling.
             // Requires the Swiper Mousewheel module (included in swiper-bundle).
-			mousewheel: enableMousewheel
-			  ? {
-			      enabled: true,
-			      forceToAxis: false,
-			      sensitivity: 1,
-			      releaseOnEdges: true,
-			      eventsTarget: swiperElement
-			    }
-			  : false,
+			mousewheel: {
+			  enabled: true,
+			  forceToAxis: false,
+			  sensitivity: 1,
+			  releaseOnEdges: true
+			},
 
             navigation: previousButton && nextButton
               ? {
