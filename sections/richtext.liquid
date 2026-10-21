@@ -39,7 +39,7 @@
 						{% when 'btn' %}
 						{% if bs.url != blank and bs.title != blank %}
 							<div class="btn-flex">
-								{% render 'button', url: bs.url, style: 'button', label: bs.title %}
+								<a href="{{bs.url}}" class="button">{{bs.title}}</a>
 							</div>
 						{% endif %}
 
