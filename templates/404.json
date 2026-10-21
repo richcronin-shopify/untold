@@ -7,14 +7,55 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
- {
+{
   "sections": {
     "main": {
       "type": "404",
+      "disabled": true,
       "settings": {}
+    },
+    "richtext_XwkLdb": {
+      "type": "richtext",
+      "blocks": {
+        "heading_jkVRMW": {
+          "type": "heading",
+          "settings": {
+            "heading_tag": 1,
+            "font_size": 3,
+            "title": "404 - Looks like you're in the wrong place"
+          }
+        },
+        "richtext_nVTdFV": {
+          "type": "richtext",
+          "settings": {
+            "richtext": "<p>It happens to us all. Click below to go to the homepage.</p>"
+          }
+        },
+        "btn_BmtxMY": {
+          "type": "btn",
+          "settings": {
+            "title": "Return Home",
+            "url": "/"
+          }
+        }
+      },
+      "block_order": [
+        "heading_jkVRMW",
+        "richtext_nVTdFV",
+        "btn_BmtxMY"
+      ],
+      "name": "Richtext",
+      "settings": {
+        "text_align": "text-align-center",
+        "padding-top": 60,
+        "padding-bottom": 60,
+        "padding-top-m": 30,
+        "padding-bottom-m": 30
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "richtext_XwkLdb"
   ]
 }
