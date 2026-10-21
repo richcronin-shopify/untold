@@ -20,6 +20,9 @@
 
 		.btn-flex {
 
+			display: flex;
+			margin-top: 20px;
+
 			.button {
 
 			}
