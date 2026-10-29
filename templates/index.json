@@ -266,7 +266,7 @@
       ],
       "name": "Image with USPs",
       "settings": {
-        "desktop_image": "shopify://shop_images/bmx-spotlight.webp",
+        "desktop_image": "shopify://shop_images/rider-approved.jpg",
         "mobile_image": "shopify://shop_images/bmx-shoot-m.webp",
         "heading": "Rider owned. ||Rider approved.",
         "heading_tag": 2,
