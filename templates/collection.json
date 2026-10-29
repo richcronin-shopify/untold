@@ -94,62 +94,63 @@
         "brands_desktop": 6,
         "brands_tablet": 4,
         "brands_mobile": 3,
+        "grid_gap": 20,
         "padding-top": 40,
         "padding-bottom": 40,
         "padding-top-m": 30,
         "padding-bottom-m": 30
       }
     },
-    "collection_grid_BFHjXk": {
+    "collection_grid_C3GyHM": {
       "type": "collection-grid",
       "blocks": {
-        "collection_Cp6CH6": {
+        "collection_fbYAC4": {
           "type": "collection",
           "settings": {
             "collection": "complete-bikes",
-            "image": "shopify://shop_images/complet-bikes.jpg",
+            "image": "shopify://shop_images/home-collections.jpg",
             "title": "Complete Bikes"
           }
         },
-        "collection_wXrqDF": {
+        "collection_jrQ4Xi": {
           "type": "collection",
           "settings": {
             "collection": "frames",
-            "image": "shopify://shop_images/frames_99457d6c-7c1b-43f0-a4d8-7d76fac3a0de.jpg",
+            "image": "shopify://shop_images/home-frames_a6fbf060-9475-4053-9adc-d987ff369d1f.jpg",
             "title": ""
           }
         },
-        "collection_w9Pepj": {
+        "collection_rBNfQm": {
           "type": "collection",
           "settings": {
             "collection": "wheels",
-            "image": "shopify://shop_images/wheels.jpg",
+            "image": "shopify://shop_images/home-wheels.jpg",
             "title": ""
           }
         },
-        "collection_HV88Pf": {
+        "collection_XgRrAk": {
           "type": "collection",
           "settings": {
-            "collection": "all-products",
-            "image": "shopify://shop_images/parts.jpg",
+            "collection": "parts",
+            "image": "shopify://shop_images/home-parts.jpg",
             "title": "Parts"
           }
         },
-        "collection_EBy3qA": {
+        "collection_66Gfhx": {
           "type": "collection",
           "settings": {
-            "collection": "backpacks",
-            "image": "shopify://shop_images/sale.jpg",
+            "collection": "sale",
+            "image": "shopify://shop_images/home-sale.jpg",
             "title": "Sale"
           }
         }
       },
       "block_order": [
-        "collection_Cp6CH6",
-        "collection_wXrqDF",
-        "collection_w9Pepj",
-        "collection_HV88Pf",
-        "collection_EBy3qA"
+        "collection_fbYAC4",
+        "collection_jrQ4Xi",
+        "collection_rBNfQm",
+        "collection_XgRrAk",
+        "collection_66Gfhx"
       ],
       "name": "Collection grid",
       "settings": {
@@ -165,6 +166,6 @@
     "main",
     "usp_grid_zHV33d",
     "brand_slider_emVjVm",
-    "collection_grid_BFHjXk"
+    "collection_grid_C3GyHM"
   ]
 }
