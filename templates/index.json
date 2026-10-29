@@ -221,10 +221,10 @@
       ],
       "name": "Payment options",
       "settings": {
-        "title": "Ride now. Pay your way.",
+        "title": "Ride now. Pay Later.",
         "description": "Interest-free options available at checkout",
         "button_label": "",
-        "button_url": "shopify://pages/terms-conditions",
+        "button_url": "",
         "padding-top": 50,
         "padding-bottom": 40,
         "padding-top-m": 30,
