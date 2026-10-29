@@ -285,7 +285,7 @@
       "settings": {
         "desktop_image": "shopify://shop_images/bmx-spotlight.webp",
         "mobile_image": "shopify://shop_images/bmx-shoot-m.webp",
-        "heading": "Rider owned. Rider approved.",
+        "heading": "Rider owned. ||Rider approved.",
         "heading_tag": 2,
         "font_size": 2,
         "text": "<p>We bring together trusted BMX bikes, frames and parts from the best brands in the scene. Honest advice, dependable service and real support before and after your order.</p>",
