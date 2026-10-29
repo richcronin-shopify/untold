@@ -1,3 +1,4 @@
+
 {{- 'brand-slider.css' | asset_url | stylesheet_tag -}}
 
 {%- assign ss = section.settings -%}
@@ -96,6 +97,22 @@
     --brands-desktop: {{ ss.brands_desktop }};
     --brands-tablet: {{ ss.brands_tablet }};
     --brands-mobile: {{ ss.brands_mobile }};
+    --brands-grid-gap: {{ ss.grid_gap }}px;
+  }
+
+  #{{ section.id }}.brand-slider--grid .brand-slider__items {
+    display: grid;
+    grid-template-columns: repeat(var(--brands-desktop), minmax(0, 1fr));
+    column-gap: var(--brands-grid-gap);
+    row-gap: var(--brands-grid-gap);
+  }
+
+  @media screen and (max-width: 989px) {
+
+    #{{ section.id }}.brand-slider--grid .brand-slider__items {
+      grid-template-columns: repeat(var(--brands-tablet), minmax(0, 1fr));
+    }
+
   }
 
   @media screen and (max-width: 767px) {
@@ -103,6 +120,10 @@
     #{{ section.id }} {
       padding-top: {{ ss.padding-top-m }}px;
       padding-bottom: {{ ss.padding-bottom-m }}px;
+    }
+
+    #{{ section.id }}.brand-slider--grid .brand-slider__items {
+      grid-template-columns: repeat(var(--brands-mobile), minmax(0, 1fr));
     }
 
   }
@@ -158,42 +179,42 @@
 
           const brandSwiper = new Swiper(swiperElement, {
 
-			  slidesPerView: brandsMobile,
+            slidesPerView: brandsMobile,
 
-			  spaceBetween: 60,
+            spaceBetween: 60,
 
-			  speed: 4000,
+            speed: 4000,
 
-			  loop: true,
+            loop: true,
 
-			  watchOverflow: true,
+            watchOverflow: true,
 
-			  allowTouchMove: true,
+            allowTouchMove: true,
 
-			  autoplay: {
-			    delay: 0,
-			    disableOnInteraction: false,
-			    pauseOnMouseEnter: false
-			  },
+            autoplay: {
+              delay: 0,
+              disableOnInteraction: false,
+              pauseOnMouseEnter: false
+            },
 
-			  breakpoints: {
+            breakpoints: {
 
-			    768: {
-			      slidesPerView: brandsTablet
-			    },
+              768: {
+                slidesPerView: brandsTablet
+              },
 
-			    990: {
-			      slidesPerView: brandsDesktop
-			    }
+              990: {
+                slidesPerView: brandsDesktop
+              }
 
-			  },
+            },
 
-			  a11y: {
-			    enabled: true,
-			    slideLabelMessage: '{{index}} of {{slidesLength}}'
-			  }
+            a11y: {
+              enabled: true,
+              slideLabelMessage: '{{index}} of {{slidesLength}}'
+            }
 
-			});
+          });
 
           const pauseAutoplay = () => {
 
@@ -325,6 +346,20 @@
       "step": 1,
       "label": "Brands shown on mobile",
       "default": 3
+    },
+    {
+      "type": "header",
+      "content": "Grid settings"
+    },
+    {
+      "type": "range",
+      "id": "grid_gap",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Grid gap (carousel disabled)",
+      "default": 20
     },
     {
       "type": "header",
