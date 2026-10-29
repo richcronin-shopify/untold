@@ -403,8 +403,8 @@
 							transform: translate(0, -50%);
 							height: unset;
 							aspect-ratio: 1/1;
-							width: 200%;
-							max-width: 200%;
+							width: 120%;
+							max-width: 120%;
 							transition: .3s all;
 							object-fit: cover;
 						}
@@ -420,7 +420,7 @@
 					&:hover {
 						.product__paired-colour-image {
 							img {
-								width: 150%;
+								width: 100%;
 							}
 						}
 					}
