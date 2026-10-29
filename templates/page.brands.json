@@ -18,9 +18,26 @@
         "button_label": "",
         "button_link": ""
       }
+    },
+    "brand_slider_xJP464": {
+      "type": "brand-slider",
+      "name": "Brand slider",
+      "settings": {
+        "title": "",
+        "enable_carousel": false,
+        "max_image_width": 180,
+        "brands_desktop": 7,
+        "brands_tablet": 3,
+        "brands_mobile": 2,
+        "padding-top": 60,
+        "padding-bottom": 40,
+        "padding-top-m": 30,
+        "padding-bottom-m": 30
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "brand_slider_xJP464"
   ]
 }
