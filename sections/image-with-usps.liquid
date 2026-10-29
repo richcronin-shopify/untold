@@ -11,7 +11,7 @@
 
 					{%- if ss.heading != blank -%}
 						<h{{ ss.heading_tag }} class="h{{ ss.font_size }} image-with-usps__heading">
-							{{ ss.heading }}
+							{{ ss.heading | replace: '||', '<br>' }}
 						</h{{ ss.heading_tag }}>
 					{%- endif -%}
 
@@ -70,6 +70,10 @@
 								</div>
 
 							</div>
+
+							{%- unless forloop.last -%}
+								<span class="image-with-usps__divider"></span>
+							{%- endunless -%}
 
 						{%- endfor -%}
 
