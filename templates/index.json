@@ -22,7 +22,7 @@
             "heading_tag": 1,
             "font_size": 1,
             "text": "<strong>from £239.99</strong> - Ready to dispatch",
-            "button_label": "Shop now",
+            "button_label": "View Frames",
             "button_url": "shopify://collections/frames",
             "button_style": "button"
           }
@@ -36,7 +36,7 @@
             "heading_tag": 2,
             "font_size": 1,
             "text": "<strong>From £239.99</strong> · Ready to dispatch",
-            "button_label": "Shop now",
+            "button_label": "View Kink 2027",
             "button_url": "/collections/complete-bikes?filter.p.vendor=Kink&sort_by=created-descending",
             "button_style": "button"
           }
