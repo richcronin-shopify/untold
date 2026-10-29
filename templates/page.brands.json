@@ -26,7 +26,7 @@
         "title": "",
         "enable_carousel": false,
         "max_image_width": 180,
-        "brands_desktop": 7,
+        "brands_desktop": 8,
         "brands_tablet": 3,
         "brands_mobile": 2,
         "grid_gap": 50,
