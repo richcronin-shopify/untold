@@ -29,6 +29,7 @@
         "brands_desktop": 7,
         "brands_tablet": 3,
         "brands_mobile": 2,
+        "grid_gap": 50,
         "padding-top": 60,
         "padding-bottom": 40,
         "padding-top-m": 30,
