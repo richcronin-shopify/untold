@@ -267,7 +267,7 @@
       "name": "Image with USPs",
       "settings": {
         "desktop_image": "shopify://shop_images/rider-approved.jpg",
-        "mobile_image": "shopify://shop_images/bmx-shoot-m.webp",
+        "mobile_image": "shopify://shop_images/about-m.jpg",
         "heading": "Rider owned. ||Rider approved.",
         "heading_tag": 2,
         "font_size": 2,
