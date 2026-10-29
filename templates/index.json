@@ -323,7 +323,7 @@
         "card_Q4CJDK": {
           "type": "card",
           "settings": {
-            "image": "shopify://shop_images/shop-by-style.webp",
+            "image": "shopify://shop_images/help.jpg",
             "icon": "shopify://shop_images/icon-cs.svg",
             "title": "Still need help?",
             "description": "Get in touch today",
