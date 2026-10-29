@@ -115,7 +115,7 @@
           "type": "collection",
           "settings": {
             "collection": "complete-bikes",
-            "image": "shopify://shop_images/complet-bikes.jpg",
+            "image": "shopify://shop_images/home-collections.jpg",
             "title": "Complete Bikes"
           }
         },
@@ -123,7 +123,7 @@
           "type": "collection",
           "settings": {
             "collection": "frames",
-            "image": "shopify://shop_images/frames_99457d6c-7c1b-43f0-a4d8-7d76fac3a0de.jpg",
+            "image": "shopify://shop_images/home-frames.jpg",
             "title": ""
           }
         },
@@ -131,7 +131,7 @@
           "type": "collection",
           "settings": {
             "collection": "wheels",
-            "image": "shopify://shop_images/wheels.jpg",
+            "image": "shopify://shop_images/home-wheels.jpg",
             "title": ""
           }
         },
@@ -139,7 +139,7 @@
           "type": "collection",
           "settings": {
             "collection": "parts",
-            "image": "shopify://shop_images/parts.jpg",
+            "image": "shopify://shop_images/home-parts.jpg",
             "title": "Parts"
           }
         },
@@ -147,7 +147,7 @@
           "type": "collection",
           "settings": {
             "collection": "sale",
-            "image": "shopify://shop_images/sale.jpg",
+            "image": "shopify://shop_images/home-sale.jpg",
             "title": "Sale"
           }
         }
