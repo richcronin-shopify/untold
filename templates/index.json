@@ -208,9 +208,9 @@
         "payment_mKqnB9": {
           "type": "payment",
           "settings": {
-            "image": "shopify://shop_images/paypal.png",
-            "title": "PayPal",
-            "description": "Pay in 3"
+            "image": "shopify://shop_images/shopay-icon.png",
+            "title": "Pay in 3",
+            "description": "Interest-free"
           }
         }
       },
