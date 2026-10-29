@@ -142,7 +142,7 @@
       ],
       "name": "Collection grid",
       "settings": {
-        "padding-top": 0,
+        "padding-top": 30,
         "padding-bottom": 0,
         "padding-top-m": 0,
         "padding-bottom-m": 0
