@@ -95,7 +95,6 @@ html {
 
   		&.scrolled {
 			.site-header {
-				top: -40px;
 				@media (max-width: 767px) {
 					top: 0;
 				}
@@ -133,9 +132,7 @@ body {
 
 	&.scrolled {
 		.site-header {
-			@media (max-width: 767px) {
-				top: -40px;
-			}
+			top: -40px;
 			.site-header__main {
 				background: var(--color-black-reduced);
 			}
