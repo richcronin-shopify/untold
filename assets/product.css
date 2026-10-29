@@ -406,6 +406,7 @@
 							width: 200%;
 							max-width: 200%;
 							transition: .3s all;
+							object-fit: cover;
 						}
 					}
 					.product__paired-colour-label {
