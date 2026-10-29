@@ -95,6 +95,7 @@ html {
 
   		&.scrolled {
 			.site-header {
+				top: -40px;
 				@media (max-width: 767px) {
 					top: 0;
 				}
