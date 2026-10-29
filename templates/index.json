@@ -90,7 +90,7 @@
             "image": "shopify://shop_images/icon-cs.svg",
             "title": "need help?",
             "description": "Chat with our team today",
-            "url": "shopify://pages/contact"
+            "url": "#open-chat"
           }
         }
       },
@@ -290,6 +290,7 @@
         "brands_desktop": 7,
         "brands_tablet": 4,
         "brands_mobile": 3,
+        "grid_gap": 20,
         "padding-top": 40,
         "padding-bottom": 40,
         "padding-top-m": 30,
