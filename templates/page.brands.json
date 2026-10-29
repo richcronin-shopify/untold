@@ -12,10 +12,11 @@
     "main": {
       "type": "page",
       "settings": {
-        "navigation": "in-page-menu",
-        "button_intro": "<p>Still can’t find what you’re looking for?<br/>Please contact us below</p>",
-        "button_label": "Contact us",
-        "button_link": "shopify://pages/contact"
+        "nav_only": false,
+        "navigation": "",
+        "button_intro": "",
+        "button_label": "",
+        "button_link": ""
       }
     }
   },
