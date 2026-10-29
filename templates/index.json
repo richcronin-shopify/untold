@@ -80,7 +80,7 @@
           "settings": {
             "image": "shopify://shop_images/icon-secure.svg",
             "title": "Secure payments",
-            "description": "Klarna, Clearpay, Paypal & More",
+            "description": "Klarna, Clearpay & more",
             "url": ""
           }
         },
