@@ -89,7 +89,7 @@
           "settings": {
             "image": "shopify://shop_images/icon-cs.svg",
             "title": "need help?",
-            "description": "Chat with our team today",
+            "description": "Click the chat icon below",
             "url": ""
           }
         }
