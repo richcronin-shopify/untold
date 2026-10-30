@@ -190,6 +190,9 @@ html.cart-drawer-open {
 		flex-direction: column;
 		min-width: 0;
 		min-height: 100%;
+		.cart-drawer__item-remove {
+			
+		}
 	}
 
 	.cart-drawer__item-title {
