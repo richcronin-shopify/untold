@@ -56,17 +56,36 @@
 
 							<span class="hero-slider__media--video-overlay"></span>
 
-							{{
-								video
-								| video_tag:
-									class: 'hero-slider__video',
-									autoplay: true,
-									loop: true,
-									muted: true,
-									controls: false,
-									playsinline: true,
-									preload: 'metadata'
-							}}
+							{%- liquid
+								assign mp4_sources = video.sources | where: 'format', 'mp4' | sort: 'width'
+								assign video_source = mp4_sources | first
+								for source in mp4_sources
+									if source.width <= 1280
+										assign video_source = source
+									endif
+								endfor
+								if video_source == blank
+									assign video_source = video.sources | first
+								endif
+							-%}
+
+							<video
+								class="hero-slider__video"
+								muted
+								loop
+								playsinline
+								preload="none"
+								{% if video.preview_image != blank %}
+									data-poster="{{ video.preview_image | image_url: width: 1200 }}"
+								{% endif %}
+							>
+								{%- if video_source != blank -%}
+									<source
+										data-src="{{ video_source.url | escape }}"
+										type="{{ video_source.mime_type | escape }}"
+									>
+								{%- endif -%}
+							</video>
 
 						</div>
 
@@ -280,6 +299,23 @@
 									video.muted = true;
 
 									if (index === swiper.activeIndex) {
+
+										// Only load video media when its slide becomes active.
+										const deferredSource = video.querySelector('source[data-src]');
+
+										if (deferredSource) {
+											deferredSource.src = deferredSource.dataset.src;
+											deferredSource.removeAttribute('data-src');
+										}
+
+										if (video.dataset.poster) {
+											video.poster = video.dataset.poster;
+											delete video.dataset.poster;
+										}
+
+										if (deferredSource) {
+											video.load();
+										}
 
 										const playPromise = video.play();
 
