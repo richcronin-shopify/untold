@@ -22,6 +22,7 @@
 	data-cart-drawer
 	data-free-delivery-threshold="{{ free_delivery_threshold }}"
 	data-points-per-pound="{{ points_per_pound }}"
+	data-trash-icon-url="{{ 'icon-trash.svg' | asset_url }}"
 	aria-hidden="true"
 >
 	<button
@@ -108,7 +109,7 @@
 								data-quantity="0"
 								aria-label="Remove {{ item.product.title | escape }} from cart"
 							>
-								{{- 'icon-trash.svg' | inline_asset_content -}}
+								<img src="{{ 'icon-trash.svg' | asset_url }}" width="18" height="18" alt="" aria-hidden="true">
 							</button>
 
 							<a href="{{ item.url }}" class="cart-drawer__item-title">
@@ -237,10 +238,6 @@
 	</div>
 </div>
 
-<template data-cart-trash-icon>
-	{{- 'icon-trash.svg' | inline_asset_content -}}
-</template>
-
 {%- style -%}
 	#{{ section.id }} .cart-drawer__item-content {
 		position: relative;
@@ -259,7 +256,8 @@
 		cursor: pointer;
 	}
 
-	#{{ section.id }} .cart-drawer__item-remove svg {
+	#{{ section.id }} .cart-drawer__item-remove img {
+		display: block;
 		width: 18px;
 		height: 18px;
 	}
@@ -298,7 +296,7 @@
 				this.footerCount = element.querySelector('[data-cart-footer-count]');
 				this.subtotal = element.querySelector('[data-cart-subtotal]');
 				this.status = element.querySelector('[data-cart-status]');
-				this.trashIcon = element.querySelector('[data-cart-trash-icon]')?.innerHTML || '';
+				this.trashIcon = element.dataset.trashIconUrl || '';
 
 
 				this.threshold = Number(
@@ -424,7 +422,7 @@
 								data-quantity="0"
 								aria-label="Remove ${this.escapeHtml(item.product_title)} from cart"
 							>
-								${this.trashIcon}
+								<img src="${this.escapeHtml(this.trashIcon)}" width="18" height="18" alt="" aria-hidden="true">
 							</button>
 
 							<a href="${this.escapeHtml(item.url)}" class="cart-drawer__item-title">
