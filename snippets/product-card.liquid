@@ -55,7 +55,7 @@
 							height: 800,
 							widths: '300, 400, 500, 600, 800',
 							sizes: '(min-width: 990px) 25vw, 50vw',
-							alt: primary_image.alt
+							alt: primary_image.alt | default: product.title | escape
 				-}}
 
 				{%- if show_secondary_image -%}
