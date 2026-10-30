@@ -98,7 +98,7 @@
 														fetchpriority: 'high',
 														widths: '600, 900, 1200, 1500, 1800',
 														sizes: '(min-width: 990px) 50vw, 100vw',
-														alt: media.preview_image.alt
+														alt: media.preview_image.alt | default: product.title | escape
 												}}
 											{%- else -%}
 												{{
@@ -108,7 +108,7 @@
 														loading: 'lazy',
 														widths: '600, 900, 1200, 1500, 1800',
 														sizes: '(min-width: 990px) 50vw, 100vw',
-														alt: media.preview_image.alt
+														alt: media.preview_image.alt | default: product.title | escape
 												}}
 											{%- endif -%}
 
