@@ -1520,6 +1520,12 @@ button,
 				}
 			}
 
+			.product-card__saving {
+				font-size: 12px;
+				color: var(--color-primary);
+				font-weight: 400;
+			}
+
 		}
 
 		.product-card__availability {

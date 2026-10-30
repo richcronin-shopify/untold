@@ -8,10 +8,31 @@
 {%- liquid
 	assign current_on_sale = false
 	assign current_saving = 0
+	assign current_display_price = current_variant.price
+	assign current_compare_price = 0
 	assign show_size_guide = false
 
-	if current_variant.compare_at_price > current_variant.price
+	assign automatic_sale_percent = product.metafields.custom.automatic_sale_percent.value | default: 0 | plus: 0
+	assign has_automatic_sale = false
+
+	if automatic_sale_percent > 0 and automatic_sale_percent <= 100
+		comment
+			Shopify calculates percentage discounts from the discount amount,
+			rounded down to whole pennies, not by rounding the final sale price.
+		endcomment
+		assign sale_discount = current_variant.price | times: automatic_sale_percent | divided_by: 100.0 | floor
+		assign current_display_price = current_variant.price | minus: sale_discount
+		if current_display_price < current_variant.price
+			assign has_automatic_sale = true
+			assign current_on_sale = true
+			assign current_compare_price = current_variant.price
+			assign current_saving = current_variant.price | minus: current_display_price
+		endif
+	endif
+
+	if has_automatic_sale == false and current_variant.compare_at_price > current_variant.price
 		assign current_on_sale = true
+		assign current_compare_price = current_variant.compare_at_price
 		assign current_saving = current_variant.compare_at_price | minus: current_variant.price
 	endif
 
@@ -34,6 +55,7 @@
 	id="{{ section.id }}"
 	data-product-section
 	data-product-id="{{ product.id }}"
+	data-automatic-sale-percent="{{ automatic_sale_percent }}"
 >
 	<div class="container">
 
@@ -215,7 +237,7 @@
 
 					<div class="product__price">
 						<span class="product__price-current" data-product-price>
-							{{ current_variant.price | money }}
+							{{ current_display_price | money }}
 						</span>
 
 						<span
@@ -223,7 +245,7 @@
 							data-product-compare-price
 							{% unless current_on_sale %}hidden{% endunless %}
 						>
-							{{ current_variant.compare_at_price | money }}
+							{{ current_compare_price | money }}
 						</span>
 					</div>
 
@@ -235,6 +257,11 @@
 						Save <span data-product-saving-value>{{ current_saving | money_without_trailing_zeros }}</span>
 					</div>
 
+					{%- if has_automatic_sale -%}
+						<p class="product__discount-note" data-product-discount-note>
+							Discount applied automatically in basket
+						</p>
+					{%- endif -%}
 				</div>
 
 				{%- if ss.show_klarna -%}
@@ -242,7 +269,7 @@
 						<div class="product__klarna-text">
 							Or 3 interest-free payments of
 							<strong data-product-klarna-price>
-								{{ current_variant.price | divided_by: 3.0 | money }}
+								{{ current_display_price | divided_by: 3.0 | money }}
 							</strong>
 							with Klarna
 						</div>
@@ -509,7 +536,7 @@
 
 						{%- liquid
 							assign points_per_pound = block.settings.points_per_pound | default: 1
-							assign points_earned = current_variant.price | times: points_per_pound | divided_by: 100
+							assign points_earned = current_display_price | times: points_per_pound | divided_by: 100
 							assign points_text = block.settings.text | replace: '[points]', points_earned
 						-%}
 
@@ -733,6 +760,15 @@
 		{{ product.variants | json }}
 	</script>
 </section>
+
+{%- style -%}
+	#{{ section.id }} .product__discount-note {
+		margin: 8px 0 0;
+		font-size: 12px;
+		line-height: 1.4;
+		opacity: .75;
+	}
+{%- endstyle -%}
 
 {% javascript %}
 
@@ -979,6 +1015,22 @@
 
 					};
 
+					const automaticSalePercent = Math.min(
+						100,
+						Math.max(0, Number(section.dataset.automaticSalePercent || 0))
+					);
+
+					const getDisplayedPrice = (variant) => {
+						const regularPrice = Number(variant.price || 0);
+						if (automaticSalePercent <= 0) return regularPrice;
+
+						// Round the discount down to whole pennies, then subtract it.
+						const discountAmount = Math.floor(
+							(regularPrice * automaticSalePercent) / 100
+						);
+						return regularPrice - discountAmount;
+					};
+
 					const currentPageUrl = new URL(window.location.href);
 					const backInStockSubmitted =
 						currentPageUrl.searchParams.get('back_in_stock_success') === '1';
@@ -1019,7 +1071,7 @@
 							);
 
 							const points = Math.floor(
-								(Number(variant.price || 0) / 100) * pointsPerPound
+								(getDisplayedPrice(variant) / 100) * pointsPerPound
 							);
 
 							if (textElement) {
@@ -1043,18 +1095,21 @@
 							variantInput.value = variant.id;
 						}
 
-						if (priceElement) {
-							priceElement.textContent = formatMoney(variant.price);
-						}
+						const regularPrice = Number(variant.price || 0);
+						const displayedPrice = getDisplayedPrice(variant);
+						const automaticSaleActive = displayedPrice < regularPrice;
+						const compareAt = Number(variant.compare_at_price || 0);
+						const comparePrice = automaticSaleActive ? regularPrice : compareAt;
+						const onSale = comparePrice > displayedPrice;
 
-						const onSale =
-							Number(variant.compare_at_price || 0) >
-							Number(variant.price || 0);
+						if (priceElement) {
+							priceElement.textContent = formatMoney(displayedPrice);
+						}
 
 						if (comparePriceElement) {
 							comparePriceElement.hidden = !onSale;
 							comparePriceElement.textContent = onSale
-								? formatMoney(variant.compare_at_price)
+								? formatMoney(comparePrice)
 								: '';
 						}
 
@@ -1063,16 +1118,18 @@
 						}
 
 						if (savingValueElement) {
-							const saving = onSale
-								? Number(variant.compare_at_price) - Number(variant.price)
-								: 0;
-
+							const saving = onSale ? comparePrice - displayedPrice : 0;
 							savingValueElement.textContent = formatMoney(saving);
+						}
+
+						const discountNote = section.querySelector('[data-product-discount-note]');
+						if (discountNote) {
+							discountNote.hidden = !automaticSaleActive;
 						}
 
 						if (klarnaPriceElement) {
 							klarnaPriceElement.textContent = formatMoney(
-								Math.round(Number(variant.price || 0) / 3)
+								Math.round(displayedPrice / 3)
 							);
 						}
 
