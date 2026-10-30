@@ -17,8 +17,8 @@
         "announcement_J9yAtB": {
           "type": "announcement",
           "settings": {
-            "title": "Shop now",
-            "url": "/collections"
+            "title": "10% off frames",
+            "url": "shopify://collections/10-off-frames"
           }
         },
         "announcement_7crK3Q": {
