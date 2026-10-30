@@ -198,8 +198,6 @@
 	/* Product information */
 
 	.product__info {
-		position: sticky;
-		top: 170px;
 		min-width: 0;
 
 		@media (max-width: 989px) {
