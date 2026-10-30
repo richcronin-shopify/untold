@@ -126,6 +126,23 @@
 								</div>
 							{%- endunless -%}
 
+							{%- if item.line_level_discount_allocations.size > 0 -%}
+								<div class="cart-drawer__item-discounts" aria-label="Applied discounts">
+									{%- for allocation in item.line_level_discount_allocations -%}
+										{%- if allocation.discount_application.title != blank -%}
+											<div class="cart-drawer__item-discount">
+												{%- if allocation.discount_application.type == 'discount_code' -%}
+													<span>Code:</span>
+												{%- else -%}
+													<span>Discount:</span>
+												{%- endif -%}
+												<span>{{ allocation.discount_application.title | escape }}</span>
+											</div>
+										{%- endif -%}
+									{%- endfor -%}
+								</div>
+							{%- endif -%}
+
 							<div class="cart-drawer__item-bottom">
 								<div class="cart-drawer__quantity" aria-label="Quantity for {{ item.product.title | escape }}">
 									<button
@@ -154,7 +171,10 @@
 								</div>
 
 								<div class="cart-drawer__item-price">
-									{{ item.final_line_price | money }}
+									{%- if item.original_line_price > item.final_line_price -%}
+										<s class="cart-drawer__item-price-original" aria-label="Original price">{{ item.original_line_price | money }}</s>
+									{%- endif -%}
+									<span class="cart-drawer__item-price-final">{{ item.final_line_price | money }}</span>
 								</div>
 							</div>
 						</div>
@@ -239,12 +259,12 @@
 </div>
 
 {%- style -%}
-	#{{ section.id }} .cart-drawer__item-content {
+	#CartDrawer-{{ section.id }} .cart-drawer__item-content {
 		position: relative;
 		padding-right: 32px;
 	}
 
-	#{{ section.id }} .cart-drawer__item-remove {
+	#CartDrawer-{{ section.id }} .cart-drawer__item-remove {
 		position: absolute;
 		top: 0;
 		right: 0;
@@ -256,10 +276,38 @@
 		cursor: pointer;
 	}
 
-	#{{ section.id }} .cart-drawer__item-remove img {
+	#CartDrawer-{{ section.id }} .cart-drawer__item-remove img {
 		display: block;
 		width: 18px;
 		height: 18px;
+	}
+
+	#CartDrawer-{{ section.id }} .cart-drawer__item-price {
+		display: flex;
+		align-items: baseline;
+		justify-content: flex-end;
+		flex-wrap: wrap;
+		column-gap: 8px;
+		row-gap: 2px;
+	}
+
+	#CartDrawer-{{ section.id }} .cart-drawer__item-price-original {
+		color: #777;
+		font-size: 0.875em;
+		font-weight: 400;
+		text-decoration: line-through;
+	}
+
+	#CartDrawer-{{ section.id }} .cart-drawer__item-discounts {
+		margin-top: 6px;
+		font-size: 12px;
+		line-height: 1.5;
+	}
+
+	#CartDrawer-{{ section.id }} .cart-drawer__item-discount {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 4px;
 	}
 {%- endstyle -%}
 
@@ -393,6 +441,29 @@
 			}
 
 
+			getItemDiscounts(item) {
+
+				if (!Array.isArray(item.line_level_discount_allocations)) {
+					return '';
+				}
+
+				return item.line_level_discount_allocations
+					.map((allocation) => {
+						const application = allocation?.discount_application;
+						if (!application?.title) return '';
+
+						const label = application.type === 'discount_code'
+							? 'Code:'
+							: 'Discount:';
+
+						return `<div class="cart-drawer__item-discount"><span>${label}</span><span>${this.escapeHtml(application.title)}</span></div>`;
+					})
+					.filter(Boolean)
+					.join('');
+
+			}
+
+
 			renderItem(item) {
 
 				const image = item.image
@@ -406,6 +477,7 @@
 					: '';
 
 				const options = this.getItemOptions(item);
+				const discounts = this.getItemDiscounts(item);
 
 				return `
 					<div class="cart-drawer__item" data-cart-item data-line-key="${this.escapeHtml(item.key)}">
@@ -430,6 +502,7 @@
 							</a>
 
 							${options ? `<div class="cart-drawer__item-options">${options}</div>` : ''}
+							${discounts ? `<div class="cart-drawer__item-discounts" aria-label="Applied discounts">${discounts}</div>` : ''}
 
 							<div class="cart-drawer__item-bottom">
 								<div class="cart-drawer__quantity" aria-label="Quantity for ${this.escapeHtml(item.product_title)}">
@@ -459,7 +532,10 @@
 								</div>
 
 								<div class="cart-drawer__item-price">
-									${this.formatMoney(item.final_line_price)}
+									${Number(item.original_line_price) > Number(item.final_line_price)
+										? `<s class="cart-drawer__item-price-original" aria-label="Original price">${this.formatMoney(item.original_line_price)}</s>`
+										: ''}
+									<span class="cart-drawer__item-price-final">${this.formatMoney(item.final_line_price)}</span>
 								</div>
 							</div>
 						</div>

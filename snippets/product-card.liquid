@@ -11,10 +11,37 @@
 		assign show_secondary_image = true
 	endif
 
+	comment
+		Use the same automatic-sale calculation as the PDP.
+		Shopify rounds the discount amount down to whole pennies.
+		The metafield is a display setting; the cart still applies the real discount.
+	endcomment
+	assign automatic_sale_percent = card_product.metafields.custom.automatic_sale_percent.value | default: 0 | plus: 0
+	assign card_original_price = card_product.price_min
+	assign card_display_price = card_original_price
+	assign card_compare_price = 0
+	assign has_automatic_sale = false
 	assign on_sale = false
 
-	if card_product.compare_at_price_max > card_product.price
+	if automatic_sale_percent > 0 and automatic_sale_percent <= 100
+		assign sale_discount = card_original_price | times: automatic_sale_percent | divided_by: 100.0 | floor
+		assign card_display_price = card_original_price | minus: sale_discount
+
+		if card_display_price < card_original_price
+			assign has_automatic_sale = true
+			assign on_sale = true
+			assign card_compare_price = card_original_price
+		endif
+	endif
+
+	if has_automatic_sale == false and card_product.compare_at_price_max > card_original_price
 		assign on_sale = true
+		assign card_compare_price = card_product.compare_at_price_max
+	endif
+
+	assign card_saving = 0
+	if on_sale and card_compare_price > card_display_price
+		assign card_saving = card_compare_price | minus: card_display_price
 	endif
 
 	assign primary_image_loading = 'lazy'
@@ -24,6 +51,7 @@
 		assign primary_image_loading = 'eager'
 		assign primary_image_fetchpriority = 'high'
 	endif
+
 	assign vendor = card_product.vendor
 	for tag in card_product.tags
 		if tag contains 'vendor:'
@@ -100,7 +128,6 @@
 
 	</div>
 
-
 	<div class="product-card__content">
 
 		{%- if settings.product_card_show_vendor and vendor != blank -%}
@@ -111,28 +138,16 @@
 
 		{%- endif -%}
 
-
 		<h3 class="product-card__title">
 			{{- card_product.title -}}
 		</h3>
 
-
 		<div class="product-card__price">
 
-			{%- if card_product.price_varies -%}
-
-				<span class="product-card__price-current">
-					From {{ card_product.price_min | money }}
-				</span>
-
-			{%- else -%}
-
-				<span class="product-card__price-current">
-					{{ card_product.price | money }}
-				</span>
-
-			{%- endif -%}
-
+			<span class="product-card__price-current">
+				{%- if card_product.price_varies -%}From {% endif -%}
+				{{ card_display_price | money }}
+			</span>
 
 			{%- if on_sale -%}
 
@@ -141,13 +156,18 @@
 						Regular price
 					</span>
 
-					Was <span class="product-card__price-compare-sale">{{ card_product.compare_at_price_max | money }}</span>
+					Was <span class="product-card__price-compare-sale">{{ card_compare_price | money }}</span>
 				</span>
 
 			{%- endif -%}
 
-		</div>
+			{%- if card_saving > 0 -%}
+				<span class="product-card__saving">
+					Save {{ card_saving | money_without_trailing_zeros }}
+				</span>
+			{%- endif -%}
 
+		</div>
 
 		{%- if settings.product_card_show_availability -%}
 
