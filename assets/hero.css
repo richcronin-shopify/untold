@@ -120,6 +120,9 @@
 		font-size: 32px;
 		font-weight: 500;
 		margin: 0 0 10px 0;
+		@media (max-width: 767px) {
+			font-size: 20px;
+		}
 	}
 
 	.hero-slider__heading {
