@@ -100,6 +100,17 @@
 						</a>
 
 						<div class="cart-drawer__item-content">
+							<button
+								type="button"
+								class="cart-drawer__item-remove button--reset"
+								data-cart-quantity-change
+								data-line-key="{{ item.key }}"
+								data-quantity="0"
+								aria-label="Remove {{ item.product.title | escape }} from cart"
+							>
+								{{- 'icon-trash.svg' | inline_asset_content -}}
+							</button>
+
 							<a href="{{ item.url }}" class="cart-drawer__item-title">
 								{{ item.product.title }}
 							</a>
@@ -226,6 +237,34 @@
 	</div>
 </div>
 
+<template data-cart-trash-icon>
+	{{- 'icon-trash.svg' | inline_asset_content -}}
+</template>
+
+{%- style -%}
+	#{{ section.id }} .cart-drawer__item-content {
+		position: relative;
+		padding-right: 32px;
+	}
+
+	#{{ section.id }} .cart-drawer__item-remove {
+		position: absolute;
+		top: 0;
+		right: 0;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 28px;
+		height: 28px;
+		cursor: pointer;
+	}
+
+	#{{ section.id }} .cart-drawer__item-remove svg {
+		width: 18px;
+		height: 18px;
+	}
+{%- endstyle -%}
+
 <script type="application/json" data-cart-drawer-config>
 	{
 		"pointsText": {{ ss.points_text | json }},
@@ -259,6 +298,8 @@
 				this.footerCount = element.querySelector('[data-cart-footer-count]');
 				this.subtotal = element.querySelector('[data-cart-subtotal]');
 				this.status = element.querySelector('[data-cart-status]');
+				this.trashIcon = element.querySelector('[data-cart-trash-icon]')?.innerHTML || '';
+
 
 				this.threshold = Number(
 					element.dataset.freeDeliveryThreshold || 0
@@ -375,6 +416,17 @@
 						</a>
 
 						<div class="cart-drawer__item-content">
+							<button
+								type="button"
+								class="cart-drawer__item-remove button--reset"
+								data-cart-quantity-change
+								data-line-key="${this.escapeHtml(item.key)}"
+								data-quantity="0"
+								aria-label="Remove ${this.escapeHtml(item.product_title)} from cart"
+							>
+								${this.trashIcon}
+							</button>
+
 							<a href="${this.escapeHtml(item.url)}" class="cart-drawer__item-title">
 								${this.escapeHtml(item.product_title)}
 							</a>
