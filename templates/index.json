@@ -173,7 +173,7 @@
       "settings": {
         "title": "Just Landed",
         "collection": "new-in",
-        "product_limit": 20,
+        "product_limit": 12,
         "show_view_all": true,
         "enable_carousel": true,
         "enable_mousewheel": false,
