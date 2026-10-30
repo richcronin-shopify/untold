@@ -218,6 +218,12 @@ html.cart-drawer-open {
 		color: rgba(255, 255, 255, .55);
 	}
 
+	.cart-drawer__item-discounts {
+		.cart-drawer__item-discount {
+			color: var(--color-sale);
+		}
+	}
+
 	.cart-drawer__item-bottom {
 		display: flex;
 		align-items: end;
@@ -260,8 +266,12 @@ html.cart-drawer-open {
 	.cart-drawer__item-price {
 		font-family: var(--font-heading-family);
 		font-size: 18px;
-		font-weight: 600;
+		font-weight: 400;
 		white-space: nowrap;
+		.cart-drawer__item-price-original {
+			font-weight: 200;
+			font-size: 16px;
+		}
 	}
 
 	.cart-drawer__empty {
