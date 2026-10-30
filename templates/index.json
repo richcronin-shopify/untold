@@ -231,6 +231,23 @@
         "padding-bottom-m": 30
       }
     },
+    "brand_slider_CBWDTy": {
+      "type": "brand-slider",
+      "name": "Brand slider",
+      "settings": {
+        "title": "Shop by brand",
+        "enable_carousel": true,
+        "max_image_width": 120,
+        "brands_desktop": 7,
+        "brands_tablet": 4,
+        "brands_mobile": 3,
+        "grid_gap": 20,
+        "padding-top": 20,
+        "padding-bottom": 40,
+        "padding-top-m": 30,
+        "padding-bottom-m": 40
+      }
+    },
     "image_with_usps_KeYf6t": {
       "type": "image-with-usps",
       "blocks": {
@@ -278,23 +295,6 @@
         "padding-bottom": 0,
         "padding-top-m": 0,
         "padding-bottom-m": 20
-      }
-    },
-    "brand_slider_CBWDTy": {
-      "type": "brand-slider",
-      "name": "Brand slider",
-      "settings": {
-        "title": "Shop by brand",
-        "enable_carousel": true,
-        "max_image_width": 120,
-        "brands_desktop": 7,
-        "brands_tablet": 4,
-        "brands_mobile": 3,
-        "grid_gap": 20,
-        "padding-top": 40,
-        "padding-bottom": 40,
-        "padding-top-m": 30,
-        "padding-bottom-m": 40
       }
     },
     "multicolumn_zU8AgG": {
@@ -375,8 +375,8 @@
     "collection_grid_ydaH7n",
     "product_component_aiiB9b",
     "payment_icons_74q9MM",
-    "image_with_usps_KeYf6t",
     "brand_slider_CBWDTy",
+    "image_with_usps_KeYf6t",
     "multicolumn_zU8AgG",
     "product_component_QLzHta"
   ]
