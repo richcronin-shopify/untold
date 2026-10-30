@@ -244,8 +244,8 @@
         "grid_gap": 20,
         "padding-top": 20,
         "padding-bottom": 40,
-        "padding-top-m": 30,
-        "padding-bottom-m": 40
+        "padding-top-m": 10,
+        "padding-bottom-m": 20
       }
     },
     "image_with_usps_KeYf6t": {
@@ -294,7 +294,7 @@
         "padding-top": 0,
         "padding-bottom": 0,
         "padding-top-m": 0,
-        "padding-bottom-m": 20
+        "padding-bottom-m": 40
       }
     },
     "multicolumn_zU8AgG": {
