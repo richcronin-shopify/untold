@@ -17,13 +17,13 @@
           "settings": {
             "image_desktop": "shopify://shop_images/hero_3678a1d3-f014-4d8c-b6f4-6e77155910b9.jpg",
             "image_mobile": "shopify://shop_images/hero-frames-m.jpg",
-            "eyebrow": "fresh frames",
-            "heading": "New frames now in stock",
+            "eyebrow": "save save save",
+            "heading": "10% off all frames",
             "heading_tag": 1,
             "font_size": 1,
-            "text": "<strong>from £239.99</strong> - Ready to dispatch",
+            "text": "",
             "button_label": "View Frames",
-            "button_url": "shopify://collections/frames",
+            "button_url": "shopify://collections/10-off-frames",
             "button_style": "button"
           }
         },
