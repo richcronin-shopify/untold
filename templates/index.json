@@ -48,8 +48,8 @@
       ],
       "name": "Hero slider",
       "settings": {
-        "autoplay": false,
-        "autoplay_delay": 5,
+        "autoplay": true,
+        "autoplay_delay": 8,
         "show_arrows": true,
         "show_pagination": true
       }
