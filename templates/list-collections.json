@@ -31,7 +31,7 @@
         "richtext_CzjTKK": {
           "type": "richtext",
           "settings": {
-            "richtext": "<p>We bring together trusted BMX bikes, frames and parts from the best brands in the scene. Honest advice, dependable service and real support before and after your order.</p>"
+            "richtext": "<p>We bring together trusted BMX bikes, frames and parts from the best brands in the scene.<br/>Honest advice, dependable service and real support before and after your order.</p>"
           }
         }
       },
@@ -160,12 +160,12 @@
       "name": "Brand slider",
       "settings": {
         "title": "Shop by brand",
-        "enable_carousel": true,
-        "max_image_width": 120,
+        "enable_carousel": false,
+        "max_image_width": 100,
         "brands_desktop": 7,
         "brands_tablet": 4,
         "brands_mobile": 3,
-        "grid_gap": 20,
+        "grid_gap": 100,
         "padding-top": 70,
         "padding-bottom": 40,
         "padding-top-m": 30,
