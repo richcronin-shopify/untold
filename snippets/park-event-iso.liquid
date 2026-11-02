@@ -1,0 +1,12 @@
+{% doc %}
+  Outputs an ISO 8601 date-time with a colon in the offset, e.g. 2026-11-14T10:00:00+00:00.
+
+  @param {string} value - A date or timestamp
+{% enddoc %}
+{%- liquid
+  assign pi_base = value | date: '%Y-%m-%dT%H:%M:%S'
+  assign pi_off = value | date: '%z'
+  assign pi_off_h = pi_off | slice: 0, 3
+  assign pi_off_m = pi_off | slice: 3, 2
+  echo pi_base | append: pi_off_h | append: ':' | append: pi_off_m
+-%}

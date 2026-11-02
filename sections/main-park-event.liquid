@@ -1,0 +1,168 @@
+{{- 'skatepark.css' | asset_url | stylesheet_tag -}}
+{%- liquid
+  assign ss = section.settings
+  assign event = metaobject
+  assign park = event.park.value
+  assign status = event.status.value
+  assign index_url = ss.index_url | default: '/pages/skateparks-uk'
+  assign event_url = request.origin | append: event.system.url
+
+  assign is_listed = false
+  if status == 'Approved' or status == 'Cancelled'
+    assign is_listed = true
+  endif
+
+  assign now_ts = 'now' | date: '%s' | plus: 0
+  assign until_ts = event.start.value | date: '%s' | plus: 0
+  if event.end.value != blank
+    assign until_ts = event.end.value | date: '%s' | plus: 0
+  endif
+  assign is_past = false
+  if until_ts < now_ts
+    assign is_past = true
+  endif
+
+  capture placeholder_url
+    render 'skatepark-placeholder-url', image: ss.placeholder_image, url: ss.placeholder_url, width: 640
+  endcapture
+  assign placeholder_url = placeholder_url | strip
+-%}
+
+<section class="park-event-page" id="{{ section.id }}">
+  <div class="container">
+
+    <nav class="breadcrumbs skatepark__breadcrumbs" aria-label="Breadcrumb">
+      <ol class="breadcrumbs__list" role="list">
+        <li class="breadcrumbs__item"><a href="{{ routes.root_url }}" class="breadcrumbs__link">Home</a></li>
+        <li class="breadcrumbs__item"><span class="breadcrumbs__separator" aria-hidden="true">/</span><a href="{{ index_url }}" class="breadcrumbs__link">{{ ss.index_label | default: 'Skateparks' | escape }}</a></li>
+        {%- if park != blank -%}
+          <li class="breadcrumbs__item"><span class="breadcrumbs__separator" aria-hidden="true">/</span><a href="{{ park.system.url }}" class="breadcrumbs__link">{{ park.name.value | escape }}</a></li>
+        {%- endif -%}
+        <li class="breadcrumbs__item"><span class="breadcrumbs__separator" aria-hidden="true">/</span><span class="breadcrumbs__current" aria-current="page">{% if is_listed %}{{ event.title.value | escape }}{% else %}Event{% endif %}</span></li>
+      </ol>
+    </nav>
+
+    {%- if is_listed == false -%}
+
+      <header class="skatepark__header">
+        <h1 class="skatepark__title h2">Event not available</h1>
+        <p>This event isn't listed at the moment.</p>
+        {%- if park != blank -%}
+          <p><a href="{{ park.system.url }}" class="button button--outline">Back to {{ park.name.value | escape }}</a></p>
+        {%- endif -%}
+      </header>
+
+    {%- else -%}
+
+      <div class="park-event-page__layout">
+        <div class="park-event-page__main">
+          <header class="skatepark__header">
+            <p class="park-event__meta">
+              {%- if event.event_type.value != blank -%}<span class="skatepark-chip park-event__type">{{ event.event_type.value | escape }}</span>{%- endif -%}
+              {%- if status == 'Cancelled' -%}<span class="skatepark__status">Cancelled</span>{%- elsif is_past -%}<span class="skatepark__status skatepark__status--muted">This event has finished</span>{%- endif -%}
+            </p>
+            <h1 class="skatepark__title h2">{{ event.title.value | escape }}</h1>
+            {%- if park != blank -%}
+              <p class="skatepark__subtitle">{{ park.name.value | escape }}{% if park.town_city.value != blank %}, {{ park.town_city.value | escape }}{% endif %}</p>
+            {%- endif -%}
+          </header>
+
+          {%- capture pe_iso -%}{% render 'park-event-iso', value: event.start.value %}{%- endcapture -%}
+          <dl class="skatepark-facts__list park-event-page__facts">
+            <div class="skatepark-facts__row">
+              <dt>When</dt>
+              <dd><time datetime="{{ pe_iso | strip }}">{% render 'park-event-when', event: event %}</time></dd>
+            </div>
+            {%- if park != blank -%}
+              <div class="skatepark-facts__row">
+                <dt>Where</dt>
+                <dd><a href="{{ park.system.url }}">{{ park.name.value | escape }}</a>{% if park.address_line.value != blank %}, {{ park.address_line.value | escape }}{% endif %}{% if park.town_city.value != blank %}, {{ park.town_city.value | escape }}{% endif %}{% if park.postcode.value != blank %} {{ park.postcode.value | escape }}{% endif %}</dd>
+              </div>
+            {%- endif -%}
+            {%- if event.organiser.value != blank -%}
+              <div class="skatepark-facts__row"><dt>Organiser</dt><dd>{{ event.organiser.value | escape }}</dd></div>
+            {%- endif -%}
+            {%- if event.price_note.value != blank -%}
+              <div class="skatepark-facts__row"><dt>Entry</dt><dd>{{ event.price_note.value | escape }}</dd></div>
+            {%- endif -%}
+          </dl>
+
+          {%- if event.description.value != blank -%}
+            <div class="skatepark__description rte">
+              <h2 class="skatepark__heading h5">About the event</h2>
+              {%- assign paras = event.description.value | newline_to_br | split: '<br />' -%}
+              {%- for para in paras -%}
+                {%- assign para_text = para | strip -%}
+                {%- if para_text != blank -%}<p>{{ para_text | escape }}</p>{%- endif -%}
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+
+          <div class="park-event__actions park-event-page__actions">
+            {%- if event.link.value != blank -%}
+              <a href="{% render 'skatepark-ref-url', url: event.link.value %}" class="button" target="_blank" rel="noopener nofollow">More info</a>
+            {%- endif -%}
+            {%- if park != blank -%}
+              {%- liquid
+                assign maps_url = park.google_maps_url.value
+                if maps_url == blank and park.latitude.value != blank
+                  assign maps_url = 'https://www.google.com/maps/search/?api=1&query=' | append: park.latitude.value | append: ',' | append: park.longitude.value
+                endif
+              -%}
+              {%- if maps_url != blank -%}
+                <a href="{% render 'skatepark-ref-url', url: maps_url %}" class="button button--outline" target="_blank" rel="noopener nofollow">Open in Google Maps</a>
+              {%- endif -%}
+              {%- unless is_past or status == 'Cancelled' -%}
+                {% render 'park-event-calendar', event: event, park: park, url: event_url %}
+              {%- endunless -%}
+            {%- endif -%}
+          </div>
+        </div>
+
+        {%- if park != blank -%}
+          <aside class="park-event-page__park">
+            <h2 class="skatepark__heading h6">The park</h2>
+            {% render 'skatepark-card', park: park, index: 1, placeholder: placeholder_url %}
+          </aside>
+        {%- endif -%}
+      </div>
+
+      {%- if park != blank -%}
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {% render 'park-event-schema', event: event, park: park, url: event_url %},
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {"@type": "ListItem", "position": 1, "name": "Home", "item": {{ request.origin | append: routes.root_url | json }}},
+                {"@type": "ListItem", "position": 2, "name": {{ ss.index_label | default: 'Skateparks' | json }}, "item": {{ request.origin | append: index_url | json }}},
+                {"@type": "ListItem", "position": 3, "name": {{ park.name.value | json }}, "item": {{ request.origin | append: park.system.url | json }}},
+                {"@type": "ListItem", "position": 4, "name": {{ event.title.value | json }}, "item": {{ event_url | json }}}
+              ]
+            }
+          ]
+        }
+        </script>
+      {%- endif -%}
+
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Park event",
+  "tag": "div",
+  "class": "main-park-event-section",
+  "enabled_on": { "templates": ["metaobject"] },
+  "settings": [
+    { "type": "url", "id": "index_url", "label": "Skateparks index page", "info": "Used for the breadcrumb. Defaults to /pages/skateparks-uk." },
+    { "type": "text", "id": "index_label", "label": "Index breadcrumb label", "default": "Skateparks" },
+    { "type": "image_picker", "id": "placeholder_image", "label": "Park placeholder image", "info": "Used on the park card when the park has no photo. If empty, park-coming-soon.jpg from Files is used." },
+    { "type": "text", "id": "placeholder_url", "label": "Park placeholder image URL (fallback)", "default": "https://cdn.shopify.com/s/files/1/0052/6873/4040/files/park-coming-soon.jpg?v=1793626514" }
+  ]
+}
+{% endschema %}

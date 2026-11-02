@@ -1,0 +1,43 @@
+{% doc %}
+  One park event in a list: date badge, type, time range, title, organiser, price note and links.
+
+  @param {object} event - A park_event metaobject
+  @param {object} park - The event's skatepark metaobject
+  @param {string} [heading_tag] - Heading tag for the title (default h3)
+{% enddoc %}
+{%- liquid
+  assign pi_tag = heading_tag | default: 'h3'
+  assign pi_url = request.origin | append: event.system.url
+  capture pi_iso
+    render 'park-event-iso', value: event.start.value
+  endcapture
+  assign pi_iso = pi_iso | strip
+-%}
+<li class="park-event{% if event.status.value == 'Cancelled' %} park-event--cancelled{% endif %}">
+  <div class="park-event__date" aria-hidden="true">
+    <span class="park-event__day">{{ event.start.value | date: '%-d' }}</span>
+    <span class="park-event__month">{{ event.start.value | date: '%b' }}</span>
+  </div>
+  <div class="park-event__body">
+    <p class="park-event__meta">
+      {%- if event.event_type.value != blank -%}<span class="skatepark-chip park-event__type">{{ event.event_type.value | escape }}</span>{%- endif -%}
+      <time datetime="{{ pi_iso }}" class="park-event__when">{% render 'park-event-when', event: event %}</time>
+    </p>
+    <{{ pi_tag }} class="park-event__title"><a href="{{ event.system.url }}">{{ event.title.value | escape }}</a></{{ pi_tag }}>
+    {%- if event.organiser.value != blank or event.price_note.value != blank -%}
+      <p class="park-event__info">
+        {%- if event.organiser.value != blank -%}Organised by {{ event.organiser.value | escape }}{%- endif -%}
+        {%- if event.organiser.value != blank and event.price_note.value != blank %} · {% endif -%}
+        {%- if event.price_note.value != blank -%}{{ event.price_note.value | escape }}{%- endif -%}
+      </p>
+    {%- endif -%}
+    <div class="park-event__actions">
+      {%- if event.link.value != blank -%}
+        <a href="{% render 'skatepark-ref-url', url: event.link.value %}" class="park-event__action park-event__action--primary" target="_blank" rel="noopener nofollow">More info</a>
+      {%- else -%}
+        <a href="{{ event.system.url }}" class="park-event__action park-event__action--primary">More info</a>
+      {%- endif -%}
+      {% render 'park-event-calendar', event: event, park: park, url: pi_url %}
+    </div>
+  </div>
+</li>

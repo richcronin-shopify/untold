@@ -1,0 +1,66 @@
+{% doc %}
+  "Add to calendar" links for a park event: Google Calendar and an .ics file (Apple, Outlook).
+  Times are sent as UK local time (Europe/London). Events with no end get a 2-hour slot.
+
+  @param {object} event - A park_event metaobject
+  @param {object} park - The event's skatepark metaobject
+  @param {string} url - Absolute URL of the event page
+{% enddoc %}
+{%- liquid
+  assign pc_start_ts = event.start.value | date: '%s' | plus: 0
+  if event.end.value != blank
+    assign pc_end_ts = event.end.value | date: '%s' | plus: 0
+  else
+    assign pc_end_ts = pc_start_ts | plus: 7200
+  endif
+  assign pc_start = pc_start_ts | date: '%Y%m%dT%H%M%S'
+  assign pc_end = pc_end_ts | date: '%Y%m%dT%H%M%S'
+
+  assign pc_location = park.name.value
+  if park.address_line.value != blank
+    assign pc_location = pc_location | append: ', ' | append: park.address_line.value
+  endif
+  if park.town_city.value != blank
+    assign pc_location = pc_location | append: ', ' | append: park.town_city.value
+  endif
+  if park.postcode.value != blank
+    assign pc_location = pc_location | append: ', ' | append: park.postcode.value
+  endif
+
+  assign pc_details = event.description.value | strip_newlines | truncate: 600
+  if pc_details != blank
+    assign pc_details = pc_details | append: ' '
+  endif
+  assign pc_details = pc_details | append: url
+
+  assign pc_title_enc = event.title.value | url_encode
+  assign pc_loc_enc = pc_location | url_encode
+  assign pc_det_enc = pc_details | url_encode
+  assign pc_google = 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' | append: pc_title_enc | append: '&dates=' | append: pc_start | append: '%2F' | append: pc_end | append: '&ctz=Europe%2FLondon&location=' | append: pc_loc_enc | append: '&details=' | append: pc_det_enc
+
+  assign pc_ics_title = event.title.value | replace: '\', '\\' | replace: ',', '\,' | replace: ';', '\;'
+  assign pc_ics_loc = pc_location | replace: '\', '\\' | replace: ',', '\,' | replace: ';', '\;'
+  assign pc_ics_desc = pc_details | replace: '\', '\\' | replace: ',', '\,' | replace: ';', '\;'
+  assign pc_stamp = 'now' | date: '%Y%m%dT%H%M%S'
+  assign pc_uid = event.system.handle | append: '@untoldbmx.co.uk'
+  assign pc_lines = 'BEGIN:VCALENDAR|VERSION:2.0|PRODID:-//UNTOLD BMX//Park events//EN|CALSCALE:GREGORIAN|BEGIN:VEVENT' | split: '|'
+  capture pc_ics
+    for pc_line in pc_lines
+      echo pc_line | url_encode | append: '%0D%0A'
+    endfor
+    echo 'UID:' | append: pc_uid | url_encode | append: '%0D%0A'
+    echo 'DTSTAMP;TZID=Europe/London:' | append: pc_stamp | url_encode | append: '%0D%0A'
+    echo 'DTSTART;TZID=Europe/London:' | append: pc_start | url_encode | append: '%0D%0A'
+    echo 'DTEND;TZID=Europe/London:' | append: pc_end | url_encode | append: '%0D%0A'
+    echo 'SUMMARY:' | append: pc_ics_title | url_encode | append: '%0D%0A'
+    echo 'LOCATION:' | append: pc_ics_loc | url_encode | append: '%0D%0A'
+    echo 'DESCRIPTION:' | append: pc_ics_desc | url_encode | append: '%0D%0A'
+    echo 'URL:' | append: url | url_encode | append: '%0D%0A'
+    echo 'END:VEVENT%0D%0AEND:VCALENDAR%0D%0A'
+  endcapture
+  assign pc_file = event.system.handle | append: '.ics'
+-%}
+<div class="park-event__calendar">
+  <a href="{{ pc_google }}" class="park-event__action" target="_blank" rel="noopener nofollow">Add to Google Calendar</a>
+  <a href="data:text/calendar;charset=utf-8,{{ pc_ics | strip }}" class="park-event__action" download="{{ pc_file | escape }}">Download .ics</a>
+</div>

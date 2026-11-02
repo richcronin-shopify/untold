@@ -1,0 +1,22 @@
+{% doc %}
+  Outputs the UK-format date and time range for a park event, e.g. "Sat 14 Nov 2026, 10:00–16:00".
+
+  @param {object} event - A park_event metaobject
+{% enddoc %}
+{%- liquid
+  assign pw_start = event.start.value
+  assign pw_end = event.end.value
+  assign pw_day = pw_start | date: '%a %-d %b %Y'
+  assign pw_time = pw_start | date: '%H:%M'
+  if pw_end == blank
+    echo pw_day | append: ', ' | append: pw_time
+  else
+    assign pw_end_day = pw_end | date: '%a %-d %b %Y'
+    assign pw_end_time = pw_end | date: '%H:%M'
+    if pw_end_day == pw_day
+      echo pw_day | append: ', ' | append: pw_time | append: '–' | append: pw_end_time
+    else
+      echo pw_day | append: ', ' | append: pw_time | append: ' – ' | append: pw_end_day | append: ', ' | append: pw_end_time
+    endif
+  endif
+-%}

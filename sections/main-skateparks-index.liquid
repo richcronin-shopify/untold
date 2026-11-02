@@ -259,6 +259,7 @@
           : '<span class="skatepark-card__placeholder" aria-hidden="true">' + esc(p.n.charAt(0)) + '</span>';
       return '<a href="' + esc(p.u) + '" class="skatepark-card"><div class="skatepark-card__media">' + img +
         (p.y ? '<span class="skatepark-card__badge">' + esc(p.y) + '</span>' : '') +
+        (p.e ? '<span class="skatepark-card__events">Upcoming events</span>' : '') +
         '</div><div class="skatepark-card__body"><h3 class="skatepark-card__title">' + esc(p.n) + '</h3><p class="skatepark-card__meta">' + meta + '</p>' +
         (p.r ? '<p class="skatepark-card__region">' + esc(p.r) + '</p>' : '') + '</div></a>';
     };

@@ -303,6 +303,40 @@
           </div>
         {%- endif -%}
 
+        {%- if ss.show_events -%}
+          {%- liquid
+            capture event_keys
+              render 'park-event-upcoming-keys', events: park.events.value
+            endcapture
+            assign event_keys = event_keys | strip | split: ',' | sort
+            assign park_events = park.events.value
+          -%}
+          {%- if event_keys.size > 0 -%}
+            <div class="skatepark-events" id="{{ section.id }}-events">
+              <h2 class="skatepark__heading h5">{{ ss.events_heading | default: 'Upcoming events' | escape }}</h2>
+              <ul class="park-events" role="list">
+                {%- for event_key in event_keys limit: ss.events_limit -%}
+                  {%- assign event_index = event_key | split: ':' | last | plus: 0 -%}
+                  {%- for park_event in park_events -%}
+                    {%- if forloop.index0 == event_index -%}
+                      {% render 'park-event-item', event: park_event, park: park %}
+                      {%- break -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+                {%- endfor -%}
+              </ul>
+            </div>
+          {%- elsif ss.show_no_events -%}
+            <p class="skatepark-events__empty">
+              {%- if ss.no_events_link != blank -%}
+                <a href="{{ ss.no_events_link }}">{{ ss.no_events_text | escape }}</a>
+              {%- else -%}
+                {{ ss.no_events_text | escape }}
+              {%- endif -%}
+            </p>
+          {%- endif -%}
+        {%- endif -%}
+
       </div>
 
     </div>
@@ -403,6 +437,26 @@
   {%- endif -%}
 }
 </script>
+{%- if ss.show_events and event_keys.size > 0 -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {%- for event_key in event_keys limit: ss.events_limit -%}
+      {%- assign event_index = event_key | split: ':' | last | plus: 0 -%}
+      {%- for ld_event in park_events -%}
+        {%- if forloop.index0 == event_index -%}
+          {%- assign ld_url = request.origin | append: ld_event.system.url -%}
+          {% render 'park-event-schema', event: ld_event, park: park, url: ld_url %}
+          {%- break -%}
+        {%- endif -%}
+      {%- endfor -%}
+      {%- unless forloop.last -%},{%- endunless -%}
+    {%- endfor -%}
+  ]
+}
+</script>
+{%- endif -%}
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -588,6 +642,49 @@
       "label": "Placeholder image URL (fallback)",
       "default": "https://cdn.shopify.com/s/files/1/0052/6873/4040/files/park-coming-soon.jpg?v=1793626514",
       "info": "Used only if no placeholder image is picked and park-coming-soon.jpg is not in Files."
+    },
+    {
+      "type": "header",
+      "content": "Upcoming events"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_events",
+      "label": "Show upcoming events",
+      "default": true,
+      "info": "Lists the park's Events that are published, have Status = Approved and haven't finished, soonest first."
+    },
+    {
+      "type": "text",
+      "id": "events_heading",
+      "label": "Heading",
+      "default": "Upcoming events"
+    },
+    {
+      "type": "range",
+      "id": "events_limit",
+      "min": 1,
+      "max": 12,
+      "step": 1,
+      "label": "Maximum events",
+      "default": 6
+    },
+    {
+      "type": "checkbox",
+      "id": "show_no_events",
+      "label": "Show a line when there are no events",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "no_events_text",
+      "label": "No events text",
+      "default": "No upcoming events — got one? Let us know"
+    },
+    {
+      "type": "url",
+      "id": "no_events_link",
+      "label": "No events link"
     },
     {
       "type": "header",

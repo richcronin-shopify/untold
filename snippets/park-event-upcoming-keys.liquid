@@ -1,0 +1,26 @@
+{% doc %}
+  Outputs the upcoming, approved events in a list as sortable keys: "<start timestamp>:<index>,".
+  An event counts as upcoming until its end (or its start if it has no end).
+  Capture the output, then: split: ',' | sort, and read the index after the colon.
+
+  @param {object} events - A list of park_event metaobjects (e.g. park.events.value)
+{% enddoc %}
+{%- liquid
+  assign pe_now = 'now' | date: '%s' | plus: 0
+  for pe in events
+    if pe.status.value != 'Approved'
+      continue
+    endif
+    if pe.start.value == blank
+      continue
+    endif
+    assign pe_start = pe.start.value | date: '%s' | plus: 0
+    assign pe_until = pe_start
+    if pe.end.value != blank
+      assign pe_until = pe.end.value | date: '%s' | plus: 0
+    endif
+    if pe_until >= pe_now
+      echo pe_start | append: ':' | append: forloop.index0 | append: ','
+    endif
+  endfor
+-%}

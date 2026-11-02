@@ -24,6 +24,15 @@
   else
     assign sp_alt = park.name.value | append: ', ' | append: park.town_city.value
   endif
+  assign sp_has_events = false
+  if park.events.value != blank
+    capture sp_event_keys
+      render 'park-event-upcoming-keys', events: park.events.value
+    endcapture
+    if sp_event_keys contains ':'
+      assign sp_has_events = true
+    endif
+  endif
 -%}
 <a href="{{ park.system.url }}" class="skatepark-card">
   <div class="skatepark-card__media">
@@ -34,6 +43,9 @@
     {%- endif -%}
     {%- if park.park_type.value != blank -%}
       <span class="skatepark-card__badge">{{ park.park_type.value | escape }}</span>
+    {%- endif -%}
+    {%- if sp_has_events -%}
+      <span class="skatepark-card__events">Upcoming events</span>
     {%- endif -%}
   </div>
   <div class="skatepark-card__body">

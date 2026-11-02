@@ -1,0 +1,69 @@
+{% doc %}
+  JSON-LD Event object for a park event (no surrounding script tag), with the park as its Place.
+
+  @param {object} event - A park_event metaobject
+  @param {object} park - The event's skatepark metaobject
+  @param {string} url - Absolute URL of the event page
+{% enddoc %}
+{%- liquid
+  assign ps_status = 'https://schema.org/EventScheduled'
+  if event.status.value == 'Cancelled'
+    assign ps_status = 'https://schema.org/EventCancelled'
+  endif
+  assign ps_img = park.thumbnail_image_url.value | first
+  if ps_img contains 'google.com/vt/'
+    assign ps_img = blank
+  endif
+  capture ps_start
+    render 'park-event-iso', value: event.start.value
+  endcapture
+  if event.end.value != blank
+    capture ps_end
+      render 'park-event-iso', value: event.end.value
+    endcapture
+  endif
+  assign ps_lat = park.latitude.value
+  assign ps_lng = park.longitude.value
+-%}
+{
+  "@type": "Event",
+  "name": {{ event.title.value | json }},
+  "url": {{ url | json }},
+  "startDate": {{ ps_start | strip | json }}
+  {%- if ps_end != blank -%},
+  "endDate": {{ ps_end | strip | json }}
+  {%- endif -%},
+  "eventStatus": {{ ps_status | json }},
+  "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode"
+  {%- if event.description.value != blank -%},
+  "description": {{ event.description.value | strip_newlines | json }}
+  {%- endif -%}
+  {%- if ps_img != blank -%},
+  "image": [{{ ps_img | json }}]
+  {%- endif -%},
+  "location": {
+    "@type": "Place",
+    "name": {{ park.name.value | json }},
+    "url": {{ request.origin | append: park.system.url | json }},
+    "address": {
+      "@type": "PostalAddress"
+      {%- if park.address_line.value != blank -%},"streetAddress": {{ park.address_line.value | json }}{%- endif -%}
+      {%- if park.town_city.value != blank -%},"addressLocality": {{ park.town_city.value | json }}{%- endif -%}
+      {%- if park.county_district.value != blank -%},"addressRegion": {{ park.county_district.value | json }}{%- endif -%}
+      {%- if park.postcode.value != blank -%},"postalCode": {{ park.postcode.value | json }}{%- endif -%},
+      "addressCountry": "GB"
+    }
+    {%- if ps_lat != blank and ps_lng != blank -%},
+    "geo": {"@type": "GeoCoordinates", "latitude": {{ ps_lat }}, "longitude": {{ ps_lng }}}
+    {%- endif %}
+  }
+  {%- if event.organiser.value != blank -%},
+  "organizer": {
+    "@type": "Organization",
+    "name": {{ event.organiser.value | json }}
+    {%- if event.link.value != blank -%},
+    "url": {{ event.link.value | json }}
+    {%- endif %}
+  }
+  {%- endif %}
+}

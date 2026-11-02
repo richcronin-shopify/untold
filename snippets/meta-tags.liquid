@@ -107,7 +107,76 @@
       assign sp_image = sp_image | strip
     endif
   endif
+
+  comment
+    Park event metaobject pages: "Event title – Park, Sat 14 Nov 2026". Events that are not
+    Approved or Cancelled (e.g. Pending) are marked noindex. The description never uses the
+    price note.
+  endcomment
+  assign pe_noindex = false
+  if request.page_type == 'metaobject' and metaobject.system.type == 'park_event'
+    assign pe_park = metaobject.park.value
+    assign pe_status = metaobject.status.value
+    if pe_status != 'Approved' and pe_status != 'Cancelled'
+      assign pe_noindex = true
+      assign seo_title = 'Event not available'
+      assign seo_description = 'This event is not listed at the moment.'
+    else
+      assign pe_date = metaobject.start.value | date: '%a %-d %b %Y'
+      assign seo_title = metaobject.title.value
+      if pe_park != blank
+        assign seo_title = seo_title | append: ' – ' | append: pe_park.name.value
+      endif
+      assign seo_title = seo_title | append: ', ' | append: pe_date
+      if pe_status == 'Cancelled'
+        assign seo_title = seo_title | append: ' (cancelled)'
+      endif
+
+      assign pe_desc = metaobject.description.value | strip_newlines | strip
+      assign pe_check = pe_desc | downcase
+      assign pe_desc_ok = true
+      if pe_desc == blank
+        assign pe_desc_ok = false
+      endif
+      assign pe_banned = 'deliver|price|£|in stock|out of stock| best |best.|cheapest|shipping|postage' | split: '|'
+      for pe_word in pe_banned
+        if pe_check contains pe_word
+          assign pe_desc_ok = false
+        endif
+      endfor
+      if pe_desc_ok
+        assign seo_description = pe_desc | truncate: 158
+      else
+        assign pe_type = metaobject.event_type.value | default: 'Event' | downcase
+        assign seo_description = metaobject.title.value | append: ': a BMX ' | append: pe_type | append: ' on ' | append: pe_date
+        if pe_park != blank
+          assign seo_description = seo_description | append: ' at ' | append: pe_park.name.value
+          if pe_park.town_city.value != blank
+            assign seo_description = seo_description | append: ', ' | append: pe_park.town_city.value
+          endif
+        endif
+        assign seo_description = seo_description | append: '. Times, location and how to add it to your calendar.'
+      endif
+    endif
+    assign og_title = seo_title
+    assign og_description = seo_description
+    if pe_park != blank
+      assign sp_image = pe_park.thumbnail_image_url.value | first
+      if sp_image contains 'google.com/vt/'
+        assign sp_image = blank
+      endif
+    endif
+    if sp_image == blank
+      capture sp_image
+        render 'skatepark-placeholder-url', width: 1200
+      endcapture
+      assign sp_image = sp_image | strip
+    endif
+  endif
 -%}
+{%- if pe_noindex -%}
+  <meta name="robots" content="noindex, nofollow">
+{%- endif -%}
 
 <meta
   property="og:site_name"
