@@ -1,0 +1,14 @@
+{%- layout none -%}
+{%- comment -%}
+  JSON feed of skatepark listings for the skateparks index search and filters.
+  Request: /pages/<handle>?view=skateparks-data (250 parks per page). Further pages use the
+  parameter named in the "param" field, e.g. &page_xxxx=2.
+{%- endcomment -%}
+{%- paginate shop.metaobjects.skatepark.values by 250 -%}
+{"page":{{ paginate.current_page | default: 1 }},"param":{{ paginate.page_param | default: 'page' | json }},"pages":{{ paginate.pages | default: 1 }},"total":{{ paginate.items }},"items":[
+{%- for p in shop.metaobjects.skatepark.values -%}
+{%- assign img = p.thumbnail_image_url.value | first | default: p.satellite_thumbnail_url.value -%}
+{"u":{{ p.system.url | json }},"n":{{ p.name.value | json }},"t":{{ p.town_city.value | json }},"c":{{ p.county_district.value | json }},"r":{{ p.region.value | json }},"p":{{ p.postcode.value | json }},"y":{{ p.park_type.value | strip | json }},"a":{{ p.latitude.value | json }},"o":{{ p.longitude.value | json }},"i":{{ img | json }}}{%- unless forloop.last -%},{%- endunless %}
+{% endfor -%}
+]}
+{%- endpaginate -%}

@@ -17,6 +17,87 @@
   endif
 %}
 
+{%- liquid
+  comment
+    Skatepark metaobject pages: build the SEO title and description from the park's data.
+    The description falls back to a generated summary if the park description is empty or
+    contains words that must not appear in SEO text.
+  endcomment
+  assign seo_title = page_title
+  assign seo_description = page_description
+  assign sp_image = blank
+
+  if request.page_type == 'metaobject' and metaobject.system.type == 'skatepark'
+    assign sp_name = metaobject.name.value
+    assign sp_town = metaobject.town_city.value
+    assign sp_county = metaobject.county_district.value
+    assign sp_name_down = sp_name | downcase
+    assign sp_town_down = sp_town | downcase
+
+    assign seo_title = sp_name
+    if sp_town != blank
+      unless sp_name_down contains sp_town_down
+        assign seo_title = seo_title | append: ', ' | append: sp_town
+      endunless
+    endif
+    assign sp_kind = 'Skatepark guide'
+    if metaobject.park_type.value == 'Pump Track'
+      assign sp_kind = 'Pump track guide'
+    elsif metaobject.park_type.value == 'BMX Track / Dirt Jumps'
+      assign sp_kind = 'BMX track guide'
+    endif
+    assign seo_title = seo_title | append: ' – ' | append: sp_kind
+
+    assign sp_desc = metaobject.description.value | strip_newlines | strip
+    assign sp_check = sp_desc | downcase
+    assign sp_desc_ok = true
+    if sp_desc == blank
+      assign sp_desc_ok = false
+    endif
+    assign sp_banned = 'deliver|price|£|in stock|out of stock| best |best.|cheapest|shipping|postage' | split: '|'
+    for sp_word in sp_banned
+      if sp_check contains sp_word
+        assign sp_desc_ok = false
+      endif
+    endfor
+
+    if sp_desc_ok
+      assign seo_description = sp_desc | truncate: 158
+    else
+      assign sp_type = metaobject.park_type.value | default: 'Skatepark' | downcase | replace: 'bmx', 'BMX'
+      assign sp_setting = metaobject.setting.value | downcase
+      assign seo_description = sp_name | append: ' is '
+      if sp_setting contains 'covered'
+        assign sp_setting = 'covered'
+      endif
+      if sp_setting != blank
+        assign sp_phrase = sp_setting | append: ' ' | append: sp_type
+      else
+        assign sp_phrase = sp_type
+      endif
+      assign sp_first = sp_phrase | slice: 0
+      if 'aeiou' contains sp_first
+        assign seo_description = seo_description | append: 'an ' | append: sp_phrase
+      else
+        assign seo_description = seo_description | append: 'a ' | append: sp_phrase
+      endif
+      if sp_town != blank
+        assign seo_description = seo_description | append: ' in ' | append: sp_town
+        if sp_county != blank and sp_county != sp_town
+          assign seo_description = seo_description | append: ', ' | append: sp_county
+        endif
+      endif
+      assign seo_description = seo_description | append: '. Features, facilities, map, directions and key facts for BMX riders.'
+    endif
+
+    assign og_title = seo_title
+    assign og_description = seo_description
+    unless metaobject.thumbnail_source_type.value contains 'Satellite'
+      assign sp_image = metaobject.thumbnail_image_url.value | first
+    endunless
+  endif
+-%}
+
 <meta
   property="og:site_name"
   content="{{ shop.name }}"
@@ -38,7 +119,12 @@
   content="{{ og_description | escape }}"
 >
 
-{%- if page_image -%}
+{%- if sp_image != blank -%}
+  <meta
+    property="og:image"
+    content="{{ sp_image | escape }}"
+  >
+{%- elsif page_image -%}
   <meta
     property="og:image"
     content="http:{{ page_image | image_url }}"
@@ -86,10 +172,10 @@
 >
 
 <title>
-  {{ page_title }}
+  {{ seo_title }}
   {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
   {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
-  {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+  {%- unless seo_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
 </title>
 
 <link
@@ -97,9 +183,9 @@
   href="{{ canonical_url }}"
 >
 
-{% if page_description %}
+{% if seo_description %}
   <meta
     name="description"
-    content="{{ page_description | escape }}"
+    content="{{ seo_description | escape }}"
   >
 {% endif %}

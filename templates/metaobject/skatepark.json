@@ -1,0 +1,45 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-skatepark",
+      "settings": {
+        "index_url": "/pages/skateparks-uk",
+        "index_label": "Skateparks",
+        "max_images": 10,
+        "show_map": true
+      }
+    },
+    "gear": {
+      "type": "product-component",
+      "name": "Product slider",
+      "settings": {
+        "title": "Gear up for the park",
+        "collection": "frames",
+        "product_limit": 10,
+        "show_view_all": true,
+        "enable_carousel": true,
+        "enable_mousewheel": false,
+        "products_desktop": 5,
+        "products_tablet": 3,
+        "products_mobile": 2,
+        "padding-top": 40,
+        "padding-bottom": 40,
+        "padding-top-m": 30,
+        "padding-bottom-m": 30
+      }
+    }
+  },
+  "order": [
+    "main",
+    "gear"
+  ]
+}

@@ -1,0 +1,39 @@
+{% doc %}
+  Skatepark listing card.
+
+  @param {object} park - A skatepark metaobject
+  @param {number} [index] - Position in the list, used to load the first images eagerly
+{% enddoc %}
+{%- liquid
+  assign sp_img = park.thumbnail_image_url.value | first
+  if sp_img == blank
+    assign sp_img = park.satellite_thumbnail_url.value
+  endif
+  assign sp_loading = 'lazy'
+  if index and index <= 4
+    assign sp_loading = 'eager'
+  endif
+  assign sp_alt = park.name.value | append: ', ' | append: park.town_city.value
+-%}
+<a href="{{ park.system.url }}" class="skatepark-card">
+  <div class="skatepark-card__media">
+    {%- if sp_img != blank -%}
+      <img src="{{ sp_img | escape }}" alt="{{ sp_alt | escape }}" loading="{{ sp_loading }}" decoding="async" referrerpolicy="no-referrer" width="640" height="480" class="skatepark-card__image">
+    {%- else -%}
+      <span class="skatepark-card__placeholder" aria-hidden="true">{{ park.name.value | slice: 0 }}</span>
+    {%- endif -%}
+    {%- if park.park_type.value != blank -%}
+      <span class="skatepark-card__badge">{{ park.park_type.value | escape }}</span>
+    {%- endif -%}
+  </div>
+  <div class="skatepark-card__body">
+    <h3 class="skatepark-card__title">{{ park.name.value | escape }}</h3>
+    <p class="skatepark-card__meta">
+      {{- park.town_city.value | escape -}}
+      {%- if park.county_district.value != blank and park.county_district.value != park.town_city.value %}, {{ park.county_district.value | escape }}{% endif -%}
+    </p>
+    {%- if park.region.value != blank -%}
+      <p class="skatepark-card__region">{{ park.region.value | escape }}</p>
+    {%- endif -%}
+  </div>
+</a>

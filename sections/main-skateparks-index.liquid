@@ -1,0 +1,483 @@
+{{- 'skatepark.css' | asset_url | stylesheet_tag -}}
+{%- assign ss = section.settings -%}
+{%- assign regions = ss.regions | newline_to_br | replace: '<br />', ',' | split: ',' -%}
+{%- assign park_types = ss.park_types | newline_to_br | replace: '<br />', '|' | split: '|' -%}
+
+<section class="skateparks-index" id="{{ section.id }}" data-skateparks-index data-per-page="{{ ss.per_page }}">
+  <div class="container">
+
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <ol class="breadcrumbs__list" role="list">
+        <li class="breadcrumbs__item"><a href="{{ routes.root_url }}" class="breadcrumbs__link">Home</a></li>
+        <li class="breadcrumbs__item"><span class="breadcrumbs__separator" aria-hidden="true">/</span><span class="breadcrumbs__current" aria-current="page">{{ ss.title | escape }}</span></li>
+      </ol>
+    </nav>
+
+    <header class="skateparks-index__header">
+      <h1 class="skateparks-index__title h2">{{ ss.title | escape }}</h1>
+      {%- if ss.intro != blank -%}<div class="skateparks-index__intro rte">{{ ss.intro }}</div>{%- endif -%}
+    </header>
+
+    <form class="skateparks-index__filters" role="search" data-sp-form onsubmit="return false">
+      <div class="skateparks-index__field skateparks-index__field--search">
+        <label for="{{ section.id }}-q" class="skateparks-index__label">Search</label>
+        <input type="search" id="{{ section.id }}-q" name="q" placeholder="Park name, town or postcode" autocomplete="off" data-sp-q>
+      </div>
+      <div class="skateparks-index__field">
+        <label for="{{ section.id }}-region" class="skateparks-index__label">Region</label>
+        <select id="{{ section.id }}-region" name="region" data-sp-region>
+          <option value="">All regions</option>
+          {%- for r in regions -%}
+            {%- assign r_clean = r | strip -%}
+            {%- if r_clean != blank -%}<option value="{{ r_clean | escape }}">{{ r_clean | escape }}</option>{%- endif -%}
+          {%- endfor -%}
+        </select>
+      </div>
+      <div class="skateparks-index__field">
+        <label for="{{ section.id }}-county" class="skateparks-index__label">County / area</label>
+        <select id="{{ section.id }}-county" name="county" data-sp-county disabled>
+          <option value="">All counties</option>
+        </select>
+      </div>
+      <div class="skateparks-index__field">
+        <label for="{{ section.id }}-type" class="skateparks-index__label">Park type</label>
+        <select id="{{ section.id }}-type" name="type" data-sp-type>
+          <option value="">All park types</option>
+          {%- for t in park_types -%}
+            {%- assign t_clean = t | strip -%}
+            {%- if t_clean != blank -%}<option value="{{ t_clean | escape }}">{{ t_clean | escape }}</option>{%- endif -%}
+          {%- endfor -%}
+        </select>
+      </div>
+      <button type="button" class="button button--outline skateparks-index__reset" data-sp-reset hidden>Clear</button>
+    </form>
+
+    <div class="skateparks-index__toolbar">
+      <p class="skateparks-index__status" data-sp-status aria-live="polite"></p>
+      <div class="skateparks-index__view-toggle" role="group" aria-label="View">
+        <button type="button" class="skateparks-index__view-btn button--reset is-active" data-sp-view="list" aria-pressed="true">List</button>
+        <button type="button" class="skateparks-index__view-btn button--reset" data-sp-view="map" aria-pressed="false">Map</button>
+      </div>
+    </div>
+
+    <div class="skateparks-index__map-wrap" data-sp-map-wrap hidden>
+      <div class="skateparks-index__map" data-sp-map role="region" aria-label="Map of skateparks"></div>
+    </div>
+
+    <div data-sp-list>
+      <div class="skateparks-index__results" data-sp-results hidden>
+        <div class="skateparks-index__grid" data-sp-results-grid></div>
+        <div class="skateparks-index__more">
+          <button type="button" class="button" data-sp-more hidden>Show more parks</button>
+        </div>
+      </div>
+
+      <div data-sp-server>
+        {%- paginate shop.metaobjects.skatepark.values by ss.per_page -%}
+          <p class="skateparks-index__count" data-sp-server-count>{{ paginate.items }} parks</p>
+          <div class="skateparks-index__grid">
+            {%- for park in shop.metaobjects.skatepark.values -%}
+              {% render 'skatepark-card', park: park, index: forloop.index %}
+            {%- endfor -%}
+          </div>
+
+          {%- if paginate.pages > 1 -%}
+            <nav class="skateparks-index__pagination" aria-label="Pagination">
+              {%- if paginate.previous -%}
+                <a href="{{ paginate.previous.url }}" class="skateparks-index__page skateparks-index__page--prev" aria-label="Previous page">&larr;</a>
+              {%- endif -%}
+              {%- for part in paginate.parts -%}
+                {%- if part.is_link -%}
+                  <a href="{{ part.url }}" class="skateparks-index__page">{{ part.title }}</a>
+                {%- elsif part.title == paginate.current_page -%}
+                  <span class="skateparks-index__page is-current" aria-current="page">{{ part.title }}</span>
+                {%- else -%}
+                  <span class="skateparks-index__page skateparks-index__page--gap">{{ part.title }}</span>
+                {%- endif -%}
+              {%- endfor -%}
+              {%- if paginate.next -%}
+                <a href="{{ paginate.next.url }}" class="skateparks-index__page skateparks-index__page--next" aria-label="Next page">&rarr;</a>
+              {%- endif -%}
+            </nav>
+          {%- endif -%}
+        {%- endpaginate -%}
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  (() => {
+    const root = document.getElementById({{ section.id | json }});
+    if (!root || root.dataset.ready) return;
+    root.dataset.ready = 'true';
+
+    const MIN_CHARS = 2;
+    const LOADING_DELAY = 300;
+    const LEAFLET = 'https://unpkg.com/leaflet@1.9.4/dist/';
+    const CLUSTER = 'https://unpkg.com/leaflet.markercluster@1.5.3/dist/';
+
+    const perPage = parseInt(root.dataset.perPage, 10) || 24;
+    const $ = (sel) => root.querySelector(sel);
+    const q = $('[data-sp-q]');
+    const regionSel = $('[data-sp-region]');
+    const countySel = $('[data-sp-county]');
+    const typeSel = $('[data-sp-type]');
+    const reset = $('[data-sp-reset]');
+    const status = $('[data-sp-status]');
+    const results = $('[data-sp-results]');
+    const grid = $('[data-sp-results-grid]');
+    const more = $('[data-sp-more]');
+    const server = $('[data-sp-server]');
+    const list = $('[data-sp-list]');
+    const mapWrap = $('[data-sp-map-wrap]');
+    const mapEl = $('[data-sp-map]');
+    const viewBtns = root.querySelectorAll('[data-sp-view]');
+
+    let data = null;
+    let loading = null;
+    let matches = [];
+    let shown = 0;
+    let viewMode = 'list';
+    let map = null;
+    let cluster = null;
+    let leafletLoading = null;
+    let applySeq = 0;
+
+    const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    const norm = (s) => String(s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, ' ').trim();
+    const tidy = (s) => String(s || '').replace(/\s+/g, ' ').trim();
+    const uniqSorted = (arr) => [...new Set(arr.map(tidy).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'en-GB'));
+    const options = (all, items) => '<option value="">' + all + '</option>' + items.map((v) => '<option value="' + esc(v) + '">' + esc(v) + '</option>').join('');
+
+    /* ---------- Data ---------- */
+
+    const feedUrl = (page, param) => {
+      const u = new URL(window.location.pathname, window.location.origin);
+      u.searchParams.set('view', 'skateparks-data');
+      if (page > 1) u.searchParams.set(param || 'page', page);
+      const t = window.Shopify && window.Shopify.theme;
+      if (t && t.role && t.role !== 'main' && t.id) u.searchParams.set('preview_theme_id', t.id);
+      return u.toString();
+    };
+
+    const rebuildSelect = (sel, all, items) => {
+      const current = sel.value;
+      sel.innerHTML = options(all, items);
+      sel.value = items.includes(current) ? current : '';
+    };
+
+    const load = () => {
+      if (data) return Promise.resolve(data);
+      if (loading) return loading;
+      const getPage = (n, param) => fetch(feedUrl(n, param), { credentials: 'same-origin' }).then((r) => {
+        if (!r.ok) throw new Error('Feed ' + r.status);
+        return r.json();
+      });
+      loading = getPage(1).then((first) => {
+        const rest = [];
+        for (let n = 2; n <= first.pages; n++) rest.push(getPage(n, first.param));
+        return Promise.all(rest).then((pages) => {
+          data = first.items.concat(...pages.map((p) => p.items));
+          data.forEach((p) => {
+            p.y = tidy(p.y);
+            p.r = tidy(p.r);
+            p.c = tidy(p.c);
+            p._s = norm([p.n, p.t, p.c, p.r, p.y, p.p, (p.p || '').replace(/\s/g, '')].join(' '));
+          });
+          data.sort((a, b) => a.n.localeCompare(b.n, 'en-GB'));
+          rebuildSelect(regionSel, 'All regions', uniqSorted(data.map((p) => p.r)));
+          rebuildSelect(typeSel, 'All park types', uniqSorted(data.map((p) => p.y)));
+          return data;
+        });
+      }).catch((e) => {
+        loading = null;
+        throw e;
+      });
+      return loading;
+    };
+
+    /* Show "Loading parks…" only if the load takes longer than LOADING_DELAY. */
+    const withLoading = (promise) => {
+      if (data) return promise;
+      const timer = setTimeout(() => { status.textContent = 'Loading parks…'; }, LOADING_DELAY);
+      return promise.finally(() => clearTimeout(timer));
+    };
+
+    const fillCounties = () => {
+      const r = regionSel.value;
+      const current = countySel.value;
+      const counties = uniqSorted(data.filter((p) => !r || p.r === r).map((p) => p.c));
+      countySel.innerHTML = options('All counties', counties);
+      countySel.value = counties.includes(current) ? current : '';
+      countySel.disabled = counties.length === 0;
+    };
+
+    /* ---------- State ---------- */
+
+    const term = () => {
+      const t = norm(q.value);
+      return t.length >= MIN_CHARS ? t : '';
+    };
+    const filtersActive = () => !!(term() || regionSel.value || countySel.value || typeSel.value);
+
+    const updateUrl = () => {
+      const u = new URL(window.location.href);
+      ['q', 'region', 'county', 'type', 'view_mode'].forEach((k) => u.searchParams.delete(k));
+      if (term()) u.searchParams.set('q', q.value.trim());
+      if (regionSel.value) u.searchParams.set('region', regionSel.value);
+      if (countySel.value) u.searchParams.set('county', countySel.value);
+      if (typeSel.value) u.searchParams.set('type', typeSel.value);
+      if (viewMode === 'map') u.searchParams.set('view_mode', 'map');
+      history.replaceState(null, '', u.toString());
+    };
+
+    const computeMatches = () => {
+      const words = term().split(' ').filter(Boolean);
+      const r = regionSel.value;
+      const c = countySel.value;
+      const y = typeSel.value;
+      return data.filter((p) => (!r || p.r === r) && (!c || p.c === c) && (!y || p.y === y) && words.every((w) => p._s.includes(w)));
+    };
+
+    const countText = (n) => (n === 1 ? '1 park found' : n.toLocaleString('en-GB') + ' parks found');
+
+    /* ---------- List ---------- */
+
+    const card = (p, i) => {
+      const alt = esc(p.n + (p.t ? ', ' + p.t : ''));
+      const meta = esc(p.t || '') + (p.c && p.c !== p.t ? ', ' + esc(p.c) : '');
+      const img = p.i
+        ? '<img src="' + esc(p.i) + '" alt="' + alt + '" loading="' + (i < 4 ? 'eager' : 'lazy') + '" decoding="async" referrerpolicy="no-referrer" width="640" height="480" class="skatepark-card__image">'
+        : '<span class="skatepark-card__placeholder" aria-hidden="true">' + esc(p.n.charAt(0)) + '</span>';
+      return '<a href="' + esc(p.u) + '" class="skatepark-card"><div class="skatepark-card__media">' + img +
+        (p.y ? '<span class="skatepark-card__badge">' + esc(p.y) + '</span>' : '') +
+        '</div><div class="skatepark-card__body"><h3 class="skatepark-card__title">' + esc(p.n) + '</h3><p class="skatepark-card__meta">' + meta + '</p>' +
+        (p.r ? '<p class="skatepark-card__region">' + esc(p.r) + '</p>' : '') + '</div></a>';
+    };
+
+    const renderMore = () => {
+      const next = matches.slice(shown, shown + perPage);
+      grid.insertAdjacentHTML('beforeend', next.map((p, i) => card(p, shown + i)).join(''));
+      shown += next.length;
+      more.hidden = shown >= matches.length;
+    };
+
+    const renderList = () => {
+      const active = filtersActive();
+      server.hidden = active;
+      results.hidden = !active;
+      if (!active) return;
+      grid.innerHTML = '';
+      shown = 0;
+      renderMore();
+    };
+
+    /* ---------- Map ---------- */
+
+    const addCss = (href) => new Promise((resolve) => {
+      if (document.querySelector('link[href="' + href + '"]')) return resolve();
+      const l = document.createElement('link');
+      l.rel = 'stylesheet'; l.href = href; l.onload = resolve; l.onerror = resolve;
+      document.head.appendChild(l);
+    });
+    const addJs = (src) => new Promise((resolve, reject) => {
+      if (document.querySelector('script[src="' + src + '"]')) return resolve();
+      const s = document.createElement('script');
+      s.src = src; s.onload = resolve; s.onerror = reject;
+      document.head.appendChild(s);
+    });
+
+    const loadLeaflet = () => {
+      if (window.L && window.L.markerClusterGroup) return Promise.resolve();
+      if (leafletLoading) return leafletLoading;
+      leafletLoading = Promise.all([
+        addCss(LEAFLET + 'leaflet.css'),
+        addCss(CLUSTER + 'MarkerCluster.css'),
+        addCss(CLUSTER + 'MarkerCluster.Default.css')
+      ]).then(() => addJs(LEAFLET + 'leaflet.js')).then(() => addJs(CLUSTER + 'leaflet.markercluster.js'));
+      return leafletLoading;
+    };
+
+    const popupHtml = (p) => {
+      const place = esc(p.t || '') + (p.c && p.c !== p.t ? ', ' + esc(p.c) : '');
+      return '<div class="skatepark-popup"><strong class="skatepark-popup__title">' + esc(p.n) + '</strong>' +
+        (place ? '<span class="skatepark-popup__place">' + place + '</span>' : '') +
+        (p.y ? '<span class="skatepark-popup__type">' + esc(p.y) + '</span>' : '') +
+        '<a class="skatepark-popup__link" href="' + esc(p.u) + '">View park &rarr;</a></div>';
+    };
+
+    const renderMap = () => {
+      if (!map || !data) return;
+      const L = window.L;
+      const set = filtersActive() ? matches : data;
+      cluster.clearLayers();
+      const markers = [];
+      set.forEach((p) => {
+        const lat = parseFloat(p.a);
+        const lng = parseFloat(p.o);
+        if (!isFinite(lat) || !isFinite(lng)) return;
+        const m = L.marker([lat, lng], { title: p.n, alt: p.n });
+        m.bindPopup(() => popupHtml(p));
+        markers.push(m);
+      });
+      cluster.addLayers(markers);
+      if (markers.length === 1) {
+        map.setView(markers[0].getLatLng(), 14);
+      } else if (markers.length > 1) {
+        map.fitBounds(cluster.getBounds(), { padding: [30, 30], maxZoom: 14 });
+      }
+    };
+
+    const ensureMap = () => {
+      if (map) return Promise.resolve();
+      return loadLeaflet().then(() => {
+        if (map) return;
+        const L = window.L;
+        map = L.map(mapEl, { scrollWheelZoom: false, zoomControl: true }).setView([54.5, -3], 5);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          maxZoom: 19,
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors'
+        }).addTo(map);
+        cluster = L.markerClusterGroup({ chunkedLoading: true, showCoverageOnHover: false, maxClusterRadius: 50 });
+        map.addLayer(cluster);
+        map.on('focus', () => map.scrollWheelZoom.enable());
+        map.on('blur', () => map.scrollWheelZoom.disable());
+      });
+    };
+
+    const setView = (mode, opts) => {
+      viewMode = mode === 'map' ? 'map' : 'list';
+      viewBtns.forEach((b) => {
+        const on = b.dataset.spView === viewMode;
+        b.classList.toggle('is-active', on);
+        b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+      list.hidden = viewMode === 'map';
+      mapWrap.hidden = viewMode !== 'map';
+      if (!(opts && opts.silent)) updateUrl();
+      if (viewMode === 'map') {
+        withLoading(Promise.all([load(), ensureMap()])).then(() => {
+          map.invalidateSize();
+          apply({ keepUrl: true });
+        }).catch(() => { status.textContent = 'Sorry, the map is unavailable right now.'; });
+      } else {
+        apply({ keepUrl: true });
+      }
+    };
+
+    /* ---------- Apply ---------- */
+
+    const apply = (opts) => {
+      const seq = ++applySeq;
+      const active = filtersActive();
+      reset.hidden = !active;
+      if (!(opts && opts.keepUrl)) updateUrl();
+
+      if (!active && viewMode === 'list') {
+        server.hidden = false;
+        results.hidden = true;
+        status.textContent = '';
+        return;
+      }
+
+      withLoading(load()).then(() => {
+        if (seq !== applySeq) return;
+        fillCounties();
+        matches = active ? computeMatches() : data;
+        status.textContent = active ? countText(matches.length) : countText(data.length).replace(' found', '');
+        if (viewMode === 'map') renderMap(); else renderList();
+      }).catch(() => {
+        if (seq === applySeq) status.textContent = 'Sorry, the park search is unavailable right now.';
+      });
+    };
+
+    /* ---------- Events ---------- */
+
+    let timer;
+    let lastTerm = '';
+    q.addEventListener('input', () => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        const t = term();
+        if (t === lastTerm) return;
+        lastTerm = t;
+        apply();
+      }, 250);
+    });
+    regionSel.addEventListener('change', () => { countySel.value = ''; apply(); });
+    countySel.addEventListener('change', () => apply());
+    typeSel.addEventListener('change', () => apply());
+    more.addEventListener('click', renderMore);
+    reset.addEventListener('click', () => {
+      q.value = ''; lastTerm = '';
+      regionSel.value = ''; countySel.value = ''; typeSel.value = '';
+      countySel.disabled = true;
+      apply();
+    });
+    viewBtns.forEach((b) => b.addEventListener('click', () => {
+      if (b.dataset.spView !== viewMode) setView(b.dataset.spView);
+    }));
+
+    /* ---------- Initial state from URL ---------- */
+
+    const params = new URLSearchParams(window.location.search);
+    const ensureOption = (sel, v) => {
+      if (v && ![...sel.options].some((o) => o.value === v)) sel.insertAdjacentHTML('beforeend', '<option value="' + esc(v) + '">' + esc(v) + '</option>');
+      sel.value = v || '';
+    };
+    q.value = params.get('q') || '';
+    lastTerm = term();
+    ensureOption(regionSel, params.get('region'));
+    ensureOption(typeSel, params.get('type'));
+    const initialCounty = params.get('county') || '';
+    const initialMode = params.get('view_mode') === 'map' ? 'map' : 'list';
+
+    if (initialCounty || params.get('region') || params.get('type') || term()) {
+      withLoading(load()).then(() => {
+        regionSel.value = params.get('region') || '';
+        typeSel.value = params.get('type') || '';
+        fillCounties();
+        countySel.value = initialCounty;
+        setView(initialMode, { silent: true });
+      }).catch(() => { status.textContent = 'Sorry, the park search is unavailable right now.'; });
+    } else if (initialMode === 'map') {
+      setView('map', { silent: true });
+    }
+
+    /* Quiet prefetch so the first search feels instant. */
+    const prefetch = () => { load().catch(() => {}); };
+    const idle = window.requestIdleCallback || ((fn) => setTimeout(fn, 1500));
+    if (document.readyState === 'complete') idle(prefetch, { timeout: 4000 });
+    else window.addEventListener('load', () => idle(prefetch, { timeout: 4000 }), { once: true });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Skateparks index",
+  "tag": "div",
+  "class": "main-skateparks-index-section",
+  "enabled_on": { "templates": ["page"] },
+  "settings": [
+    { "type": "text", "id": "title", "label": "Heading", "default": "UK skateparks" },
+    { "type": "richtext", "id": "intro", "label": "Intro text" },
+    { "type": "range", "id": "per_page", "min": 12, "max": 48, "step": 12, "label": "Parks per page", "default": 24 },
+    {
+      "type": "textarea",
+      "id": "regions",
+      "label": "Region filter options",
+      "info": "One per line. Shown before the full park list loads; replaced by the regions found in the data once it has loaded.",
+      "default": "Channel Islands\nEast Midlands\nEast of England\nIsle of Man\nLondon\nNorth East\nNorth West\nNorthern Ireland\nScotland\nSouth East\nSouth West\nWales\nWest Midlands\nYorkshire and The Humber"
+    },
+    {
+      "type": "textarea",
+      "id": "park_types",
+      "label": "Park type filter options",
+      "info": "One per line. Shown before the full park list loads; replaced by the park types found in the data once it has loaded.",
+      "default": "BMX Track / Dirt Jumps\nBowl / Pool\nMini Ramp\nMulti-Sport Action Park\nPump Track\nSkatepark\nSkatepark & Pump / BMX Track\nStreet Plaza"
+    }
+  ]
+}
+{% endschema %}

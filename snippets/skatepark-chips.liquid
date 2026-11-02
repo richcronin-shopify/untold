@@ -1,0 +1,29 @@
+{% doc %}
+  Renders a comma/semicolon-separated list as chips.
+  Commas inside brackets are kept together, e.g. "All Levels (Beginner, Intermediate, Advanced)".
+
+  @param {string} value - The raw list text
+  @param {string} [class] - Optional extra class on the list
+{% enddoc %}
+{%- if value != blank -%}
+  {%- assign sp_parts = value | replace: ';', ',' | split: ',' -%}
+  {%- assign sp_buf = '' -%}
+  <ul class="skatepark-chips {{ class }}" role="list">
+    {%- for sp_part in sp_parts -%}
+      {%- assign sp_p = sp_part | strip -%}
+      {%- if sp_p == blank -%}{%- continue -%}{%- endif -%}
+      {%- if sp_buf == '' -%}
+        {%- assign sp_buf = sp_p -%}
+      {%- else -%}
+        {%- assign sp_buf = sp_buf | append: ', ' | append: sp_p -%}
+      {%- endif -%}
+      {%- if sp_buf contains '(' -%}
+        {%- unless sp_buf contains ')' -%}
+          {%- unless forloop.last -%}{%- continue -%}{%- endunless -%}
+        {%- endunless -%}
+      {%- endif -%}
+      <li class="skatepark-chip">{{ sp_buf | escape }}</li>
+      {%- assign sp_buf = '' -%}
+    {%- endfor -%}
+  </ul>
+{%- endif -%}

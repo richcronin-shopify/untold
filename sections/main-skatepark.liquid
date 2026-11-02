@@ -1,0 +1,499 @@
+{{- 'skatepark.css' | asset_url | stylesheet_tag -}}
+{%- liquid
+  assign ss = section.settings
+  assign park = metaobject
+
+  assign index_url = ss.index_url | default: '/pages/skateparks-uk'
+  assign park_name = park.name.value
+  assign town = park.town_city.value
+  assign county = park.county_district.value
+  assign region = park.region.value
+  assign region_enc = region | url_encode
+
+  assign images = park.thumbnail_image_url.value
+  assign using_satellite = false
+  if images == blank or images.size == 0
+    if park.satellite_thumbnail_url.value != blank
+      assign images = park.satellite_thumbnail_url.value | split: '|||'
+      assign using_satellite = true
+    endif
+  endif
+  if park.thumbnail_source_type.value contains 'Satellite'
+    assign using_satellite = true
+  endif
+
+  assign image_alt = park_name
+  if town != blank
+    assign image_alt = image_alt | append: ', ' | append: town
+  endif
+
+  assign lat = park.latitude.value
+  assign lng = park.longitude.value
+  assign has_geo = false
+  if lat != blank and lng != blank
+    assign has_geo = true
+  endif
+
+  assign credit = park.photo_credit.value
+  assign licence = park.photo_licence.value
+  assign licence_name = licence
+  assign licence_url = ''
+  if licence contains 'Google'
+    comment
+      Google photos already carry "(Google Maps)" in the credit; the terms text is not shown.
+    endcomment
+    assign licence_name = ''
+  endif
+  if licence contains '(http'
+    assign licence_name = licence | split: ' (' | first
+    assign licence_url = licence | split: '(' | last | remove: ')' | strip
+  endif
+
+  assign w3w = park.what3words.value | remove: '///' | strip
+  assign status = park.verification_status.value
+-%}
+
+<section class="skatepark" id="{{ section.id }}">
+  <div class="container">
+
+    <nav class="breadcrumbs skatepark__breadcrumbs" aria-label="Breadcrumb">
+      <ol class="breadcrumbs__list" role="list">
+        <li class="breadcrumbs__item"><a href="{{ routes.root_url }}" class="breadcrumbs__link">Home</a></li>
+        <li class="breadcrumbs__item"><span class="breadcrumbs__separator" aria-hidden="true">/</span><a href="{{ index_url }}" class="breadcrumbs__link">{{ ss.index_label | default: 'Skateparks' | escape }}</a></li>
+        {%- if region != blank -%}
+          <li class="breadcrumbs__item"><span class="breadcrumbs__separator" aria-hidden="true">/</span><a href="{{ index_url }}?region={{ region_enc }}" class="breadcrumbs__link">{{ region | escape }}</a></li>
+        {%- endif -%}
+        <li class="breadcrumbs__item"><span class="breadcrumbs__separator" aria-hidden="true">/</span><span class="breadcrumbs__current" aria-current="page">{{ park_name | escape }}</span></li>
+      </ol>
+    </nav>
+
+    <header class="skatepark__header">
+      <h1 class="skatepark__title h2">{{ park_name | escape }}</h1>
+      {%- if town != blank or county != blank -%}
+        <p class="skatepark__subtitle">
+          {{- town | escape -}}
+          {%- if county != blank and county != town -%}{% if town != blank %}, {% endif %}{{ county | escape }}{%- endif -%}
+        </p>
+      {%- endif -%}
+      {%- if status != blank and status != 'Verified Active' -%}
+        {%- liquid
+          assign status_label = status
+          if status == 'Closed (Graveyard)'
+            assign status_label = 'Permanently closed'
+          elsif status contains 'Temporarily Closed'
+            assign status_label = 'Temporarily closed'
+            if status contains 'Construction'
+              assign status_label = 'Temporarily closed for building work'
+            endif
+          endif
+        -%}
+        <p class="skatepark__status" role="status">{{ status_label | escape }}</p>
+      {%- endif -%}
+    </header>
+
+    <div class="skatepark__layout">
+
+      <div class="skatepark__main">
+
+        <div class="skatepark-gallery{% if using_satellite %} skatepark-gallery--satellite{% endif %}" data-skatepark-gallery>
+          {%- if images != blank and images.size > 0 -%}
+            {%- assign gallery_count = images.size | at_most: ss.max_images -%}
+            <div class="skatepark-gallery__stage">
+              <div class="swiper skatepark-gallery__swiper" data-gallery-swiper>
+                <div class="swiper-wrapper">
+                  {%- for img in images limit: ss.max_images -%}
+                    <div class="swiper-slide skatepark-gallery__slide">
+                      <img
+                        src="{{ img | escape }}"
+                        alt="{{ image_alt | escape }}{% if gallery_count > 1 %} – photo {{ forloop.index }}{% endif %}"
+                        class="skatepark-gallery__image"
+                        {% if forloop.first %}fetchpriority="high"{% else %}loading="lazy"{% endif %}
+                        decoding="async"
+                        referrerpolicy="no-referrer"
+                        width="1280"
+                        height="960"
+                      >
+                    </div>
+                  {%- endfor -%}
+                </div>
+              </div>
+
+              {%- if gallery_count > 1 -%}
+                <div class="skatepark-gallery__navigation">
+                  <button
+                    type="button"
+                    class="swiper-slider__arrow swiper-slider__arrow--prev button--reset"
+                    aria-label="Previous photo"
+                  >
+                    {{- 'icon-long-arrow.svg' | inline_asset_content -}}
+                  </button>
+                  <button
+                    type="button"
+                    class="swiper-slider__arrow swiper-slider__arrow--next button--reset"
+                    aria-label="Next photo"
+                  >
+                    {{- 'icon-long-arrow.svg' | inline_asset_content -}}
+                  </button>
+                </div>
+              {%- endif -%}
+
+              {%- if using_satellite -%}
+                <span class="skatepark-gallery__tag">Satellite view</span>
+              {%- endif -%}
+            </div>
+
+            {%- if gallery_count > 1 -%}
+              <div class="skatepark-gallery__pagination swiper-pagination"></div>
+
+              <div class="skatepark-gallery__thumbs">
+                {%- for img in images limit: ss.max_images -%}
+                  <button type="button" class="skatepark-gallery__thumb button--reset{% if forloop.first %} is-active{% endif %}" data-gallery-thumb="{{ forloop.index0 }}" aria-label="Show photo {{ forloop.index }} of {{ gallery_count }}">
+                    <img src="{{ img | escape }}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="160" height="120">
+                  </button>
+                {%- endfor -%}
+              </div>
+            {%- endif -%}
+
+            {%- if credit != blank or licence_name != blank -%}
+              <p class="skatepark-gallery__credit">
+                {%- if credit != blank -%}{{ credit | escape }}{%- endif -%}
+                {%- if licence_name != blank -%}
+                  {%- if credit != blank %} · {% endif -%}
+                  {%- if licence_url != blank -%}
+                    <a href="{{ licence_url | escape }}" target="_blank" rel="noopener nofollow">{{ licence_name | escape }}</a>
+                  {%- else -%}
+                    {{ licence_name | escape }}
+                  {%- endif -%}
+                {%- endif -%}
+              </p>
+            {%- endif -%}
+          {%- else -%}
+            <div class="skatepark-gallery__placeholder" aria-hidden="true">
+              <span>{{ park_name | escape }}</span>
+            </div>
+          {%- endif -%}
+        </div>
+
+
+      </div>
+
+      <div class="skatepark__content">
+
+        <div class="skatepark__overview">
+        {%- if park.description.value != blank -%}
+          <div class="skatepark__description rte">
+            <h2 class="skatepark__heading h5">About the park</h2>
+            {%- assign paras = park.description.value | newline_to_br | split: '<br />' -%}
+            {%- for para in paras -%}
+              {%- assign para_text = para | strip -%}
+              {%- if para_text != blank -%}<p>{{ para_text | escape }}</p>{%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        {%- liquid
+          assign chip_groups = 'features:Features|disciplines_supported:Disciplines|skill_levels:Skill levels|facilities:Facilities' | split: '|'
+        -%}
+        {%- for group in chip_groups -%}
+          {%- assign g_key = group | split: ':' | first -%}
+          {%- assign g_label = group | split: ':' | last -%}
+          {%- assign g_value = park[g_key].value -%}
+          {%- if g_value != blank -%}
+            <div class="skatepark__chip-group">
+              <h3 class="skatepark__chip-title">{{ g_label }}</h3>
+              {% render 'skatepark-chips', value: g_value %}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+        </div>
+
+        <div class="skatepark-facts">
+          <h2 class="skatepark__heading h5">Key facts</h2>
+          <dl class="skatepark-facts__list">
+            {%- liquid
+              assign fact_keys = 'park_type:Park type|setting:Setting|entry_type:Entry|surface_material:Surface|bmx_allowed:BMX allowed|floodlit:Floodlit|rain_friendly:Rain-friendly|opening_hours:Opening hours|helmet_required:Helmet|events_suitable:Events|builder_designer:Builder / designer' | split: '|'
+            -%}
+            {%- for fact in fact_keys -%}
+              {%- assign f_key = fact | split: ':' | first -%}
+              {%- assign f_label = fact | split: ':' | last -%}
+              {%- assign f_field = park[f_key] -%}
+              {%- if f_key == 'rain_friendly' -%}
+                {%- assign rf = f_field.value -%}
+                {%- if rf == true or rf == false -%}
+                  <div class="skatepark-facts__row">
+                    <dt>{{ f_label }}</dt>
+                    <dd>{% if rf == true %}Yes{% else %}No{% endif %}</dd>
+                  </div>
+                {%- endif -%}
+              {%- elsif f_field.value != blank -%}
+                <div class="skatepark-facts__row">
+                  <dt>{{ f_label }}</dt>
+                  <dd>{{ f_field.value | escape }}</dd>
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          </dl>
+        </div>
+
+        {%- if park.website_url.value != blank or park.phone.value != blank -%}
+          <div class="skatepark-contact">
+            <h2 class="skatepark__heading h6">Contact</h2>
+            {%- if park.website_url.value != blank -%}
+              <p><a href="{{ park.website_url.value | escape }}" target="_blank" rel="noopener nofollow" class="skatepark-contact__link">Park website</a></p>
+            {%- endif -%}
+            {%- if park.phone.value != blank -%}
+              <p><a href="tel:{{ park.phone.value | remove: ' ' | escape }}" class="skatepark-contact__link">{{ park.phone.value | escape }}</a></p>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+      </div>
+
+    </div>
+
+    <div class="skatepark-location" id="{{ section.id }}-location">
+      <h2 class="skatepark__heading h5">Location</h2>
+      <div class="skatepark-location__grid">
+
+        <div class="skatepark-location__details">
+          <address class="skatepark-location__address">
+            {%- if park.address_line.value != blank -%}{{ park.address_line.value | escape }}<br>{%- endif -%}
+            {%- if town != blank -%}{{ town | escape }}<br>{%- endif -%}
+            {%- if county != blank and county != town -%}{{ county | escape }}<br>{%- endif -%}
+            {%- if park.postcode.value != blank -%}{{ park.postcode.value | escape }}<br>{%- endif -%}
+            {%- if park.country.value != blank -%}{{ park.country.value | escape }}{%- endif -%}
+          </address>
+
+          <div class="skatepark-location__buttons">
+            {%- liquid
+              assign maps_url = park.google_maps_url.value
+              if maps_url == blank and has_geo
+                assign maps_url = 'https://www.google.com/maps/search/?api=1&query=' | append: lat | append: ',' | append: lng
+              endif
+            -%}
+            {%- if maps_url != blank -%}
+              <a href="{{ maps_url | escape }}" class="button" target="_blank" rel="noopener nofollow">Open in Google Maps</a>
+            {%- endif -%}
+            {%- if w3w != blank -%}
+              <a href="https://what3words.com/{{ w3w | escape }}" class="button button--outline" target="_blank" rel="noopener nofollow">///{{ w3w | escape }}</a>
+            {%- endif -%}
+          </div>
+
+          {%- if park.directions_notes.value != blank -%}
+            <div class="skatepark-location__directions">
+              <h3 class="skatepark__chip-title">Getting there</h3>
+              <p>{{ park.directions_notes.value | escape | newline_to_br }}</p>
+            </div>
+          {%- endif -%}
+        </div>
+
+        {%- if has_geo and ss.show_map -%}
+          {%- liquid
+            assign bb_w = lng | minus: 0.006
+            assign bb_e = lng | plus: 0.006
+            assign bb_s = lat | minus: 0.0035
+            assign bb_n = lat | plus: 0.0035
+          -%}
+          <div class="skatepark-location__map">
+            <iframe
+              title="Map showing {{ park_name | escape }}"
+              src="https://www.openstreetmap.org/export/embed.html?bbox={{ bb_w }}%2C{{ bb_s }}%2C{{ bb_e }}%2C{{ bb_n }}&amp;layer=mapnik&amp;marker={{ lat }}%2C{{ lng }}"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+            ></iframe>
+            <p class="skatepark-location__map-credit">Map data © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap contributors</a></p>
+          </div>
+        {%- endif -%}
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+{%- comment -%} Structured data {%- endcomment -%}
+{%- capture sp_address -%}
+  {"@type":"PostalAddress"
+  {%- if park.address_line.value != blank -%},"streetAddress":{{ park.address_line.value | json }}{%- endif -%}
+  {%- if town != blank -%},"addressLocality":{{ town | json }}{%- endif -%}
+  {%- if county != blank -%},"addressRegion":{{ county | json }}{%- endif -%}
+  {%- if park.postcode.value != blank -%},"postalCode":{{ park.postcode.value | json }}{%- endif -%}
+  ,"addressCountry":"GB"}
+{%- endcapture -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SportsActivityLocation",
+  "name": {{ park_name | json }},
+  "url": {{ canonical_url | json }}
+  {%- if park.description.value != blank -%},
+  "description": {{ park.description.value | strip_newlines | json }}
+  {%- endif -%},
+  "address": {{ sp_address }}
+  {%- if has_geo -%},
+  "geo": {"@type": "GeoCoordinates", "latitude": {{ lat }}, "longitude": {{ lng }}}
+  {%- endif -%}
+  {%- if images != blank and images.size > 0 and using_satellite == false -%},
+  "image": [{%- for img in images limit: 5 -%}{{ img | json }}{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}]
+  {%- endif -%}
+  {%- if park.entry_type.value == 'Free' -%},
+  "isAccessibleForFree": true
+  {%- endif -%}
+  {%- if park.website_url.value != blank -%},
+  "sameAs": {{ park.website_url.value | json }}
+  {%- endif -%}
+  {%- if park.phone.value != blank -%},
+  "telephone": {{ park.phone.value | json }}
+  {%- endif -%}
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "Home", "item": {{ request.origin | append: routes.root_url | json }}},
+    {"@type": "ListItem", "position": 2, "name": {{ ss.index_label | default: 'Skateparks' | json }}, "item": {{ request.origin | append: index_url | json }}}
+    {%- if region != blank -%},
+    {"@type": "ListItem", "position": 3, "name": {{ region | json }}, "item": {{ request.origin | append: index_url | append: '?region=' | append: region_enc | json }}}
+    {%- endif -%},
+    {"@type": "ListItem", "position": {% if region != blank %}4{% else %}3{% endif %}, "name": {{ park_name | json }}, "item": {{ canonical_url | json }}}
+  ]
+}
+</script>
+
+<script>
+  (() => {
+    const initialiseGalleries = () => {
+      if (typeof Swiper === 'undefined') {
+        return;
+      }
+
+      document.querySelectorAll('[data-skatepark-gallery]').forEach((gallery) => {
+        if (gallery.dataset.initialised === 'true') {
+          return;
+        }
+
+        const swiperElement = gallery.querySelector('[data-gallery-swiper]');
+        if (!swiperElement) {
+          return;
+        }
+
+        const previousButton = gallery.querySelector('.swiper-slider__arrow--prev');
+        const nextButton = gallery.querySelector('.swiper-slider__arrow--next');
+        const pagination = gallery.querySelector('.skatepark-gallery__pagination');
+        const thumbs = gallery.querySelectorAll('[data-gallery-thumb]');
+
+        const syncThumbs = (swiper) => {
+          thumbs.forEach((thumb, i) => thumb.classList.toggle('is-active', i === swiper.activeIndex));
+          const active = thumbs[swiper.activeIndex];
+          if (active && active.scrollIntoView && gallery.dataset.initialised === 'true') {
+            active.parentElement.scrollTo({ left: active.offsetLeft - active.parentElement.clientWidth / 2 + active.clientWidth / 2, behavior: 'smooth' });
+          }
+        };
+
+        const swiper = new Swiper(swiperElement, {
+          slidesPerView: 1,
+          spaceBetween: 0,
+          watchOverflow: true,
+          allowTouchMove: true,
+          simulateTouch: true,
+          grabCursor: true,
+          threshold: 5,
+          keyboard: { enabled: true, onlyInViewport: true },
+
+          navigation: previousButton && nextButton
+            ? {
+                prevEl: previousButton,
+                nextEl: nextButton
+              }
+            : false,
+
+          pagination: pagination
+            ? {
+                el: pagination,
+                clickable: true,
+                bulletElement: 'button'
+              }
+            : false,
+
+          a11y: {
+            enabled: true,
+            prevSlideMessage: 'Previous photo',
+            nextSlideMessage: 'Next photo',
+            paginationBulletMessage: 'Go to photo {% raw %}{{index}}{% endraw %}'
+          },
+
+          on: {
+            slideChange: syncThumbs
+          }
+        });
+
+        thumbs.forEach((thumb, i) => thumb.addEventListener('click', () => swiper.slideTo(i)));
+
+        /* Drop photos whose external URL fails to load. */
+        swiperElement.querySelectorAll('.skatepark-gallery__image').forEach((img) => {
+          const drop = () => {
+            const slide = img.closest('.swiper-slide');
+            const index = [...swiper.slides].indexOf(slide);
+            if (index < 0) return;
+            swiper.removeSlide(index);
+            const thumb = gallery.querySelectorAll('[data-gallery-thumb]')[index];
+            if (thumb) thumb.remove();
+            if (swiper.slides.length === 0) gallery.classList.add('skatepark-gallery--broken');
+          };
+          if (img.complete && img.naturalWidth === 0) drop();
+          else img.addEventListener('error', drop, { once: true });
+        });
+
+        gallery.dataset.initialised = 'true';
+      });
+    };
+
+    initialiseGalleries();
+
+    window.addEventListener('load', initialiseGalleries);
+    document.addEventListener('DOMContentLoaded', initialiseGalleries);
+    document.addEventListener('shopify:section:load', initialiseGalleries);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Skatepark",
+  "tag": "div",
+  "class": "main-skatepark-section",
+  "enabled_on": {
+    "templates": ["metaobject"]
+  },
+  "settings": [
+    {
+      "type": "url",
+      "id": "index_url",
+      "label": "Skateparks index page",
+      "info": "Used for the breadcrumb. Defaults to /pages/skateparks-uk."
+    },
+    {
+      "type": "text",
+      "id": "index_label",
+      "label": "Index breadcrumb label",
+      "default": "Skateparks"
+    },
+    {
+      "type": "range",
+      "id": "max_images",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "label": "Maximum photos",
+      "default": 10
+    },
+    {
+      "type": "checkbox",
+      "id": "show_map",
+      "label": "Show map",
+      "default": true
+    }
+  ]
+}
+{% endschema %}
