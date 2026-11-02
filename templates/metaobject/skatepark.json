@@ -15,8 +15,31 @@
         "index_url": "/pages/skateparks-uk",
         "index_label": "Skateparks",
         "max_images": 10,
-        "show_map": true
-      }
+        "show_map": true,
+        "show_photo_form": false
+      },
+      "blocks": {
+        "forms_inline_park_photo": {
+          "type": "shopify://apps/forms/blocks/inline/8744a304-fcb1-4347-b211-bb6b4759a76a",
+          "settings": {
+            "form_id": "1230220",
+            "text_color": "#FFFFFF",
+            "button_background_color": "#61C968",
+            "button_label_color": "#0E0E0E",
+            "links_color": "#61C968",
+            "errors_color": "#ED3F41",
+            "text_alignment": "left",
+            "form_alignment": "flex-start",
+            "padding_top": 0,
+            "padding_bottom": 0,
+            "padding_right": 0,
+            "padding_left": 0
+          }
+        }
+      },
+      "block_order": [
+        "forms_inline_park_photo"
+      ]
     },
     "gear": {
       "type": "product-component",

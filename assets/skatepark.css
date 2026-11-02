@@ -743,3 +743,90 @@
 		font-size: 14px;
 	}
 }
+
+/* Share a park photo */
+
+.skatepark-photo-share {
+	margin: 20px 0 0;
+
+	.skatepark-photo-share__toggle {
+		display: inline-flex;
+		align-items: center;
+		gap: 10px;
+		font-family: var(--font-heading-family);
+		font-weight: 500;
+		font-size: var(--xs);
+		text-transform: uppercase;
+		color: var(--color-primary);
+		text-decoration: underline;
+		text-underline-offset: 4px;
+		cursor: pointer;
+		text-align: left;
+
+		&:hover,
+		&:focus-visible {
+			opacity: .8;
+		}
+
+		&:focus-visible {
+			outline: 1px solid var(--color-primary);
+			outline-offset: 4px;
+		}
+	}
+
+	.skatepark-photo-share__icon {
+		position: relative;
+		flex: 0 0 auto;
+		width: 12px;
+		height: 12px;
+
+		&::before,
+		&::after {
+			content: '';
+			position: absolute;
+			left: 0;
+			top: 50%;
+			width: 12px;
+			height: 2px;
+			margin-top: -1px;
+			background: currentColor;
+			transition: transform .3s;
+		}
+
+		&::after {
+			transform: rotate(90deg);
+		}
+	}
+
+	&.is-open .skatepark-photo-share__icon::after {
+		transform: rotate(0deg);
+	}
+
+	.skatepark-photo-share__panel {
+		margin: 15px 0 0;
+		padding: 20px;
+		border: 1px solid var(--border-white);
+		animation: skatepark-photo-share-in .3s ease;
+
+		@media (max-width: 767px) {
+			padding: 16px;
+		}
+	}
+}
+
+@keyframes skatepark-photo-share-in {
+	from {
+		opacity: 0;
+		transform: translateY(-6px);
+	}
+	to {
+		opacity: 1;
+		transform: none;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.skatepark-photo-share .skatepark-photo-share__panel {
+		animation: none;
+	}
+}

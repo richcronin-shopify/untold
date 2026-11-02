@@ -201,6 +201,35 @@
           {%- endif -%}
         </div>
 
+        {%- if ss.show_photo_form and section.blocks.size > 0 -%}
+          <div class="skatepark-photo-share" data-skatepark-photo-share>
+            <button
+              type="button"
+              class="skatepark-photo-share__toggle button--reset"
+              aria-expanded="false"
+              aria-controls="{{ section.id }}-photo-form"
+              data-photo-share-toggle
+            >
+              <span>{{ ss.photo_link_text | default: 'Got an updated park photo? Share it with us.' | escape }}</span>
+              <span class="skatepark-photo-share__icon" aria-hidden="true"></span>
+            </button>
+            <div
+              class="skatepark-photo-share__panel"
+              id="{{ section.id }}-photo-form"
+              role="region"
+              aria-label="{{ ss.photo_link_text | default: 'Share a park photo' | escape }}"
+              data-photo-share-panel
+              hidden
+            >
+              {%- for block in section.blocks -%}
+                {%- case block.type -%}
+                  {%- when '@app' -%}
+                    {% render block %}
+                {%- endcase -%}
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- endif -%}
 
       </div>
 
@@ -485,6 +514,28 @@
   })();
 </script>
 
+<script>
+  (() => {
+    document.querySelectorAll('[data-skatepark-photo-share]').forEach((wrap) => {
+      if (wrap.dataset.ready === 'true') return;
+      wrap.dataset.ready = 'true';
+      const toggle = wrap.querySelector('[data-photo-share-toggle]');
+      const panel = wrap.querySelector('[data-photo-share-panel]');
+      if (!toggle || !panel) return;
+      toggle.addEventListener('click', () => {
+        const open = toggle.getAttribute('aria-expanded') !== 'true';
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        panel.hidden = !open;
+        wrap.classList.toggle('is-open', open);
+        if (open) {
+          const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          panel.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'nearest' });
+        }
+      });
+    });
+  })();
+</script>
+
 {% schema %}
 {
   "name": "Skatepark",
@@ -537,6 +588,28 @@
       "label": "Placeholder image URL (fallback)",
       "default": "https://cdn.shopify.com/s/files/1/0052/6873/4040/files/park-coming-soon.jpg?v=1793626514",
       "info": "Used only if no placeholder image is picked and park-coming-soon.jpg is not in Files."
+    },
+    {
+      "type": "header",
+      "content": "Share a park photo"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_photo_form",
+      "label": "Show photo share link",
+      "default": true,
+      "info": "Shows the link under the gallery. Add a Shopify Forms app block to this section for the form it opens."
+    },
+    {
+      "type": "text",
+      "id": "photo_link_text",
+      "label": "Link text",
+      "default": "Got an updated park photo? Share it with us."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
     }
   ]
 }
