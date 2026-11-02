@@ -804,6 +804,7 @@
 
 	.skatepark-photo-share__panel {
 		margin: 15px 0 0;
+		max-width: 520px;
 		padding: 20px;
 		border: 1px solid var(--border-white);
 		animation: skatepark-photo-share-in .3s ease;
