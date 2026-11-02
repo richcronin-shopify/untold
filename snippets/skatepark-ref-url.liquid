@@ -1,4 +1,4 @@
-{%- comment -%} Adds ref=untoldbmx to an external URL, keeping any #fragment. {%- endcomment -%}
+{%- comment -%} Adds source=untoldbmx to an external URL, keeping any #fragment. {%- endcomment -%}
 {%- liquid
   assign parts = url | split: '#'
   assign base = parts | first
@@ -6,13 +6,13 @@
   if parts.size > 1
     assign frag = url | remove_first: base
   endif
-  if base contains 'ref=untoldbmx'
+  if base contains 'source=untoldbmx'
     assign out = url
   else
     if base contains '?'
-      assign out = base | append: '&ref=untoldbmx' | append: frag
+      assign out = base | append: '&source=untoldbmx' | append: frag
     else
-      assign out = base | append: '?ref=untoldbmx' | append: frag
+      assign out = base | append: '?source=untoldbmx' | append: frag
     endif
   endif
 -%}{{ out | escape }}
