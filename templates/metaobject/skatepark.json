@@ -16,7 +16,7 @@
         "index_label": "Skateparks",
         "max_images": 10,
         "show_map": true,
-        "show_photo_form": false
+        "show_photo_form": true
       },
       "blocks": {
         "forms_inline_park_photo": {
