@@ -179,7 +179,7 @@
                 {%- if licence_name != blank -%}
                   {%- if credit != blank %} · {% endif -%}
                   {%- if licence_url != blank -%}
-                    <a href="{{ licence_url | escape }}" target="_blank" rel="noopener nofollow">{{ licence_name | escape }}</a>
+                    <a href="{% render 'skatepark-ref-url', url: licence_url %}" target="_blank" rel="noopener nofollow">{{ licence_name | escape }}</a>
                   {%- else -%}
                     {{ licence_name | escape }}
                   {%- endif -%}
@@ -295,7 +295,7 @@
           <div class="skatepark-contact">
             <h2 class="skatepark__heading h6">Contact</h2>
             {%- if park.website_url.value != blank -%}
-              <p><a href="{{ park.website_url.value | escape }}" target="_blank" rel="noopener nofollow" class="skatepark-contact__link">Park website</a></p>
+              <p><a href="{% render 'skatepark-ref-url', url: park.website_url.value %}" target="_blank" rel="noopener nofollow" class="skatepark-contact__link">Park website</a></p>
             {%- endif -%}
             {%- if park.phone.value != blank -%}
               <p><a href="tel:{{ park.phone.value | remove: ' ' | escape }}" class="skatepark-contact__link">{{ park.phone.value | escape }}</a></p>
@@ -328,10 +328,10 @@
               endif
             -%}
             {%- if maps_url != blank -%}
-              <a href="{{ maps_url | escape }}" class="button" target="_blank" rel="noopener nofollow">Open in Google Maps</a>
+              <a href="{% render 'skatepark-ref-url', url: maps_url %}" class="button" target="_blank" rel="noopener nofollow">Open in Google Maps</a>
             {%- endif -%}
             {%- if w3w != blank -%}
-              <a href="https://what3words.com/{{ w3w | escape }}" class="button button--outline" target="_blank" rel="noopener nofollow">///{{ w3w | escape }}</a>
+              {%- assign w3w_url = 'https://what3words.com/' | append: w3w -%}<a href="{% render 'skatepark-ref-url', url: w3w_url %}" class="button button--outline" target="_blank" rel="noopener nofollow">///{{ w3w | escape }}</a>
             {%- endif -%}
           </div>
 
@@ -357,7 +357,7 @@
               loading="lazy"
               referrerpolicy="no-referrer-when-downgrade"
             ></iframe>
-            <p class="skatepark-location__map-credit">Map data © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap contributors</a></p>
+            <p class="skatepark-location__map-credit">Map data © <a href="https://www.openstreetmap.org/copyright?ref=untoldbmx" target="_blank" rel="noopener">OpenStreetMap contributors</a></p>
           </div>
         {%- endif -%}
 
