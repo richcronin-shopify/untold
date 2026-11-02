@@ -218,23 +218,11 @@
 		}
 	}
 
-	.skatepark-gallery__placeholder {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		aspect-ratio: 16 / 9;
-		border: 1px solid var(--border-white);
-		background:
-			repeating-linear-gradient(135deg, transparent 0 18px, rgb(from var(--color-white) r g b / 3%) 18px 36px),
-			rgb(from var(--color-white) r g b / 4%);
+	.skatepark-gallery__stage--placeholder {
+		aspect-ratio: 4 / 3;
 
-		span {
-			font-family: var(--font-heading-family);
-			text-transform: uppercase;
-			font-size: var(--h4);
-			opacity: .35;
-			text-align: center;
-			padding: 20px;
+		.skatepark-gallery__image--placeholder {
+			display: block;
 		}
 	}
 

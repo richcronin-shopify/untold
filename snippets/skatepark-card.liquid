@@ -3,22 +3,32 @@
 
   @param {object} park - A skatepark metaobject
   @param {number} [index] - Position in the list, used to load the first images eagerly
+  @param {string} [placeholder] - Image URL used when the park has no photo or satellite image
 {% enddoc %}
 {%- liquid
   assign sp_img = park.thumbnail_image_url.value | first
   if sp_img == blank
     assign sp_img = park.satellite_thumbnail_url.value
   endif
+  assign sp_is_placeholder = false
+  if sp_img == blank and placeholder != blank
+    assign sp_img = placeholder
+    assign sp_is_placeholder = true
+  endif
   assign sp_loading = 'lazy'
   if index and index <= 4
     assign sp_loading = 'eager'
   endif
-  assign sp_alt = park.name.value | append: ', ' | append: park.town_city.value
+  if sp_is_placeholder
+    assign sp_alt = park.name.value | append: ' – photo coming soon'
+  else
+    assign sp_alt = park.name.value | append: ', ' | append: park.town_city.value
+  endif
 -%}
 <a href="{{ park.system.url }}" class="skatepark-card">
   <div class="skatepark-card__media">
     {%- if sp_img != blank -%}
-      <img src="{{ sp_img | escape }}" alt="{{ sp_alt | escape }}" loading="{{ sp_loading }}" decoding="async" referrerpolicy="no-referrer" width="640" height="480" class="skatepark-card__image">
+      <img src="{{ sp_img | escape }}" alt="{{ sp_alt | escape }}" loading="{{ sp_loading }}" decoding="async" {% unless sp_is_placeholder %}referrerpolicy="no-referrer" {% endunless %}width="640" height="480" class="skatepark-card__image{% if sp_is_placeholder %} skatepark-card__image--placeholder{% endif %}">
     {%- else -%}
       <span class="skatepark-card__placeholder" aria-hidden="true">{{ park.name.value | slice: 0 }}</span>
     {%- endif -%}

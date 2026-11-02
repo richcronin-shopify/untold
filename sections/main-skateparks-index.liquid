@@ -2,8 +2,10 @@
 {%- assign ss = section.settings -%}
 {%- assign regions = ss.regions | newline_to_br | replace: '<br />', ',' | split: ',' -%}
 {%- assign park_types = ss.park_types | newline_to_br | replace: '<br />', '|' | split: '|' -%}
+{%- capture placeholder_url -%}{% render 'skatepark-placeholder-url', image: ss.placeholder_image, url: ss.placeholder_url, width: 640 %}{%- endcapture -%}
+{%- assign placeholder_url = placeholder_url | strip -%}
 
-<section class="skateparks-index" id="{{ section.id }}" data-skateparks-index data-per-page="{{ ss.per_page }}">
+<section class="skateparks-index" id="{{ section.id }}" data-skateparks-index data-per-page="{{ ss.per_page }}" data-placeholder="{{ placeholder_url | escape }}">
   <div class="container">
 
     <nav class="breadcrumbs" aria-label="Breadcrumb">
@@ -77,7 +79,7 @@
           <p class="skateparks-index__count" data-sp-server-count>{{ paginate.items }} parks</p>
           <div class="skateparks-index__grid">
             {%- for park in shop.metaobjects.skatepark.values -%}
-              {% render 'skatepark-card', park: park, index: forloop.index %}
+              {% render 'skatepark-card', park: park, index: forloop.index, placeholder: placeholder_url %}
             {%- endfor -%}
           </div>
 
@@ -119,6 +121,7 @@
     const CLUSTER = 'https://unpkg.com/leaflet.markercluster@1.5.3/dist/';
 
     const perPage = parseInt(root.dataset.perPage, 10) || 24;
+    const placeholder = root.dataset.placeholder || '';
     const $ = (sel) => root.querySelector(sel);
     const q = $('[data-sp-q]');
     const regionSel = $('[data-sp-region]');
@@ -248,9 +251,12 @@
     const card = (p, i) => {
       const alt = esc(p.n + (p.t ? ', ' + p.t : ''));
       const meta = esc(p.t || '') + (p.c && p.c !== p.t ? ', ' + esc(p.c) : '');
+      const loadingAttr = '" loading="' + (i < 4 ? 'eager' : 'lazy') + '" decoding="async" width="640" height="480" ';
       const img = p.i
-        ? '<img src="' + esc(p.i) + '" alt="' + alt + '" loading="' + (i < 4 ? 'eager' : 'lazy') + '" decoding="async" referrerpolicy="no-referrer" width="640" height="480" class="skatepark-card__image">'
-        : '<span class="skatepark-card__placeholder" aria-hidden="true">' + esc(p.n.charAt(0)) + '</span>';
+        ? '<img src="' + esc(p.i) + '" alt="' + alt + loadingAttr + 'referrerpolicy="no-referrer" class="skatepark-card__image">'
+        : placeholder
+          ? '<img src="' + esc(placeholder) + '" alt="' + esc(p.n + ' – photo coming soon') + loadingAttr + 'class="skatepark-card__image skatepark-card__image--placeholder">'
+          : '<span class="skatepark-card__placeholder" aria-hidden="true">' + esc(p.n.charAt(0)) + '</span>';
       return '<a href="' + esc(p.u) + '" class="skatepark-card"><div class="skatepark-card__media">' + img +
         (p.y ? '<span class="skatepark-card__badge">' + esc(p.y) + '</span>' : '') +
         '</div><div class="skatepark-card__body"><h3 class="skatepark-card__title">' + esc(p.n) + '</h3><p class="skatepark-card__meta">' + meta + '</p>' +
@@ -470,6 +476,19 @@
       "label": "Region filter options",
       "info": "One per line. Shown before the full park list loads; replaced by the regions found in the data once it has loaded.",
       "default": "Channel Islands\nEast Midlands\nEast of England\nIsle of Man\nLondon\nNorth East\nNorth West\nNorthern Ireland\nScotland\nSouth East\nSouth West\nWales\nWest Midlands\nYorkshire and The Humber"
+    },
+    {
+      "type": "image_picker",
+      "id": "placeholder_image",
+      "label": "Placeholder image",
+      "info": "Shown on cards for parks with no photo or satellite image. 4:3 works best. If empty, park-coming-soon.jpg from Files is used."
+    },
+    {
+      "type": "text",
+      "id": "placeholder_url",
+      "label": "Placeholder image URL (fallback)",
+      "default": "https://cdn.shopify.com/s/files/1/0052/6873/4040/files/park-coming-soon.jpg?v=1793626514",
+      "info": "Used only if no placeholder image is picked and park-coming-soon.jpg is not in Files."
     },
     {
       "type": "textarea",

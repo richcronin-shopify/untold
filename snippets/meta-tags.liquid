@@ -92,9 +92,20 @@
 
     assign og_title = seo_title
     assign og_description = seo_description
-    unless metaobject.thumbnail_source_type.value contains 'Satellite'
-      assign sp_image = metaobject.thumbnail_image_url.value | first
-    endunless
+    comment
+      Social image: first real park photo; satellite tiles are not used, so parks without a
+      photo get the "photo coming soon" placeholder.
+    endcomment
+    assign sp_image = metaobject.thumbnail_image_url.value | first
+    if sp_image contains 'google.com/vt/'
+      assign sp_image = blank
+    endif
+    if sp_image == blank
+      capture sp_image
+        render 'skatepark-placeholder-url', width: 1200
+      endcapture
+      assign sp_image = sp_image | strip
+    endif
   endif
 -%}
 

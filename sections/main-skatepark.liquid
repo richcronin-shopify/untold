@@ -10,16 +10,35 @@
   assign region = park.region.value
   assign region_enc = region | url_encode
 
+  comment
+    Image fallback: park photos -> satellite thumbnail -> "photo coming soon" placeholder.
+  endcomment
   assign images = park.thumbnail_image_url.value
-  assign using_satellite = false
+  assign image_mode = 'photos'
   if images == blank or images.size == 0
     if park.satellite_thumbnail_url.value != blank
       assign images = park.satellite_thumbnail_url.value | split: '|||'
-      assign using_satellite = true
+      assign image_mode = 'satellite'
+    else
+      assign images = blank
+      assign image_mode = 'placeholder'
+    endif
+  else
+    assign first_image = images | first
+    if first_image contains 'google.com/vt/'
+      assign image_mode = 'satellite'
     endif
   endif
-  if park.thumbnail_source_type.value contains 'Satellite'
+  assign using_satellite = false
+  if image_mode == 'satellite'
     assign using_satellite = true
+  endif
+
+  if image_mode == 'placeholder'
+    capture placeholder_url
+      render 'skatepark-placeholder-url', image: ss.placeholder_image, url: ss.placeholder_url, width: 1280
+    endcapture
+    assign placeholder_url = placeholder_url | strip
   endif
 
   assign image_alt = park_name
@@ -168,8 +187,16 @@
               </p>
             {%- endif -%}
           {%- else -%}
-            <div class="skatepark-gallery__placeholder" aria-hidden="true">
-              <span>{{ park_name | escape }}</span>
+            <div class="skatepark-gallery__stage skatepark-gallery__stage--placeholder">
+              <img
+                src="{{ placeholder_url | escape }}"
+                alt="{{ park_name | escape }} – photo coming soon"
+                class="skatepark-gallery__image skatepark-gallery__image--placeholder"
+                fetchpriority="high"
+                decoding="async"
+                width="1600"
+                height="1200"
+              >
             </div>
           {%- endif -%}
         </div>
@@ -493,6 +520,23 @@
       "id": "show_map",
       "label": "Show map",
       "default": true
+    },
+    {
+      "type": "header",
+      "content": "Parks with no photos"
+    },
+    {
+      "type": "image_picker",
+      "id": "placeholder_image",
+      "label": "Placeholder image",
+      "info": "Shown when a park has no photo or satellite image. 4:3 works best. If empty, park-coming-soon.jpg from Files is used."
+    },
+    {
+      "type": "text",
+      "id": "placeholder_url",
+      "label": "Placeholder image URL (fallback)",
+      "default": "https://cdn.shopify.com/s/files/1/0052/6873/4040/files/park-coming-soon.jpg?v=1793626514",
+      "info": "Used only if no placeholder image is picked and park-coming-soon.jpg is not in Files."
     }
   ]
 }
