@@ -6,6 +6,17 @@
   assign status = event.status.value
   assign index_url = ss.index_url | default: '/pages/skateparks-uk'
   assign event_url = request.origin | append: event.system.url
+  assign pe_ext = event.link.value | strip
+  assign pe_ext_internal = false
+  if pe_ext != blank
+    assign pe_host = request.host | remove: 'www.'
+    assign pe_ext_trim = pe_ext | remove: 'https://' | remove: 'http://' | remove: 'www.' | split: '?' | first | split: '#' | first | remove_last: '/'
+    if pe_ext_trim == pe_host or pe_ext_trim == shop.permanent_domain or pe_ext_trim == blank
+      assign pe_ext = blank
+    elsif pe_ext contains pe_host or pe_ext contains shop.permanent_domain
+      assign pe_ext_internal = true
+    endif
+  endif
 
   assign is_listed = false
   if status == 'Approved' or status == 'Cancelled'
@@ -113,8 +124,12 @@
           {%- endif -%}
 
           <div class="park-event__actions park-event-page__actions">
-            {%- if event.link.value != blank -%}
-              <a href="{% render 'skatepark-ref-url', url: event.link.value %}" class="button" target="_blank" rel="noopener nofollow">More info</a>
+            {%- if pe_ext != blank -%}
+              {%- if pe_ext_internal -%}
+                <a href="{{ pe_ext | escape }}" class="button">More info</a>
+              {%- else -%}
+                <a href="{% render 'skatepark-ref-url', url: pe_ext %}" class="button" target="_blank" rel="noopener nofollow">Event website</a>
+              {%- endif -%}
             {%- endif -%}
             {%- if park != blank -%}
               {%- liquid

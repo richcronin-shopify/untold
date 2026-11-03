@@ -7,15 +7,30 @@
 {% enddoc %}
 {%- liquid
   assign pi_tag = heading_tag | default: 'h3'
-  assign pi_url = request.origin | append: event.system.url
   capture pi_iso
     render 'park-event-iso', value: event.start.value
   endcapture
   assign pi_iso = pi_iso | strip
+  assign pi_event_url = event.system.url
+  if pi_event_url == blank
+    assign pi_event_url = '/pages/park-events/' | append: event.system.handle
+  endif
+  assign pi_url = request.origin | append: pi_event_url
+  assign pi_ext = event.link.value | strip
+  assign pi_ext_internal = false
+  if pi_ext != blank
+    assign pi_host = request.host | remove: 'www.'
+    assign pi_ext_trim = pi_ext | remove: 'https://' | remove: 'http://' | remove: 'www.' | split: '?' | first | split: '#' | first | remove_last: '/'
+    if pi_ext_trim == pi_host or pi_ext_trim == shop.permanent_domain or pi_ext_trim == blank
+      assign pi_ext = blank
+    elsif pi_ext contains pi_host or pi_ext contains shop.permanent_domain
+      assign pi_ext_internal = true
+    endif
+  endif
 -%}
 <li class="park-event{% if event.status.value == 'Cancelled' %} park-event--cancelled{% endif %}{% if event.cover_image.value != blank %} park-event--has-cover{% endif %}">
   {%- if event.cover_image.value != blank -%}
-    <a href="{{ event.system.url }}" class="park-event__cover" tabindex="-1" aria-hidden="true">
+    <a href="{{ pi_event_url }}" class="park-event__cover" tabindex="-1" aria-hidden="true">
       {{- event.cover_image.value
         | image_url: width: 800
         | image_tag:
@@ -36,7 +51,7 @@
       {%- if event.event_type.value != blank -%}<span class="skatepark-chip park-event__type">{{ event.event_type.value | escape }}</span>{%- endif -%}
       <time datetime="{{ pi_iso }}" class="park-event__when">{% render 'park-event-when', event: event %}</time>
     </p>
-    <{{ pi_tag }} class="park-event__title"><a href="{{ event.system.url }}">{{ event.title.value | escape }}</a></{{ pi_tag }}>
+    <{{ pi_tag }} class="park-event__title"><a href="{{ pi_event_url }}">{{ event.title.value | escape }}</a></{{ pi_tag }}>
     {%- if event.organiser.value != blank or event.price_note.value != blank -%}
       <p class="park-event__info">
         {%- if event.organiser.value != blank -%}Organised by {{ event.organiser.value | escape }}{%- endif -%}
@@ -45,10 +60,13 @@
       </p>
     {%- endif -%}
     <div class="park-event__actions">
-      {%- if event.link.value != blank -%}
-        <a href="{% render 'skatepark-ref-url', url: event.link.value %}" class="park-event__action park-event__action--primary" target="_blank" rel="noopener nofollow">More info</a>
-      {%- else -%}
-        <a href="{{ event.system.url }}" class="park-event__action park-event__action--primary">More info</a>
+      <a href="{{ pi_event_url }}" class="park-event__action park-event__action--primary">More info</a>
+      {%- if pi_ext != blank -%}
+        {%- if pi_ext_internal -%}
+          <a href="{{ pi_ext | escape }}" class="park-event__action">Event link</a>
+        {%- else -%}
+          <a href="{% render 'skatepark-ref-url', url: pi_ext %}" class="park-event__action" target="_blank" rel="noopener nofollow">Event website</a>
+        {%- endif -%}
       {%- endif -%}
       {% render 'park-event-calendar', event: event, park: park, url: pi_url %}
     </div>
