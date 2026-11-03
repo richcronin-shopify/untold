@@ -1,0 +1,66 @@
+{% comment %}
+  Favourite and Ridden it buttons for a skatepark metaobject page.
+  {% render 'untold-park-actions', park: metaobject %}
+  Wrap in an element with data-untold-parks (see main-skatepark).
+{% endcomment %}
+{% liquid
+  assign park = park | default: metaobject
+  assign is_favourite = false
+  assign is_ridden = false
+  if customer and park != blank
+    for item in customer.metafields.untold.favourite_parks.value
+      if item.system.id == park.system.id
+        assign is_favourite = true
+        break
+      endif
+    endfor
+    for item in customer.metafields.untold.ridden_parks.value
+      if item.system.id == park.system.id
+        assign is_ridden = true
+        break
+      endif
+    endfor
+  endif
+  assign login_return = request.path | url_encode
+  assign login_sep = '?'
+  if routes.account_login_url contains '?'
+    assign login_sep = '&'
+  endif
+  assign login_href = routes.account_login_url | append: login_sep | append: 'return_url=' | append: login_return | append: '&return_to=' | append: login_return
+%}
+<div class="untold-actions" data-untold-actions>
+  <button
+    type="button"
+    class="button button--outline untold-btn"
+    data-untold-action="favourite"
+    aria-pressed="{% if is_favourite %}true{% else %}false{% endif %}"
+  >
+    <svg class="untold-btn__icon untold-btn__icon--star" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false">
+      <path class="untold-icon__off" d="M12 2.8l2.84 5.75 6.35.92-4.6 4.48 1.09 6.32L12 17.29l-5.68 2.98 1.09-6.32-4.6-4.48 6.35-.92z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+      <path class="untold-icon__on" d="M12 2.8l2.84 5.75 6.35.92-4.6 4.48 1.09 6.32L12 17.29l-5.68 2.98 1.09-6.32-4.6-4.48 6.35-.92z" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+    </svg>
+    <span data-untold-label data-off="Favourite" data-on="Favourited">
+      {%- if is_favourite %}Favourited{% else %}Favourite{% endif -%}
+    </span>
+  </button>
+  <button
+    type="button"
+    class="button button--outline untold-btn"
+    data-untold-action="ridden"
+    aria-pressed="{% if is_ridden %}true{% else %}false{% endif %}"
+  >
+    <svg class="untold-btn__icon untold-btn__icon--check" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false">
+      <rect x="3" y="3" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"/>
+      <path class="untold-icon__on" d="M7 12.5l3.5 3.5L17 8.5" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square"/>
+    </svg>
+    <span data-untold-label data-off="Ridden it" data-on="Ridden">
+      {%- if is_ridden %}Ridden{% else %}Ridden it{% endif -%}
+    </span>
+  </button>
+</div>
+<p class="untold-status" data-untold-action-status role="status"></p>
+{%- unless customer -%}
+  <p class="untold-note">
+    <a href="{{ login_href }}">Log in</a> to save parks you love and track the ones you've ridden.
+  </p>
+{%- endunless -%}

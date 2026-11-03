@@ -1,0 +1,74 @@
+{% comment %}
+  My parks: a signed-in customer's favourite and ridden skateparks.
+  Assign a page the "my-parks" template.
+{% endcomment %}
+{{ 'untold-parks.css' | asset_url | stylesheet_tag }}
+{%- liquid
+  assign login_return = request.path | url_encode
+  assign login_sep = '?'
+  if routes.account_login_url contains '?'
+    assign login_sep = '&'
+  endif
+  assign login_href = routes.account_login_url | append: login_sep | append: 'return_url=' | append: login_return | append: '&return_to=' | append: login_return
+-%}
+<section class="untold-parks untold-my-parks" id="{{ section.id }}">
+  <div class="container">
+    <header class="untold-my-parks__header">
+      <h1 class="h2">{{ section.settings.heading | escape }}</h1>
+    </header>
+
+    {%- if customer == nil -%}
+      <div class="untold-my-parks__login">
+        <p>Log in to see the parks you've favourited and the ones you've ridden.</p>
+        <a class="button" href="{{ login_href }}">Log in</a>
+      </div>
+      {%- if request.design_mode -%}
+        <p class="untold-note">The theme editor isn't signed in as a customer. A signed-in customer sees their saved parks here.</p>
+      {%- endif -%}
+    {%- else -%}
+      {%- assign favourites = customer.metafields.untold.favourite_parks.value -%}
+      {%- assign ridden = customer.metafields.untold.ridden_parks.value -%}
+
+      <div class="untold-my-parks__group">
+        <h2 class="untold-my-parks__heading h5">Favourites</h2>
+        {% render 'untold-park-card-list', parks: favourites, empty_text: "You haven't favourited a park yet.", directory_url: section.settings.directory_url %}
+      </div>
+
+      <div class="untold-my-parks__group">
+        <h2 class="untold-my-parks__heading h5">Ridden</h2>
+        {% render 'untold-park-card-list', parks: ridden, empty_text: "You haven't marked a park as ridden yet.", directory_url: section.settings.directory_url %}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "My parks",
+  "tag": "div",
+  "class": "untold-my-parks-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "My parks"
+    },
+    {
+      "type": "text",
+      "id": "directory_url",
+      "label": "Skatepark directory link",
+      "default": "/pages/skateparks-uk",
+      "info": "Shown when a list is empty."
+    }
+  ],
+  "enabled_on": {
+    "templates": ["page"]
+  },
+  "presets": [
+    {
+      "name": "My parks"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,108 @@
+{% comment %}
+  "Add an event" link and collapsible form. Times are UK time.
+  {% render 'untold-park-event-form', park: metaobject, event_types: section.settings.event_types %}
+  Wrap in an element with data-untold-parks (see main-skatepark).
+  Logged-out visitors get a log-in prompt instead of the form.
+{% endcomment %}
+{% liquid
+  assign park = park | default: metaobject
+  assign uid = park.system.handle
+  assign type_source = event_types | default: 'Jam, Comp, Session, Lesson, Demo, Other'
+  assign type_list = type_source | split: ','
+  assign login_return = request.path | url_encode
+  assign login_sep = '?'
+  if routes.account_login_url contains '?'
+    assign login_sep = '&'
+  endif
+  assign login_href = routes.account_login_url | append: login_sep | append: 'return_url=' | append: login_return | append: '&return_to=' | append: login_return
+%}
+<div class="untold-event" data-untold-event>
+  <button
+    type="button"
+    class="untold-event__toggle button--reset"
+    data-untold-event-toggle
+    aria-expanded="false"
+    aria-controls="untold-event-{{ uid }}"
+  >
+    <span>Got an event at this park? Add it here.</span>
+    <span class="untold-event__icon" aria-hidden="true"></span>
+  </button>
+  <div class="untold-event__panel" id="untold-event-{{ uid }}" data-untold-event-panel hidden>
+    {%- if customer -%}
+      <form class="untold-event-form" data-untold-event-form method="post" action="{{ request.path }}" novalidate>
+        <h3 class="untold-event-form__title h6">Add an event</h3>
+        <p class="untold-event-form__intro">We'll check it over and it'll appear on this park once it's approved.</p>
+        <p class="untold-status" data-untold-form-status role="status"></p>
+        <div class="untold-hp" aria-hidden="true">
+          <label for="untold-leave-blank-{{ uid }}">Leave this blank</label>
+          <input id="untold-leave-blank-{{ uid }}" name="untold_leave_blank" type="text" tabindex="-1" autocomplete="off">
+        </div>
+        <div class="untold-fields">
+          <div class="untold-field untold-field--full">
+            <label for="untold-title-{{ uid }}">Event name *</label>
+            <input id="untold-title-{{ uid }}" name="title" type="text" required maxlength="120" autocomplete="off">
+          </div>
+          <div class="untold-field untold-field--full">
+            <label for="untold-type-{{ uid }}">Type of event</label>
+            <div class="untold-select-wrap">
+              <select id="untold-type-{{ uid }}" name="eventType">
+                <option value="">Choose a type (optional)</option>
+                {%- for type in type_list -%}
+                  {%- assign label = type | strip -%}
+                  {%- if label != blank -%}
+                    <option value="{{ label | escape }}">{{ label | escape }}</option>
+                  {%- endif -%}
+                {%- endfor -%}
+              </select>
+            </div>
+          </div>
+          <div class="untold-field">
+            <label for="untold-start-{{ uid }}">Starts *</label>
+            <input id="untold-start-{{ uid }}" name="start" type="datetime-local" required>
+          </div>
+          <div class="untold-field">
+            <label for="untold-end-{{ uid }}">Ends *</label>
+            <input id="untold-end-{{ uid }}" name="end" type="datetime-local" required>
+          </div>
+          <p class="untold-hint untold-field--full">Times are UK time.</p>
+          <div class="untold-field untold-field--full">
+            <label for="untold-description-{{ uid }}">Description</label>
+            <textarea id="untold-description-{{ uid }}" name="description" maxlength="2000"></textarea>
+          </div>
+          <div class="untold-field">
+            <label for="untold-organiser-{{ uid }}">Organiser</label>
+            <input id="untold-organiser-{{ uid }}" name="organiser" type="text" maxlength="80" autocomplete="organization">
+          </div>
+          <div class="untold-field">
+            <label for="untold-price-{{ uid }}">Entry</label>
+            <input id="untold-price-{{ uid }}" name="priceNote" type="text" maxlength="140" placeholder="e.g. Free, or £5 on the door">
+          </div>
+          <div class="untold-field untold-field--full">
+            <label for="untold-link-{{ uid }}">Event website</label>
+            <input id="untold-link-{{ uid }}" name="link" type="url" maxlength="300" placeholder="https://" inputmode="url">
+          </div>
+          <div class="untold-field untold-field--full">
+            <label for="untold-cover-{{ uid }}">Cover photo</label>
+            <input id="untold-cover-{{ uid }}" name="cover" type="file" accept="image/jpeg,image/png,image/webp">
+            <span class="untold-hint">Optional. JPEG, PNG or WebP, up to 5 MB. Landscape works best.</span>
+          </div>
+          <div class="untold-field untold-field--full">
+            <label for="untold-notes-{{ uid }}">Note to Untold</label>
+            <textarea id="untold-notes-{{ uid }}" name="notes" maxlength="1000"></textarea>
+            <span class="untold-hint">Only we see this. It isn't shown on the park page.</span>
+          </div>
+        </div>
+        <button type="submit" class="button untold-submit" data-untold-submit>Send for approval</button>
+      </form>
+    {%- else -%}
+      <div class="untold-event-login">
+        <h3 class="untold-event-form__title h6">Add an event</h3>
+        <p>Log in to your Untold account to add an event to this park.</p>
+        <a class="button" href="{{ login_href }}">Log in</a>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+<noscript>
+  <p class="untold-note">Turn on JavaScript to favourite a park or add an event.</p>
+</noscript>

@@ -1,0 +1,8 @@
+{% comment %}
+  Loads the parks stylesheet, and the script when script is true.
+  {% render 'untold-parks-assets', script: true %}
+{% endcomment %}
+{{ 'untold-parks.css' | asset_url | stylesheet_tag }}
+{% if script %}
+  <script src="{{ 'untold-parks.js' | asset_url }}" defer></script>
+{% endif %}

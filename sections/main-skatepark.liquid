@@ -108,6 +108,18 @@
         -%}
         <p class="skatepark__status" role="status">{{ status_label | escape }}</p>
       {%- endif -%}
+      {%- if ss.show_park_actions -%}
+        <div
+          class="untold-parks untold-parks--actions"
+          data-untold-parks
+          data-endpoint="/apps/parks"
+          data-logged-in="{% if customer %}true{% else %}false{% endif %}"
+          data-login-url="{{ routes.account_login_url }}"
+          data-park-handle="{{ park.system.handle | escape }}"
+        >
+          {% render 'untold-park-actions', park: park %}
+        </div>
+      {%- endif -%}
     </header>
 
     <div class="skatepark__layout">
@@ -335,6 +347,19 @@
               {%- endif -%}
             </p>
           {%- endif -%}
+        {%- endif -%}
+
+        {%- if ss.show_event_form -%}
+          <div
+            class="untold-parks untold-parks--event"
+            data-untold-parks
+            data-endpoint="/apps/parks"
+            data-logged-in="{% if customer %}true{% else %}false{% endif %}"
+            data-login-url="{{ routes.account_login_url }}"
+            data-park-handle="{{ park.system.handle | escape }}"
+          >
+            {% render 'untold-park-event-form', park: park, event_types: ss.event_types %}
+          </div>
         {%- endif -%}
 
       </div>
@@ -590,6 +615,10 @@
   })();
 </script>
 
+{%- if ss.show_park_actions or ss.show_event_form -%}
+  {% render 'untold-parks-assets', script: true %}
+{%- endif -%}
+
 {% schema %}
 {
   "name": "Skatepark",
@@ -702,6 +731,29 @@
       "id": "photo_link_text",
       "label": "Link text",
       "default": "Got an updated park photo? Share it with us."
+    },
+    {
+      "type": "header",
+      "content": "Customer park tools"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_park_actions",
+      "label": "Show Favourite and Ridden it buttons",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_event_form",
+      "label": "Show Add an event form",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "event_types",
+      "label": "Event types",
+      "default": "Jam, Comp, Session, Lesson, Demo, Other",
+      "info": "Comma-separated. Must match the Event type choices on the Park event metaobject."
     }
   ],
   "blocks": [

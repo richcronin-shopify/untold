@@ -16,7 +16,10 @@
         "index_label": "Skateparks",
         "max_images": 10,
         "show_map": true,
-        "show_photo_form": true
+        "show_photo_form": true,
+        "show_park_actions": true,
+        "show_event_form": true,
+        "event_types": "Jam, Comp, Session, Lesson, Demo, Other"
       },
       "blocks": {
         "forms_inline_park_photo": {

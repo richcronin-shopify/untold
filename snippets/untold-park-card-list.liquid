@@ -1,0 +1,61 @@
+{% comment %}
+  Cards for a list of skatepark metaobjects.
+  {% render 'untold-park-card-list', parks: favourites, empty_text: "You haven't favourited a park yet.", directory_url: '/pages/skateparks' %}
+{% endcomment %}
+{% liquid
+  assign visible = 0
+  if parks != blank
+    for park in parks
+      if park != blank
+        assign visible = visible | plus: 1
+      endif
+    endfor
+  endif
+%}
+{% if visible == 0 %}
+  <p>{{ empty_text }}</p>
+  {% if directory_url != blank %}
+    <p><a href="{{ directory_url }}">Browse skateparks</a></p>
+  {% endif %}
+{% else %}
+  <ul class="untold-park-grid">
+    {% for park in parks %}
+      {% if park != blank %}
+        {% liquid
+          assign park_name = park.name.value
+          if park_name == blank
+            assign park_name = park.title.value
+          endif
+          if park_name == blank
+            assign park_name = park.system.handle | replace: '-', ' '
+          endif
+          assign image_src = ''
+          assign raw = park.thumbnail_image_url.value
+          if raw.first contains '://'
+            for thumb in raw
+              if thumb contains '://'
+                assign image_src = thumb
+                break
+              endif
+            endfor
+          elsif raw contains '://'
+            assign image_src = raw
+          endif
+          if image_src == blank and park.satellite_thumbnail_url.value contains '://'
+            assign image_src = park.satellite_thumbnail_url.value
+          endif
+        %}
+        <li>
+          <a class="untold-park-card" href="/pages/skateparks/{{ park.system.handle }}">
+            <span class="untold-park-card__media">
+              {% if image_src != blank %}
+                <img src="{{ image_src }}" alt="" width="640" height="360" loading="lazy">
+              {% endif %}
+            </span>
+            <span class="untold-park-card__name">{{ park_name }}</span>
+          </a>
+        </li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+{% endif %}
