@@ -14,6 +14,9 @@
   if ps_img contains 'google.com/vt/'
     assign ps_img = blank
   endif
+  if event.cover_image.value != blank
+    assign ps_img = event.cover_image.value | image_url: width: 1600 | prepend: 'https:'
+  endif
   capture ps_start
     render 'park-event-iso', value: event.start.value
   endcapture

@@ -13,7 +13,20 @@
   endcapture
   assign pi_iso = pi_iso | strip
 -%}
-<li class="park-event{% if event.status.value == 'Cancelled' %} park-event--cancelled{% endif %}">
+<li class="park-event{% if event.status.value == 'Cancelled' %} park-event--cancelled{% endif %}{% if event.cover_image.value != blank %} park-event--has-cover{% endif %}">
+  {%- if event.cover_image.value != blank -%}
+    <a href="{{ event.system.url }}" class="park-event__cover" tabindex="-1" aria-hidden="true">
+      {{- event.cover_image.value
+        | image_url: width: 800
+        | image_tag:
+          widths: '400, 600, 800',
+          sizes: '(max-width: 767px) calc(100vw - 32px), 600px',
+          loading: 'lazy',
+          alt: event.title.value,
+          class: 'park-event__cover-img'
+      -}}
+    </a>
+  {%- endif -%}
   <div class="park-event__date" aria-hidden="true">
     <span class="park-event__day">{{ event.start.value | date: '%-d' }}</span>
     <span class="park-event__month">{{ event.start.value | date: '%b' }}</span>

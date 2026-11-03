@@ -56,6 +56,20 @@
 
       <div class="park-event-page__layout">
         <div class="park-event-page__main">
+          {%- if event.cover_image.value != blank -%}
+            <div class="park-event-page__cover">
+              {{- event.cover_image.value
+                | image_url: width: 1600
+                | image_tag:
+                  widths: '600, 800, 1000, 1200, 1600',
+                  sizes: '(max-width: 990px) calc(100vw - 32px), 800px',
+                  loading: 'eager',
+                  fetchpriority: 'high',
+                  alt: event.title.value,
+                  class: 'park-event-page__cover-img'
+              -}}
+            </div>
+          {%- endif -%}
           <header class="skatepark__header">
             <p class="park-event__meta">
               {%- if event.event_type.value != blank -%}<span class="skatepark-chip park-event__type">{{ event.event_type.value | escape }}</span>{%- endif -%}
