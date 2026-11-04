@@ -157,7 +157,7 @@
 								assign filter_has_active_values = false
 								assign filter_option_count = 0
 
-								if filter.active_values.size > 0
+								if filter.active_values.size > 0 or filter.true_value.active or filter.false_value.active
 									assign filter_has_active_values = true
 								endif
 
@@ -1655,17 +1655,45 @@
 
 					}
 
+					const openActiveFilterGroups = () => {
+
+						section.querySelectorAll('.collection-filters__dropdown').forEach((dropdown) => {
+
+							const hasSelectedOption = dropdown.querySelector(
+								'input[type="checkbox"]:checked, input[type="radio"]:checked'
+							);
+
+							const hasPriceRange = dropdown === priceDropdown && (
+								(priceMinInput && priceMinInput.value !== '') ||
+								(priceMaxInput && priceMaxInput.value !== '')
+							);
+
+							if (hasSelectedOption || hasPriceRange) {
+								dropdown.open = true;
+							}
+
+						});
+
+					};
+
+
 					const openFilterDrawer = () => {
 
 						if (!filterDrawer) {
 							return;
 						}
 
+						openActiveFilterGroups();
+
 						section.classList.add('is-filter-drawer-open');
 						filterDrawer.setAttribute('aria-hidden', 'false');
 						filterDrawer.inert = false;
 						filterTrigger?.setAttribute('aria-expanded', 'true');
 						document.documentElement.classList.add('collection-filter-drawer-open');
+
+						if (priceDropdown?.open) {
+							loadPriceCounts();
+						}
 
 						requestAnimationFrame(() => {
 							filterDrawerPanel
@@ -1864,6 +1892,8 @@
 
 					}
 
+					openActiveFilterGroups();
+
 					section.dataset.collectionFiltersInitialised = 'true';
 
 				});
@@ -1884,6 +1914,10 @@
 							'[data-collection-filters] .collection-filters__dropdown[open]'
 						)
 						.forEach((dropdown) => {
+
+							if (dropdown.closest('[data-filter-drawer]')) {
+								return;
+							}
 
 							if (!dropdown.contains(event.target)) {
 								dropdown.removeAttribute('open');
@@ -1918,7 +1952,9 @@
 							'[data-collection-filters] .collection-filters__dropdown[open]'
 						)
 						.forEach((dropdown) => {
-							dropdown.removeAttribute('open');
+							if (!dropdown.closest('[data-filter-drawer]')) {
+								dropdown.removeAttribute('open');
+							}
 						});
 
 				}
