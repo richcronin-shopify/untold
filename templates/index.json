@@ -171,8 +171,8 @@
       "type": "product-component",
       "name": "Product slider",
       "settings": {
-        "title": "Just Landed",
-        "collection": "new-in",
+        "title": "10% Off frames",
+        "collection": "10-off-frames",
         "product_limit": 12,
         "show_view_all": true,
         "enable_carousel": true,
