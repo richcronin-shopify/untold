@@ -11,26 +11,16 @@
   "sections": {
     "main": {
       "type": "main-skatepark",
-      "settings": {
-        "index_url": "/pages/skateparks-uk",
-        "index_label": "Skateparks",
-        "max_images": 10,
-        "show_map": true,
-        "show_photo_form": true,
-        "show_park_actions": true,
-        "show_event_form": true,
-        "event_types": "Jam, Comp, Session, Lesson, Demo, Other"
-      },
       "blocks": {
         "forms_inline_park_photo": {
           "type": "shopify://apps/forms/blocks/inline/8744a304-fcb1-4347-b211-bb6b4759a76a",
           "settings": {
             "form_id": "1230220",
-            "text_color": "#FFFFFF",
-            "button_background_color": "#61C968",
-            "button_label_color": "#0E0E0E",
-            "links_color": "#61C968",
-            "errors_color": "#ED3F41",
+            "text_color": "#ffffff",
+            "button_background_color": "#61c968",
+            "button_label_color": "#0e0e0e",
+            "links_color": "#61c968",
+            "errors_color": "#ed3f41",
             "text_alignment": "left",
             "form_alignment": "flex-start",
             "padding_top": 0,
@@ -42,7 +32,26 @@
       },
       "block_order": [
         "forms_inline_park_photo"
-      ]
+      ],
+      "settings": {
+        "index_url": "/pages/skateparks-uk",
+        "index_label": "Skateparks",
+        "max_images": 10,
+        "show_map": true,
+        "placeholder_image": "shopify://shop_images/park-placeholder.jpg",
+        "placeholder_url": "",
+        "show_events": true,
+        "events_heading": "Upcoming events",
+        "events_limit": 6,
+        "show_no_events": false,
+        "no_events_text": "No upcoming events — got one? Let us know",
+        "no_events_link": "",
+        "show_photo_form": true,
+        "photo_link_text": "Got an updated park photo? Share it with us.",
+        "show_park_actions": true,
+        "show_event_form": true,
+        "event_types": "Jam, Comp, Session, Lesson, Demo, Other"
+      }
     },
     "gear": {
       "type": "product-component",
