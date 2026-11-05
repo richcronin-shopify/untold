@@ -35,7 +35,7 @@
       ],
       "settings": {
         "index_url": "/pages/skateparks-uk",
-        "index_label": "Skateparks",
+        "index_label": "Skatepark finder",
         "max_images": 10,
         "show_map": true,
         "placeholder_image": "shopify://shop_images/park-placeholder.jpg",
