@@ -448,7 +448,7 @@
 
 					<span data-product-availability-text>
 						{%- if current_variant.available -%}
-							{% if current_variant.metafields.custom.in_stock.value %}In stock — ready to dispatch{% else %}In stock — 1-2 days{% endif %}
+							{% if current_variant.metafields.custom.in_stock.value %}In stock — ready to dispatch{% else %}Dispatched in 1-2 days{% endif %}
 						{%- else -%}
 							Sold out
 						{%- endif -%}
