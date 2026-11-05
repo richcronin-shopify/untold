@@ -12,11 +12,17 @@
     "main": {
       "type": "main-skateparks-index",
       "settings": {
-        "title": "UK skateparks",
+        "title": "UK skatepark finder",
         "intro": "<p>Find skateparks, pump tracks, BMX tracks and dirt jumps across the UK. Search by name or town, or filter by region and county.</p>",
-        "per_page": 24
+        "per_page": 24,
+        "regions": "Channel Islands\nEast Midlands\nEast of England\nIsle of Man\nLondon\nNorth East\nNorth West\nNorthern Ireland\nScotland\nSouth East\nSouth West\nWales\nWest Midlands\nYorkshire and The Humber",
+        "placeholder_image": "shopify://shop_images/park-placeholder.jpg",
+        "placeholder_url": "",
+        "park_types": "BMX Track / Dirt Jumps\nBowl / Pool\nMini Ramp\nMulti-Sport Action Park\nPump Track\nSkatepark\nSkatepark & Pump / BMX Track\nStreet Plaza"
       }
     }
   },
-  "order": ["main"]
+  "order": [
+    "main"
+  ]
 }
