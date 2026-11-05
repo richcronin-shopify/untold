@@ -56,25 +56,33 @@
 
     <div class="{% if ss.enable_carousel %}swiper product-slider__swiper{% else %}product-slider__grid{% endif %}">
       <div class="{% if ss.enable_carousel %}swiper-wrapper{% else %}product-slider__items{% endif %}">
-        {%- if has_product_overrides -%}
-          {%- for block in section.blocks -%}
-            {%- assign bs = block.settings -%}
-            {%- if block.type == 'product' and bs.product != blank -%}
-              <div
-                class="product-slider__item{% if ss.enable_carousel %} swiper-slide{% endif %}"
-                {{ block.shopify_attributes }}
-              >
-                {% render 'product-card', product: bs.product %}
-              </div>
-            {%- endif -%}
-          {%- endfor -%}
-        {%- elsif ss.collection != blank -%}
-          {%- for product in ss.collection.products limit: ss.product_limit -%}
-            <div class="product-slider__item{% if ss.enable_carousel %} swiper-slide{% endif %}">
-              {% render 'product-card', product: product %}
-            </div>
-          {%- endfor -%}
-        {%- endif -%}
+		{%- if has_product_overrides -%}
+
+		  {%- for block in section.blocks -%}
+		    {%- assign bs = block.settings -%}
+
+		    {%- if block.type == 'product' and bs.product != blank and bs.product.available -%}
+		      <div
+		        class="product-slider__item{% if ss.enable_carousel %} swiper-slide{% endif %}"
+		        {{ block.shopify_attributes }}
+		      >
+		        {% render 'product-card', product: bs.product %}
+		      </div>
+		    {%- endif -%}
+
+		  {%- endfor -%}
+
+		{%- elsif ss.collection != blank -%}
+
+		  {%- assign available_products = ss.collection.products | where: 'available', true -%}
+
+		  {%- for product in available_products limit: ss.product_limit -%}
+		    <div class="product-slider__item{% if ss.enable_carousel %} swiper-slide{% endif %}">
+		      {% render 'product-card', product: product %}
+		    </div>
+		  {%- endfor -%}
+
+		{%- endif -%}        
       </div>
 
       {%- if ss.enable_carousel -%}
