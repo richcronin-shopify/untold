@@ -108,7 +108,7 @@
         -%}
         <p class="skatepark__status" role="status">{{ status_label | escape }}</p>
       {%- endif -%}
-      {%- if ss.show_park_actions -%}
+      {%- if ss.show_park_actions and customer -%}
         <div
           class="untold-parks untold-parks--actions"
           data-untold-parks
