@@ -20,7 +20,7 @@
 	margin: 0 0 30px;
 	max-width: 1100px;
 	.untold-parks--login {
-		color: var(--primary);
+		color: var(--color-primary);
 		text-decoration: underline;
 	}
 }
