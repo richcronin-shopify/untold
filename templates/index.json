@@ -231,6 +231,13 @@
             "collection": "forks",
             "title": ""
           }
+        },
+        "collection_pfhrXN": {
+          "type": "collection",
+          "settings": {
+            "collection": "pedals",
+            "title": ""
+          }
         }
       },
       "block_order": [
@@ -238,10 +245,14 @@
         "collection_PgNP4w",
         "collection_JPiyLY",
         "collection_Tx6Urx",
-        "collection_NLazNy"
+        "collection_NLazNy",
+        "collection_pfhrXN"
       ],
       "name": "Collection grid",
       "settings": {
+        "blocks-per-row": 6,
+        "blocks-per-row-t": 3,
+        "blocks-per-row-m": 2,
         "padding-top": 0,
         "padding-bottom": 0,
         "padding-top-m": 0,
