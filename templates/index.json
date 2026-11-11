@@ -134,7 +134,7 @@
       "name": "Category grid",
       "settings": {
         "gap": 10,
-        "padding-top": 150,
+        "padding-top": 140,
         "padding-bottom": 0,
         "padding-top-m": 0,
         "padding-bottom-m": 0
