@@ -401,6 +401,78 @@
         "padding-bottom-m": 20
       }
     },
+    "park_slider_cDeyLk": {
+      "type": "park-slider",
+      "blocks": {
+        "park_brkYeT": {
+          "type": "park",
+          "settings": {
+            "park": "uk-f51-skatepark-folkestone"
+          }
+        },
+        "park_Vq6fWt": {
+          "type": "park",
+          "settings": {
+            "park": "uk-4motion-skatepark"
+          }
+        },
+        "park_JwAnCN": {
+          "type": "park",
+          "settings": {
+            "park": "uk-aberdare-skatepark"
+          }
+        },
+        "park_MUQMjz": {
+          "type": "park",
+          "settings": {
+            "park": "uk-acton-skatepark"
+          }
+        },
+        "park_GzzA3y": {
+          "type": "park",
+          "settings": {
+            "park": "uk-angmering-skatepark"
+          }
+        },
+        "park_wjAD3F": {
+          "type": "park",
+          "settings": {
+            "park": "uk-bole-hill-bmx-track"
+          }
+        },
+        "park_PFLKWP": {
+          "type": "park",
+          "settings": {
+            "park": "uk-bournemouth-duck-lane-skatepark"
+          }
+        }
+      },
+      "block_order": [
+        "park_brkYeT",
+        "park_Vq6fWt",
+        "park_JwAnCN",
+        "park_MUQMjz",
+        "park_GzzA3y",
+        "park_wjAD3F",
+        "park_PFLKWP"
+      ],
+      "name": "Skatepark slider",
+      "settings": {
+        "title": "plan your next ride",
+        "subheading": "",
+        "show_view_all": true,
+        "view_all_link": "",
+        "enable_carousel": true,
+        "parks_desktop": 3,
+        "parks_tablet": "2",
+        "parks_mobile": "1",
+        "placeholder_url": "https://cdn.shopify.com/s/files/1/0052/6873/4040/files/park-coming-soon.jpg?v=1793626514",
+        "padding-top": 40,
+        "padding-bottom": 40,
+        "padding-top-m": 30,
+        "padding-bottom-m": 30
+      }
+    },
     "image_with_usps_KeYf6t": {
       "type": "image-with-usps",
       "blocks": {
@@ -520,78 +592,6 @@
         "padding-top-m": 0,
         "padding-bottom-m": 20
       }
-    },
-    "park_slider_cDeyLk": {
-      "type": "park-slider",
-      "blocks": {
-        "park_brkYeT": {
-          "type": "park",
-          "settings": {
-            "park": "uk-f51-skatepark-folkestone"
-          }
-        },
-        "park_Vq6fWt": {
-          "type": "park",
-          "settings": {
-            "park": "uk-4motion-skatepark"
-          }
-        },
-        "park_JwAnCN": {
-          "type": "park",
-          "settings": {
-            "park": "uk-aberdare-skatepark"
-          }
-        },
-        "park_MUQMjz": {
-          "type": "park",
-          "settings": {
-            "park": "uk-acton-skatepark"
-          }
-        },
-        "park_GzzA3y": {
-          "type": "park",
-          "settings": {
-            "park": "uk-angmering-skatepark"
-          }
-        },
-        "park_wjAD3F": {
-          "type": "park",
-          "settings": {
-            "park": "uk-bole-hill-bmx-track"
-          }
-        },
-        "park_PFLKWP": {
-          "type": "park",
-          "settings": {
-            "park": "uk-bournemouth-duck-lane-skatepark"
-          }
-        }
-      },
-      "block_order": [
-        "park_brkYeT",
-        "park_Vq6fWt",
-        "park_JwAnCN",
-        "park_MUQMjz",
-        "park_GzzA3y",
-        "park_wjAD3F",
-        "park_PFLKWP"
-      ],
-      "name": "Skatepark slider",
-      "settings": {
-        "title": "plan your next ride",
-        "subheading": "",
-        "show_view_all": true,
-        "view_all_link": "",
-        "enable_carousel": true,
-        "parks_desktop": 3,
-        "parks_tablet": "2",
-        "parks_mobile": "1",
-        "placeholder_url": "https://cdn.shopify.com/s/files/1/0052/6873/4040/files/park-coming-soon.jpg?v=1793626514",
-        "padding-top": 40,
-        "padding-bottom": 40,
-        "padding-top-m": 30,
-        "padding-bottom-m": 30
-      }
     }
   },
   "order": [
@@ -602,9 +602,9 @@
     "product_component_aiiB9b",
     "payment_icons_74q9MM",
     "brand_slider_CBWDTy",
+    "park_slider_cDeyLk",
     "image_with_usps_KeYf6t",
     "multicolumn_zU8AgG",
-    "product_component_QLzHta",
-    "park_slider_cDeyLk"
+    "product_component_QLzHta"
   ]
 }
