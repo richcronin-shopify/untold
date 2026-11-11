@@ -37,7 +37,7 @@
 .category-grid__media {
 	position: relative;
 	height: 100%;
-	aspect-ratio: 4 / 2.55; /* 15% shorter than 4 / 3; desktop only, overridden below 990px */
+	aspect-ratio: 4 / 2.295; /* 15% then a further 10% shorter than 4 / 3; desktop only, overridden below 990px */
 }
 
 .category-grid__item--featured .category-grid__media {
