@@ -1,9 +1,15 @@
 {{- 'collection-grid.css' | asset_url | stylesheet_tag -}}
 {%- assign ss = section.settings -%}
 
-<section class="collection-grid" id="{{ section.id }}">
+<section
+	class="collection-grid"
+	id="{{ section.id }}"
+	style="--cols-desktop: {{ ss.blocks-per-row }}; --cols-tablet: {{ ss.blocks-per-row-t }}; --cols-mobile: {{ ss.blocks-per-row-m }};"
+>
 	<div class="container">
 		<div class="collection-grid__items">
+
+			{%- capture block_image_sizes -%}(min-width: 990px) calc(100vw / {{ ss.blocks-per-row }}), (min-width: 750px) calc(100vw / {{ ss.blocks-per-row-t }}), calc(100vw / {{ ss.blocks-per-row-m }}){%- endcapture -%}
 
 			{%- for block in section.blocks -%}
 				{%- assign bs = block.settings -%}
@@ -24,7 +30,7 @@
 											class: 'collection-grid__image',
 											loading: 'lazy',
 											widths: '400, 600, 800, 1000',
-											sizes: '(min-width: 990px) 20vw, 50vw',
+											sizes: block_image_sizes,
 											alt: block_image.alt
 									}}
 								</div>
@@ -74,6 +80,37 @@
 	"tag": "section",
 	"class": "collection-grid-section",
 	"settings": [
+		{
+			"type": "header",
+			"content": "Layout"
+		},
+		{
+			"type": "range",
+			"id": "blocks-per-row",
+			"min": 1,
+			"max": 6,
+			"step": 1,
+			"label": "Blocks per row (desktop)",
+			"default": 5
+		},
+		{
+			"type": "range",
+			"id": "blocks-per-row-t",
+			"min": 1,
+			"max": 6,
+			"step": 1,
+			"label": "Blocks per row (tablet)",
+			"default": 3
+		},
+		{
+			"type": "range",
+			"id": "blocks-per-row-m",
+			"min": 1,
+			"max": 4,
+			"step": 1,
+			"label": "Blocks per row (mobile)",
+			"default": 2
+		},
 		{
 			"type": "header",
 			"content": "Padding (desktop)"
