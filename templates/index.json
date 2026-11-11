@@ -236,6 +236,7 @@
           "type": "collection",
           "settings": {
             "collection": "pedals",
+            "image": "shopify://shop_images/pedal-collection.png",
             "title": ""
           }
         }
