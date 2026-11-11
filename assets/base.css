@@ -453,7 +453,7 @@ button,
 
 	.site-header__main {
 		position: relative;
-		height: 120px;
+		height: 100px;
 		background: var(--color-black);
 		display: flex;
 		align-items: center;
