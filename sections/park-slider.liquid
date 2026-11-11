@@ -1,0 +1,429 @@
+{{- 'product-slider.css' | asset_url | stylesheet_tag -}}
+{{- 'skatepark.css' | asset_url | stylesheet_tag -}}
+{%- assign ss = section.settings -%}
+
+{%- liquid
+	assign park_count = 0
+	for block in section.blocks
+		if block.settings.park != blank
+			assign park_count = park_count | plus: 1
+		endif
+	endfor
+
+	assign view_all_url = ss.view_all_link
+	if view_all_url == blank
+		if pages['skateparks-finder-uk'] != blank
+			assign view_all_url = pages['skateparks-finder-uk'].url
+		else
+			assign view_all_url = '/pages/skateparks-uk'
+		endif
+	endif
+
+	capture placeholder_url
+		render 'skatepark-placeholder-url', image: ss.placeholder_image, url: ss.placeholder_url, width: 640
+	endcapture
+	assign placeholder_url = placeholder_url | strip
+-%}
+
+{%- if park_count > 0 or request.design_mode -%}
+
+	<section
+		class="product-slider park-slider{% unless ss.enable_carousel %} product-slider--grid{% endunless %}"
+		id="{{ section.id }}"
+		data-park-slider
+		data-carousel="{{ ss.enable_carousel }}"
+		data-parks-desktop="{{ ss.parks_desktop }}"
+		data-parks-tablet="{{ ss.parks_tablet }}"
+		data-parks-mobile="{{ ss.parks_mobile }}"
+	>
+		<div class="container">
+
+			<div class="product-slider__header">
+
+				<div class="product-slider__intro">
+					{%- if ss.title != blank -%}
+						<h2 class="product-slider__title h5">
+							{{ ss.title }}
+						</h2>
+					{%- endif -%}
+
+					{%- if ss.subheading != blank -%}
+						<p class="product-slider__subheading">
+							{{ ss.subheading }}
+						</p>
+					{%- endif -%}
+				</div>
+
+				<div class="product-slider__controls">
+
+					{%- if ss.show_view_all and view_all_url != blank -%}
+						<a href="{{ view_all_url }}" class="product-slider__view-all">
+							View all parks
+						</a>
+					{%- endif -%}
+
+					{%- if ss.enable_carousel -%}
+						<div class="product-slider__navigation">
+
+							<button
+								type="button"
+								class="swiper-slider__arrow swiper-slider__arrow--prev button--reset"
+								aria-label="Previous parks"
+							>
+								{{- 'icon-long-arrow.svg' | inline_asset_content -}}
+							</button>
+
+							<button
+								type="button"
+								class="swiper-slider__arrow swiper-slider__arrow--next button--reset"
+								aria-label="Next parks"
+							>
+								{{- 'icon-long-arrow.svg' | inline_asset_content -}}
+							</button>
+
+						</div>
+					{%- endif -%}
+
+				</div>
+
+			</div>
+
+			<div class="{% if ss.enable_carousel %}swiper product-slider__swiper{% else %}product-slider__grid{% endif %}">
+
+				<div class="{% if ss.enable_carousel %}swiper-wrapper{% else %}product-slider__items{% endif %}">
+
+					{%- assign rendered_parks = 0 -%}
+
+					{%- for block in section.blocks -%}
+
+						{%- assign park = block.settings.park -%}
+
+						{%- if park != blank -%}
+
+							{%- assign rendered_parks = rendered_parks | plus: 1 -%}
+
+							<div class="product-slider__item{% if ss.enable_carousel %} swiper-slide{% endif %}" {{ block.shopify_attributes }}>
+								{% render 'skatepark-card', park: park, index: rendered_parks, placeholder: placeholder_url %}
+							</div>
+
+						{%- endif -%}
+
+					{%- endfor -%}
+
+				</div>
+
+				{%- if ss.enable_carousel -%}
+					<div class="product-slider__pagination swiper-pagination"></div>
+				{%- endif -%}
+
+			</div>
+
+		</div>
+	</section>
+
+{%- endif -%}
+
+{%- style -%}
+
+	#{{ section.id }} {
+		padding-top: {{ ss.padding-top }}px;
+		padding-bottom: {{ ss.padding-bottom }}px;
+		--products-desktop: {{ ss.parks_desktop }};
+		--products-tablet: {{ ss.parks_tablet }};
+		--products-mobile: {{ ss.parks_mobile }};
+	}
+
+	@media screen and (max-width: 750px) {
+
+		#{{ section.id }} {
+			padding-top: {{ ss.padding-top-m }}px;
+			padding-bottom: {{ ss.padding-bottom-m }}px;
+		}
+
+	}
+
+{%- endstyle -%}
+
+{% stylesheet %}
+	.park-slider .product-slider__intro {
+		min-width: 0;
+	}
+
+	.park-slider .product-slider__subheading {
+		margin: 6px 0 0;
+		opacity: 0.8;
+	}
+
+	.park-slider .product-slider__item .skatepark-card {
+		height: 100%;
+	}
+{% endstylesheet %}
+
+{% javascript %}
+
+	(() => {
+
+		const initialiseParkSliders = () => {
+
+			if (typeof Swiper === 'undefined') {
+				return;
+			}
+
+			document
+				.querySelectorAll('[data-park-slider]')
+				.forEach((section) => {
+
+					if (
+						section.dataset.carousel !== 'true' ||
+						section.dataset.initialised === 'true'
+					) {
+						return;
+					}
+
+					const swiperElement = section.querySelector(
+						'.product-slider__swiper'
+					);
+
+					if (!swiperElement) {
+						return;
+					}
+
+					const parksDesktop =
+						parseInt(section.dataset.parksDesktop, 10) || 5;
+
+					const parksTablet =
+						parseInt(section.dataset.parksTablet, 10) || 3;
+
+					const parksMobile =
+						parseInt(section.dataset.parksMobile, 10) || 2;
+
+					const previousButton = section.querySelector(
+						'.swiper-slider__arrow--prev'
+					);
+
+					const nextButton = section.querySelector(
+						'.swiper-slider__arrow--next'
+					);
+
+					const pagination = section.querySelector(
+						'.product-slider__pagination'
+					);
+
+					new Swiper(swiperElement, {
+
+						slidesPerView: parksMobile,
+						spaceBetween: 10,
+						watchOverflow: true,
+
+						navigation: previousButton && nextButton
+							? {
+								prevEl: previousButton,
+								nextEl: nextButton
+							}
+							: false,
+
+						pagination: pagination
+							? {
+								el: pagination,
+								clickable: true,
+								bulletElement: 'button'
+							}
+							: false,
+
+						breakpoints: {
+							768: {
+								slidesPerView: parksTablet
+							},
+							990: {
+								slidesPerView: parksDesktop
+							}
+						},
+
+						a11y: {
+							enabled: true,
+							prevSlideMessage: 'Previous parks',
+							nextSlideMessage: 'Next parks',
+							paginationBulletMessage: 'Go to park group'
+						}
+
+					});
+
+					section.dataset.initialised = 'true';
+
+				});
+
+		};
+
+		initialiseParkSliders();
+
+		window.addEventListener(
+			'load',
+			initialiseParkSliders
+		);
+
+		document.addEventListener(
+			'shopify:section:load',
+			initialiseParkSliders
+		);
+
+	})();
+
+{% endjavascript %}
+
+{% schema %}
+{
+	"name": "Skatepark slider",
+	"tag": "section",
+	"class": "park-slider-section",
+	"max_blocks": 20,
+	"settings": [
+		{
+			"type": "text",
+			"id": "title",
+			"label": "Title",
+			"default": "UK skateparks"
+		},
+		{
+			"type": "text",
+			"id": "subheading",
+			"label": "Subheading"
+		},
+		{
+			"type": "checkbox",
+			"id": "show_view_all",
+			"default": true,
+			"label": "Show view all parks",
+			"info": "Links to the UK skateparks page unless a different URL is set below."
+		},
+		{
+			"type": "url",
+			"id": "view_all_link",
+			"label": "View all parks link",
+			"info": "Leave blank to use the UK skateparks page."
+		},
+		{
+			"type": "checkbox",
+			"id": "enable_carousel",
+			"default": true,
+			"label": "Enable carousel"
+		},
+		{
+			"type": "range",
+			"id": "parks_desktop",
+			"min": 2,
+			"max": 6,
+			"step": 1,
+			"label": "Parks shown on desktop",
+			"default": 5
+		},
+		{
+			"type": "select",
+			"id": "parks_tablet",
+			"label": "Parks shown on tablet",
+			"options": [
+				{"value": "2", "label": "2"},
+				{"value": "3", "label": "3"},
+				{"value": "4", "label": "4"}
+			],
+			"default": "3"
+		},
+		{
+			"type": "select",
+			"id": "parks_mobile",
+			"label": "Parks shown on mobile",
+			"options": [
+				{"value": "1", "label": "1"},
+				{"value": "2", "label": "2"}
+			],
+			"default": "2"
+		},
+		{
+			"type": "header",
+			"content": "Placeholder image"
+		},
+		{
+			"type": "image_picker",
+			"id": "placeholder_image",
+			"label": "Placeholder image",
+			"info": "Shown on cards for parks with no photo or satellite image. 4:3 works best. If empty, park-coming-soon.jpg from Files is used."
+		},
+		{
+			"type": "text",
+			"id": "placeholder_url",
+			"label": "Placeholder image URL (fallback)",
+			"default": "https://cdn.shopify.com/s/files/1/0052/6873/4040/files/park-coming-soon.jpg?v=1793626514",
+			"info": "Used only if no placeholder image is picked and park-coming-soon.jpg is not in Files."
+		},
+		{
+			"type": "header",
+			"content": "Padding (desktop)"
+		},
+		{
+			"type": "range",
+			"id": "padding-top",
+			"min": 0,
+			"max": 300,
+			"step": 5,
+			"label": "Padding top",
+			"default": 40
+		},
+		{
+			"type": "range",
+			"id": "padding-bottom",
+			"min": 0,
+			"max": 300,
+			"step": 5,
+			"label": "Padding bottom",
+			"default": 40
+		},
+		{
+			"type": "header",
+			"content": "Padding (mobile)"
+		},
+		{
+			"type": "range",
+			"id": "padding-top-m",
+			"min": 0,
+			"max": 300,
+			"step": 5,
+			"label": "Padding top",
+			"default": 30
+		},
+		{
+			"type": "range",
+			"id": "padding-bottom-m",
+			"min": 0,
+			"max": 300,
+			"step": 5,
+			"label": "Padding bottom",
+			"default": 30
+		}
+	],
+	"blocks": [
+		{
+			"type": "park",
+			"name": "Park",
+			"settings": [
+				{
+					"type": "metaobject",
+					"id": "park",
+					"label": "Park",
+					"metaobject_type": "skatepark"
+				}
+			]
+		}
+	],
+	"presets": [
+		{
+			"name": "Skatepark slider",
+			"blocks": [
+				{ "type": "park" },
+				{ "type": "park" },
+				{ "type": "park" },
+				{ "type": "park" },
+				{ "type": "park" }
+			]
+		}
+	]
+}
+{% endschema %}
