@@ -1,0 +1,260 @@
+{{- 'category-grid.css' | asset_url | stylesheet_tag -}}
+<script src="{{ 'category-grid.js' | asset_url }}" defer="defer"></script>
+{%- assign ss = section.settings -%}
+{%- assign small_count = section.blocks.size | minus: 1 -%}
+{%- assign small_rows = small_count | divided_by: 2.0 | ceil -%}
+{%- if small_rows < 1 -%}{%- assign small_rows = 1 -%}{%- endif -%}
+
+<section class="category-grid" id="{{ section.id }}">
+	<div class="container">
+		{%- if section.blocks.size > 0 -%}
+			<category-grid class="category-grid__items{% if section.blocks.size == 1 %} category-grid__items--single{% endif %}" style="--category-grid-rows: {{ small_rows }};">
+				{%- for block in section.blocks -%}
+					{%- assign bs = block.settings -%}
+					{%- assign is_featured = forloop.first -%}
+					{%- assign tile_title = bs.title | escape -%}
+					{%- assign tile_alt = bs.image.alt | default: bs.title -%}
+
+					<div class="category-grid__item{% if is_featured %} category-grid__item--featured{% endif %}{% if bs.is_sale %} category-grid__item--sale{% endif %}" {{ block.shopify_attributes }}>
+						{%- if bs.url != blank -%}
+							<a href="{{ bs.url }}" class="category-grid__card"{% if tile_title != blank %} aria-label="{{ tile_title }}"{% endif %}{% if bs.video != blank %} data-category-video{% endif %}>
+						{%- else -%}
+							<div class="category-grid__card"{% if bs.video != blank %} data-category-video{% endif %}>
+						{%- endif -%}
+
+							<div class="category-grid__media">
+								{%- if bs.image != blank -%}
+									{%- if is_featured -%}
+										{{
+											bs.image
+											| image_url: width: 1600
+											| image_tag:
+												class: 'category-grid__image',
+												loading: 'eager',
+												widths: '600, 800, 1000, 1200, 1400, 1600',
+												sizes: '(min-width: 990px) 50vw, 100vw',
+												alt: tile_alt
+										}}
+									{%- else -%}
+										{{
+											bs.image
+											| image_url: width: 1000
+											| image_tag:
+												class: 'category-grid__image',
+												loading: 'lazy',
+												widths: '300, 400, 600, 800, 1000',
+												sizes: '(min-width: 990px) 25vw, 50vw',
+												alt: tile_alt
+										}}
+									{%- endif -%}
+								{%- else -%}
+									{{ 'collection-1' | placeholder_svg_tag: 'category-grid__image category-grid__placeholder' }}
+								{%- endif -%}
+
+								{%- if bs.video != blank -%}
+									<video
+										class="category-grid__video"
+										muted
+										loop
+										playsinline
+										disablepictureinpicture
+										preload="none"
+										aria-hidden="true"
+										tabindex="-1"
+									>
+										{%- liquid
+											if is_featured
+												assign max_height = 1080
+											else
+												assign max_height = 720
+											endif
+											assign video_src = blank
+											assign best_height = 0
+											assign fallback_src = blank
+											for source in bs.video.sources
+												if source.mime_type == 'video/mp4'
+													if fallback_src == blank
+														assign fallback_src = source.url
+													endif
+													if source.height <= max_height and source.height > best_height
+														assign best_height = source.height
+														assign video_src = source.url
+													endif
+												endif
+											endfor
+											if video_src == blank
+												assign video_src = fallback_src
+											endif
+										-%}
+										{%- if video_src != blank -%}
+											<source data-src="{{ video_src }}" type="video/mp4">
+										{%- endif -%}
+									</video>
+								{%- endif -%}
+							</div>
+
+							<div class="category-grid__content">
+								{%- if bs.title != blank -%}
+									<p class="category-grid__title {% if is_featured %}h4{% else %}h5{% endif %}">{{ bs.title }}</p>
+								{%- endif -%}
+								<span class="category-grid__arrow" aria-hidden="true">
+									{{- 'icon-long-arrow.svg' | inline_asset_content -}}
+								</span>
+							</div>
+
+						{%- if bs.url != blank -%}
+							</a>
+						{%- else -%}
+							</div>
+						{%- endif -%}
+					</div>
+				{%- endfor -%}
+			</category-grid>
+		{%- endif -%}
+	</div>
+</section>
+
+{%- style -%}
+
+	#{{ section.id }} {
+		padding-top: {{ ss.padding-top }}px;
+		padding-bottom: {{ ss.padding-bottom }}px;
+	}
+
+	#{{ section.id }} .category-grid__items {
+		gap: {{ ss.gap }}px;
+	}
+
+	@media screen and (max-width: 750px) {
+
+		#{{ section.id }} {
+			padding-top: {{ ss.padding-top-m }}px;
+			padding-bottom: {{ ss.padding-bottom-m }}px;
+		}
+
+	}
+
+{%- endstyle -%}
+
+{% schema %}
+{
+	"name": "Category grid",
+	"tag": "section",
+	"class": "category-grid-section",
+	"max_blocks": 9,
+	"settings": [
+		{
+			"type": "header",
+			"content": "Layout"
+		},
+		{
+			"type": "range",
+			"id": "gap",
+			"min": 0,
+			"max": 40,
+			"step": 2,
+			"unit": "px",
+			"label": "Gap between blocks",
+			"default": 10
+		},
+		{
+			"type": "header",
+			"content": "Padding (desktop)"
+		},
+		{
+			"type": "range",
+			"id": "padding-top",
+			"min": 0,
+			"max": 300,
+			"step": 5,
+			"label": "Padding top",
+			"default": 0
+		},
+		{
+			"type": "range",
+			"id": "padding-bottom",
+			"min": 0,
+			"max": 300,
+			"step": 5,
+			"label": "Padding bottom",
+			"default": 0
+		},
+		{
+			"type": "header",
+			"content": "Padding (mobile)"
+		},
+		{
+			"type": "range",
+			"id": "padding-top-m",
+			"min": 0,
+			"max": 300,
+			"step": 5,
+			"label": "Padding top",
+			"default": 0
+		},
+		{
+			"type": "range",
+			"id": "padding-bottom-m",
+			"min": 0,
+			"max": 300,
+			"step": 5,
+			"label": "Padding bottom",
+			"default": 0
+		}
+	],
+	"blocks": [
+		{
+			"type": "tile",
+			"name": "Tile",
+			"settings": [
+				{
+					"type": "paragraph",
+					"content": "The first tile is always shown as the large featured tile."
+				},
+				{
+					"type": "image_picker",
+					"id": "image",
+					"label": "Image"
+				},
+				{
+					"type": "text",
+					"id": "title",
+					"label": "Title"
+				},
+				{
+					"type": "url",
+					"id": "url",
+					"label": "URL"
+				},
+				{
+					"type": "video",
+					"id": "video",
+					"label": "Hover video",
+					"info": "Short cinemagraph of the same image. Plays muted on hover (desktop only)."
+				},
+				{
+					"type": "checkbox",
+					"id": "is_sale",
+					"label": "Is sale",
+					"info": "Shows the title and arrow in red.",
+					"default": false
+				}
+			]
+		}
+	],
+	"presets": [
+		{
+			"name": "Category grid",
+			"blocks": [
+				{ "type": "tile", "settings": { "title": "Complete bikes" } },
+				{ "type": "tile", "settings": { "title": "Frames" } },
+				{ "type": "tile", "settings": { "title": "Wheels" } },
+				{ "type": "tile", "settings": { "title": "Drivetrain" } },
+				{ "type": "tile", "settings": { "title": "Seats" } },
+				{ "type": "tile", "settings": { "title": "Tyres" } },
+				{ "type": "tile", "settings": { "title": "Sale", "is_sale": true } }
+			]
+		}
+	]
+}
+{% endschema %}
