@@ -262,10 +262,70 @@
     },
     "product_component_aiiB9b": {
       "type": "product-component",
+      "blocks": {
+        "product_t9KN6B": {
+          "type": "product",
+          "settings": {
+            "product": "colony-injustice-frame-clear-red"
+          }
+        },
+        "product_iTT3Cb": {
+          "type": "product",
+          "settings": {
+            "product": "kink-eastman-guard-sprocket-matt-black"
+          }
+        },
+        "product_QyWJx6": {
+          "type": "product",
+          "settings": {
+            "product": "colony-injustice-frame-ed-black"
+          }
+        },
+        "product_GFLJfR": {
+          "type": "product",
+          "settings": {
+            "product": "pro-tec-full-cut-certified-helmet-s-m-shield-sig-edition-light-grey"
+          }
+        },
+        "product_nHVPEP": {
+          "type": "product",
+          "settings": {
+            "product": "colony-sigil-slim-pivotal-seat-black"
+          }
+        },
+        "product_NFAQka": {
+          "type": "product",
+          "settings": {
+            "product": "s-m-scratch-tall-trucker-hat-black"
+          }
+        },
+        "product_EVC7zh": {
+          "type": "product",
+          "settings": {
+            "product": "united-x-union-collab-hub-female-axle-9t-rhd-polished"
+          }
+        },
+        "product_9UEcD7": {
+          "type": "product",
+          "settings": {
+            "product": "s-m-rea-frame-evergreen"
+          }
+        }
+      },
+      "block_order": [
+        "product_t9KN6B",
+        "product_iTT3Cb",
+        "product_QyWJx6",
+        "product_GFLJfR",
+        "product_nHVPEP",
+        "product_NFAQka",
+        "product_EVC7zh",
+        "product_9UEcD7"
+      ],
       "name": "Product slider",
       "settings": {
-        "title": "freshly dropped frames",
-        "collection": "frames",
+        "title": "fresh drops",
+        "collection": "",
         "product_limit": 12,
         "show_view_all": true,
         "enable_carousel": true,
