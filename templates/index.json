@@ -136,7 +136,7 @@
         "gap": 10,
         "padding-top": 140,
         "padding-bottom": 0,
-        "padding-top-m": 0,
+        "padding-top-m": 110,
         "padding-bottom-m": 0
       }
     },
