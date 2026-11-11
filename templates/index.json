@@ -55,6 +55,91 @@
         "show_pagination": true
       }
     },
+    "category_grid_nrTFMX": {
+      "type": "category-grid",
+      "blocks": {
+        "tile_FmzgKE": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/image_64.jpg",
+            "title": "Complete bikes",
+            "url": "shopify://collections/complete-bikes",
+            "is_sale": false
+          }
+        },
+        "tile_ct4P7t": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/image_65.jpg",
+            "title": "Frames",
+            "url": "shopify://collections/frames",
+            "is_sale": false
+          }
+        },
+        "tile_7deimx": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/image_72.jpg",
+            "title": "Wheels",
+            "url": "shopify://collections/wheels",
+            "is_sale": false
+          }
+        },
+        "tile_dqCqHU": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/image_70.jpg",
+            "title": "Drivetrain",
+            "url": "shopify://collections/drivetrain",
+            "is_sale": false
+          }
+        },
+        "tile_QprrWb": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/image_69.jpg",
+            "title": "Seats",
+            "url": "shopify://collections/seats",
+            "is_sale": false
+          }
+        },
+        "tile_nFcFYi": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/image_71.jpg",
+            "title": "Tyres",
+            "url": "shopify://collections/tyres",
+            "is_sale": false
+          }
+        },
+        "tile_VE3LTe": {
+          "type": "tile",
+          "settings": {
+            "image": "shopify://shop_images/image_68_0bcd5fd7-b4ea-4d96-8fc4-4162bf3c0501.jpg",
+            "title": "Sale",
+            "url": "shopify://collections/sale",
+            "is_sale": true
+          }
+        }
+      },
+      "block_order": [
+        "tile_FmzgKE",
+        "tile_ct4P7t",
+        "tile_7deimx",
+        "tile_dqCqHU",
+        "tile_QprrWb",
+        "tile_nFcFYi",
+        "tile_VE3LTe"
+      ],
+      "name": "Category grid",
+      "settings": {
+        "gap": 10,
+        "padding-top": 0,
+        "padding-bottom": 0,
+        "padding-top-m": 0,
+        "padding-bottom-m": 0
+      }
+    },
     "usp_grid_giqUqR": {
       "type": "usp-grid",
       "blocks": {
@@ -372,6 +457,7 @@
   },
   "order": [
     "hero_XdJJ7X",
+    "category_grid_nrTFMX",
     "usp_grid_giqUqR",
     "collection_grid_ydaH7n",
     "product_component_aiiB9b",
