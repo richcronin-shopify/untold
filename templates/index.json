@@ -200,41 +200,36 @@
         "collection_TNJyMY": {
           "type": "collection",
           "settings": {
-            "collection": "complete-bikes",
-            "image": "shopify://shop_images/home-collections.jpg",
-            "title": "Complete Bikes"
+            "collection": "grips",
+            "title": ""
           }
         },
         "collection_PgNP4w": {
           "type": "collection",
           "settings": {
-            "collection": "frames",
-            "image": "shopify://shop_images/home-frames_a6fbf060-9475-4053-9adc-d987ff369d1f.jpg",
+            "collection": "bars",
             "title": ""
           }
         },
         "collection_JPiyLY": {
           "type": "collection",
           "settings": {
-            "collection": "wheels",
-            "image": "shopify://shop_images/home-wheels.jpg",
+            "collection": "brakes",
             "title": ""
           }
         },
         "collection_Tx6Urx": {
           "type": "collection",
           "settings": {
-            "collection": "parts",
-            "image": "shopify://shop_images/home-parts.jpg",
-            "title": "Parts"
+            "collection": "cranks",
+            "title": ""
           }
         },
         "collection_NLazNy": {
           "type": "collection",
           "settings": {
-            "collection": "sale",
-            "image": "shopify://shop_images/home-sale.jpg",
-            "title": "Sale"
+            "collection": "forks",
+            "title": ""
           }
         }
       },
