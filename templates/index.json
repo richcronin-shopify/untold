@@ -398,7 +398,7 @@
           "settings": {
             "image": "shopify://shop_images/shop-by-height_6d1e3290-a431-4d45-a056-0fe0741b7fc9.jpg",
             "icon": "shopify://shop_images/icon-size.svg",
-            "title": "Shop by height",
+            "title": "Shop by age & height",
             "description": "Find the right frame size",
             "url": "shopify://pages/bmx-bike-size-guide"
           }
@@ -406,11 +406,11 @@
         "card_HhjRXp": {
           "type": "card",
           "settings": {
-            "image": "shopify://shop_images/SHOP-BY-AGE_72002157-c320-456a-a94d-c402154a8e0b.jpg",
+            "image": "shopify://shop_images/park.jpg",
             "icon": "shopify://shop_images/icon-age.svg",
-            "title": "Shop by age",
-            "description": "Perfect picks for younger riders",
-            "url": "shopify://pages/bmx-bike-size-guide"
+            "title": "park finder",
+            "description": "Set your set ride",
+            "url": "shopify://pages/skateparks-finder-uk"
           }
         },
         "card_Q4CJDK": {
