@@ -2,6 +2,7 @@
 {%- assign ss = section.settings -%}
 {%- assign regions = ss.regions | newline_to_br | replace: '<br />', ',' | split: ',' -%}
 {%- assign park_types = ss.park_types | newline_to_br | replace: '<br />', '|' | split: '|' -%}
+{%- assign park_settings = ss.park_settings | newline_to_br | replace: '<br />', '|' | split: '|' -%}
 {%- capture placeholder_url -%}{% render 'skatepark-placeholder-url', image: ss.placeholder_image, url: ss.placeholder_url, width: 640 %}{%- endcapture -%}
 {%- assign placeholder_url = placeholder_url | strip -%}
 
@@ -48,6 +49,16 @@
           {%- for t in park_types -%}
             {%- assign t_clean = t | strip -%}
             {%- if t_clean != blank -%}<option value="{{ t_clean | escape }}">{{ t_clean | escape }}</option>{%- endif -%}
+          {%- endfor -%}
+        </select>
+      </div>
+      <div class="skateparks-index__field">
+        <label for="{{ section.id }}-setting" class="skateparks-index__label">Setting</label>
+        <select id="{{ section.id }}-setting" name="setting" data-sp-setting>
+          <option value="">All settings</option>
+          {%- for s in park_settings -%}
+            {%- assign s_clean = s | strip -%}
+            {%- if s_clean != blank -%}<option value="{{ s_clean | escape }}">{{ s_clean | escape }}</option>{%- endif -%}
           {%- endfor -%}
         </select>
       </div>
@@ -127,6 +138,7 @@
     const regionSel = $('[data-sp-region]');
     const countySel = $('[data-sp-county]');
     const typeSel = $('[data-sp-type]');
+    const settingSel = $('[data-sp-setting]');
     const reset = $('[data-sp-reset]');
     const status = $('[data-sp-status]');
     const results = $('[data-sp-results]');
@@ -185,13 +197,15 @@
           data = first.items.concat(...pages.map((p) => p.items));
           data.forEach((p) => {
             p.y = tidy(p.y);
+            p.s = tidy(p.s);
             p.r = tidy(p.r);
             p.c = tidy(p.c);
-            p._s = norm([p.n, p.t, p.c, p.r, p.y, p.p, (p.p || '').replace(/\s/g, '')].join(' '));
+            p._s = norm([p.n, p.t, p.c, p.r, p.y, p.s, p.p, (p.p || '').replace(/\s/g, '')].join(' '));
           });
           data.sort((a, b) => a.n.localeCompare(b.n, 'en-GB'));
           rebuildSelect(regionSel, 'All regions', uniqSorted(data.map((p) => p.r)));
           rebuildSelect(typeSel, 'All park types', uniqSorted(data.map((p) => p.y)));
+          rebuildSelect(settingSel, 'All settings', uniqSorted(data.map((p) => p.s)));
           return data;
         });
       }).catch((e) => {
@@ -223,15 +237,16 @@
       const t = norm(q.value);
       return t.length >= MIN_CHARS ? t : '';
     };
-    const filtersActive = () => !!(term() || regionSel.value || countySel.value || typeSel.value);
+    const filtersActive = () => !!(term() || regionSel.value || countySel.value || typeSel.value || settingSel.value);
 
     const updateUrl = () => {
       const u = new URL(window.location.href);
-      ['q', 'region', 'county', 'type', 'view_mode'].forEach((k) => u.searchParams.delete(k));
+      ['q', 'region', 'county', 'type', 'setting', 'view_mode'].forEach((k) => u.searchParams.delete(k));
       if (term()) u.searchParams.set('q', q.value.trim());
       if (regionSel.value) u.searchParams.set('region', regionSel.value);
       if (countySel.value) u.searchParams.set('county', countySel.value);
       if (typeSel.value) u.searchParams.set('type', typeSel.value);
+      if (settingSel.value) u.searchParams.set('setting', settingSel.value);
       if (viewMode === 'map') u.searchParams.set('view_mode', 'map');
       history.replaceState(null, '', u.toString());
     };
@@ -241,7 +256,8 @@
       const r = regionSel.value;
       const c = countySel.value;
       const y = typeSel.value;
-      return data.filter((p) => (!r || p.r === r) && (!c || p.c === c) && (!y || p.y === y) && words.every((w) => p._s.includes(w)));
+      const s = settingSel.value;
+      return data.filter((p) => (!r || p.r === r) && (!c || p.c === c) && (!y || p.y === y) && (!s || p.s === s) && words.every((w) => p._s.includes(w)));
     };
 
     const countText = (n) => (n === 1 ? '1 park found' : n.toLocaleString('en-GB') + ' parks found');
@@ -416,10 +432,11 @@
     regionSel.addEventListener('change', () => { countySel.value = ''; apply(); });
     countySel.addEventListener('change', () => apply());
     typeSel.addEventListener('change', () => apply());
+    settingSel.addEventListener('change', () => apply());
     more.addEventListener('click', renderMore);
     reset.addEventListener('click', () => {
       q.value = ''; lastTerm = '';
-      regionSel.value = ''; countySel.value = ''; typeSel.value = '';
+      regionSel.value = ''; countySel.value = ''; typeSel.value = ''; settingSel.value = '';
       countySel.disabled = true;
       apply();
     });
@@ -438,13 +455,15 @@
     lastTerm = term();
     ensureOption(regionSel, params.get('region'));
     ensureOption(typeSel, params.get('type'));
+    ensureOption(settingSel, params.get('setting'));
     const initialCounty = params.get('county') || '';
     const initialMode = params.get('view_mode') === 'map' ? 'map' : 'list';
 
-    if (initialCounty || params.get('region') || params.get('type') || term()) {
+    if (initialCounty || params.get('region') || params.get('type') || params.get('setting') || term()) {
       withLoading(load()).then(() => {
         regionSel.value = params.get('region') || '';
         typeSel.value = params.get('type') || '';
+        settingSel.value = params.get('setting') || '';
         fillCounties();
         countySel.value = initialCounty;
         setView(initialMode, { silent: true });
@@ -497,6 +516,13 @@
       "label": "Park type filter options",
       "info": "One per line. Shown before the full park list loads; replaced by the park types found in the data once it has loaded.",
       "default": "BMX Track / Dirt Jumps\nBowl / Pool\nMini Ramp\nMulti-Sport Action Park\nPump Track\nSkatepark\nSkatepark & Pump / BMX Track\nStreet Plaza"
+    },
+    {
+      "type": "textarea",
+      "id": "park_settings",
+      "label": "Setting filter options",
+      "info": "One per line. Shown before the full park list loads; replaced by the settings found in the data once it has loaded.",
+      "default": "Indoor\nOutdoor\nCovered / Undercover"
     }
   ]
 }

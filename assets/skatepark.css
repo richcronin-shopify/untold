@@ -416,7 +416,7 @@
 
 .skateparks-index__filters {
 	display: grid;
-	grid-template-columns: minmax(0, 1.6fr) repeat(3, minmax(0, 1fr)) auto;
+	grid-template-columns: minmax(0, 1.6fr) repeat(4, minmax(0, 1fr)) auto;
 	gap: 15px;
 	align-items: end;
 	margin: 0 0 20px;
