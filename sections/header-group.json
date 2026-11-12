@@ -14,13 +14,6 @@
     "header": {
       "type": "header",
       "blocks": {
-        "announcement_J9yAtB": {
-          "type": "announcement",
-          "settings": {
-            "title": "10% off frames",
-            "url": "shopify://collections/10-off-frames"
-          }
-        },
         "announcement_7crK3Q": {
           "type": "announcement",
           "settings": {
@@ -37,7 +30,6 @@
         }
       },
       "block_order": [
-        "announcement_J9yAtB",
         "announcement_7crK3Q",
         "announcement_DyQCfq"
       ],
