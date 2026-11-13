@@ -199,22 +199,43 @@
 
   <div class="container">
 
+    <div class="skateparks-index__overview">
     <div class="skateparks-index__stats" role="list">
       <div class="skateparks-index__stat" role="listitem">
-        <span class="skateparks-index__stat-value" data-sp-stat="total">—</span>
-        <span class="skateparks-index__stat-label">{{ ss.stat_total_label | default: 'Parks listed' | escape }}</span>
+        <span class="skateparks-index__stat-icon" aria-hidden="true">
+          {% render 'skatepark-stat-icon', icon: ss.stat_total_icon, image: ss.stat_total_icon_image %}
+        </span>
+        <span class="skateparks-index__stat-text">
+          <span class="skateparks-index__stat-value" data-sp-stat="total">—</span>
+          <span class="skateparks-index__stat-label">{{ ss.stat_total_label | default: 'Parks listed' | escape }}</span>
+        </span>
       </div>
       <div class="skateparks-index__stat" role="listitem">
-        <span class="skateparks-index__stat-value" data-sp-stat="regions">—</span>
-        <span class="skateparks-index__stat-label">{{ ss.stat_regions_label | default: 'UK regions' | escape }}</span>
+        <span class="skateparks-index__stat-icon" aria-hidden="true">
+          {% render 'skatepark-stat-icon', icon: ss.stat_regions_icon, image: ss.stat_regions_icon_image %}
+        </span>
+        <span class="skateparks-index__stat-text">
+          <span class="skateparks-index__stat-value" data-sp-stat="regions">—</span>
+          <span class="skateparks-index__stat-label">{{ ss.stat_regions_label | default: 'UK regions' | escape }}</span>
+        </span>
       </div>
       <div class="skateparks-index__stat" role="listitem">
-        <span class="skateparks-index__stat-value" data-sp-stat="types">—</span>
-        <span class="skateparks-index__stat-label">{{ ss.stat_types_label | default: 'Park types' | escape }}</span>
+        <span class="skateparks-index__stat-icon" aria-hidden="true">
+          {% render 'skatepark-stat-icon', icon: ss.stat_types_icon, image: ss.stat_types_icon_image %}
+        </span>
+        <span class="skateparks-index__stat-text">
+          <span class="skateparks-index__stat-value" data-sp-stat="types">—</span>
+          <span class="skateparks-index__stat-label">{{ ss.stat_types_label | default: 'Park types' | escape }}</span>
+        </span>
       </div>
       <div class="skateparks-index__stat" role="listitem">
-        <span class="skateparks-index__stat-value" data-sp-stat="outdoor">—</span>
-        <span class="skateparks-index__stat-label">{{ ss.stat_outdoor_label | default: 'Outdoor spots' | escape }}</span>
+        <span class="skateparks-index__stat-icon" aria-hidden="true">
+          {% render 'skatepark-stat-icon', icon: ss.stat_outdoor_icon, image: ss.stat_outdoor_icon_image %}
+        </span>
+        <span class="skateparks-index__stat-text">
+          <span class="skateparks-index__stat-value" data-sp-stat="outdoor">—</span>
+          <span class="skateparks-index__stat-label">{{ ss.stat_outdoor_label | default: 'Outdoor spots' | escape }}</span>
+        </span>
       </div>
     </div>
 
@@ -238,6 +259,7 @@
           </span>
         {%- endif -%}
       </div>
+    </div>
     </div>
 
     <div class="skateparks-index__types">
@@ -447,11 +469,113 @@
       "label": "View all parks link",
       "info": "Leave blank to use the skateparks finder page."
     },
-    { "type": "header", "content": "Stats labels" },
+    { "type": "header", "content": "Stats" },
     { "type": "text", "id": "stat_total_label", "label": "Total parks label", "default": "Parks listed" },
     { "type": "text", "id": "stat_regions_label", "label": "Regions label", "default": "UK regions" },
     { "type": "text", "id": "stat_types_label", "label": "Park types label", "default": "Park types" },
     { "type": "text", "id": "stat_outdoor_label", "label": "Outdoor spots label", "default": "Outdoor spots" },
+    { "type": "header", "content": "Stat icons" },
+    { "type": "paragraph", "content": "Each statistic uses a built-in outline icon. A custom image overrides the selected icon." },
+    {
+      "type": "select",
+      "id": "stat_total_icon",
+      "label": "Total parks icon",
+      "options": [
+          { "value": "ramp", "label": "Ramp" },
+          { "value": "pin", "label": "Map pin" },
+          { "value": "layers", "label": "Layers" },
+          { "value": "mountain", "label": "Mountain" },
+          { "value": "sneaker", "label": "Sneaker" },
+          { "value": "star", "label": "Star" },
+          { "value": "bike", "label": "Bike" },
+          { "value": "flag", "label": "Flag" },
+          { "value": "compass", "label": "Compass" },
+          { "value": "tree", "label": "Tree" },
+          { "value": "sun", "label": "Sun" }
+      ],
+      "default": "ramp"
+    },
+    {
+      "type": "image_picker",
+      "id": "stat_total_icon_image",
+      "label": "Total parks custom icon",
+      "info": "Optional. Overrides the icon above. A simple graphic on a transparent background works best."
+    },
+    {
+      "type": "select",
+      "id": "stat_regions_icon",
+      "label": "Regions icon",
+      "options": [
+          { "value": "ramp", "label": "Ramp" },
+          { "value": "pin", "label": "Map pin" },
+          { "value": "layers", "label": "Layers" },
+          { "value": "mountain", "label": "Mountain" },
+          { "value": "sneaker", "label": "Sneaker" },
+          { "value": "star", "label": "Star" },
+          { "value": "bike", "label": "Bike" },
+          { "value": "flag", "label": "Flag" },
+          { "value": "compass", "label": "Compass" },
+          { "value": "tree", "label": "Tree" },
+          { "value": "sun", "label": "Sun" }
+      ],
+      "default": "pin"
+    },
+    {
+      "type": "image_picker",
+      "id": "stat_regions_icon_image",
+      "label": "Regions custom icon",
+      "info": "Optional. Overrides the icon above."
+    },
+    {
+      "type": "select",
+      "id": "stat_types_icon",
+      "label": "Park types icon",
+      "options": [
+          { "value": "ramp", "label": "Ramp" },
+          { "value": "pin", "label": "Map pin" },
+          { "value": "layers", "label": "Layers" },
+          { "value": "mountain", "label": "Mountain" },
+          { "value": "sneaker", "label": "Sneaker" },
+          { "value": "star", "label": "Star" },
+          { "value": "bike", "label": "Bike" },
+          { "value": "flag", "label": "Flag" },
+          { "value": "compass", "label": "Compass" },
+          { "value": "tree", "label": "Tree" },
+          { "value": "sun", "label": "Sun" }
+      ],
+      "default": "layers"
+    },
+    {
+      "type": "image_picker",
+      "id": "stat_types_icon_image",
+      "label": "Park types custom icon",
+      "info": "Optional. Overrides the icon above."
+    },
+    {
+      "type": "select",
+      "id": "stat_outdoor_icon",
+      "label": "Outdoor spots icon",
+      "options": [
+          { "value": "ramp", "label": "Ramp" },
+          { "value": "pin", "label": "Map pin" },
+          { "value": "layers", "label": "Layers" },
+          { "value": "mountain", "label": "Mountain" },
+          { "value": "sneaker", "label": "Sneaker" },
+          { "value": "star", "label": "Star" },
+          { "value": "bike", "label": "Bike" },
+          { "value": "flag", "label": "Flag" },
+          { "value": "compass", "label": "Compass" },
+          { "value": "tree", "label": "Tree" },
+          { "value": "sun", "label": "Sun" }
+      ],
+      "default": "mountain"
+    },
+    {
+      "type": "image_picker",
+      "id": "stat_outdoor_icon_image",
+      "label": "Outdoor spots custom icon",
+      "info": "Optional. Overrides the icon above."
+    },
     {
       "type": "textarea",
       "id": "regions",

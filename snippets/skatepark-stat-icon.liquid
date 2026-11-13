@@ -1,0 +1,53 @@
+{% doc %}
+  Outline icon for a finder statistic.
+
+  @param {string} icon - Built-in icon key
+  @param {object} [image] - Optional custom image; when present it overrides the built-in icon
+{% enddoc %}
+{%- if image != blank -%}
+  {%- assign icon_src = image | image_url: width: 96 -%}
+  <img src="{{ icon_src | escape }}" alt="" width="32" height="32" loading="lazy" decoding="async" class="skateparks-index__stat-icon-image">
+{%- else -%}
+  <svg viewBox="0 0 24 24" width="32" height="32" aria-hidden="true" focusable="false">
+    {%- case icon -%}
+      {%- when 'pin' -%}
+        <path d="M12 21s7-6.1 7-11.2a7 7 0 1 0-14 0C5 14.9 12 21 12 21z"/>
+        <circle cx="12" cy="9.8" r="2.2"/>
+      {%- when 'layers' -%}
+        <path d="M4 15.5 12 20l8-4.5"/>
+        <path d="M4 11.5 12 16l8-4.5"/>
+        <path d="M4 7.5 12 12l8-4.5-8-4.5-8 4.5z"/>
+      {%- when 'mountain' -%}
+        <path d="M3 19h18L14.5 7.5 11 13 8.5 9.5 3 19z"/>
+        <path d="M16.2 12.2 18 9.5"/>
+      {%- when 'sneaker' -%}
+        <path d="M4 16.5h13.5A3.5 3.5 0 0 0 21 13c0-1.5-1-2.2-2.4-2.4L12 10 9.5 7H6.5L5 10.5v6z"/>
+        <path d="M4 16.5v1.2A1.8 1.8 0 0 0 5.8 19.5h11.2"/>
+        <path d="M12 10.2V13M9.2 10.6 9.6 13M15 10.4v2.4"/>
+      {%- when 'star' -%}
+        <path d="M12 3.6 14.4 9l5.8.8-4.2 4.1 1 5.8L12 16.9 6.9 19.7l1-5.8L3.8 9.8 9.6 9 12 3.6z"/>
+      {%- when 'bike' -%}
+        <circle cx="6" cy="16" r="3.2"/>
+        <circle cx="18" cy="16" r="3.2"/>
+        <path d="M6 16 10 8.5h4.5L18 16M10 8.5 8 12.5h6.5M13.2 8.5V7"/>
+      {%- when 'flag' -%}
+        <path d="M6 20V5"/>
+        <path d="M6 5h11l-2.2 3.5L17 12H6"/>
+      {%- when 'compass' -%}
+        <circle cx="12" cy="12" r="8.5"/>
+        <path d="m9.2 14.8 1.6-5.6 5.6-1.6-1.6 5.6-5.6 1.6z"/>
+        <circle cx="12" cy="12" r="1"/>
+      {%- when 'tree' -%}
+        <path d="M12 21v-6"/>
+        <path d="M12 15s-5 .2-5-4.2A5 5 0 0 1 12 6.2 5 5 0 0 1 17 10.8c0 4.4-5 4.2-5 4.2z"/>
+        <path d="M9.5 11.5h5"/>
+      {%- when 'sun' -%}
+        <circle cx="12" cy="12" r="4"/>
+        <path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M18.4 5.6 17 7M7 17l-1.4 1.4"/>
+      {%- else -%}
+        {%- comment -%}Default: ramp{%- endcomment -%}
+        <path d="M3 19V7c5.5 0 9.5 5.2 18 12H3z"/>
+        <path d="M3 19h18"/>
+    {%- endcase -%}
+  </svg>
+{%- endif -%}
