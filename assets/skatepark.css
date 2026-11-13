@@ -1881,6 +1881,7 @@
 	background: var(--color-primary);
 	color: var(--color-black);
 	font-family: var(--font-heading-family);
+	font-weight: 500;
 	font-size: var(--xs);
 	text-transform: uppercase;
 	text-decoration: none;
@@ -1890,6 +1891,7 @@
 	color: inherit;
 	text-align: center;
 	font-family: var(--font-heading-family);
+	font-weight: 500;
 	font-size: var(--xxs);
 	text-transform: uppercase;
 	text-decoration: underline;
