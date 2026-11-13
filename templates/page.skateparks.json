@@ -31,6 +31,7 @@
         "stat_types_label": "Park types",
         "stat_outdoor_label": "Outdoor spots",
         "stat_total_icon": "ramp",
+        "stat_total_icon_image": "shopify://shop_images/stat-parks.svg",
         "stat_regions_icon": "pin",
         "stat_types_icon": "layers",
         "stat_outdoor_icon": "mountain",
