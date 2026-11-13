@@ -1117,20 +1117,21 @@
 }
 
 .skateparks-index__filters {
-	grid-template-columns: minmax(0, 1.6fr) repeat(3, minmax(0, 1fr)) auto;
-	gap: 12px 14px;
+	grid-template-columns: minmax(0, 1.45fr) repeat(4, minmax(0, 1fr)) auto;
+	gap: 10px 12px;
 	margin: 0;
-	padding: 18px;
+	padding: 16px;
 	background: rgb(0 0 0 / 45%);
 	border-color: rgb(from var(--color-white) r g b / 18%);
 	backdrop-filter: blur(6px);
 
 	@media (max-width: 990px) {
 		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+		gap: 12px 14px;
+		padding: 18px;
 
 		.skateparks-index__field--search,
-		.skateparks-index__search-btn,
-		.skateparks-index__field--county {
+		.skateparks-index__search-btn {
 			grid-column: 1 / -1;
 		}
 	}
@@ -1138,14 +1139,6 @@
 	@media (max-width: 560px) {
 		grid-template-columns: minmax(0, 1fr);
 		padding: 14px;
-	}
-
-	.skateparks-index__field--county {
-		grid-column: 1 / 3;
-
-		@media (max-width: 990px) {
-			grid-column: 1 / -1;
-		}
 	}
 
 	.skateparks-index__label {
@@ -1179,13 +1172,26 @@
 
 	input,
 	select {
-		background: rgb(0 0 0 / 35%);
+		background-color: rgb(0 0 0 / 35%);
+	}
+
+	select {
+		appearance: none;
+		-webkit-appearance: none;
+		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1.2 1.6 6 6.4 10.8 1.6' stroke='%23ffffff' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+		background-repeat: no-repeat;
+		background-position: right 16px center;
+		background-size: 12px 8px;
+		padding-right: 44px;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		overflow: hidden;
 	}
 }
 
 .skateparks-index__search-btn {
 	height: 48px;
-	padding: 0 22px;
+	padding: 0 16px;
 	border: 0;
 	background: var(--color-primary);
 	color: var(--color-black);
@@ -1204,6 +1210,7 @@
 
 	@media (max-width: 990px) {
 		width: 100%;
+		padding: 0 22px;
 	}
 }
 
@@ -1523,14 +1530,23 @@
 .skateparks-index__sort {
 	min-width: 140px;
 	height: 42px;
-	padding: 0 12px;
-	background: transparent;
+	padding: 0 44px 0 12px;
+	appearance: none;
+	-webkit-appearance: none;
+	background-color: transparent;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1.2 1.6 6 6.4 10.8 1.6' stroke='%23ffffff' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+	background-repeat: no-repeat;
+	background-position: right 16px center;
+	background-size: 12px 8px;
 	color: var(--color-white);
 	border: 1px solid var(--border-white);
 	border-radius: var(--style-border-radius-inputs);
 	font-family: var(--font-heading-family);
 	font-size: var(--xxs);
 	text-transform: uppercase;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	cursor: pointer;
 
 	option {
 		background: var(--color-black);

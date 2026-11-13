@@ -155,6 +155,12 @@
             {%- endfor -%}
           </select>
         </div>
+        <div class="skateparks-index__field skateparks-index__field--county">
+          <label for="{{ section.id }}-county" class="skateparks-index__label">County / area</label>
+          <select id="{{ section.id }}-county" name="county" data-sp-county disabled>
+            <option value="">All counties</option>
+          </select>
+        </div>
         <div class="skateparks-index__field">
           <label for="{{ section.id }}-type" class="skateparks-index__label">
             <span class="skateparks-index__label-icon" aria-hidden="true">
@@ -186,12 +192,6 @@
           </select>
         </div>
         <button type="submit" class="skateparks-index__search-btn" data-sp-search>Search parks</button>
-        <div class="skateparks-index__field skateparks-index__field--county">
-          <label for="{{ section.id }}-county" class="skateparks-index__label">County / area</label>
-          <select id="{{ section.id }}-county" name="county" data-sp-county disabled>
-            <option value="">All counties</option>
-          </select>
-        </div>
       </form>
 
     </div>
