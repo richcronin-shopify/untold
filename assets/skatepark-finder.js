@@ -11,11 +11,13 @@
   const TYPE_GROUPS = {
     track: ['BMX Track / Dirt Jumps', 'Skatepark & Pump / BMX Track'],
     skatepark: ['Skatepark', 'Street Plaza', 'Bowl / Pool', 'Mini Ramp', 'Multi-Sport Action Park', 'Skatepark & Pump / BMX Track'],
+    plaza: ['Street Plaza'],
     pump: ['Pump Track', 'Skatepark & Pump / BMX Track']
   };
   const TYPE_GROUP_LABELS = {
     track: 'Track/Dirt jumps',
     skatepark: 'Skatepark',
+    plaza: 'Street Plaza',
     pump: 'Pump track'
   };
   const FEATURE_LABELS = {
