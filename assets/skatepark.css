@@ -1359,6 +1359,56 @@
 	.skateparks-index__pills {
 		justify-content: safe center;
 		width: 100%;
+		gap: 20px;
+
+		@media (max-width: 989px) {
+			gap: 14px;
+		}
+
+		@media (max-width: 749px) {
+			gap: 12px;
+		}
+	}
+
+	.skateparks-index__pill {
+		height: 54px;
+		padding: 0 28px;
+		gap: 12px;
+		border-width: 2px;
+		border-radius: 999px;
+		font-size: 16px;
+		font-weight: 600;
+		letter-spacing: .06em;
+
+		svg {
+			width: 28px;
+			height: 28px;
+			stroke-width: 1.7;
+		}
+
+		@media (max-width: 989px) {
+			height: 48px;
+			padding: 0 22px;
+			gap: 10px;
+			font-size: 14px;
+
+			svg {
+				width: 24px;
+				height: 24px;
+			}
+		}
+
+		@media (max-width: 749px) {
+			height: 44px;
+			padding: 0 18px;
+			gap: 8px;
+			font-size: 13px;
+
+			svg {
+				width: 20px;
+				height: 20px;
+			}
+		}
 	}
 }
 
