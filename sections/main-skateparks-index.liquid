@@ -34,6 +34,24 @@
     assign popular_count = popular_parks.size
   endif
 
+  assign show_trending = false
+  if ss.show_trending_badge
+    assign show_trending = true
+  endif
+  assign trending_label = ss.trending_label | default: 'Trending' | strip
+  if trending_label == blank
+    assign trending_label = 'Trending'
+  endif
+  assign trending_handles = ''
+  if show_trending and popular_parks != blank
+    for park in popular_parks
+      if park.system.handle != blank
+        assign trending_handles = trending_handles | append: park.system.handle | append: ','
+      endif
+    endfor
+  endif
+  assign trending_csv = ',' | append: trending_handles
+
   assign region_priority = 'South East,South West,East of England,East Midlands,London,Yorkshire and The Humber,North West,West Midlands,Scotland,Wales,North East,Northern Ireland,Channel Islands,Isle of Man' | split: ','
   assign ordered_regions_str = ''
   assign seen = '|'
@@ -114,6 +132,8 @@
   data-login-url="{{ routes.account_login_url | escape }}"
   data-register-url="{{ routes.account_register_url | escape }}"
   data-favourites="{{ fav_handles | escape }}"
+  data-trending="{{ trending_handles | escape }}"
+  data-trending-label="{{ trending_label | escape }}"
 >
   <div class="skateparks-index__hero"{% if hero_url != blank %} style="--hero-image: url({{ hero_url | escape }});"{% endif %}>
     <div class="container">
@@ -325,7 +345,7 @@
                   {%- endif -%}
                 {%- endif -%}
                 <div class="product-slider__item swiper-slide">
-                  {% render 'skatepark-card', park: park, index: forloop.index, placeholder: placeholder_url, show_bookmark: true, is_favourite: is_fav %}
+                  {% render 'skatepark-card', park: park, index: forloop.index, placeholder: placeholder_url, show_bookmark: true, is_favourite: is_fav, show_trending: show_trending, trending_label: trending_label %}
                 </div>
               {%- endfor -%}
             </div>
@@ -373,13 +393,17 @@
           <div class="skateparks-index__grid">
             {%- for park in shop.metaobjects.skatepark.values -%}
               {%- assign is_fav = false -%}
+              {%- assign is_trending = false -%}
               {%- if park.system.handle != blank -%}
                 {%- assign fav_needle = ',' | append: park.system.handle | append: ',' -%}
                 {%- if fav_csv contains fav_needle -%}
                   {%- assign is_fav = true -%}
                 {%- endif -%}
+                {%- if show_trending and trending_csv contains fav_needle -%}
+                  {%- assign is_trending = true -%}
+                {%- endif -%}
               {%- endif -%}
-              {% render 'skatepark-card', park: park, index: forloop.index, placeholder: placeholder_url, show_bookmark: true, is_favourite: is_fav %}
+              {% render 'skatepark-card', park: park, index: forloop.index, placeholder: placeholder_url, show_bookmark: true, is_favourite: is_fav, show_trending: is_trending, trending_label: trending_label %}
             {%- endfor -%}
           </div>
 
@@ -472,6 +496,19 @@
       "id": "popular_view_all_link",
       "label": "View all parks link",
       "info": "Leave blank to use the skateparks finder page."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_trending_badge",
+      "label": "Show trending flag on popular parks",
+      "info": "Also shown on those same parks in the results grid.",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "trending_label",
+      "label": "Trending flag text",
+      "default": "Trending"
     },
     { "type": "header", "content": "Stats" },
     { "type": "text", "id": "stat_total_label", "label": "Total parks label", "default": "Parks listed" },

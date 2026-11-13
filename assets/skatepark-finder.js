@@ -38,6 +38,10 @@
   const favourites = new Set(
     (root.dataset.favourites || '').split(',').map((s) => s.trim()).filter(Boolean)
   );
+  const trending = new Set(
+    (root.dataset.trending || '').split(',').map((s) => s.trim()).filter(Boolean)
+  );
+  const trendingLabel = (root.dataset.trendingLabel || 'Trending').trim() || 'Trending';
 
   const $ = (sel) => root.querySelector(sel);
   const $$ = (sel) => [...root.querySelectorAll(sel)];
@@ -259,11 +263,20 @@
     const feats = featureItems(p).map((f) =>
       '<li class="skatepark-card__feature" data-feature="' + esc(f.key) + '"><span class="skatepark-card__feature-icon" aria-hidden="true"></span><span>' + esc(f.label) + '</span></li>'
     ).join('');
+    const trendingFlag = (p.h && trending.has(p.h))
+      ? '<span class="skatepark-card__trending"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" focusable="false"><path d="M12 3c.4 2.2 1.6 4.2 2.2 6.2.7-1.1 1.6-2 2.6-2.2 0 2.2-1 3.8-2.2 5 .6.3 1.2.8 1.6 1.5 1-1.1 1.6-2.5 1.6-4.1C19.2 11 21 13 21 16.2 21 19.6 17.6 22 12 22S3 19.6 3 16.2C3 13.4 4.8 11.3 6.6 9.8 7.2 11.6 8.4 13 9.2 13.5 8.8 10.4 10.6 6.2 12 3z" fill="currentColor"/></svg><span>' + esc(trendingLabel) + '</span></span>'
+      : '';
+    const labels = (p.y || p.e)
+      ? '<div class="skatepark-card__media-labels">' +
+        (p.e ? '<span class="skatepark-card__events">Upcoming events</span>' : '') +
+        (p.y ? '<span class="skatepark-card__badge">' + esc(p.y) + '</span>' : '') +
+        '</div>'
+      : '';
     return '<article class="skatepark-card"' + (p.h ? ' data-park-handle="' + esc(p.h) + '"' : '') + '>' +
       '<div class="skatepark-card__media">' +
         '<a href="' + esc(p.u) + '" class="skatepark-card__media-link" tabindex="-1" aria-hidden="true">' + img + '</a>' +
-        (p.y ? '<span class="skatepark-card__badge">' + esc(p.y) + '</span>' : '') +
-        (p.e ? '<span class="skatepark-card__events">Upcoming events</span>' : '') +
+        trendingFlag +
+        labels +
         bookmark +
       '</div>' +
       '<div class="skatepark-card__body">' +

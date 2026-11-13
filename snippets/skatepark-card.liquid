@@ -4,8 +4,10 @@
   @param {object} park - A skatepark metaobject
   @param {number} [index] - Position in the list, used to load the first images eagerly
   @param {string} [placeholder] - Image URL used when the park has no photo or satellite image
-  @param {boolean} [show_bookmark] - Show the favourite bookmark control (default true)
+  @param {boolean} [show_bookmark] - Show the favourite bookmark control (default false)
   @param {boolean} [is_favourite] - Whether the signed-in customer has favourited this park
+  @param {boolean} [show_trending] - Show the trending flag on the image
+  @param {string} [trending_label] - Label for the trending flag
 {% enddoc %}
 {%- liquid
   assign sp_img = park.thumbnail_image_url.value | first
@@ -36,6 +38,14 @@
   if show_bookmark
     assign sp_show_bookmark = true
   endif
+  assign sp_show_trending = false
+  if show_trending
+    assign sp_show_trending = true
+  endif
+  assign sp_trending_label = trending_label | default: 'Trending' | strip
+  if sp_trending_label == blank
+    assign sp_trending_label = 'Trending'
+  endif
   capture sp_feat_keys
     render 'skatepark-feature-keys', park: park
   endcapture
@@ -55,11 +65,23 @@
         <span class="skatepark-card__placeholder" aria-hidden="true">{{ park.name.value | slice: 0 }}</span>
       {%- endif -%}
     </a>
-    {%- if park.park_type.value != blank -%}
-      <span class="skatepark-card__badge">{{ park.park_type.value | escape }}</span>
+    {%- if sp_show_trending -%}
+      <span class="skatepark-card__trending">
+        <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" focusable="false">
+          <path d="M12 3c.4 2.2 1.6 4.2 2.2 6.2.7-1.1 1.6-2 2.6-2.2 0 2.2-1 3.8-2.2 5 .6.3 1.2.8 1.6 1.5 1-1.1 1.6-2.5 1.6-4.1C19.2 11 21 13 21 16.2 21 19.6 17.6 22 12 22S3 19.6 3 16.2C3 13.4 4.8 11.3 6.6 9.8 7.2 11.6 8.4 13 9.2 13.5 8.8 10.4 10.6 6.2 12 3z" fill="currentColor"/>
+        </svg>
+        <span>{{ sp_trending_label | escape }}</span>
+      </span>
     {%- endif -%}
-    {%- if sp_has_events -%}
-      <span class="skatepark-card__events">Upcoming events</span>
+    {%- if park.park_type.value != blank or sp_has_events -%}
+      <div class="skatepark-card__media-labels">
+        {%- if sp_has_events -%}
+          <span class="skatepark-card__events">Upcoming events</span>
+        {%- endif -%}
+        {%- if park.park_type.value != blank -%}
+          <span class="skatepark-card__badge">{{ park.park_type.value | escape }}</span>
+        {%- endif -%}
+      </div>
     {%- endif -%}
     {%- if sp_show_bookmark and sp_handle != blank -%}
       <button
