@@ -1,4 +1,6 @@
 {{- 'skatepark.css' | asset_url | stylesheet_tag -}}
+{{- 'product-slider.css' | asset_url | stylesheet_tag -}}
+<script src="{{ 'skatepark-finder.js' | asset_url }}" defer="defer"></script>
 {%- assign ss = section.settings -%}
 {%- assign regions = ss.regions | newline_to_br | replace: '<br />', ',' | split: ',' -%}
 {%- assign park_types = ss.park_types | newline_to_br | replace: '<br />', '|' | split: '|' -%}
@@ -6,71 +8,325 @@
 {%- capture placeholder_url -%}{% render 'skatepark-placeholder-url', image: ss.placeholder_image, url: ss.placeholder_url, width: 640 %}{%- endcapture -%}
 {%- assign placeholder_url = placeholder_url | strip -%}
 
-<section class="skateparks-index" id="{{ section.id }}" data-skateparks-index data-per-page="{{ ss.per_page }}" data-placeholder="{{ placeholder_url | escape }}">
+{%- liquid
+  assign fav_handles = ''
+  if customer and customer.metafields.untold.favourite_parks.value != blank
+    for item in customer.metafields.untold.favourite_parks.value
+      if item.system.handle != blank
+        assign fav_handles = fav_handles | append: item.system.handle | append: ','
+      endif
+    endfor
+  endif
+  assign fav_csv = ',' | append: fav_handles
+
+  assign view_all_url = ss.popular_view_all_link
+  if view_all_url == blank
+    if pages['skateparks-finder-uk'] != blank
+      assign view_all_url = pages['skateparks-finder-uk'].url
+    else
+      assign view_all_url = '/pages/skateparks-uk'
+    endif
+  endif
+
+  assign popular_parks = ss.popular_parks
+  assign popular_count = 0
+  if popular_parks != blank
+    assign popular_count = popular_parks.size
+  endif
+
+  assign region_priority = 'South East,South West,East of England,East Midlands,London,Yorkshire and The Humber,North West,West Midlands,Scotland,Wales,North East,Northern Ireland,Channel Islands,Isle of Man' | split: ','
+  assign ordered_regions_str = ''
+  assign seen = '|'
+
+  for r in region_priority
+    assign r_clean = r | strip
+    assign in_settings = false
+    for s in regions
+      assign s_clean = s | strip
+      if s_clean == r_clean
+        assign in_settings = true
+        break
+      endif
+    endfor
+    if in_settings
+      assign ordered_regions_str = ordered_regions_str | append: r_clean | append: '|'
+      assign seen = seen | append: r_clean | append: '|'
+    endif
+  endfor
+
+  for s in regions
+    assign s_clean = s | strip
+    if s_clean != blank
+      assign needle = '|' | append: s_clean | append: '|'
+      unless seen contains needle
+        assign ordered_regions_str = ordered_regions_str | append: s_clean | append: '|'
+        assign seen = seen | append: s_clean | append: '|'
+      endunless
+    endif
+  endfor
+
+  assign ordered_regions = ordered_regions_str | split: '|'
+-%}
+
+{%- liquid
+  assign visible_limit = 4
+  assign region_total = 0
+  for r in ordered_regions
+    if r != blank
+      assign region_total = region_total | plus: 1
+    endif
+  endfor
+  assign region_rest_count = region_total | minus: visible_limit
+  if region_rest_count < 0
+    assign region_rest_count = 0
+  endif
+
+  assign visible_regions_str = ''
+  assign rest_regions_str = ''
+  assign region_idx = 0
+  for r in ordered_regions
+    if r != blank
+      assign region_idx = region_idx | plus: 1
+      if region_idx <= visible_limit
+        assign visible_regions_str = visible_regions_str | append: r | append: '|'
+      else
+        assign rest_regions_str = rest_regions_str | append: r | append: '|'
+      endif
+    endif
+  endfor
+  assign visible_regions = visible_regions_str | split: '|'
+  assign rest_regions = rest_regions_str | split: '|'
+
+  assign hero_url = ''
+  if ss.hero_image != blank
+    assign hero_url = ss.hero_image | image_url: width: 2000
+  endif
+-%}
+
+<section
+  class="skateparks-index"
+  id="{{ section.id }}"
+  data-skateparks-index
+  data-per-page="{{ ss.per_page }}"
+  data-placeholder="{{ placeholder_url | escape }}"
+  data-logged-in="{% if customer %}true{% else %}false{% endif %}"
+  data-endpoint="/apps/parks"
+  data-login-url="{{ routes.account_login_url | escape }}"
+  data-register-url="{{ routes.account_register_url | escape }}"
+  data-favourites="{{ fav_handles | escape }}"
+>
+  <div class="skateparks-index__hero"{% if hero_url != blank %} style="--hero-image: url({{ hero_url | escape }});"{% endif %}>
+    <div class="container">
+
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <ol class="breadcrumbs__list" role="list">
+          <li class="breadcrumbs__item"><a href="{{ routes.root_url }}" class="breadcrumbs__link">Home</a></li>
+          <li class="breadcrumbs__item"><span class="breadcrumbs__separator" aria-hidden="true">/</span><span class="breadcrumbs__current" aria-current="page">{{ ss.title | escape }}</span></li>
+        </ol>
+      </nav>
+
+      <header class="skateparks-index__header">
+        <h1 class="skateparks-index__title h2">{{ ss.title | escape }}</h1>
+        {%- if ss.intro != blank -%}<div class="skateparks-index__intro rte">{{ ss.intro }}</div>{%- endif -%}
+      </header>
+
+      <form class="skateparks-index__filters" role="search" data-sp-form>
+        <div class="skateparks-index__field skateparks-index__field--search">
+          <label for="{{ section.id }}-q" class="skateparks-index__label">
+            <span class="skateparks-index__label-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            </span>
+            Search
+          </label>
+          <input type="search" id="{{ section.id }}-q" name="q" placeholder="Park name, town or postcode" autocomplete="off" data-sp-q>
+        </div>
+        <div class="skateparks-index__field">
+          <label for="{{ section.id }}-region" class="skateparks-index__label">
+            <span class="skateparks-index__label-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.2"/></svg>
+            </span>
+            Region
+          </label>
+          <select id="{{ section.id }}-region" name="region" data-sp-region>
+            <option value="">All regions</option>
+            {%- for r in regions -%}
+              {%- assign r_clean = r | strip -%}
+              {%- if r_clean != blank -%}<option value="{{ r_clean | escape }}">{{ r_clean | escape }}</option>{%- endif -%}
+            {%- endfor -%}
+          </select>
+        </div>
+        <div class="skateparks-index__field">
+          <label for="{{ section.id }}-type" class="skateparks-index__label">
+            <span class="skateparks-index__label-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M3 19V5c6 0 10 6 18 14H3z"/></svg>
+            </span>
+            Park type
+          </label>
+          <select id="{{ section.id }}-type" name="type" data-sp-type>
+            <option value="">All park types</option>
+            {%- for t in park_types -%}
+              {%- assign t_clean = t | strip -%}
+              {%- if t_clean != blank -%}<option value="{{ t_clean | escape }}">{{ t_clean | escape }}</option>{%- endif -%}
+            {%- endfor -%}
+          </select>
+        </div>
+        <div class="skateparks-index__field">
+          <label for="{{ section.id }}-setting" class="skateparks-index__label">
+            <span class="skateparks-index__label-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M18.4 5.6 17 7M7 17l-1.4 1.4"/></svg>
+            </span>
+            Setting
+          </label>
+          <select id="{{ section.id }}-setting" name="setting" data-sp-setting>
+            <option value="">All settings</option>
+            {%- for s in park_settings -%}
+              {%- assign s_clean = s | strip -%}
+              {%- if s_clean != blank -%}<option value="{{ s_clean | escape }}">{{ s_clean | escape }}</option>{%- endif -%}
+            {%- endfor -%}
+          </select>
+        </div>
+        <button type="submit" class="skateparks-index__search-btn" data-sp-search>Search parks</button>
+        <div class="skateparks-index__field skateparks-index__field--county">
+          <label for="{{ section.id }}-county" class="skateparks-index__label">County / area</label>
+          <select id="{{ section.id }}-county" name="county" data-sp-county disabled>
+            <option value="">All counties</option>
+          </select>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
   <div class="container">
 
-    <nav class="breadcrumbs" aria-label="Breadcrumb">
-      <ol class="breadcrumbs__list" role="list">
-        <li class="breadcrumbs__item"><a href="{{ routes.root_url }}" class="breadcrumbs__link">Home</a></li>
-        <li class="breadcrumbs__item"><span class="breadcrumbs__separator" aria-hidden="true">/</span><span class="breadcrumbs__current" aria-current="page">{{ ss.title | escape }}</span></li>
-      </ol>
-    </nav>
+    <div class="skateparks-index__stats" role="list">
+      <div class="skateparks-index__stat" role="listitem">
+        <span class="skateparks-index__stat-value" data-sp-stat="total">—</span>
+        <span class="skateparks-index__stat-label">{{ ss.stat_total_label | default: 'Parks listed' | escape }}</span>
+      </div>
+      <div class="skateparks-index__stat" role="listitem">
+        <span class="skateparks-index__stat-value" data-sp-stat="regions">—</span>
+        <span class="skateparks-index__stat-label">{{ ss.stat_regions_label | default: 'UK regions' | escape }}</span>
+      </div>
+      <div class="skateparks-index__stat" role="listitem">
+        <span class="skateparks-index__stat-value" data-sp-stat="types">—</span>
+        <span class="skateparks-index__stat-label">{{ ss.stat_types_label | default: 'Park types' | escape }}</span>
+      </div>
+      <div class="skateparks-index__stat" role="listitem">
+        <span class="skateparks-index__stat-value" data-sp-stat="outdoor">—</span>
+        <span class="skateparks-index__stat-label">{{ ss.stat_outdoor_label | default: 'Outdoor spots' | escape }}</span>
+      </div>
+    </div>
 
-    <header class="skateparks-index__header">
-      <h1 class="skateparks-index__title h2">{{ ss.title | escape }}</h1>
-      {%- if ss.intro != blank -%}<div class="skateparks-index__intro rte">{{ ss.intro }}</div>{%- endif -%}
-    </header>
+    <div class="skateparks-index__browse">
+      <h2 class="skateparks-index__browse-label">Browse by region</h2>
+      <div class="skateparks-index__pills" role="group" aria-label="Browse by region">
+        <button type="button" class="skateparks-index__pill is-active" data-sp-region-pill="" aria-pressed="true">All UK</button>
+        {%- for r in visible_regions -%}
+          {%- if r != blank -%}
+            <button type="button" class="skateparks-index__pill" data-sp-region-pill="{{ r | escape }}" aria-pressed="false">{{ r | escape }}</button>
+          {%- endif -%}
+        {%- endfor -%}
+        {%- if region_rest_count > 0 -%}
+          <button type="button" class="skateparks-index__pill skateparks-index__pill--more" data-sp-region-more data-count="{{ region_rest_count }}" aria-expanded="false">+{{ region_rest_count }}</button>
+          <span class="skateparks-index__pill-rest" data-sp-region-rest hidden>
+            {%- for r in rest_regions -%}
+              {%- if r != blank -%}
+                <button type="button" class="skateparks-index__pill" data-sp-region-pill="{{ r | escape }}" aria-pressed="false">{{ r | escape }}</button>
+              {%- endif -%}
+            {%- endfor -%}
+          </span>
+        {%- endif -%}
+      </div>
+    </div>
 
-    <form class="skateparks-index__filters" role="search" data-sp-form onsubmit="return false">
-      <div class="skateparks-index__field skateparks-index__field--search">
-        <label for="{{ section.id }}-q" class="skateparks-index__label">Search</label>
-        <input type="search" id="{{ section.id }}-q" name="q" placeholder="Park name, town or postcode" autocomplete="off" data-sp-q>
+    <div class="skateparks-index__types">
+      <h2 class="skateparks-index__types-label visually-hidden">Park type</h2>
+      <div class="skateparks-index__pills" role="group" aria-label="Park type">
+        <button type="button" class="skateparks-index__pill is-active" data-sp-type-pill="" aria-pressed="true">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="4" width="6" height="6"/><rect x="14" y="4" width="6" height="6"/><rect x="4" y="14" width="6" height="6"/><rect x="14" y="14" width="6" height="6"/></svg>
+          All
+        </button>
+        <button type="button" class="skateparks-index__pill" data-sp-type-pill="track" aria-pressed="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 18c2-7 5-7 6.5-2C11 8 14 7 16 13c1-5 3-6 5 5"/></svg>
+          Track/Dirt jumps
+        </button>
+        <button type="button" class="skateparks-index__pill" data-sp-type-pill="skatepark" aria-pressed="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 19V5c6 0 10 6 18 14H3z"/></svg>
+          Skatepark
+        </button>
+        <button type="button" class="skateparks-index__pill" data-sp-type-pill="pump" aria-pressed="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 16c2.5-6 4.5-6 7 0s4.5 6 7 0 4.5-6 4 0"/></svg>
+          Pump track
+        </button>
       </div>
-      <div class="skateparks-index__field">
-        <label for="{{ section.id }}-region" class="skateparks-index__label">Region</label>
-        <select id="{{ section.id }}-region" name="region" data-sp-region>
-          <option value="">All regions</option>
-          {%- for r in regions -%}
-            {%- assign r_clean = r | strip -%}
-            {%- if r_clean != blank -%}<option value="{{ r_clean | escape }}">{{ r_clean | escape }}</option>{%- endif -%}
-          {%- endfor -%}
-        </select>
-      </div>
-      <div class="skateparks-index__field">
-        <label for="{{ section.id }}-county" class="skateparks-index__label">County / area</label>
-        <select id="{{ section.id }}-county" name="county" data-sp-county disabled>
-          <option value="">All counties</option>
-        </select>
-      </div>
-      <div class="skateparks-index__field">
-        <label for="{{ section.id }}-type" class="skateparks-index__label">Park type</label>
-        <select id="{{ section.id }}-type" name="type" data-sp-type>
-          <option value="">All park types</option>
-          {%- for t in park_types -%}
-            {%- assign t_clean = t | strip -%}
-            {%- if t_clean != blank -%}<option value="{{ t_clean | escape }}">{{ t_clean | escape }}</option>{%- endif -%}
-          {%- endfor -%}
-        </select>
-      </div>
-      <div class="skateparks-index__field">
-        <label for="{{ section.id }}-setting" class="skateparks-index__label">Setting</label>
-        <select id="{{ section.id }}-setting" name="setting" data-sp-setting>
-          <option value="">All settings</option>
-          {%- for s in park_settings -%}
-            {%- assign s_clean = s | strip -%}
-            {%- if s_clean != blank -%}<option value="{{ s_clean | escape }}">{{ s_clean | escape }}</option>{%- endif -%}
-          {%- endfor -%}
-        </select>
-      </div>
-      <button type="button" class="button button--outline skateparks-index__reset" data-sp-reset hidden>Clear</button>
-    </form>
+    </div>
 
-    <div class="skateparks-index__toolbar">
+    {%- if popular_count > 0 or request.design_mode -%}
+      <div class="product-slider park-slider skateparks-index__popular" data-sp-popular>
+        <div class="product-slider__header">
+          <div class="product-slider__intro">
+            {%- if ss.popular_title != blank -%}
+              <h2 class="product-slider__title h5">{{ ss.popular_title | escape }}</h2>
+            {%- endif -%}
+            {%- if ss.popular_subheading != blank -%}
+              <p class="product-slider__subheading">{{ ss.popular_subheading | escape }}</p>
+            {%- endif -%}
+          </div>
+          <div class="product-slider__controls">
+            {%- if ss.show_popular_view_all and view_all_url != blank -%}
+              <a href="{{ view_all_url }}" class="product-slider__view-all">View all parks</a>
+            {%- endif -%}
+            <div class="product-slider__navigation">
+              <button type="button" class="swiper-slider__arrow swiper-slider__arrow--prev button--reset" aria-label="Previous parks">
+                {{- 'icon-long-arrow.svg' | inline_asset_content -}}
+              </button>
+              <button type="button" class="swiper-slider__arrow swiper-slider__arrow--next button--reset" aria-label="Next parks">
+                {{- 'icon-long-arrow.svg' | inline_asset_content -}}
+              </button>
+            </div>
+          </div>
+        </div>
+        {%- if popular_count > 0 -%}
+          <div class="swiper product-slider__swiper" data-sp-popular-swiper>
+            <div class="swiper-wrapper">
+              {%- for park in popular_parks -%}
+                {%- assign is_fav = false -%}
+                {%- if park.system.handle != blank -%}
+                  {%- assign fav_needle = ',' | append: park.system.handle | append: ',' -%}
+                  {%- if fav_csv contains fav_needle -%}
+                    {%- assign is_fav = true -%}
+                  {%- endif -%}
+                {%- endif -%}
+                <div class="product-slider__item swiper-slide">
+                  {% render 'skatepark-card', park: park, index: forloop.index, placeholder: placeholder_url, show_bookmark: true, is_favourite: is_fav %}
+                </div>
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- elsif request.design_mode -%}
+          <p class="skateparks-index__intro rte">Choose parks in the theme editor to show them here.</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div data-sp-results-anchor class="skateparks-index__results-head">
+      <p class="skateparks-index__count" data-sp-count></p>
+      <div class="skateparks-index__chips" data-sp-chips></div>
+      <button type="button" class="skateparks-index__reset" data-sp-reset hidden>Clear all</button>
+      <div class="skateparks-index__results-tools">
+        <label for="{{ section.id }}-sort" class="visually-hidden">Sort parks</label>
+        <select id="{{ section.id }}-sort" data-sp-sort class="skateparks-index__sort">
+          <option value="az">A–Z</option>
+          <option value="za">Z–A</option>
+          <option value="near">Near me</option>
+        </select>
+        <div class="skateparks-index__view-toggle" role="group" aria-label="View">
+          <button type="button" class="skateparks-index__view-btn button--reset is-active" data-sp-view="list" aria-pressed="true">Grid</button>
+          <button type="button" class="skateparks-index__view-btn button--reset" data-sp-view="map" aria-pressed="false">Map</button>
+        </div>
+      </div>
       <p class="skateparks-index__status" data-sp-status aria-live="polite"></p>
-      <div class="skateparks-index__view-toggle" role="group" aria-label="View">
-        <button type="button" class="skateparks-index__view-btn button--reset is-active" data-sp-view="list" aria-pressed="true">List</button>
-        <button type="button" class="skateparks-index__view-btn button--reset" data-sp-view="map" aria-pressed="false">Map</button>
-      </div>
     </div>
 
     <div class="skateparks-index__map-wrap" data-sp-map-wrap hidden>
@@ -90,7 +346,14 @@
           <p class="skateparks-index__count" data-sp-server-count>{{ paginate.items }} parks</p>
           <div class="skateparks-index__grid">
             {%- for park in shop.metaobjects.skatepark.values -%}
-              {% render 'skatepark-card', park: park, index: forloop.index, placeholder: placeholder_url %}
+              {%- assign is_fav = false -%}
+              {%- if park.system.handle != blank -%}
+                {%- assign fav_needle = ',' | append: park.system.handle | append: ',' -%}
+                {%- if fav_csv contains fav_needle -%}
+                  {%- assign is_fav = true -%}
+                {%- endif -%}
+              {%- endif -%}
+              {% render 'skatepark-card', park: park, index: forloop.index, placeholder: placeholder_url, show_bookmark: true, is_favourite: is_fav %}
             {%- endfor -%}
           </div>
 
@@ -118,367 +381,23 @@
     </div>
 
   </div>
+
+  <span class="skateparks-index__arrow-template" data-sp-arrow-icon hidden aria-hidden="true">
+    {{- 'icon-long-arrow.svg' | inline_asset_content -}}
+  </span>
+
+  <div class="skateparks-auth-modal" data-sp-auth-modal hidden role="dialog" aria-modal="true" aria-labelledby="{{ section.id }}-auth-title">
+    <div class="skateparks-auth-modal__panel">
+      <button type="button" class="skateparks-auth-modal__close" data-sp-auth-close aria-label="Close">&times;</button>
+      <h2 class="skateparks-auth-modal__title" id="{{ section.id }}-auth-title">Save parks you like</h2>
+      <p class="skateparks-auth-modal__text">Create an account to bookmark parks and find them later.</p>
+      <div class="skateparks-auth-modal__actions">
+        <a class="skateparks-auth-modal__register" data-sp-auth-register href="{{ routes.account_register_url }}">Create account</a>
+        <a class="skateparks-auth-modal__login" data-sp-auth-login href="{{ routes.account_login_url }}">Log in</a>
+      </div>
+    </div>
+  </div>
 </section>
-
-<script>
-  (() => {
-    const root = document.getElementById({{ section.id | json }});
-    if (!root || root.dataset.ready) return;
-    root.dataset.ready = 'true';
-
-    const MIN_CHARS = 2;
-    const LOADING_DELAY = 300;
-    const LEAFLET = 'https://unpkg.com/leaflet@1.9.4/dist/';
-    const CLUSTER = 'https://unpkg.com/leaflet.markercluster@1.5.3/dist/';
-
-    const perPage = parseInt(root.dataset.perPage, 10) || 24;
-    const placeholder = root.dataset.placeholder || '';
-    const $ = (sel) => root.querySelector(sel);
-    const q = $('[data-sp-q]');
-    const regionSel = $('[data-sp-region]');
-    const countySel = $('[data-sp-county]');
-    const typeSel = $('[data-sp-type]');
-    const settingSel = $('[data-sp-setting]');
-    const reset = $('[data-sp-reset]');
-    const status = $('[data-sp-status]');
-    const results = $('[data-sp-results]');
-    const grid = $('[data-sp-results-grid]');
-    const more = $('[data-sp-more]');
-    const server = $('[data-sp-server]');
-    const list = $('[data-sp-list]');
-    const mapWrap = $('[data-sp-map-wrap]');
-    const mapEl = $('[data-sp-map]');
-    const viewBtns = root.querySelectorAll('[data-sp-view]');
-
-    let data = null;
-    let loading = null;
-    let matches = [];
-    let shown = 0;
-    let viewMode = 'list';
-    let map = null;
-    let cluster = null;
-    let leafletLoading = null;
-    let applySeq = 0;
-
-    const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-    const norm = (s) => String(s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, ' ').trim();
-    const tidy = (s) => String(s || '').replace(/\s+/g, ' ').trim();
-    const uniqSorted = (arr) => [...new Set(arr.map(tidy).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'en-GB'));
-    const options = (all, items) => '<option value="">' + all + '</option>' + items.map((v) => '<option value="' + esc(v) + '">' + esc(v) + '</option>').join('');
-
-    /* ---------- Data ---------- */
-
-    const feedUrl = (page, param) => {
-      const u = new URL(window.location.pathname, window.location.origin);
-      u.searchParams.set('view', 'skateparks-data');
-      if (page > 1) u.searchParams.set(param || 'page', page);
-      const t = window.Shopify && window.Shopify.theme;
-      if (t && t.role && t.role !== 'main' && t.id) u.searchParams.set('preview_theme_id', t.id);
-      return u.toString();
-    };
-
-    const rebuildSelect = (sel, all, items) => {
-      const current = sel.value;
-      sel.innerHTML = options(all, items);
-      sel.value = items.includes(current) ? current : '';
-    };
-
-    const load = () => {
-      if (data) return Promise.resolve(data);
-      if (loading) return loading;
-      const getPage = (n, param) => fetch(feedUrl(n, param), { credentials: 'same-origin' }).then((r) => {
-        if (!r.ok) throw new Error('Feed ' + r.status);
-        return r.json();
-      });
-      loading = getPage(1).then((first) => {
-        const rest = [];
-        for (let n = 2; n <= first.pages; n++) rest.push(getPage(n, first.param));
-        return Promise.all(rest).then((pages) => {
-          data = first.items.concat(...pages.map((p) => p.items));
-          data.forEach((p) => {
-            p.y = tidy(p.y);
-            p.s = tidy(p.s);
-            p.r = tidy(p.r);
-            p.c = tidy(p.c);
-            p._s = norm([p.n, p.t, p.c, p.r, p.y, p.s, p.p, (p.p || '').replace(/\s/g, '')].join(' '));
-          });
-          data.sort((a, b) => a.n.localeCompare(b.n, 'en-GB'));
-          rebuildSelect(regionSel, 'All regions', uniqSorted(data.map((p) => p.r)));
-          rebuildSelect(typeSel, 'All park types', uniqSorted(data.map((p) => p.y)));
-          rebuildSelect(settingSel, 'All settings', uniqSorted(data.map((p) => p.s)));
-          return data;
-        });
-      }).catch((e) => {
-        loading = null;
-        throw e;
-      });
-      return loading;
-    };
-
-    /* Show "Loading parks…" only if the load takes longer than LOADING_DELAY. */
-    const withLoading = (promise) => {
-      if (data) return promise;
-      const timer = setTimeout(() => { status.textContent = 'Loading parks…'; }, LOADING_DELAY);
-      return promise.finally(() => clearTimeout(timer));
-    };
-
-    const fillCounties = () => {
-      const r = regionSel.value;
-      const current = countySel.value;
-      const counties = uniqSorted(data.filter((p) => !r || p.r === r).map((p) => p.c));
-      countySel.innerHTML = options('All counties', counties);
-      countySel.value = counties.includes(current) ? current : '';
-      countySel.disabled = counties.length === 0;
-    };
-
-    /* ---------- State ---------- */
-
-    const term = () => {
-      const t = norm(q.value);
-      return t.length >= MIN_CHARS ? t : '';
-    };
-    const filtersActive = () => !!(term() || regionSel.value || countySel.value || typeSel.value || settingSel.value);
-
-    const updateUrl = () => {
-      const u = new URL(window.location.href);
-      ['q', 'region', 'county', 'type', 'setting', 'view_mode'].forEach((k) => u.searchParams.delete(k));
-      if (term()) u.searchParams.set('q', q.value.trim());
-      if (regionSel.value) u.searchParams.set('region', regionSel.value);
-      if (countySel.value) u.searchParams.set('county', countySel.value);
-      if (typeSel.value) u.searchParams.set('type', typeSel.value);
-      if (settingSel.value) u.searchParams.set('setting', settingSel.value);
-      if (viewMode === 'map') u.searchParams.set('view_mode', 'map');
-      history.replaceState(null, '', u.toString());
-    };
-
-    const computeMatches = () => {
-      const words = term().split(' ').filter(Boolean);
-      const r = regionSel.value;
-      const c = countySel.value;
-      const y = typeSel.value;
-      const s = settingSel.value;
-      return data.filter((p) => (!r || p.r === r) && (!c || p.c === c) && (!y || p.y === y) && (!s || p.s === s) && words.every((w) => p._s.includes(w)));
-    };
-
-    const countText = (n) => (n === 1 ? '1 park found' : n.toLocaleString('en-GB') + ' parks found');
-
-    /* ---------- List ---------- */
-
-    const card = (p, i) => {
-      const alt = esc(p.n + (p.t ? ', ' + p.t : ''));
-      const meta = esc(p.t || '') + (p.c && p.c !== p.t ? ', ' + esc(p.c) : '');
-      const loadingAttr = '" loading="' + (i < 4 ? 'eager' : 'lazy') + '" decoding="async" width="640" height="480" ';
-      const img = p.i
-        ? '<img src="' + esc(p.i) + '" alt="' + alt + loadingAttr + 'referrerpolicy="no-referrer" class="skatepark-card__image">'
-        : placeholder
-          ? '<img src="' + esc(placeholder) + '" alt="' + esc(p.n + ' – photo coming soon') + loadingAttr + 'class="skatepark-card__image skatepark-card__image--placeholder">'
-          : '<span class="skatepark-card__placeholder" aria-hidden="true">' + esc(p.n.charAt(0)) + '</span>';
-      return '<a href="' + esc(p.u) + '" class="skatepark-card"><div class="skatepark-card__media">' + img +
-        (p.y ? '<span class="skatepark-card__badge">' + esc(p.y) + '</span>' : '') +
-        (p.e ? '<span class="skatepark-card__events">Upcoming events</span>' : '') +
-        '</div><div class="skatepark-card__body"><h3 class="skatepark-card__title">' + esc(p.n) + '</h3><p class="skatepark-card__meta">' + meta + '</p>' +
-        (p.r ? '<p class="skatepark-card__region">' + esc(p.r) + '</p>' : '') + '</div></a>';
-    };
-
-    const renderMore = () => {
-      const next = matches.slice(shown, shown + perPage);
-      grid.insertAdjacentHTML('beforeend', next.map((p, i) => card(p, shown + i)).join(''));
-      shown += next.length;
-      more.hidden = shown >= matches.length;
-    };
-
-    const renderList = () => {
-      const active = filtersActive();
-      server.hidden = active;
-      results.hidden = !active;
-      if (!active) return;
-      grid.innerHTML = '';
-      shown = 0;
-      renderMore();
-    };
-
-    /* ---------- Map ---------- */
-
-    const addCss = (href) => new Promise((resolve) => {
-      if (document.querySelector('link[href="' + href + '"]')) return resolve();
-      const l = document.createElement('link');
-      l.rel = 'stylesheet'; l.href = href; l.onload = resolve; l.onerror = resolve;
-      document.head.appendChild(l);
-    });
-    const addJs = (src) => new Promise((resolve, reject) => {
-      if (document.querySelector('script[src="' + src + '"]')) return resolve();
-      const s = document.createElement('script');
-      s.src = src; s.onload = resolve; s.onerror = reject;
-      document.head.appendChild(s);
-    });
-
-    const loadLeaflet = () => {
-      if (window.L && window.L.markerClusterGroup) return Promise.resolve();
-      if (leafletLoading) return leafletLoading;
-      leafletLoading = Promise.all([
-        addCss(LEAFLET + 'leaflet.css'),
-        addCss(CLUSTER + 'MarkerCluster.css'),
-        addCss(CLUSTER + 'MarkerCluster.Default.css')
-      ]).then(() => addJs(LEAFLET + 'leaflet.js')).then(() => addJs(CLUSTER + 'leaflet.markercluster.js'));
-      return leafletLoading;
-    };
-
-    const popupHtml = (p) => {
-      const place = esc(p.t || '') + (p.c && p.c !== p.t ? ', ' + esc(p.c) : '');
-      return '<div class="skatepark-popup"><strong class="skatepark-popup__title">' + esc(p.n) + '</strong>' +
-        (place ? '<span class="skatepark-popup__place">' + place + '</span>' : '') +
-        (p.y ? '<span class="skatepark-popup__type">' + esc(p.y) + '</span>' : '') +
-        '<a class="skatepark-popup__link" href="' + esc(p.u) + '">View park &rarr;</a></div>';
-    };
-
-    const renderMap = () => {
-      if (!map || !data) return;
-      const L = window.L;
-      const set = filtersActive() ? matches : data;
-      cluster.clearLayers();
-      const markers = [];
-      set.forEach((p) => {
-        const lat = parseFloat(p.a);
-        const lng = parseFloat(p.o);
-        if (!isFinite(lat) || !isFinite(lng)) return;
-        const m = L.marker([lat, lng], { title: p.n, alt: p.n });
-        m.bindPopup(() => popupHtml(p));
-        markers.push(m);
-      });
-      cluster.addLayers(markers);
-      if (markers.length === 1) {
-        map.setView(markers[0].getLatLng(), 14);
-      } else if (markers.length > 1) {
-        map.fitBounds(cluster.getBounds(), { padding: [30, 30], maxZoom: 14 });
-      }
-    };
-
-    const ensureMap = () => {
-      if (map) return Promise.resolve();
-      return loadLeaflet().then(() => {
-        if (map) return;
-        const L = window.L;
-        map = L.map(mapEl, { scrollWheelZoom: false, zoomControl: true }).setView([54.5, -3], 5);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          maxZoom: 19,
-          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors'
-        }).addTo(map);
-        cluster = L.markerClusterGroup({ chunkedLoading: true, showCoverageOnHover: false, maxClusterRadius: 50 });
-        map.addLayer(cluster);
-        map.on('focus', () => map.scrollWheelZoom.enable());
-        map.on('blur', () => map.scrollWheelZoom.disable());
-      });
-    };
-
-    const setView = (mode, opts) => {
-      viewMode = mode === 'map' ? 'map' : 'list';
-      viewBtns.forEach((b) => {
-        const on = b.dataset.spView === viewMode;
-        b.classList.toggle('is-active', on);
-        b.setAttribute('aria-pressed', on ? 'true' : 'false');
-      });
-      list.hidden = viewMode === 'map';
-      mapWrap.hidden = viewMode !== 'map';
-      if (!(opts && opts.silent)) updateUrl();
-      if (viewMode === 'map') {
-        withLoading(Promise.all([load(), ensureMap()])).then(() => {
-          map.invalidateSize();
-          apply({ keepUrl: true });
-        }).catch(() => { status.textContent = 'Sorry, the map is unavailable right now.'; });
-      } else {
-        apply({ keepUrl: true });
-      }
-    };
-
-    /* ---------- Apply ---------- */
-
-    const apply = (opts) => {
-      const seq = ++applySeq;
-      const active = filtersActive();
-      reset.hidden = !active;
-      if (!(opts && opts.keepUrl)) updateUrl();
-
-      if (!active && viewMode === 'list') {
-        server.hidden = false;
-        results.hidden = true;
-        status.textContent = '';
-        return;
-      }
-
-      withLoading(load()).then(() => {
-        if (seq !== applySeq) return;
-        fillCounties();
-        matches = active ? computeMatches() : data;
-        status.textContent = active ? countText(matches.length) : countText(data.length).replace(' found', '');
-        if (viewMode === 'map') renderMap(); else renderList();
-      }).catch(() => {
-        if (seq === applySeq) status.textContent = 'Sorry, the park search is unavailable right now.';
-      });
-    };
-
-    /* ---------- Events ---------- */
-
-    let timer;
-    let lastTerm = '';
-    q.addEventListener('input', () => {
-      clearTimeout(timer);
-      timer = setTimeout(() => {
-        const t = term();
-        if (t === lastTerm) return;
-        lastTerm = t;
-        apply();
-      }, 250);
-    });
-    regionSel.addEventListener('change', () => { countySel.value = ''; apply(); });
-    countySel.addEventListener('change', () => apply());
-    typeSel.addEventListener('change', () => apply());
-    settingSel.addEventListener('change', () => apply());
-    more.addEventListener('click', renderMore);
-    reset.addEventListener('click', () => {
-      q.value = ''; lastTerm = '';
-      regionSel.value = ''; countySel.value = ''; typeSel.value = ''; settingSel.value = '';
-      countySel.disabled = true;
-      apply();
-    });
-    viewBtns.forEach((b) => b.addEventListener('click', () => {
-      if (b.dataset.spView !== viewMode) setView(b.dataset.spView);
-    }));
-
-    /* ---------- Initial state from URL ---------- */
-
-    const params = new URLSearchParams(window.location.search);
-    const ensureOption = (sel, v) => {
-      if (v && ![...sel.options].some((o) => o.value === v)) sel.insertAdjacentHTML('beforeend', '<option value="' + esc(v) + '">' + esc(v) + '</option>');
-      sel.value = v || '';
-    };
-    q.value = params.get('q') || '';
-    lastTerm = term();
-    ensureOption(regionSel, params.get('region'));
-    ensureOption(typeSel, params.get('type'));
-    ensureOption(settingSel, params.get('setting'));
-    const initialCounty = params.get('county') || '';
-    const initialMode = params.get('view_mode') === 'map' ? 'map' : 'list';
-
-    if (initialCounty || params.get('region') || params.get('type') || params.get('setting') || term()) {
-      withLoading(load()).then(() => {
-        regionSel.value = params.get('region') || '';
-        typeSel.value = params.get('type') || '';
-        settingSel.value = params.get('setting') || '';
-        fillCounties();
-        countySel.value = initialCounty;
-        setView(initialMode, { silent: true });
-      }).catch(() => { status.textContent = 'Sorry, the park search is unavailable right now.'; });
-    } else if (initialMode === 'map') {
-      setView('map', { silent: true });
-    }
-
-    /* Quiet prefetch so the first search feels instant. */
-    const prefetch = () => { load().catch(() => {}); };
-    const idle = window.requestIdleCallback || ((fn) => setTimeout(fn, 1500));
-    if (document.readyState === 'complete') idle(prefetch, { timeout: 4000 });
-    else window.addEventListener('load', () => idle(prefetch, { timeout: 4000 }), { once: true });
-  })();
-</script>
 
 {% schema %}
 {
@@ -489,7 +408,50 @@
   "settings": [
     { "type": "text", "id": "title", "label": "Heading", "default": "UK skateparks" },
     { "type": "richtext", "id": "intro", "label": "Intro text" },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero image",
+      "info": "Shown behind the title and search bar. A wide photo works best."
+    },
     { "type": "range", "id": "per_page", "min": 12, "max": 48, "step": 12, "label": "Parks per page", "default": 24 },
+    { "type": "header", "content": "Popular parks" },
+    {
+      "type": "text",
+      "id": "popular_title",
+      "label": "Popular parks heading",
+      "default": "Popular parks"
+    },
+    {
+      "type": "text",
+      "id": "popular_subheading",
+      "label": "Popular parks subheading"
+    },
+    {
+      "type": "metaobject_list",
+      "id": "popular_parks",
+      "label": "Popular parks",
+      "info": "Choose a short list of parks to show above the results. This row is hidden until you pick some.",
+      "metaobject_type": "skatepark",
+      "limit": 12
+    },
+    {
+      "type": "checkbox",
+      "id": "show_popular_view_all",
+      "label": "Show 'View all parks' link",
+      "default": true
+    },
+    {
+      "type": "url",
+      "id": "popular_view_all_link",
+      "label": "View all parks link",
+      "info": "Leave blank to use the skateparks finder page."
+    },
+    { "type": "header", "content": "Stats labels" },
+    { "type": "text", "id": "stat_total_label", "label": "Total parks label", "default": "Parks listed" },
+    { "type": "text", "id": "stat_regions_label", "label": "Regions label", "default": "UK regions" },
+    { "type": "text", "id": "stat_types_label", "label": "Park types label", "default": "Park types" },
+    { "type": "text", "id": "stat_outdoor_label", "label": "Outdoor spots label", "default": "Outdoor spots" },
     {
       "type": "textarea",
       "id": "regions",

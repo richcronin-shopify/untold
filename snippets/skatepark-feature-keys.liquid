@@ -1,0 +1,53 @@
+{% doc %}
+  Outputs a comma-separated list of feature icon keys for a skatepark, in priority order.
+  Keys: dirt_jumps, trails, bowls, ramps, boxes, plaza. At most two are returned.
+
+  @param {object} park - A skatepark metaobject
+{% enddoc %}
+{%- liquid
+  assign feat = park.features.value | default: '' | downcase
+  assign keys = ''
+  assign count = 0
+
+  if feat contains 'jump track' or feat contains 'dirt jump' or feat contains 'bmx race' or feat contains 'start gate'
+    assign keys = keys | append: 'dirt_jumps,'
+    assign count = count | plus: 1
+  endif
+
+  if count < 2
+    if feat contains 'pump track' or feat contains 'roller' or feat contains 'berm' or feat contains 'trail'
+      assign keys = keys | append: 'trails,'
+      assign count = count | plus: 1
+    endif
+  endif
+
+  if count < 2
+    if feat contains 'bowl' or feat contains 'pool coping' or feat contains 'cradle' or feat contains 'oververt'
+      assign keys = keys | append: 'bowls,'
+      assign count = count | plus: 1
+    endif
+  endif
+
+  if count < 2
+    if feat contains 'quarter pipe' or feat contains 'mini ramp' or feat contains 'vert ramp' or feat contains 'resi ramp' or feat contains 'transition' or feat contains 'roll-in' or feat contains 'ramps'
+      assign keys = keys | append: 'ramps,'
+      assign count = count | plus: 1
+    endif
+  endif
+
+  if count < 2
+    if feat contains 'jump box' or feat contains 'volcano' or feat contains 'pyramid' or feat contains 'tabletop'
+      assign keys = keys | append: 'boxes,'
+      assign count = count | plus: 1
+    endif
+  endif
+
+  if count < 2
+    if feat contains 'plaza' or feat contains 'street section' or feat contains 'street obstacle'
+      assign keys = keys | append: 'plaza,'
+      assign count = count | plus: 1
+    endif
+  endif
+
+  echo keys | remove_last: ','
+-%}

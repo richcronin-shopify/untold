@@ -1062,3 +1062,647 @@
 .park-event-page .skatepark__header {
 	margin-top: 20px;
 }
+
+/* ------------------------------------------------------------------ */
+/* Finder redesign: hero, stats, pills, results toolbar, restyled card */
+/* ------------------------------------------------------------------ */
+
+.skateparks-index__hero {
+	position: relative;
+	margin: 0 0 40px;
+	padding: 36px 0 44px;
+	background-color: #0c0c0c;
+	background-image: var(--hero-image);
+	background-size: cover;
+	background-position: center;
+	color: var(--color-white);
+
+	@media (max-width: 767px) {
+		margin-bottom: 28px;
+		padding: 20px 0 24px;
+	}
+
+	&::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(90deg, rgb(0 0 0 / 82%) 0%, rgb(0 0 0 / 62%) 48%, rgb(0 0 0 / 38%) 100%);
+
+		@media (max-width: 767px) {
+			background: linear-gradient(180deg, rgb(0 0 0 / 78%) 0%, rgb(0 0 0 / 70%) 100%);
+		}
+	}
+
+	> .container {
+		position: relative;
+		z-index: 1;
+	}
+
+	.breadcrumbs {
+		margin-bottom: 22px;
+	}
+
+	.skateparks-index__header {
+		max-width: 720px;
+		margin-bottom: 28px;
+
+		@media (max-width: 767px) {
+			margin-bottom: 20px;
+		}
+	}
+
+	.skateparks-index__title {
+		margin-bottom: 12px;
+	}
+}
+
+.skateparks-index__filters {
+	grid-template-columns: minmax(0, 1.6fr) repeat(3, minmax(0, 1fr)) auto;
+	gap: 12px 14px;
+	margin: 0;
+	padding: 18px;
+	background: rgb(0 0 0 / 45%);
+	border-color: rgb(from var(--color-white) r g b / 18%);
+	backdrop-filter: blur(6px);
+
+	@media (max-width: 990px) {
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+
+		.skateparks-index__field--search,
+		.skateparks-index__search-btn,
+		.skateparks-index__field--county {
+			grid-column: 1 / -1;
+		}
+	}
+
+	@media (max-width: 560px) {
+		grid-template-columns: minmax(0, 1fr);
+		padding: 14px;
+	}
+
+	.skateparks-index__field--county {
+		grid-column: 1 / 3;
+
+		@media (max-width: 990px) {
+			grid-column: 1 / -1;
+		}
+	}
+
+	.skateparks-index__label {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		opacity: .85;
+	}
+
+	.skateparks-index__label-icon {
+		display: inline-flex;
+		width: 14px;
+		height: 14px;
+		opacity: .9;
+
+		svg {
+			width: 14px;
+			height: 14px;
+			fill: none;
+			stroke: currentColor;
+			stroke-width: 1.8;
+			stroke-linecap: round;
+			stroke-linejoin: round;
+		}
+	}
+
+	.skateparks-index__field--county .skateparks-index__label,
+	.skateparks-index__field--county select {
+		opacity: .75;
+	}
+
+	input,
+	select {
+		background: rgb(0 0 0 / 35%);
+	}
+}
+
+.skateparks-index__search-btn {
+	height: 48px;
+	padding: 0 22px;
+	border: 0;
+	background: var(--color-primary);
+	color: var(--color-black);
+	font-family: var(--font-heading-family);
+	font-weight: 500;
+	font-size: var(--xs);
+	text-transform: uppercase;
+	letter-spacing: .04em;
+	cursor: pointer;
+	white-space: nowrap;
+	transition: .3s all;
+
+	&:hover {
+		filter: brightness(1.05);
+	}
+
+	@media (max-width: 990px) {
+		width: 100%;
+	}
+}
+
+.skateparks-index__stats {
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	gap: 16px 24px;
+	margin: 0 0 36px;
+	padding: 8px 0 28px;
+	border-bottom: 1px solid var(--border-white);
+
+	@media (max-width: 767px) {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 18px 16px;
+		margin-bottom: 24px;
+		padding-bottom: 20px;
+	}
+}
+
+.skateparks-index__stat-value {
+	display: block;
+	font-family: var(--font-heading-family);
+	font-size: clamp(28px, 4vw, 48px);
+	font-weight: 500;
+	line-height: 1;
+	color: var(--color-primary);
+	margin: 0 0 6px;
+}
+
+.skateparks-index__stat-label {
+	display: block;
+	font-family: var(--font-heading-family);
+	text-transform: uppercase;
+	font-size: var(--xxs);
+	letter-spacing: .06em;
+	opacity: .7;
+}
+
+.skateparks-index__browse,
+.skateparks-index__types {
+	margin: 0 0 28px;
+
+	@media (max-width: 767px) {
+		margin-bottom: 20px;
+	}
+}
+
+.skateparks-index__browse-label,
+.skateparks-index__types-label {
+	margin: 0 0 12px;
+	font-family: var(--font-heading-family);
+	text-transform: uppercase;
+	font-size: var(--xs);
+	letter-spacing: .06em;
+}
+
+.skateparks-index__pills {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
+
+	@media (max-width: 749px) {
+		flex-wrap: nowrap;
+		overflow-x: auto;
+		padding-bottom: 4px;
+		scrollbar-width: none;
+		-webkit-overflow-scrolling: touch;
+
+		&::-webkit-scrollbar {
+			display: none;
+		}
+	}
+}
+
+.skateparks-index__pill {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	flex: 0 0 auto;
+	height: 40px;
+	padding: 0 16px;
+	border: 1px solid var(--border-white);
+	background: transparent;
+	color: inherit;
+	font-family: var(--font-heading-family);
+	font-size: var(--xxs);
+	font-weight: 500;
+	text-transform: uppercase;
+	letter-spacing: .04em;
+	cursor: pointer;
+	transition: .3s all;
+
+	svg {
+		width: 16px;
+		height: 16px;
+		fill: none;
+		stroke: currentColor;
+		stroke-width: 1.8;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+	}
+
+	&:hover {
+		border-color: var(--color-primary);
+		color: var(--color-primary);
+	}
+
+	&.is-active {
+		background: var(--color-primary);
+		border-color: var(--color-primary);
+		color: var(--color-black);
+	}
+}
+
+.skateparks-index__pill--more {
+	min-width: 40px;
+	justify-content: center;
+}
+
+.skateparks-index__pill-rest {
+	display: contents;
+}
+
+.skateparks-index__popular {
+	margin: 0 0 40px;
+	padding: 8px 0 0;
+
+	@media (max-width: 767px) {
+		margin-bottom: 28px;
+	}
+}
+
+.skateparks-index__results-head {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 12px 16px;
+	margin: 0 0 20px;
+	padding-top: 8px;
+	scroll-margin-top: 20px;
+}
+
+.skateparks-index__count {
+	margin: 0;
+	font-family: var(--font-heading-family);
+	text-transform: uppercase;
+	font-size: var(--xs);
+	letter-spacing: .08em;
+	opacity: 1;
+	min-height: 0;
+}
+
+.skateparks-index__chips {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
+	flex: 1 1 auto;
+}
+
+.skateparks-index__chip {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 6px 10px;
+	border: 1px solid var(--border-white);
+	background: transparent;
+	color: inherit;
+	font-family: var(--font-heading-family);
+	font-size: var(--xxs);
+	text-transform: uppercase;
+	cursor: pointer;
+	transition: .3s all;
+
+	&:hover {
+		border-color: var(--color-primary);
+		color: var(--color-primary);
+	}
+}
+
+.skateparks-index__reset {
+	height: auto;
+	padding: 0;
+	border: 0;
+	background: none;
+	color: var(--color-primary);
+	font-family: var(--font-heading-family);
+	font-size: var(--xxs);
+	text-transform: uppercase;
+	text-decoration: underline;
+	text-underline-offset: 3px;
+	cursor: pointer;
+}
+
+.skateparks-index__results-tools {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	margin-left: auto;
+
+	@media (max-width: 767px) {
+		width: 100%;
+		margin-left: 0;
+		justify-content: space-between;
+	}
+}
+
+.skateparks-index__sort {
+	min-width: 140px;
+	height: 42px;
+	padding: 0 12px;
+	background: transparent;
+	color: var(--color-white);
+	border: 1px solid var(--border-white);
+	border-radius: var(--style-border-radius-inputs);
+	font-family: var(--font-heading-family);
+	font-size: var(--xxs);
+	text-transform: uppercase;
+
+	option {
+		background: var(--color-black);
+	}
+}
+
+.skateparks-index__status {
+	width: 100%;
+	flex-basis: 100%;
+	margin: 0;
+	min-height: 0;
+}
+
+/* Card restyle (shared with park slider and popular row) */
+
+.skatepark-card {
+	position: relative;
+	background: rgb(from var(--color-white) r g b / 3%);
+
+	.skatepark-card__media-link {
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+
+	.skatepark-card__image {
+		display: block;
+	}
+
+	.skatepark-card__title a {
+		color: inherit;
+		text-decoration: none;
+	}
+
+	.skatepark-card__region {
+		display: inline-flex;
+		margin-top: 8px;
+		padding: 3px 8px;
+		border: 1px solid var(--border-white);
+		opacity: .85;
+		font-size: var(--xxxs);
+	}
+
+	.skatepark-card__body {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		flex: 1 1 auto;
+		padding-right: 40px;
+		padding-bottom: 16px;
+	}
+
+	.skatepark-card__bookmark {
+		position: absolute;
+		top: 8px;
+		right: 8px;
+		z-index: 2;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 36px;
+		height: 36px;
+		padding: 0;
+		border: 0;
+		border-radius: 50%;
+		background: rgb(0 0 0 / 62%);
+		color: var(--color-white);
+		cursor: pointer;
+		transition: .3s all;
+
+		&:hover,
+		&:focus-visible {
+			background: rgb(0 0 0 / 82%);
+			color: var(--color-primary);
+		}
+
+		.skatepark-card__bookmark-on {
+			display: none;
+		}
+
+		&[aria-pressed='true'] {
+			color: var(--color-primary);
+
+			.skatepark-card__bookmark-on {
+				display: block;
+			}
+
+			.skatepark-card__bookmark-off {
+				display: none;
+			}
+		}
+	}
+
+	.skatepark-card__features {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px 12px;
+		margin: 12px 0 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.skatepark-card__feature {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		margin: 0;
+		font-family: var(--font-heading-family);
+		font-size: var(--xxxs);
+		text-transform: uppercase;
+		letter-spacing: .03em;
+		opacity: .85;
+	}
+
+	.skatepark-card__feature-icon {
+		width: 14px;
+		height: 14px;
+		flex: 0 0 14px;
+		background-color: currentColor;
+		-webkit-mask: var(--sp-icon) center / contain no-repeat;
+		mask: var(--sp-icon) center / contain no-repeat;
+		--sp-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='7'/%3E%3C/svg%3E");
+	}
+
+	.skatepark-card__feature[data-feature='ramps'] .skatepark-card__feature-icon {
+		--sp-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 19V5c6 0 10 6 18 14H3z'/%3E%3C/svg%3E");
+	}
+
+	.skatepark-card__feature[data-feature='boxes'] .skatepark-card__feature-icon {
+		--sp-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='4' y='8' width='16' height='11'/%3E%3Cpath d='M8 8V5h8v3'/%3E%3C/svg%3E");
+	}
+
+	.skatepark-card__feature[data-feature='plaza'] .skatepark-card__feature-icon {
+		--sp-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 20V10l5-5h6l5 5v10'/%3E%3Cpath d='M10 20v-6h4v6'/%3E%3C/svg%3E");
+	}
+
+	.skatepark-card__feature[data-feature='bowls'] .skatepark-card__feature-icon {
+		--sp-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 8c0 6 3.5 11 8 11s8-5 8-11'/%3E%3Cpath d='M4 8h16'/%3E%3C/svg%3E");
+	}
+
+	.skatepark-card__feature[data-feature='trails'] .skatepark-card__feature-icon {
+		--sp-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 16c2.5-6 4.5-6 7 0s4.5 6 7 0 4.5-6 4 0'/%3E%3C/svg%3E");
+	}
+
+	.skatepark-card__feature[data-feature='dirt_jumps'] .skatepark-card__feature-icon {
+		--sp-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 18c2-7 5-7 6.5-2C11 8 14 7 16 13c1-5 3-6 5 5'/%3E%3C/svg%3E");
+	}
+
+	.skatepark-card__feature[data-feature='setting-outdoor'] .skatepark-card__feature-icon {
+		--sp-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='4'/%3E%3Cpath d='M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M18.4 5.6 17 7M7 17l-1.4 1.4'/%3E%3C/svg%3E");
+	}
+
+	.skatepark-card__feature[data-feature='setting-indoor'] .skatepark-card__feature-icon {
+		--sp-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 20V10l8-6 8 6v10'/%3E%3Cpath d='M10 20v-6h4v6'/%3E%3C/svg%3E");
+	}
+
+	.skatepark-card__feature[data-feature='setting-covered-undercover'] .skatepark-card__feature-icon {
+		--sp-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 12c2.5-5 13.5-5 16 0'/%3E%3Cpath d='M6 12v7M18 12v7M12 12v7'/%3E%3C/svg%3E");
+	}
+
+	.skatepark-card__arrow {
+		position: absolute;
+		right: 12px;
+		bottom: 12px;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 28px;
+		height: 28px;
+		color: var(--color-primary);
+		text-decoration: none;
+
+		svg {
+			width: 22px;
+			height: 22px;
+		}
+
+		@media (max-width: 767px) {
+			right: 8px;
+			bottom: 8px;
+		}
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.skateparks-index__pill,
+	.skateparks-index__chip,
+	.skateparks-index__search-btn,
+	.skatepark-card,
+	.skatepark-card__title,
+	.skatepark-card__bookmark {
+		transition: none;
+	}
+}
+
+.skateparks-auth-modal {
+	position: fixed;
+	inset: 0;
+	z-index: 80;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 20px;
+	background: rgb(0 0 0 / 72%);
+
+	&[hidden] {
+		display: none !important;
+	}
+}
+
+.skateparks-auth-modal__panel {
+	position: relative;
+	width: min(100%, 420px);
+	padding: 32px 28px 28px;
+	background: var(--color-black);
+	border: 1px solid var(--color-primary);
+	color: var(--color-white);
+}
+
+.skateparks-auth-modal__title {
+	margin: 0 0 10px;
+	font-size: var(--h5);
+}
+
+.skateparks-auth-modal__text {
+	margin: 0 0 22px;
+	font-size: var(--small);
+	opacity: .85;
+}
+
+.skateparks-auth-modal__actions {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.skateparks-auth-modal__register {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	height: 48px;
+	padding: 0 20px;
+	background: var(--color-primary);
+	color: var(--color-black);
+	font-family: var(--font-heading-family);
+	font-size: var(--xs);
+	text-transform: uppercase;
+	text-decoration: none;
+}
+
+.skateparks-auth-modal__login {
+	color: inherit;
+	text-align: center;
+	font-family: var(--font-heading-family);
+	font-size: var(--xxs);
+	text-transform: uppercase;
+	text-decoration: underline;
+	text-underline-offset: 3px;
+}
+
+.skateparks-auth-modal__close {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	width: 36px;
+	height: 36px;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	color: inherit;
+	font-size: 24px;
+	line-height: 1;
+	cursor: pointer;
+}
+
+.skateparks-index__arrow-template {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	clip: rect(0 0 0 0);
+}

@@ -4,6 +4,8 @@
   @param {object} park - A skatepark metaobject
   @param {number} [index] - Position in the list, used to load the first images eagerly
   @param {string} [placeholder] - Image URL used when the park has no photo or satellite image
+  @param {boolean} [show_bookmark] - Show the favourite bookmark control (default true)
+  @param {boolean} [is_favourite] - Whether the signed-in customer has favourited this park
 {% enddoc %}
 {%- liquid
   assign sp_img = park.thumbnail_image_url.value | first
@@ -19,11 +21,6 @@
   if index and index <= 4
     assign sp_loading = 'eager'
   endif
-  if sp_is_placeholder
-    assign sp_alt = park.name.value | append: ' – photo coming soon'
-  else
-    assign sp_alt = park.name.value | append: ', ' | append: park.town_city.value
-  endif
   assign sp_has_events = false
   if park.events.value != blank
     capture sp_event_keys
@@ -33,23 +30,57 @@
       assign sp_has_events = true
     endif
   endif
+  assign sp_url = park.system.url
+  assign sp_handle = park.system.handle
+  assign sp_show_bookmark = false
+  if show_bookmark
+    assign sp_show_bookmark = true
+  endif
+  capture sp_feat_keys
+    render 'skatepark-feature-keys', park: park
+  endcapture
+  assign sp_feat_keys = sp_feat_keys | strip | split: ','
+  assign sp_setting = park.setting.value | strip
+  assign sp_setting_label = sp_setting
+  if sp_setting == 'Covered / Undercover'
+    assign sp_setting_label = 'Covered'
+  endif
 -%}
-<a href="{{ park.system.url }}" class="skatepark-card">
+<article class="skatepark-card"{% if sp_handle != blank %} data-park-handle="{{ sp_handle | escape }}"{% endif %}>
   <div class="skatepark-card__media">
-    {%- if sp_img != blank -%}
-      <img src="{{ sp_img | escape }}" alt="{{ sp_alt | escape }}" loading="{{ sp_loading }}" decoding="async" {% unless sp_is_placeholder %}referrerpolicy="no-referrer" {% endunless %}width="640" height="480" class="skatepark-card__image{% if sp_is_placeholder %} skatepark-card__image--placeholder{% endif %}">
-    {%- else -%}
-      <span class="skatepark-card__placeholder" aria-hidden="true">{{ park.name.value | slice: 0 }}</span>
-    {%- endif -%}
+    <a href="{{ sp_url }}" class="skatepark-card__media-link" tabindex="-1" aria-hidden="true">
+      {%- if sp_img != blank -%}
+        <img src="{{ sp_img | escape }}" alt="" loading="{{ sp_loading }}" decoding="async" {% unless sp_is_placeholder %}referrerpolicy="no-referrer" {% endunless %}width="640" height="400" class="skatepark-card__image{% if sp_is_placeholder %} skatepark-card__image--placeholder{% endif %}">
+      {%- else -%}
+        <span class="skatepark-card__placeholder" aria-hidden="true">{{ park.name.value | slice: 0 }}</span>
+      {%- endif -%}
+    </a>
     {%- if park.park_type.value != blank -%}
       <span class="skatepark-card__badge">{{ park.park_type.value | escape }}</span>
     {%- endif -%}
     {%- if sp_has_events -%}
       <span class="skatepark-card__events">Upcoming events</span>
     {%- endif -%}
+    {%- if sp_show_bookmark and sp_handle != blank -%}
+      <button
+        type="button"
+        class="skatepark-card__bookmark"
+        data-sp-bookmark
+        data-park-handle="{{ sp_handle | escape }}"
+        aria-pressed="{% if is_favourite %}true{% else %}false{% endif %}"
+        aria-label="{% if is_favourite %}Remove {{ park.name.value | escape }} from favourites{% else %}Save {{ park.name.value | escape }} to favourites{% endif %}"
+      >
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
+          <path class="skatepark-card__bookmark-off" d="M7 3.5h10A1.5 1.5 0 0 1 18.5 5v16L12 17.5 5.5 21V5A1.5 1.5 0 0 1 7 3.5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+          <path class="skatepark-card__bookmark-on" d="M7 3.5h10A1.5 1.5 0 0 1 18.5 5v16L12 17.5 5.5 21V5A1.5 1.5 0 0 1 7 3.5z" fill="currentColor" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    {%- endif -%}
   </div>
   <div class="skatepark-card__body">
-    <h3 class="skatepark-card__title">{{ park.name.value | escape }}</h3>
+    <h3 class="skatepark-card__title">
+      <a href="{{ sp_url }}">{{ park.name.value | escape }}</a>
+    </h3>
     <p class="skatepark-card__meta">
       {{- park.town_city.value | escape -}}
       {%- if park.county_district.value != blank and park.county_district.value != park.town_city.value %}, {{ park.county_district.value | escape }}{% endif -%}
@@ -57,5 +88,36 @@
     {%- if park.region.value != blank -%}
       <p class="skatepark-card__region">{{ park.region.value | escape }}</p>
     {%- endif -%}
+    {%- if sp_feat_keys.size > 0 or sp_setting != blank -%}
+      <ul class="skatepark-card__features" role="list">
+        {%- for key in sp_feat_keys -%}
+          {%- assign key_clean = key | strip -%}
+          {%- if key_clean == blank -%}{%- continue -%}{%- endif -%}
+          <li class="skatepark-card__feature" data-feature="{{ key_clean | escape }}">
+            <span class="skatepark-card__feature-icon" aria-hidden="true"></span>
+            <span>
+              {%- case key_clean -%}
+                {%- when 'dirt_jumps' -%}Dirt jumps
+                {%- when 'trails' -%}Trails
+                {%- when 'bowls' -%}Bowls
+                {%- when 'ramps' -%}Ramps
+                {%- when 'boxes' -%}Boxes
+                {%- when 'plaza' -%}Plaza
+                {%- else -%}{{ key_clean | escape }}
+              {%- endcase -%}
+            </span>
+          </li>
+        {%- endfor -%}
+        {%- if sp_setting != blank -%}
+          <li class="skatepark-card__feature" data-feature="setting-{{ sp_setting | handleize | escape }}">
+            <span class="skatepark-card__feature-icon" aria-hidden="true"></span>
+            <span>{{ sp_setting_label | escape }}</span>
+          </li>
+        {%- endif -%}
+      </ul>
+    {%- endif -%}
+    <a href="{{ sp_url }}" class="skatepark-card__arrow" aria-label="View {{ park.name.value | escape }}">
+      {{- 'icon-long-arrow.svg' | inline_asset_content -}}
+    </a>
   </div>
-</a>
+</article>
