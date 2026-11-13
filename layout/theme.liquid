@@ -28,7 +28,7 @@
     	{%- assign is_policy_page = true -%}
     {%- endif -%}
 
-   <body class="template-{{ template.name | handleize }} template-{% if is_policy_page %}policy{% endif %}">
+   <body class="template-{{ template.name | handleize }} template-{% if is_policy_page %}policy{% endif %} {% if page.metafields.custom.no_body_padding %}no-top-padding{% endif %}">
     {% sections 'header-group' %}
 
     {%- if is_policy_page -%}
