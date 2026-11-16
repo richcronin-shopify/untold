@@ -26,69 +26,275 @@
   assign seo_title = page_title
   assign seo_description = page_description
   assign sp_image = blank
+  assign sp_skip_brand = false
 
   if request.page_type == 'metaobject' and metaobject.system.type == 'skatepark'
-    assign sp_name = metaobject.name.value
+    comment
+      Park titles: {Name}, {Town} | {Type}, photos & map, with shorter
+      fallbacks so the title stays at or under 60 characters. The brand
+      is not added. Parks without a real photo say "map & features"
+      rather than "Photos". Meta descriptions stay at or under 155
+      characters and never mention opening hours or fees.
+    endcomment
+    assign sp_skip_brand = true
+    assign sp_name = metaobject.name.value | strip
     assign sp_town = metaobject.town_city.value
     assign sp_county = metaobject.county_district.value
+    if sp_town contains '('
+      assign sp_town = sp_town | split: '(' | first | strip
+    endif
     assign sp_name_down = sp_name | downcase
     assign sp_town_down = sp_town | downcase
 
-    assign seo_title = sp_name
+    assign sp_place = sp_name
     if sp_town != blank
       unless sp_name_down contains sp_town_down
-        assign seo_title = seo_title | append: ', ' | append: sp_town
+        assign sp_place = sp_name | append: ', ' | append: sp_town
       endunless
     endif
+
     assign sp_kind = 'Skatepark'
-    if metaobject.park_type.value == 'Pump Track'
-      assign sp_kind = 'Pump track'
-    elsif metaobject.park_type.value == 'BMX Track / Dirt Jumps'
-      assign sp_kind = 'BMX track'
-    endif
-    assign seo_title = seo_title | append: ' – ' | append: sp_kind | append: ' | ' | append: shop.name
-
-    assign sp_desc = metaobject.description.value | strip_newlines | strip
-    assign sp_check = sp_desc | downcase
-    assign sp_desc_ok = true
-    if sp_desc == blank
-      assign sp_desc_ok = false
-    endif
-    assign sp_banned = 'deliver|price|£|in stock|out of stock| best |best.|cheapest|shipping|postage' | split: '|'
-    for sp_word in sp_banned
-      if sp_check contains sp_word
-        assign sp_desc_ok = false
+    case metaobject.park_type.value
+      when 'Pump Track'
+        assign sp_kind = 'Pump track'
+      when 'BMX Track / Dirt Jumps'
+        assign sp_kind = 'BMX track'
+      when 'Mini Ramp'
+        assign sp_kind = 'Mini ramp'
+      when 'Skatepark & Pump / BMX Track'
+        assign sp_kind = 'Skatepark & pump track'
+      when 'Bowl / Pool'
+        assign sp_kind = 'Skate bowl'
+      when 'Multi-Sport Action Park'
+        assign sp_kind = 'Action sports park'
+      when 'Street Plaza'
+        assign sp_kind = 'Street plaza'
+    endcase
+    if metaobject.setting.value == 'Indoor'
+      if sp_kind == 'Action sports park' or sp_kind == 'Skatepark' or sp_kind == 'Street plaza' or sp_kind == 'Skate bowl'
+        assign sp_kind = 'Indoor skatepark'
+      else
+        assign sp_kind_l = sp_kind | downcase
+        assign sp_kind = 'Indoor ' | append: sp_kind_l
       endif
-    endfor
+    endif
 
-    if sp_desc_ok
-      assign seo_description = sp_desc | truncate: 158
+    assign sp_kind_l = sp_kind | downcase
+    assign sp_kl = sp_kind_l
+    if sp_kind_l contains 'indoor '
+      assign sp_kl = 'indoor'
+    endif
+    assign sp_dup = false
+    if sp_name_down contains sp_kl
+      assign sp_dup = true
+    endif
+    if sp_kl == 'skatepark'
+      if sp_name_down contains 'skate park'
+        assign sp_dup = true
+      endif
+    endif
+
+    assign sp_has_photo = false
+    assign sp_thumb0 = metaobject.thumbnail_image_url.value | first
+    if sp_thumb0 != blank
+      unless sp_thumb0 contains 'google.com/vt/'
+        assign sp_has_photo = true
+      endunless
+    endif
+    if sp_has_photo
+      assign sp_tail = 'photos & map'
+      assign sp_tail_cap = 'Photos & map'
     else
-      assign sp_type = metaobject.park_type.value | default: 'Skatepark' | downcase | replace: 'bmx', 'BMX'
-      assign sp_setting = metaobject.setting.value | downcase
-      assign seo_description = sp_name | append: ' is '
-      if sp_setting contains 'covered'
-        assign sp_setting = 'covered'
+      assign sp_tail = 'map & features'
+      assign sp_tail_cap = 'Map & features'
+    endif
+
+    if metaobject.setting.value == 'Indoor'
+      assign sp_short = 'Indoor park'
+    else
+      assign sp_short = sp_kind
+    endif
+
+    assign seo_title = sp_name
+    if sp_dup
+      assign sp_c1 = sp_place | append: ' | ' | append: sp_tail_cap
+      assign sp_c2 = sp_place | append: ' | Map'
+      assign sp_c3 = sp_name | append: ' | Map'
+      assign sp_c4 = sp_name | append: ' | ' | append: sp_short
+      if sp_c1.size <= 60
+        assign seo_title = sp_c1
+      elsif sp_c2.size <= 60
+        assign seo_title = sp_c2
+      elsif sp_c3.size <= 60
+        assign seo_title = sp_c3
+      elsif sp_c4.size <= 60
+        assign seo_title = sp_c4
       endif
-      if sp_setting != blank
-        assign sp_phrase = sp_setting | append: ' ' | append: sp_type
+    else
+      assign sp_c1 = sp_place | append: ' | ' | append: sp_kind | append: ', ' | append: sp_tail
+      assign sp_c2 = sp_place | append: ' | ' | append: sp_kind | append: ' & map'
+      assign sp_c3 = sp_place | append: ' | ' | append: sp_kind
+      assign sp_c4 = sp_name | append: ' | ' | append: sp_kind
+      assign sp_c5 = sp_name | append: ' | ' | append: sp_short
+      if sp_c1.size <= 60
+        assign seo_title = sp_c1
+      elsif sp_c2.size <= 60
+        assign seo_title = sp_c2
+      elsif sp_c3.size <= 60
+        assign seo_title = sp_c3
+      elsif sp_c4.size <= 60
+        assign seo_title = sp_c4
+      elsif sp_c5.size <= 60
+        assign seo_title = sp_c5
+      endif
+    endif
+
+    assign sp_kind_meta = sp_kind | downcase | replace: 'bmx', 'BMX'
+    assign sp_adj = ''
+    unless sp_kind_meta contains 'indoor'
+      if metaobject.setting.value contains 'Covered'
+        assign sp_adj = 'Covered '
       else
-        assign sp_phrase = sp_type
+        assign sp_adj = 'Outdoor '
       endif
-      assign sp_first = sp_phrase | slice: 0
-      if 'aeiou' contains sp_first
-        assign seo_description = seo_description | append: 'an ' | append: sp_phrase
-      else
-        assign seo_description = seo_description | append: 'a ' | append: sp_phrase
+    endunless
+    if sp_adj != blank
+      assign sp_head = sp_adj | append: sp_kind_meta
+    else
+      assign sp_k0 = sp_kind_meta | slice: 0 | upcase
+      assign sp_krest = sp_kind_meta | slice: 1, 80
+      assign sp_head = sp_k0 | append: sp_krest
+    endif
+    assign sp_loc = ''
+    if sp_town != blank
+      assign sp_loc = sp_town
+      if sp_county != blank and sp_county != sp_town
+        assign sp_loc = sp_loc | append: ', ' | append: sp_county
       endif
-      if sp_town != blank
-        assign seo_description = seo_description | append: ' in ' | append: sp_town
-        if sp_county != blank and sp_county != sp_town
-          assign seo_description = seo_description | append: ', ' | append: sp_county
+    elsif sp_county != blank
+      assign sp_loc = sp_county
+    endif
+    if sp_loc != blank
+      assign sp_head = sp_head | append: ' in ' | append: sp_loc
+    endif
+
+    assign sp_lit = ''
+    if metaobject.floodlit.value == 'Yes'
+      assign sp_lit = ' Floodlit.'
+    endif
+    if sp_has_photo
+      assign sp_end = ' Photos, map, directions and park details for BMX riders.'
+    else
+      assign sp_end = ' Map, directions and park details for BMX riders.'
+    endif
+
+    assign sp_kind_cmp = sp_kind | downcase | replace: 'indoor ', ''
+    assign sp_feat_csv = ''
+    assign sp_feat_n = 0
+    if metaobject.features.value != blank
+      assign sp_raw_feats = metaobject.features.value | split: ','
+      for sp_raw in sp_raw_feats
+        assign sp_f = sp_raw | strip
+        if sp_f == blank
+          continue
+        endif
+        case sp_f
+          when 'Volcano / Pyramid'
+            assign sp_f = 'pyramid'
+          when 'Cradle / Oververt'
+            assign sp_f = 'cradle'
+          when 'BMX Race / Jump Track'
+            assign sp_f = 'jump track'
+          when 'Start Gate / Hill'
+            assign sp_f = 'start hill'
+          when 'Street Section'
+            assign sp_f = 'street section'
+          when 'Foam Pit'
+            assign sp_f = 'foam pit'
+          when 'Resi Ramp'
+            assign sp_f = 'resi ramp'
+          when 'Pool Coping'
+            assign sp_f = 'pool coping'
+          when 'Pump Track'
+            assign sp_f = 'pump track'
+          else
+            assign sp_f = sp_f | downcase | replace: 'bmx', 'BMX'
+        endcase
+        if sp_f == sp_kind_cmp
+          continue
+        endif
+        if sp_feat_csv == blank
+          assign sp_feat_csv = sp_f
+        else
+          assign sp_feat_csv = sp_feat_csv | append: '||' | append: sp_f
+        endif
+        assign sp_feat_n = sp_feat_n | plus: 1
+      endfor
+    endif
+
+    assign seo_description = sp_head | append: '.' | append: sp_lit | append: sp_end
+    assign sp_ns = '4,3,2,1,0' | split: ','
+    for sp_n_s in sp_ns
+      assign sp_n = sp_n_s | times: 1
+      assign sp_use = ''
+      assign sp_use_n = 0
+      if sp_feat_n > 0 and sp_n > 0
+        assign sp_feats = sp_feat_csv | split: '||'
+        for sp_f in sp_feats
+          if sp_use_n < sp_n
+            if sp_use == blank
+              assign sp_use = sp_f
+            else
+              assign sp_use = sp_use | append: '||' | append: sp_f
+            endif
+            assign sp_use_n = sp_use_n | plus: 1
+          endif
+        endfor
+      endif
+      assign sp_feat_str = ''
+      if sp_use_n > 0
+        assign sp_use_arr = sp_use | split: '||'
+        assign sp_f0 = sp_use_arr | first
+        assign sp_f0_last = sp_f0 | slice: -1
+        unless sp_f0_last == 's'
+          assign sp_f0_ch = sp_f0 | downcase | slice: 0
+          if 'aeiou' contains sp_f0_ch
+            assign sp_f0 = 'an ' | append: sp_f0
+          else
+            assign sp_f0 = 'a ' | append: sp_f0
+          endif
+        endunless
+        if sp_use_n == 1
+          assign sp_feat_str = sp_f0
+        elsif sp_use_n == 2
+          assign sp_f1 = sp_use_arr | last
+          assign sp_feat_str = sp_f0 | append: ' and ' | append: sp_f1
+        else
+          assign sp_feat_str = sp_f0
+          assign sp_last_i = sp_use_n | minus: 1
+          assign sp_j = 0
+          for sp_fj in sp_use_arr
+            if sp_j > 0
+              if sp_j == sp_last_i
+                assign sp_feat_str = sp_feat_str | append: ' and ' | append: sp_fj
+              else
+                assign sp_feat_str = sp_feat_str | append: ', ' | append: sp_fj
+              endif
+            endif
+            assign sp_j = sp_j | plus: 1
+          endfor
         endif
       endif
-      assign seo_description = seo_description | append: '. Features, facilities, map, directions and key facts for BMX riders.'
-    endif
+      if sp_feat_str != blank
+        assign sp_try = sp_head | append: ' with ' | append: sp_feat_str | append: '.' | append: sp_lit | append: sp_end
+      else
+        assign sp_try = sp_head | append: '.' | append: sp_lit | append: sp_end
+      endif
+      if sp_try.size <= 155
+        assign seo_description = sp_try
+        break
+      endif
+    endfor
 
     assign og_title = seo_title
     assign og_description = seo_description
@@ -302,7 +508,9 @@
   {{ seo_title }}
   {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
   {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
-  {%- unless seo_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+  {%- unless sp_skip_brand -%}
+    {%- unless seo_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+  {%- endunless -%}
 </title>
 
 <link
