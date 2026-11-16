@@ -142,17 +142,39 @@
       ],
       "name": "Collection grid",
       "settings": {
+        "blocks-per-row": 5,
+        "blocks-per-row-t": 3,
+        "blocks-per-row-m": 2,
         "padding-top": 30,
         "padding-bottom": 0,
         "padding-top-m": 0,
         "padding-bottom-m": 0
       }
+    },
+    "179486169047b2cbe5": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_review_widget_rPkGXB": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "review_data": "sample_data",
+            "max_width": 1200,
+            "show_shop_reviews": false,
+            "empty_state": "hide_widget"
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_review_widget_rPkGXB"
+      ],
+      "settings": {}
     }
   },
   "order": [
     "main",
     "pdp_releated_products_X7ffze",
     "brand_slider_hL7tdW",
-    "collection_grid_pA6YAR"
+    "collection_grid_pA6YAR",
+    "179486169047b2cbe5"
   ]
 }
