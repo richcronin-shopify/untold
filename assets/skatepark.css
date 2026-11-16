@@ -1551,6 +1551,15 @@
 	@media (max-width: 767px) {
 		margin-bottom: 28px;
 	}
+
+	.product-slider__swiper {
+
+		@media (max-width: 767px) {
+			margin-right: -16px;
+		}
+
+	}
+
 }
 
 .skateparks-index__results-head {
