@@ -13,7 +13,7 @@
       "type": "main-skatepark",
       "blocks": {
         "forms_inline_park_photo": {
-          "type": "shopify://apps/forms/blocks/inline/8744a304-fcb1-4347-b211-bb6b4759a76a",
+          "type": "shopify:\/\/apps\/forms\/blocks\/inline\/8744a304-fcb1-4347-b211-bb6b4759a76a",
           "settings": {
             "form_id": "1230220",
             "text_color": "#ffffff",
@@ -34,11 +34,11 @@
         "forms_inline_park_photo"
       ],
       "settings": {
-        "index_url": "/pages/skateparks-uk",
+        "index_url": "\/pages\/skateparks-finder-uk",
         "index_label": "Skatepark finder",
         "max_images": 10,
         "show_map": true,
-        "placeholder_image": "shopify://shop_images/park-placeholder.jpg",
+        "placeholder_image": "shopify:\/\/shop_images\/park-placeholder.jpg",
         "placeholder_url": "",
         "show_events": true,
         "events_heading": "Upcoming events",

@@ -40,13 +40,13 @@
         assign seo_title = seo_title | append: ', ' | append: sp_town
       endunless
     endif
-    assign sp_kind = 'Skatepark guide'
+    assign sp_kind = 'Skatepark'
     if metaobject.park_type.value == 'Pump Track'
-      assign sp_kind = 'Pump track guide'
+      assign sp_kind = 'Pump track'
     elsif metaobject.park_type.value == 'BMX Track / Dirt Jumps'
-      assign sp_kind = 'BMX track guide'
+      assign sp_kind = 'BMX track'
     endif
-    assign seo_title = seo_title | append: ' – ' | append: sp_kind
+    assign seo_title = seo_title | append: ' – ' | append: sp_kind | append: ' | ' | append: shop.name
 
     assign sp_desc = metaobject.description.value | strip_newlines | strip
     assign sp_check = sp_desc | downcase
@@ -173,6 +173,53 @@
       assign sp_image = sp_image | strip
     endif
   endif
+
+  comment
+    Finder page: set a tighter title, and a self-canonical plus rel=prev when a
+    pagination param is present. Page 1 stays on the clean URL. The page param
+    name is read from the request URL in content_for_header because Shopify's
+    canonical_url strips the custom paginate parameter (page_xxxx).
+  endcomment
+  assign finder_page_param = blank
+  assign finder_page_num = 1
+  assign seo_canonical = canonical_url
+  if request.page_type == 'page' and page.handle == 'skateparks-finder-uk'
+    if shopify_pageurl != blank and shopify_pageurl contains '?'
+      assign query_string = shopify_pageurl | split: '?' | last
+      assign query_parts = query_string | split: '&'
+      for part in query_parts
+        assign q_key = part | split: '=' | first
+        assign q_val = part | split: '=' | last
+        if q_key == 'page' or q_key contains 'page_'
+          if q_val != blank
+            assign finder_page_param = q_key
+            assign finder_page_num = q_val | times: 1
+          endif
+        endif
+      endfor
+    endif
+    if finder_page_num <= 1 and request.params.page_1567ba11 != blank
+      assign finder_page_param = 'page_1567ba11'
+      assign finder_page_num = request.params.page_1567ba11 | times: 1
+    endif
+    if finder_page_num <= 1 and request.params.page != blank
+      assign finder_page_param = 'page'
+      assign finder_page_num = request.params.page | times: 1
+    endif
+    if finder_page_num < 1
+      assign finder_page_num = 1
+    endif
+    if finder_page_num > 1
+      assign seo_title = 'UK Skatepark Finder – Page ' | append: finder_page_num | append: ' | ' | append: shop.name
+    else
+      assign seo_title = 'UK Skatepark Finder – 2,000+ Parks & Tracks | ' | append: shop.name
+    endif
+    assign og_title = seo_title
+    if finder_page_num > 1 and finder_page_param != blank
+      assign seo_canonical = canonical_url | append: '?' | append: finder_page_param | append: '=' | append: finder_page_num
+    endif
+    assign og_url = seo_canonical
+  endif
 -%}
 {%- if pe_noindex -%}
   <meta name="robots" content="noindex, nofollow">
@@ -260,8 +307,16 @@
 
 <link
   rel="canonical"
-  href="{{ canonical_url }}"
+  href="{{ seo_canonical }}"
 >
+{%- if request.page_type == 'page' and page.handle == 'skateparks-finder-uk' and finder_page_num > 1 and finder_page_param != blank -%}
+  {%- if finder_page_num == 2 -%}
+    <link rel="prev" href="{{ canonical_url }}">
+  {%- else -%}
+    {%- assign finder_prev_num = finder_page_num | minus: 1 -%}
+    <link rel="prev" href="{{ canonical_url }}?{{ finder_page_param }}={{ finder_prev_num }}">
+  {%- endif -%}
+{%- endif -%}
 
 {% if seo_description %}
   <meta

@@ -259,13 +259,14 @@
       </div>
     </div>
 
+    {%- assign finder_base = page.url | default: request.path -%}
     <div class="skateparks-index__browse">
       <h2 class="skateparks-index__browse-label">Browse by region</h2>
-      <div class="skateparks-index__pills" role="group" aria-label="Browse by region">
-        <button type="button" class="skateparks-index__pill is-active" data-sp-region-pill="" aria-pressed="true">All UK</button>
+      <nav class="skateparks-index__pills" aria-label="Browse by region">
+        <a href="{{ finder_base }}" class="skateparks-index__pill is-active" data-sp-region-pill="" aria-pressed="true">All UK</a>
         {%- for r in visible_regions -%}
           {%- if r != blank -%}
-            <button type="button" class="skateparks-index__pill" data-sp-region-pill="{{ r | escape }}" aria-pressed="false">{{ r | escape }}</button>
+            <a href="{{ finder_base }}?region={{ r | url_encode }}" class="skateparks-index__pill" data-sp-region-pill="{{ r | escape }}" aria-pressed="false">{{ r | escape }}</a>
           {%- endif -%}
         {%- endfor -%}
         {%- if region_rest_count > 0 -%}
@@ -273,12 +274,12 @@
           <span class="skateparks-index__pill-rest" data-sp-region-rest hidden>
             {%- for r in rest_regions -%}
               {%- if r != blank -%}
-                <button type="button" class="skateparks-index__pill" data-sp-region-pill="{{ r | escape }}" aria-pressed="false">{{ r | escape }}</button>
+                <a href="{{ finder_base }}?region={{ r | url_encode }}" class="skateparks-index__pill" data-sp-region-pill="{{ r | escape }}" aria-pressed="false">{{ r | escape }}</a>
               {%- endif -%}
             {%- endfor -%}
           </span>
         {%- endif -%}
-      </div>
+      </nav>
     </div>
     </div>
 
@@ -389,6 +390,38 @@
 
       <div data-sp-server>
         {%- paginate shop.metaobjects.skatepark.values by ss.per_page -%}
+          {%- liquid
+            assign list_canonical = canonical_url
+            if paginate.current_page > 1
+              assign list_canonical = canonical_url | append: '?' | append: paginate.page_param | append: '=' | append: paginate.current_page
+            endif
+            assign list_offset = paginate.current_page | minus: 1 | times: ss.per_page
+            assign page1_query = paginate.page_param | append: '=1'
+            assign seo_prev = blank
+            assign seo_next = blank
+            if paginate.previous
+              if paginate.current_page == 2
+                assign seo_prev = canonical_url
+              else
+                assign seo_prev = paginate.previous.url
+                unless seo_prev contains '://'
+                  assign seo_prev = request.origin | append: seo_prev
+                endunless
+              endif
+            endif
+            if paginate.next
+              assign seo_next = paginate.next.url
+              unless seo_next contains '://'
+                assign seo_next = request.origin | append: seo_next
+              endunless
+            endif
+          -%}
+          {%- if seo_prev != blank -%}
+            <link rel="prev" href="{{ seo_prev }}">
+          {%- endif -%}
+          {%- if seo_next != blank -%}
+            <link rel="next" href="{{ seo_next }}">
+          {%- endif -%}
           <p class="skateparks-index__count" data-sp-server-count>{{ paginate.items }} parks</p>
           <div class="skateparks-index__grid">
             {%- for park in shop.metaobjects.skatepark.values -%}
@@ -410,11 +443,19 @@
           {%- if paginate.pages > 1 -%}
             <nav class="skateparks-index__pagination" aria-label="Pagination">
               {%- if paginate.previous -%}
-                <a href="{{ paginate.previous.url }}" class="skateparks-index__page skateparks-index__page--prev" aria-label="Previous page">&larr;</a>
+                {%- assign prev_href = paginate.previous.url -%}
+                {%- if paginate.current_page == 2 or prev_href contains page1_query -%}
+                  {%- assign prev_href = page.url | default: request.path -%}
+                {%- endif -%}
+                <a href="{{ prev_href }}" class="skateparks-index__page skateparks-index__page--prev" aria-label="Previous page">&larr;</a>
               {%- endif -%}
               {%- for part in paginate.parts -%}
                 {%- if part.is_link -%}
-                  <a href="{{ part.url }}" class="skateparks-index__page">{{ part.title }}</a>
+                  {%- assign part_href = part.url -%}
+                  {%- if part_href contains page1_query -%}
+                    {%- assign part_href = page.url | default: request.path -%}
+                  {%- endif -%}
+                  <a href="{{ part_href }}" class="skateparks-index__page">{{ part.title }}</a>
                 {%- elsif part.title == paginate.current_page -%}
                   <span class="skateparks-index__page is-current" aria-current="page">{{ part.title }}</span>
                 {%- else -%}
@@ -426,6 +467,42 @@
               {%- endif -%}
             </nav>
           {%- endif -%}
+
+          <script type="application/ld+json">
+          {
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            "name": {{ ss.title | json }},
+            "url": {{ list_canonical | json }}
+            {%- if ss.intro != blank -%},
+            "description": {{ ss.intro | strip_html | strip | json }}
+            {%- endif -%},
+            "isPartOf": {
+              "@type": "WebSite",
+              "name": {{ shop.name | json }},
+              "url": {{ shop.url | json }}
+            },
+            "mainEntity": {
+              "@type": "ItemList",
+              "itemListOrder": "https://schema.org/ItemListOrderAscending",
+              "itemListElement": [
+                {%- for park in shop.metaobjects.skatepark.values -%}
+                  {%- assign park_url = park.system.url -%}
+                  {%- if park_url != blank and park_url contains '://' -%}
+                  {%- elsif park_url != blank -%}
+                    {%- assign park_url = request.origin | append: park_url -%}
+                  {%- endif -%}
+                  {
+                    "@type": "ListItem",
+                    "position": {{ list_offset | plus: forloop.index }},
+                    "name": {{ park.name.value | json }},
+                    "url": {{ park_url | json }}
+                  }{%- unless forloop.last -%},{%- endunless -%}
+                {%- endfor -%}
+              ]
+            }
+          }
+          </script>
         {%- endpaginate -%}
       </div>
     </div>

@@ -627,7 +627,8 @@
   }));
 
   $$('[data-sp-region-pill]').forEach((btn) => {
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', (e) => {
+      if (btn.tagName === 'A') e.preventDefault();
       if (regionSel) regionSel.value = btn.dataset.spRegionPill || '';
       if (countySel) { countySel.value = ''; }
       apply();

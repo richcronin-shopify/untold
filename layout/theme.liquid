@@ -15,11 +15,13 @@
     {{ 'base.css' | asset_url | stylesheet_tag }}
     {{ 'swiper-bundle.min.css' | asset_url | stylesheet_tag }}
 
-    {% render 'meta-tags' %}
+    {%- capture shopify_header_scripts -%}{{ content_for_header }}{%- endcapture -%}
+    {%- assign shopify_pageurl = shopify_header_scripts | split: '"pageurl":"' | last | split: '"' | first | replace: '\/', '/' | replace: '\u0026', '&' -%}
+    {% render 'meta-tags', shopify_pageurl: shopify_pageurl %}
 
     {% render 'structured-data' %}
 
-    {{ content_for_header }}
+    {{ shopify_header_scripts }}
 
   </head>
 

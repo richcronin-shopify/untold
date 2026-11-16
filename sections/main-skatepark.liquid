@@ -3,7 +3,12 @@
   assign ss = section.settings
   assign park = metaobject
 
-  assign index_url = ss.index_url | default: '/pages/skateparks-uk'
+  assign index_url = ss.index_url | default: '/pages/skateparks-finder-uk'
+  if pages['skateparks-finder-uk'] != blank
+    if index_url == blank or index_url == '/pages/skateparks-uk'
+      assign index_url = pages['skateparks-finder-uk'].url
+    endif
+  endif
   assign park_name = park.name.value
   assign town = park.town_city.value
   assign county = park.county_district.value
@@ -451,7 +456,7 @@
   {%- endif -%},
   "address": {{ sp_address }}
   {%- if has_geo -%},
-  "geo": {"@type": "GeoCoordinates", "latitude": {{ lat }}, "longitude": {{ lng }}}
+  "geo": {"@type": "GeoCoordinates", "latitude": {{ lat | json }}, "longitude": {{ lng | json }}}
   {%- endif -%}
   {%- if images != blank and images.size > 0 and using_satellite == false -%},
   "image": [{%- for img in images limit: 5 -%}{{ img | json }}{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}]
@@ -637,7 +642,7 @@
       "type": "url",
       "id": "index_url",
       "label": "Skateparks index page",
-      "info": "Used for the breadcrumb. Defaults to /pages/skateparks-uk."
+      "info": "Used for the breadcrumb. Defaults to /pages/skateparks-finder-uk."
     },
     {
       "type": "text",
