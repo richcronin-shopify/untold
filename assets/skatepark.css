@@ -1414,8 +1414,10 @@
 			gap: 14px;
 		}
 
-		@media (max-width: 749px) {
-			gap: 12px;
+		@media (max-width: 767px) {
+			gap: 8px;
+			margin: 0 -16px;
+			pasding-left: 16px;
 		}
 	}
 
