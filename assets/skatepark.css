@@ -1117,7 +1117,7 @@
 
 	@media (max-width: 767px) {
 		margin-bottom: 28px;
-		padding: 140px 0 24px;
+		padding: 140px 0 0;
 	}
 
 	&::before {
@@ -1172,6 +1172,10 @@
 		.skateparks-index__search-btn {
 			grid-column: 1 / -1;
 		}
+	}
+
+	@media (max-width: 767px) {
+		margin: 0 -20px;
 	}
 
 	@media (max-width: 560px) {
