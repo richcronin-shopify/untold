@@ -1388,6 +1388,10 @@
 				display: none;
 			}
 		}
+		@media (max-width: 767px) {
+			margin: 0 -16px;
+			padding-left: 16px;
+		}
 	}
 }
 
