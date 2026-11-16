@@ -412,6 +412,9 @@
 	font-size: var(--small);
 	line-height: 1.5;
 	opacity: .85;
+	@media (max-width: 767px) {
+		font-size: 16px;
+	}
 }
 
 .skateparks-index__filters {
