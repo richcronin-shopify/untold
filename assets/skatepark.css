@@ -1403,7 +1403,6 @@
 
 	@media (max-width: 767px) {
 		margin: 0 -16px 20px;
-		padding: 0 16px;
 	}
 
 	.skateparks-index__pills {
@@ -1417,6 +1416,7 @@
 
 		@media (max-width: 767px) {
 			gap: 8px;
+			padding: 0 16px;
 		}
 	}
 
