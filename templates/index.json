@@ -263,10 +263,10 @@
     "product_component_aiiB9b": {
       "type": "product-component",
       "blocks": {
-        "product_DgfpMY": {
+        "product_c8UfiY": {
           "type": "product",
           "settings": {
-            "product": "profile-racing-mini-cassette-hub-set"
+            "product": "profile-racing-mini-front-hub"
           }
         },
         "product_t9KN6B": {
@@ -275,10 +275,10 @@
             "product": "colony-injustice-frame-clear-red"
           }
         },
-        "product_c8UfiY": {
+        "product_b8hjxC": {
           "type": "product",
           "settings": {
-            "product": "profile-racing-mini-front-hub"
+            "product": "profile-racing-mini-race-cassette-rear-hub"
           }
         },
         "product_QyWJx6": {
@@ -287,10 +287,10 @@
             "product": "colony-injustice-frame-ed-black"
           }
         },
-        "product_b8hjxC": {
+        "product_DgfpMY": {
           "type": "product",
           "settings": {
-            "product": "profile-racing-mini-race-cassette-rear-hub"
+            "product": "profile-racing-mini-cassette-hub-set"
           }
         },
         "product_iTT3Cb": {
@@ -331,11 +331,11 @@
         }
       },
       "block_order": [
-        "product_DgfpMY",
-        "product_t9KN6B",
         "product_c8UfiY",
-        "product_QyWJx6",
+        "product_t9KN6B",
         "product_b8hjxC",
+        "product_QyWJx6",
+        "product_DgfpMY",
         "product_iTT3Cb",
         "product_GFLJfR",
         "product_nHVPEP",
