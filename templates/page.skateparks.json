@@ -13,7 +13,7 @@
       "type": "main-skateparks-index",
       "settings": {
         "title": "UK skatepark finder",
-        "intro": "<p>Find skateparks, pump tracks, BMX tracks and dirt jumps across the UK. Search by name or town, or filter by region and county.</p>",
+        "intro": "<p>Find skateparks, pump tracks, BMX tracks and dirt jumps across the UK. Search by name or town, or filter by region and county. <a href=\"/pages/my-parks\" title=\"My parks\"><span style=\"text-decoration:underline\">Login to see your saved parks</span></a>.</p>",
         "hero_image": "shopify://shop_images/park-background.jpg",
         "per_page": 24,
         "popular_title": "Popular parks",
@@ -26,6 +26,8 @@
         ],
         "show_popular_view_all": false,
         "popular_view_all_link": "",
+        "show_trending_badge": true,
+        "trending_label": "Trending",
         "stat_total_label": "Parks listed",
         "stat_regions_label": "UK regions",
         "stat_types_label": "Park types",
