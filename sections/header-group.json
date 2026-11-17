@@ -21,6 +21,13 @@
             "url": ""
           }
         },
+        "announcement_TYnqEf": {
+          "type": "announcement",
+          "settings": {
+            "title": "Pay in 3 with Klarna",
+            "url": "shopify://collections/all-products"
+          }
+        },
         "announcement_DyQCfq": {
           "type": "announcement",
           "settings": {
@@ -31,6 +38,7 @@
       },
       "block_order": [
         "announcement_7crK3Q",
+        "announcement_TYnqEf",
         "announcement_DyQCfq"
       ],
       "settings": {
