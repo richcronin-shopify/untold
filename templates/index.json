@@ -263,22 +263,40 @@
     "product_component_aiiB9b": {
       "type": "product-component",
       "blocks": {
+        "product_DgfpMY": {
+          "type": "product",
+          "settings": {
+            "product": "profile-racing-mini-cassette-hub-set"
+          }
+        },
         "product_t9KN6B": {
           "type": "product",
           "settings": {
             "product": "colony-injustice-frame-clear-red"
           }
         },
-        "product_iTT3Cb": {
+        "product_c8UfiY": {
           "type": "product",
           "settings": {
-            "product": "kink-eastman-guard-sprocket-matt-black"
+            "product": "profile-racing-mini-front-hub"
           }
         },
         "product_QyWJx6": {
           "type": "product",
           "settings": {
             "product": "colony-injustice-frame-ed-black"
+          }
+        },
+        "product_b8hjxC": {
+          "type": "product",
+          "settings": {
+            "product": "profile-racing-mini-race-cassette-rear-hub"
+          }
+        },
+        "product_iTT3Cb": {
+          "type": "product",
+          "settings": {
+            "product": "kink-eastman-guard-sprocket-matt-black"
           }
         },
         "product_GFLJfR": {
@@ -313,9 +331,12 @@
         }
       },
       "block_order": [
+        "product_DgfpMY",
         "product_t9KN6B",
-        "product_iTT3Cb",
+        "product_c8UfiY",
         "product_QyWJx6",
+        "product_b8hjxC",
+        "product_iTT3Cb",
         "product_GFLJfR",
         "product_nHVPEP",
         "product_NFAQka",
