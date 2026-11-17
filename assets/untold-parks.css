@@ -293,6 +293,16 @@
 .untold-my-parks {
 	padding: 0 0 60px;
 
+	.breadcrumbs {
+		margin: 0 0 30px;
+		@media (max-width: 767px) {
+			margin-bottom: 20px;
+			overflow-x: auto;
+			white-space: nowrap;
+			scrollbar-width: none;
+		}
+	}
+
 	.untold-my-parks__header {
 		margin: 0 0 30px;
 	}

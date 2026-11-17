@@ -13,6 +13,15 @@
 -%}
 <section class="untold-parks untold-my-parks" id="{{ section.id }}">
   <div class="container">
+    {%- assign finder_url = section.settings.directory_url | default: '/pages/skateparks-uk' -%}
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <ol class="breadcrumbs__list" role="list">
+        <li class="breadcrumbs__item"><a href="{{ routes.root_url }}" class="breadcrumbs__link">Home</a></li>
+        <li class="breadcrumbs__item"><span class="breadcrumbs__separator" aria-hidden="true">/</span><a href="{{ finder_url | escape }}" class="breadcrumbs__link">UK Skatepark Finder</a></li>
+        <li class="breadcrumbs__item"><span class="breadcrumbs__separator" aria-hidden="true">/</span><span class="breadcrumbs__current" aria-current="page">{{ section.settings.heading | escape }}</span></li>
+      </ol>
+    </nav>
+
     <header class="untold-my-parks__header">
       <h1 class="h2">{{ section.settings.heading | escape }}</h1>
     </header>
