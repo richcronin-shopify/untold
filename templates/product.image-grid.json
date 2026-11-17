@@ -1,0 +1,180 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "product",
+      "blocks": {
+        "judge_me_reviews_preview_badge_mVpT3d": {
+          "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {}
+        },
+        "size_guide_fddUjr": {
+          "type": "size_guide",
+          "settings": {
+            "icon": "shopify://shop_images/icon-size.svg",
+            "max_image_width": 25,
+            "icon_text": "",
+            "title": "Not sure which size is right?",
+            "subtext": "Check our Bike Size Help Guide for detailed measurements and fitting advice.",
+            "link": "shopify://pages/bmx-bike-size-guide"
+          }
+        },
+        "points_VfQeEP": {
+          "type": "points",
+          "disabled": true,
+          "settings": {
+            "points_per_pound": 1,
+            "icon": "shopify://shop_images/icon-points.svg",
+            "max_image_width": 40,
+            "icon_text": "",
+            "text": "Earn [points] Untold points with this product",
+            "subtext": "Create an account to collect and redeem points.",
+            "link": "shopify://pages/loyalty"
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_preview_badge_mVpT3d",
+        "size_guide_fddUjr",
+        "points_VfQeEP"
+      ],
+      "settings": {
+        "show_image_zoom": true,
+        "show_klarna": true,
+        "product_description_label": "Product Description",
+        "delivery_returns_label": "Delivery & Returns",
+        "delivery_returns": "<p><strong>Delivery: </strong>We currently deliver to the UK only.</p><ul><li>Small items (grips, chains, pedals, parts): Royal Mail Tracked 48, £8</li><li>Larger items (tyres, wheels, rims, bars, frames): DPD, £12</li><li><strong>Free UK delivery on orders over £200</strong></li></ul><p><strong>Returns: </strong>Unused items can be returned within 30 days of delivery. See our <a href=\"/policies/shipping-policy\" title=\"Shipping Policy\">Shipping policy</a> and <a href=\"/policies/refund-policy\" title=\"Refund Policy\">Refund policy</a> for full details.</p>"
+      }
+    },
+    "pdp_releated_products_X7ffze": {
+      "type": "pdp-releated-products",
+      "name": "Related Products",
+      "settings": {
+        "title": "You may also like",
+        "collection": "bestsellers",
+        "product_limit": 6,
+        "show_view_all": true,
+        "enable_carousel": true,
+        "products_desktop": 5,
+        "products_tablet": "3",
+        "products_mobile": "2",
+        "padding-top": 40,
+        "padding-bottom": 40,
+        "padding-top-m": 30,
+        "padding-bottom-m": 30
+      }
+    },
+    "brand_slider_hL7tdW": {
+      "type": "brand-slider",
+      "name": "Brand slider",
+      "settings": {
+        "title": "Shop by brand",
+        "enable_carousel": true,
+        "max_image_width": 120,
+        "brands_desktop": 6,
+        "brands_tablet": 4,
+        "brands_mobile": 3,
+        "grid_gap": 20,
+        "padding-top": 40,
+        "padding-bottom": 40,
+        "padding-top-m": 30,
+        "padding-bottom-m": 30
+      }
+    },
+    "collection_grid_pA6YAR": {
+      "type": "collection-grid",
+      "blocks": {
+        "collection_cCE9n8": {
+          "type": "collection",
+          "settings": {
+            "collection": "complete-bikes",
+            "image": "shopify://shop_images/home-collections.jpg",
+            "title": "Complete Bikes"
+          }
+        },
+        "collection_j6m3MN": {
+          "type": "collection",
+          "settings": {
+            "collection": "frames",
+            "image": "shopify://shop_images/home-frames_a6fbf060-9475-4053-9adc-d987ff369d1f.jpg",
+            "title": ""
+          }
+        },
+        "collection_fpbMcf": {
+          "type": "collection",
+          "settings": {
+            "collection": "wheels",
+            "image": "shopify://shop_images/home-wheels.jpg",
+            "title": ""
+          }
+        },
+        "collection_JfLJqw": {
+          "type": "collection",
+          "settings": {
+            "collection": "parts",
+            "image": "shopify://shop_images/home-parts.jpg",
+            "title": "Parts"
+          }
+        },
+        "collection_TnAXe3": {
+          "type": "collection",
+          "settings": {
+            "collection": "sale",
+            "image": "shopify://shop_images/home-sale.jpg",
+            "title": "Sale"
+          }
+        }
+      },
+      "block_order": [
+        "collection_cCE9n8",
+        "collection_j6m3MN",
+        "collection_fpbMcf",
+        "collection_JfLJqw",
+        "collection_TnAXe3"
+      ],
+      "name": "Collection grid",
+      "settings": {
+        "blocks-per-row": 5,
+        "blocks-per-row-t": 3,
+        "blocks-per-row-m": 2,
+        "padding-top": 30,
+        "padding-bottom": 0,
+        "padding-top-m": 0,
+        "padding-bottom-m": 0
+      }
+    },
+    "179486169047b2cbe5": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_review_widget_rPkGXB": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "review_data": "sample_data",
+            "max_width": 1200,
+            "show_shop_reviews": false,
+            "empty_state": "hide_widget"
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_review_widget_rPkGXB"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "main",
+    "pdp_releated_products_X7ffze",
+    "brand_slider_hL7tdW",
+    "collection_grid_pA6YAR",
+    "179486169047b2cbe5"
+  ]
+}
