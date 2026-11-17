@@ -1735,7 +1735,7 @@
 
 										if (distance < closestDistance) {
 											closestDistance = distance;
-											closestIndex = index;
+											closestIndex = Number(item.dataset.mediaIndex ?? index);
 										}
 
 									});
@@ -1748,6 +1748,79 @@
 							{ passive: true }
 						);
 
+					}
+
+					// Variant media: show the selected variant's featured image.
+					// Desktop (stacked gallery): move it to the top of the stack.
+					// Mobile (swipe carousel): scroll the carousel to it.
+					const mediaDesktopBreakpoint = window.matchMedia(
+						'(min-width: 990px)'
+					);
+
+					const showVariantMedia = (variant, isInitial) => {
+
+						const mediaId = variant?.featured_media?.id;
+
+						if (!mediaId || !mediaList) {
+							return;
+						}
+
+						const itemsArray = Array.from(mediaItems);
+						const target = itemsArray.find(
+							(item) => item.dataset.mediaId === String(mediaId)
+						);
+
+						if (!target) {
+							return;
+						}
+
+						revealMediaAtIndex(itemsArray.indexOf(target));
+
+						if (mediaDesktopBreakpoint.matches) {
+
+							if (mediaList.firstElementChild !== target) {
+								mediaList.prepend(target);
+							}
+
+							if (!isInitial) {
+								const listTop = mediaList.getBoundingClientRect().top;
+								if (listTop < 0) {
+									mediaList.scrollIntoView({
+										behavior: 'smooth',
+										block: 'start'
+									});
+								}
+							}
+
+						} else {
+
+							const listRect = mediaList.getBoundingClientRect();
+							const targetRect = target.getBoundingClientRect();
+							const scrollPadding =
+								parseFloat(getComputedStyle(mediaList).scrollPaddingLeft) || 0;
+
+							mediaList.scrollTo({
+								left: mediaList.scrollLeft + (targetRect.left - listRect.left) - scrollPadding,
+								behavior: isInitial ? 'auto' : 'smooth'
+							});
+
+						}
+
+						setActiveMedia(Number(target.dataset.mediaIndex || 0));
+
+					};
+
+					section.addEventListener('product:variant-change', (event) => {
+						showVariantMedia(event.detail?.variant, false);
+					});
+
+					if (new URL(window.location.href).searchParams.has('variant')) {
+						const initialMediaVariant = getSelectedVariant();
+						if (initialMediaVariant) {
+							requestAnimationFrame(() => {
+								showVariantMedia(initialMediaVariant, true);
+							});
+						}
 					}
 
 					section.dataset.productInitialised = 'true';
