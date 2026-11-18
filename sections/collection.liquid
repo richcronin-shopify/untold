@@ -127,7 +127,7 @@
 							class="collection-filters__stock-toggle"
 							for="Filter-{{ section.id }}-in-stock"
 						>
-							<span class="collection-filters__stock-toggle-label">In Stock</span>
+							<span class="collection-filters__stock-toggle-label">Show in stock only</span>
 
 							<input
 								class="collection-filters__stock-toggle-input"
@@ -208,7 +208,7 @@
 							class="collection-filters__stock-toggle"
 							for="Filter-{{ section.id }}-in-stock"
 						>
-							<span class="collection-filters__stock-toggle-label">In Stock</span>
+							<span class="collection-filters__stock-toggle-label">Show in stock only</span>
 
 							<input
 								class="collection-filters__stock-toggle-input"
@@ -387,9 +387,101 @@
 																assign swatch_image = ''
 																assign swatch_color = ''
 																assign swatch_has_native = false
+																assign swatch_from_setting = false
+																assign swatch_custom_style = ''
 																assign swatch_class = 'collection-filters__swatch'
 
-																if filter_value.swatch != blank
+																if section.settings.colour_swatches != blank
+																	assign swatch_label_down = filter_value.label | downcase
+																	assign swatch_lines = section.settings.colour_swatches | newline_to_br | replace: '<br />', '<br>' | replace: '<br/>', '<br>' | split: '<br>'
+
+																	for swatch_line in swatch_lines
+																		assign swatch_line_text = swatch_line | strip
+																		assign swatch_line_prefix = swatch_line_text | slice: 0, 2
+
+																		if swatch_line_text != blank and swatch_line_prefix != '//' and swatch_line_text contains ':'
+																			assign swatch_line_parts = swatch_line_text | split: ':'
+																			assign swatch_line_name = swatch_line_parts.first | strip
+																			assign swatch_line_value = ''
+
+																			for swatch_line_part in swatch_line_parts
+																				if forloop.index > 1
+																					if swatch_line_value != ''
+																						assign swatch_line_value = swatch_line_value | append: ':'
+																					endif
+																					assign swatch_line_value = swatch_line_value | append: swatch_line_part
+																				endif
+																			endfor
+
+																			assign swatch_line_value = swatch_line_value | strip | replace: '<', '' | replace: '>', ''
+																			assign swatch_line_name_down = swatch_line_name | downcase
+																			assign swatch_line_name_handle = swatch_line_name | handle
+
+																			if swatch_line_name_down == swatch_label_down or swatch_line_name_handle == swatch_handle
+																				assign swatch_setting_image = ''
+																				assign swatch_setting_colours = swatch_line_value
+
+																				if swatch_line_value contains ' | '
+																					assign swatch_value_bits = swatch_line_value | split: ' | '
+																					assign swatch_setting_colours = swatch_value_bits.first | strip
+																					assign swatch_setting_image = swatch_value_bits.last | strip
+																				endif
+
+																				if swatch_setting_colours contains 'https://' or swatch_setting_colours contains 'http://'
+																					assign swatch_setting_image = swatch_setting_colours
+																					assign swatch_setting_colours = ''
+																				endif
+
+																				if swatch_setting_image contains 'https://' or swatch_setting_image contains 'http://'
+																					assign swatch_safe_url = swatch_setting_image | replace: '"', '' | replace: "'", '' | strip
+																					assign swatch_custom_style = "--swatch-image: url('" | append: swatch_safe_url | append: "');"
+																					assign swatch_from_setting = true
+																				elsif swatch_setting_colours != blank
+																					assign swatch_hex_values = swatch_setting_colours | split: ','
+																					assign swatch_valid_colours = ''
+																					assign swatch_valid_count = 0
+
+																					for swatch_hex in swatch_hex_values
+																						assign swatch_hex_s = swatch_hex | strip
+
+																						if swatch_hex_s != blank
+																							if swatch_valid_colours != ''
+																								assign swatch_valid_colours = swatch_valid_colours | append: '||'
+																							endif
+																							assign swatch_valid_colours = swatch_valid_colours | append: swatch_hex_s
+																							assign swatch_valid_count = swatch_valid_count | plus: 1
+																						endif
+																					endfor
+
+																					if swatch_valid_count == 1
+																						assign swatch_custom_style = '--swatch-color: ' | append: swatch_valid_colours | append: '; --swatch-image: none;'
+																						assign swatch_from_setting = true
+																					elsif swatch_valid_count > 1
+																						assign swatch_colour_items = swatch_valid_colours | split: '||'
+																						assign swatch_gradient = 'linear-gradient(135deg'
+																						assign swatch_denom = swatch_valid_count | minus: 1
+
+																						for swatch_c in swatch_colour_items
+																							if forloop.last
+																								assign swatch_pct = 100
+																							else
+																								assign swatch_pct = forloop.index0 | times: 100 | divided_by: swatch_denom
+																							endif
+
+																							assign swatch_gradient = swatch_gradient | append: ', ' | append: swatch_c | append: ' ' | append: swatch_pct | append: '%'
+																						endfor
+
+																						assign swatch_gradient = swatch_gradient | append: ')'
+																						assign swatch_custom_style = '--swatch-image: ' | append: swatch_gradient | append: ';'
+																						assign swatch_from_setting = true
+																					endif
+																				endif
+																			endif
+																		endif
+																	endfor
+																endif
+
+																if swatch_from_setting == false and filter_value.swatch != blank
 																	if filter_value.swatch.image
 																		assign maybe_image = filter_value.swatch.image | image_url: width: 64
 
@@ -409,7 +501,9 @@
 																	endif
 																endif
 
-																if swatch_has_native
+																if swatch_from_setting
+																	assign swatch_class = swatch_class | append: ' collection-filters__swatch--custom collection-filters__swatch--' | append: swatch_handle
+																elsif swatch_has_native
 																	assign swatch_class = swatch_class | append: ' collection-filters__swatch--native'
 																else
 																	assign swatch_class = swatch_class | append: ' collection-filters__swatch--' | append: swatch_handle
@@ -434,10 +528,12 @@
 																<span
 																	class="{{ swatch_class }}"
 																	aria-hidden="true"
-																	{%- if swatch_has_native and swatch_image != blank and swatch_image != '' -%}
-																		style="background-image: url('{{ swatch_image }}');"
+																	{%- if swatch_from_setting and swatch_custom_style != blank -%}
+																		style="{{ swatch_custom_style }}"
+																	{%- elsif swatch_has_native and swatch_image != blank and swatch_image != '' -%}
+																		style="--swatch-image: url('{{ swatch_image }}');"
 																	{%- elsif swatch_has_native and swatch_color != blank and swatch_color != '' -%}
-																		style="background-color: {{ swatch_color }};"
+																		style="--swatch-color: {{ swatch_color }}; --swatch-image: none;"
 																	{%- endif -%}
 																></span>
 
@@ -2274,6 +2370,17 @@
 				}
 			],
 			"default": "standard"
+		},
+		{
+			"type": "header",
+			"content": "Colour swatches"
+		},
+		{
+			"type": "textarea",
+			"id": "colour_swatches",
+			"label": "Colour swatches",
+			"default": "Black: #111111\nBeige: #d8c3a5\nBloody Fade: #7a0e16, #d2262d, #f07a7a\nBlue: #1e5aa8\nBrown: #6b3f2a\nCream: #efe6cc\nGold: #c9a227\nGreen: #2e8b3a\nGrey: #8a8a8a\nNavy: #14325c\nOrange: #e86a17\nPink: #e85a9b\nPurple: #7b3fa3\nRed: #c4272f\nSour Grape: #6b2d8b, #a35cb8, #7bbf3a\nTeal: #1f8a80\nWhite: #f5f5f5\nYellow: #f0c420",
+			"info": "One colour per line, as Name: #hex. For a fade, use Name: #hex1, #hex2 (more hex values make a multi-stop fade). You can also use an image: Name: https://…. Chrome, Silver, Raw, Multi and Clear keep their built-in looks unless you add a line for them."
 		},
 		{
 			"type": "header",
