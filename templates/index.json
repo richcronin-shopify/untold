@@ -373,7 +373,7 @@
         "products_desktop": 5,
         "products_tablet": 3,
         "products_mobile": 2,
-        "padding-top": 40,
+        "padding-top": 0,
         "padding-bottom": 40,
         "padding-top-m": 30,
         "padding-bottom-m": 30
