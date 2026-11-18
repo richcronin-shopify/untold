@@ -15,6 +15,7 @@
 	assign availability_param_name = 'filter.v.availability'
 	assign availability_in_stock_value = '1'
 	assign availability_in_stock_active = false
+	assign availability_filter_value = blank
 
 	if filter_count > 0
 		assign use_filter_drawer = true
@@ -37,11 +38,18 @@
 			if filter.true_value != blank
 				assign availability_param_name = filter.true_value.param_name
 				assign availability_in_stock_value = filter.true_value.value
+				assign availability_filter_value = filter.true_value
+			endif
 
-				if filter.true_value.active
+			if filter.true_value.active == true or filter.true_value.active == 'true'
+				assign availability_in_stock_active = true
+			endif
+
+			for active_value in filter.active_values
+				if active_value.value == '1' or active_value.value == 1 or active_value.value == availability_in_stock_value
 					assign availability_in_stock_active = true
 				endif
-			endif
+			endfor
 		elsif filter.type == 'price_range'
 			assign price_filter = filter
 
@@ -127,9 +135,9 @@
 								id="Filter-{{ section.id }}-in-stock"
 								name="{{ availability_param_name }}"
 								value="{{ availability_in_stock_value }}"
-								{% if availability_in_stock_active %}checked{% endif %}
+								{% if availability_in_stock_active or availability_filter_value.active %}checked{% endif %}
 								role="switch"
-								aria-checked="{% if availability_in_stock_active %}true{% else %}false{% endif %}"
+								aria-checked="{% if availability_in_stock_active or availability_filter_value.active %}true{% else %}false{% endif %}"
 								data-filter-input
 							>
 
@@ -208,9 +216,9 @@
 								id="Filter-{{ section.id }}-in-stock"
 								name="{{ availability_param_name }}"
 								value="{{ availability_in_stock_value }}"
-								{% if availability_in_stock_active %}checked{% endif %}
+								{% if availability_in_stock_active or availability_filter_value.active %}checked{% endif %}
 								role="switch"
-								aria-checked="{% if availability_in_stock_active %}true{% else %}false{% endif %}"
+								aria-checked="{% if availability_in_stock_active or availability_filter_value.active %}true{% else %}false{% endif %}"
 								data-filter-input
 							>
 
@@ -1817,11 +1825,27 @@
 						form.requestSubmit();
 					};
 
+					const syncStockToggleFromUrl = (input) => {
+						const url = new URL(window.location.href);
+						const applied = url.searchParams.getAll(input.name);
+						const isActive = applied.includes(String(input.value));
+
+						input.checked = isActive;
+						input.setAttribute(
+							'aria-checked',
+							isActive ? 'true' : 'false'
+						);
+					};
+
 					section
 						.querySelectorAll('[data-filter-input]')
 						.forEach((input) => {
+							if (input.getAttribute('role') === 'switch') {
+								syncStockToggleFromUrl(input);
+							}
+
 							input.addEventListener('change', () => {
-								if (input.hasAttribute('role') && input.getAttribute('role') === 'switch') {
+								if (input.getAttribute('role') === 'switch') {
 									input.setAttribute(
 										'aria-checked',
 										input.checked ? 'true' : 'false'
