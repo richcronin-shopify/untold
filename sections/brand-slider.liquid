@@ -35,16 +35,22 @@
             assign brand_name = brand.brand_name.value
             assign logo = brand.logo.value
             assign collection = brand.collection.value
+            assign brand_has_link = false
+            if collection != blank
+              if collection.url != blank and collection.products_count > 0
+                assign brand_has_link = true
+              endif
+            endif
           -%}
 
           {%- if logo != blank -%}
 
             <div
-              class="brand-slider__item{% if ss.enable_carousel %} swiper-slide{% endif %}"
+              class="brand-slider__item{% if ss.enable_carousel %} swiper-slide{% endif %}{% unless brand_has_link %} brand--no-link{% endunless %}"
               style="--brand-logo-max-width: {{ ss.max_image_width }}px;"
             >
 
-              {%- if collection != blank -%}
+              {%- if brand_has_link -%}
                 <a
                   href="{{ collection.url }}"
                   class="brand-slider__link"
@@ -53,7 +59,7 @@
                   {% endif %}
                 >
               {%- else -%}
-                <div class="brand-slider__link">
+                <div class="brand-slider__link brand--no-link">
               {%- endif -%}
 
                 {%- assign logo_alt = logo.alt | default: brand_name -%}
@@ -69,7 +75,7 @@
                     alt: logo_alt
                 }}
 
-              {%- if collection != blank -%}
+              {%- if brand_has_link -%}
                 </a>
               {%- else -%}
                 </div>

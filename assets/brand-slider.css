@@ -76,6 +76,11 @@
 
 		}
 
+		&.brand--no-link .brand-slider__link,
+		.brand-slider__link.brand--no-link {
+			cursor: default;
+		}
+
 	}
 
 	@media (max-width: 989px) {
