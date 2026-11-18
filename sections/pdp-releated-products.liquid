@@ -161,7 +161,7 @@
 						parseInt(section.dataset.productsTablet, 10) || 3;
 
 					const productsMobile =
-						parseInt(section.dataset.productsMobile, 10) || 2;
+						parseFloat(section.dataset.productsMobile) || 2;
 
 					const previousButton = section.querySelector(
 						'.swiper-slider__arrow--prev'
@@ -305,6 +305,7 @@
 			"label": "Products shown on mobile",
 			"options": [
 				{"value": "1", "label": "1"},
+				{"value": "1.5", "label": "1.5 (peek next product)"},
 				{"value": "2", "label": "2"}
 			],
 			"default": "2"

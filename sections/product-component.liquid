@@ -142,7 +142,7 @@
 
           const productsDesktop = parseInt(section.dataset.productsDesktop, 10) || 5;
           const productsTablet = parseInt(section.dataset.productsTablet, 10) || 3;
-          const productsMobile = parseInt(section.dataset.productsMobile, 10) || 2;
+          const productsMobile = parseFloat(section.dataset.productsMobile) || 2;
           const previousButton = section.querySelector('.swiper-slider__arrow--prev');
           const nextButton = section.querySelector('.swiper-slider__arrow--next');
           const pagination = section.querySelector('.product-slider__pagination');
@@ -277,13 +277,16 @@
       "default": 3
     },
     {
-      "type": "range",
+      "type": "select",
       "id": "products_mobile",
-      "min": 1,
-      "max": 3,
-      "step": 1,
       "label": "Products shown on mobile",
-      "default": 2
+      "options": [
+        { "value": "1", "label": "1" },
+        { "value": "1.5", "label": "1.5 (peek next product)" },
+        { "value": "2", "label": "2" },
+        { "value": "3", "label": "3" }
+      ],
+      "default": "2"
     },
     {
       "type": "header",
