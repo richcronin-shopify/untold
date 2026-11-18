@@ -384,18 +384,28 @@
 
 															{%- liquid
 																assign swatch_handle = filter_value.label | handle
-																assign swatch_image = blank
-																assign swatch_color = blank
+																assign swatch_image = ''
+																assign swatch_color = ''
 																assign swatch_has_native = false
 																assign swatch_class = 'collection-filters__swatch'
 
 																if filter_value.swatch != blank
-																	if filter_value.swatch.image != blank
-																		assign swatch_image = filter_value.swatch.image | image_url: width: 64
-																		assign swatch_has_native = true
-																	elsif filter_value.swatch.color != blank
-																		assign swatch_color = filter_value.swatch.color
-																		assign swatch_has_native = true
+																	if filter_value.swatch.image
+																		assign maybe_image = filter_value.swatch.image | image_url: width: 64
+
+																		if maybe_image != blank and maybe_image != ''
+																			assign swatch_image = maybe_image
+																			assign swatch_has_native = true
+																		endif
+																	endif
+
+																	if swatch_has_native == false and filter_value.swatch.color != blank
+																		assign maybe_color = filter_value.swatch.color
+
+																		if maybe_color != blank and maybe_color != ''
+																			assign swatch_color = maybe_color
+																			assign swatch_has_native = true
+																		endif
 																	endif
 																endif
 
@@ -424,11 +434,11 @@
 																<span
 																	class="{{ swatch_class }}"
 																	aria-hidden="true"
-																	{% if swatch_image %}
+																	{%- if swatch_has_native and swatch_image != blank and swatch_image != '' -%}
 																		style="background-image: url('{{ swatch_image }}');"
-																	{% elsif swatch_color %}
+																	{%- elsif swatch_has_native and swatch_color != blank and swatch_color != '' -%}
 																		style="background-color: {{ swatch_color }};"
-																	{% endif %}
+																	{%- endif -%}
 																></span>
 
 																<span class="collection-filters__option-label">
