@@ -48,6 +48,11 @@
 		opacity: 0;
 		visibility: hidden;
 
+		@media (max-width: 768px) {
+			margin: 0 -16px;
+			padding: 0 16px;
+		}
+
 		&.swiper-initialized {
 			opacity: 1;
 			visibility: visible;
