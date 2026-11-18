@@ -11,20 +11,45 @@
 	assign active_filter_count = 0
 	assign use_filter_drawer = false
 	assign has_active_filters = false
+	assign has_availability_filter = false
+	assign availability_param_name = 'filter.v.availability'
+	assign availability_in_stock_value = '1'
+	assign availability_in_stock_active = false
 
 	if filter_count > 0
 		assign use_filter_drawer = true
 	endif
 
 	for filter in collection.filters
-		assign active_filter_count = active_filter_count | plus: filter.active_values.size
+		assign is_availability_filter = false
 
-		if filter.type == 'price_range'
+		if filter.param_name == 'filter.v.availability'
+			assign is_availability_filter = true
+		endif
+
+		if filter.true_value != blank and filter.true_value.param_name == 'filter.v.availability'
+			assign is_availability_filter = true
+		endif
+
+		if is_availability_filter
+			assign has_availability_filter = true
+
+			if filter.true_value != blank
+				assign availability_param_name = filter.true_value.param_name
+				assign availability_in_stock_value = filter.true_value.value
+
+				if filter.true_value.active
+					assign availability_in_stock_active = true
+				endif
+			endif
+		elsif filter.type == 'price_range'
 			assign price_filter = filter
 
 			if filter.min_value.value != blank or filter.max_value.value != blank
 				assign active_filter_count = active_filter_count | plus: 1
 			endif
+		else
+			assign active_filter_count = active_filter_count | plus: filter.active_values.size
 		endif
 	endfor
 
@@ -69,6 +94,8 @@
 
 				{%- if use_filter_drawer -%}
 
+					<div class="collection-filters__toolbar-actions">
+
 					<button
 						type="button"
 						class="collection-filters__drawer-trigger button--reset"
@@ -86,6 +113,31 @@
 							<span></span>
 						</span>
 					</button>
+
+					{%- if has_availability_filter -%}
+						<label
+							class="collection-filters__stock-toggle"
+							for="Filter-{{ section.id }}-in-stock"
+						>
+							<span class="collection-filters__stock-toggle-label">In Stock</span>
+
+							<input
+								class="collection-filters__stock-toggle-input"
+								type="checkbox"
+								id="Filter-{{ section.id }}-in-stock"
+								name="{{ availability_param_name }}"
+								value="{{ availability_in_stock_value }}"
+								{% if availability_in_stock_active %}checked{% endif %}
+								role="switch"
+								aria-checked="{% if availability_in_stock_active %}true{% else %}false{% endif %}"
+								data-filter-input
+							>
+
+							<span class="collection-filters__stock-toggle-switch" aria-hidden="true"></span>
+						</label>
+					{%- endif -%}
+
+					</div>
 
 					<div
 						class="collection-filters__drawer"
@@ -125,6 +177,8 @@
 
 				{%- else -%}
 
+					<div class="collection-filters__toolbar-actions">
+
 					<button
 						type="button"
 						class="collection-filters__mobile-trigger button--reset"
@@ -141,6 +195,31 @@
 						</span>
 					</button>
 
+					{%- if has_availability_filter -%}
+						<label
+							class="collection-filters__stock-toggle"
+							for="Filter-{{ section.id }}-in-stock"
+						>
+							<span class="collection-filters__stock-toggle-label">In Stock</span>
+
+							<input
+								class="collection-filters__stock-toggle-input"
+								type="checkbox"
+								id="Filter-{{ section.id }}-in-stock"
+								name="{{ availability_param_name }}"
+								value="{{ availability_in_stock_value }}"
+								{% if availability_in_stock_active %}checked{% endif %}
+								role="switch"
+								aria-checked="{% if availability_in_stock_active %}true{% else %}false{% endif %}"
+								data-filter-input
+							>
+
+							<span class="collection-filters__stock-toggle-switch" aria-hidden="true"></span>
+						</label>
+					{%- endif -%}
+
+					</div>
+
 				{%- endif -%}
 
 				<div
@@ -151,7 +230,19 @@
 
 					{%- for filter in collection.filters -%}
 
-						{%- unless filter.type == 'price_range' -%}
+						{%- liquid
+							assign is_availability_filter = false
+
+							if filter.param_name == 'filter.v.availability'
+								assign is_availability_filter = true
+							endif
+
+							if filter.true_value != blank and filter.true_value.param_name == 'filter.v.availability'
+								assign is_availability_filter = true
+							endif
+						-%}
+
+						{%- unless filter.type == 'price_range' or is_availability_filter -%}
 
 							{%- liquid
 								assign filter_has_active_values = false
@@ -259,6 +350,94 @@
 
 											{%- when 'list' -%}
 
+												{%- liquid
+													assign is_colour_filter = false
+													assign filter_label_down = filter.label | downcase
+													assign filter_param_down = filter.param_name | downcase
+
+													if filter.presentation == 'swatch'
+														assign is_colour_filter = true
+													endif
+
+													if filter_label_down == 'colour' or filter_label_down == 'color'
+														assign is_colour_filter = true
+													endif
+
+													if filter_param_down contains 'colour' or filter_param_down contains 'color'
+														assign is_colour_filter = true
+													endif
+												-%}
+
+												{%- if is_colour_filter -%}
+
+													<div class="collection-filters__swatches">
+
+														{%- for filter_value in filter.values -%}
+
+															{%- liquid
+																assign swatch_handle = filter_value.label | handle
+																assign swatch_image = blank
+																assign swatch_color = blank
+																assign swatch_has_native = false
+																assign swatch_class = 'collection-filters__swatch'
+
+																if filter_value.swatch != blank
+																	if filter_value.swatch.image != blank
+																		assign swatch_image = filter_value.swatch.image | image_url: width: 64
+																		assign swatch_has_native = true
+																	elsif filter_value.swatch.color != blank
+																		assign swatch_color = filter_value.swatch.color
+																		assign swatch_has_native = true
+																	endif
+																endif
+
+																if swatch_has_native
+																	assign swatch_class = swatch_class | append: ' collection-filters__swatch--native'
+																else
+																	assign swatch_class = swatch_class | append: ' collection-filters__swatch--' | append: swatch_handle
+																endif
+															-%}
+
+															<label
+																class="collection-filters__option collection-filters__option--swatch{% if filter_value.active %} is-active{% endif %}{% if filter_value.count == 0 and filter_value.active == false %} is-disabled{% endif %}"
+																for="Filter-{{ section.id }}-{{ filter.param_name | handle }}-{{ forloop.index }}"
+															>
+																<input
+																	class="collection-filters__checkbox-input"
+																	type="checkbox"
+																	id="Filter-{{ section.id }}-{{ filter.param_name | handle }}-{{ forloop.index }}"
+																	name="{{ filter_value.param_name }}"
+																	value="{{ filter_value.value }}"
+																	{% if filter_value.active %}checked{% endif %}
+																	{% if filter_value.count == 0 and filter_value.active == false %}disabled{% endif %}
+																	data-filter-input
+																>
+
+																<span
+																	class="{{ swatch_class }}"
+																	aria-hidden="true"
+																	{% if swatch_image %}
+																		style="background-image: url('{{ swatch_image }}');"
+																	{% elsif swatch_color %}
+																		style="background-color: {{ swatch_color }};"
+																	{% endif %}
+																></span>
+
+																<span class="collection-filters__option-label">
+																	{{ filter_value.label }}
+																</span>
+
+																<span class="collection-filters__option-count">
+																	({{- filter_value.count -}})
+																</span>
+															</label>
+
+														{%- endfor -%}
+
+													</div>
+
+												{%- else -%}
+
 												{%- for filter_value in filter.values -%}
 
 													<label
@@ -288,6 +467,8 @@
 													</label>
 
 												{%- endfor -%}
+
+												{%- endif -%}
 
 										{%- endcase -%}
 
@@ -1639,7 +1820,16 @@
 					section
 						.querySelectorAll('[data-filter-input]')
 						.forEach((input) => {
-							input.addEventListener('change', submitFilters);
+							input.addEventListener('change', () => {
+								if (input.hasAttribute('role') && input.getAttribute('role') === 'switch') {
+									input.setAttribute(
+										'aria-checked',
+										input.checked ? 'true' : 'false'
+									);
+								}
+
+								submitFilters();
+							});
 						});
 
 					if (sortSelect) {
