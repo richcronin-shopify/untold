@@ -1,0 +1,92 @@
+{%- comment -%}
+  Brand list JSON-LD for the Brands we stock page.
+  Includes only brands whose collection exists and has products,
+  matching the visible links in the brand grid.
+{%- endcomment -%}
+
+{%- assign brands = shop.metaobjects.brands.values -%}
+{%- assign brand_list_count = 0 -%}
+
+{%- for brand in brands -%}
+  {%- liquid
+    assign brand_name = brand.brand_name.value
+    assign logo = brand.logo.value
+    assign collection = brand.collection.value
+    assign brand_has_link = false
+    if logo != blank and collection != blank
+      if collection.url != blank and collection.products_count > 0
+        assign brand_has_link = true
+      endif
+    endif
+    if brand_has_link
+      assign brand_list_count = brand_list_count | plus: 1
+    endif
+  -%}
+{%- endfor -%}
+
+{%- if brand_list_count > 0 -%}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": {{ page.title | json }},
+    "url": {{ canonical_url | json }},
+    {%- if page_description != blank -%}
+    "description": {{ page_description | json }},
+    {%- endif -%}
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": {{ shop.name | json }},
+      "url": {{ shop.url | json }}
+    },
+    "mainEntity": {
+      "@type": "ItemList",
+      "numberOfItems": {{ brand_list_count }},
+      "itemListElement": [
+        {%- assign position = 0 -%}
+        {%- for brand in brands -%}
+          {%- liquid
+            assign brand_name = brand.brand_name.value
+            assign logo = brand.logo.value
+            assign collection = brand.collection.value
+            assign brand_has_link = false
+            if logo != blank and collection != blank
+              if collection.url != blank and collection.products_count > 0
+                assign brand_has_link = true
+              endif
+            endif
+          -%}
+          {%- if brand_has_link -%}
+            {%- liquid
+              assign position = position | plus: 1
+              assign item_name = brand_name
+              if item_name == blank
+                assign item_name = collection.title
+              endif
+              assign logo_url = logo | image_url: width: 600
+              unless logo_url contains '://'
+                assign logo_url = logo_url | prepend: 'https:'
+              endunless
+              assign brand_url = collection.url
+              unless brand_url contains '://'
+                assign brand_url = request.origin | append: brand_url
+              endunless
+            -%}
+            {%- unless position == 1 -%},{%- endunless -%}
+            {
+              "@type": "ListItem",
+              "position": {{ position }},
+              "item": {
+                "@type": "Brand",
+                "name": {{ item_name | json }},
+                "logo": {{ logo_url | json }},
+                "url": {{ brand_url | json }}
+              }
+            }
+          {%- endif -%}
+        {%- endfor -%}
+      ]
+    }
+  }
+  </script>
+{%- endif -%}

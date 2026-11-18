@@ -94,6 +94,12 @@
   </div>
 </section>
 
+{%- if ss.enable_carousel == false -%}
+  {%- if template.suffix == 'brands' or page.handle == 'brands-we-stock' -%}
+    {% render 'brand-list-schema' %}
+  {%- endif -%}
+{%- endif -%}
+
 {%- style -%}
 
   #{{ section.id }} {
