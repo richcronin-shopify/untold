@@ -27,7 +27,8 @@
         "padding-top": 20,
         "padding-bottom": 40,
         "padding-top-m": 30,
-        "padding-bottom-m": 30
+        "padding-bottom-m": 30,
+        "colour_swatches": "Black: #111111\nBeige: #d8c3a5\nBloody Fade: #7a0e16, #d2262d, #f07a7a\nBlue: #1e5aa8\nBrown: #6b3f2a\nCream: #efe6cc\nGold: #c9a227\nGreen: #2e8b3a\nGrey: #8a8a8a\nNavy: #14325c\nOrange: #e86a17\nPink: #e85a9b\nPurple: #7b3fa3\nRed: #c4272f\nSour Grape: #6b2d8b, #a35cb8, #7bbf3a\nTeal: #1f8a80\nWhite: #f5f5f5\nYellow: #f0c420"
       }
     },
     "usp_grid_zHV33d": {
@@ -47,7 +48,7 @@
           "settings": {
             "image": "shopify://shop_images/icon-delivery.svg",
             "title": "free delivery",
-            "description": "On orders over £200",
+            "description": "On orders over \u00a3200",
             "url": ""
           }
         },

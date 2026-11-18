@@ -11,7 +11,9 @@
   "sections": {
     "main": {
       "type": "collection",
-      "settings": {}
+      "settings": {
+        "colour_swatches": "Black: #111111\nBeige: #d8c3a5\nBloody Fade: #7a0e16, #d2262d, #f07a7a\nBlue: #1e5aa8\nBrown: #6b3f2a\nCream: #efe6cc\nGold: #c9a227\nGreen: #2e8b3a\nGrey: #8a8a8a\nNavy: #14325c\nOrange: #e86a17\nPink: #e85a9b\nPurple: #7b3fa3\nRed: #c4272f\nSour Grape: #6b2d8b, #a35cb8, #7bbf3a\nTeal: #1f8a80\nWhite: #f5f5f5\nYellow: #f0c420"
+      }
     }
   },
   "order": [
