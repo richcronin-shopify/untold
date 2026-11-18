@@ -179,7 +179,7 @@
 
 										{%- when 'video', 'external_video' -%}
 
-											{{ media | media_tag: controls: true }}
+											{{ media | media_tag: controls: false, autoplay: true, muted: true }}
 
 										{%- when 'model' -%}
 
