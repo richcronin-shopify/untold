@@ -360,6 +360,25 @@
         "padding-bottom-m": 30
       }
     },
+    "product_component_Mqax3g": {
+      "type": "product-component",
+      "name": "Product slider",
+      "settings": {
+        "title": "on sale products",
+        "collection": "sale",
+        "product_limit": 12,
+        "show_view_all": true,
+        "enable_carousel": true,
+        "enable_mousewheel": false,
+        "products_desktop": 5,
+        "products_tablet": 3,
+        "products_mobile": 2,
+        "padding-top": 40,
+        "padding-bottom": 40,
+        "padding-top-m": 30,
+        "padding-bottom-m": 30
+      }
+    },
     "payment_icons_74q9MM": {
       "type": "payment-icons",
       "blocks": {
@@ -399,7 +418,7 @@
         "description": "Interest-free options available at checkout",
         "button_label": "",
         "button_url": "",
-        "padding-top": 50,
+        "padding-top": 0,
         "padding-bottom": 40,
         "padding-top-m": 30,
         "padding-bottom-m": 30
@@ -621,6 +640,7 @@
     "usp_grid_giqUqR",
     "collection_grid_ydaH7n",
     "product_component_aiiB9b",
+    "product_component_Mqax3g",
     "payment_icons_74q9MM",
     "brand_slider_CBWDTy",
     "park_slider_cDeyLk",
