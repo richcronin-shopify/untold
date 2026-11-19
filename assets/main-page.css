@@ -309,6 +309,9 @@
 
 		ul, ol {
 			margin-bottom: 30px;
+			li {
+				margin-bottom: 10px;
+			}
 		}
 
 		table {
