@@ -3,93 +3,97 @@
 
 <div class="page">
 
-	{%- liquid
-		assign hero_excerpt = article.excerpt | strip_html | strip
-		if hero_excerpt == blank
-			assign hero_excerpt = article.content | strip_html | strip | truncatewords: 30
-		endif
-	-%}
+	<div class="container">
 
-	<section class="article-hero{% unless article.image %} article-hero--no-image{% endunless %}">
-		{%- if article.image -%}
-			<div class="article-hero__media">
-				{{
-					article.image
-					| image_url: width: 1600
-					| image_tag:
-						class: 'article-hero__image',
-						loading: 'eager',
-						fetchpriority: 'high',
-						widths: '375, 550, 750, 1000, 1200, 1600',
-						sizes: '(min-width: 768px) 50vw, 100vw',
-						alt: article.image.alt | default: article.title
-				}}
-			</div>
-		{%- endif -%}
+		{%- liquid
+			assign hero_excerpt = article.excerpt | strip_html | strip
+			if hero_excerpt == blank
+				assign hero_excerpt = article.content | strip_html | strip | truncatewords: 30
+			endif
+		-%}
 
-		<div class="article-hero__content">
-			<h1 class="article-hero__title h2">{{ article.title }}</h1>
-
-			{%- if hero_excerpt != blank -%}
-				<p class="article-hero__excerpt">{{ hero_excerpt }}</p>
+		<section class="article-hero{% unless article.image %} article-hero--no-image{% endunless %}">
+			{%- if article.image -%}
+				<div class="article-hero__media">
+					{{
+						article.image
+						| image_url: width: 1600
+						| image_tag:
+							class: 'article-hero__image',
+							loading: 'eager',
+							fetchpriority: 'high',
+							widths: '375, 550, 750, 1000, 1200, 1600',
+							sizes: '(min-width: 768px) 50vw, 100vw',
+							alt: article.image.alt | default: article.title
+					}}
+				</div>
 			{%- endif -%}
 
-			<p class="article-hero__meta">
-				{%- if article.author != blank -%}
-					<span class="article-hero__author">By {{ article.author }}</span>
-					<span class="article-hero__divider" aria-hidden="true">&middot;</span>
+			<div class="article-hero__content">
+				<h1 class="article-hero__title h2">{{ article.title }}</h1>
+
+				{%- if hero_excerpt != blank -%}
+					<p class="article-hero__excerpt">{{ hero_excerpt }}</p>
 				{%- endif -%}
-				<span class="article-hero__date">Published on {{ article.published_at | time_tag: format: 'date' }}</span>
-			</p>
+
+				<p class="article-hero__meta">
+					{%- if article.author != blank -%}
+						<span class="article-hero__author">By {{ article.author }}</span>
+						<span class="article-hero__divider" aria-hidden="true">&middot;</span>
+					{%- endif -%}
+					<span class="article-hero__date">Published on {{ article.published_at | time_tag: format: 'date' }}</span>
+				</p>
+			</div>
+		</section>
+
+		<div class="page__inner article-rte">
+
+			{{ article.content }}
+
+			{% if blog.comments_enabled? %}
+			  <h2>{{ 'blog.article_comments' | t }}</h2>
+
+			  <div id="comments">
+			    {% paginate article.comments by 10 %}
+			      {% for comment in article.comments %}
+			        <div>
+			          <p>{{ comment.author }}</p>
+			          <p>
+			            {{- comment.created_at | time_tag: format: 'date' -}}
+			          </p>
+			          <p>{{ comment.content }}</p>
+			        </div>
+			      {% endfor %}
+
+			      {{ paginate | default_pagination: anchor: 'comments' }}
+			    {% endpaginate %}
+			  </div>
+
+			  {% form 'new_comment', article %}
+			    <h2>{{ 'blog.comment_form_title' | t }}</h2>
+
+			    {{ form.errors | default_errors }}
+
+			    <div>
+			      <label for="author">{{ 'blog.comment_form_name' | t }}</label>
+			      <input type="text" name="comment[author]" id="author" value="{{ form.author }}" required>
+			    </div>
+
+			    <div>
+			      <label for="email">{{ 'blog.comment_form_email' | t }}</label>
+			      <input type="email" name="comment[email]" id="email" value="{{ form.email }}" required>
+			    </div>
+
+			    <div>
+			      <label for="body">{{ 'blog.comment_form_body' | t }}</label>
+			      <textarea name="comment[body]" id="body" required>{{ form.body }}</textarea>
+			    </div>
+
+			    <input type="submit" value="{{ 'blog.comment_form_submit' | t }}">
+			  {% endform %}
+			{% endif %}
+
 		</div>
-	</section>
-
-	<div class="page__inner article-rte">
-
-		{{ article.content }}
-
-		{% if blog.comments_enabled? %}
-		  <h2>{{ 'blog.article_comments' | t }}</h2>
-
-		  <div id="comments">
-		    {% paginate article.comments by 10 %}
-		      {% for comment in article.comments %}
-		        <div>
-		          <p>{{ comment.author }}</p>
-		          <p>
-		            {{- comment.created_at | time_tag: format: 'date' -}}
-		          </p>
-		          <p>{{ comment.content }}</p>
-		        </div>
-		      {% endfor %}
-
-		      {{ paginate | default_pagination: anchor: 'comments' }}
-		    {% endpaginate %}
-		  </div>
-
-		  {% form 'new_comment', article %}
-		    <h2>{{ 'blog.comment_form_title' | t }}</h2>
-
-		    {{ form.errors | default_errors }}
-
-		    <div>
-		      <label for="author">{{ 'blog.comment_form_name' | t }}</label>
-		      <input type="text" name="comment[author]" id="author" value="{{ form.author }}" required>
-		    </div>
-
-		    <div>
-		      <label for="email">{{ 'blog.comment_form_email' | t }}</label>
-		      <input type="email" name="comment[email]" id="email" value="{{ form.email }}" required>
-		    </div>
-
-		    <div>
-		      <label for="body">{{ 'blog.comment_form_body' | t }}</label>
-		      <textarea name="comment[body]" id="body" required>{{ form.body }}</textarea>
-		    </div>
-
-		    <input type="submit" value="{{ 'blog.comment_form_submit' | t }}">
-		  {% endform %}
-		{% endif %}
 
 	</div>
 
