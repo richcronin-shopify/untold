@@ -155,6 +155,9 @@
       "block_order": [
         "heading_tDJGTt"
       ],
+      "custom_css": [
+        "br {display: none;}"
+      ],
       "name": "Richtext",
       "settings": {
         "text_align": "text-align-center",
