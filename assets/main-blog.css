@@ -1,7 +1,7 @@
 .main-blog {
 
 	.main-blog__header {
-		padding: 200px 0 40px;
+		padding: 40px 0;
 		text-align: center;
 
 		@media (max-width: 990px) {
