@@ -69,7 +69,7 @@
         "title": "Your Cart",
         "free_delivery_threshold": 200,
         "free_delivery_label": "FREE UK Delivery",
-        "free_delivery_unlocked_label": "You've unlocked FREE UK Delivery",
+        "free_delivery_unlocked_label": "You've got free UK delivery",
         "show_points": false,
         "points_per_pound": 1,
         "points_icon": "shopify://shop_images/icon-points.svg",
