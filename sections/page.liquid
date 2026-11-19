@@ -59,7 +59,7 @@
 										{%- endif -%}
 
 										<div class="page__faq-group" {{ block.shopify_attributes }}>
-											<h2 class="page__faq-group-title h4">
+											<h2 class="page__faq-group-title h5">
 												{{ bs.title }}
 											</h2>
 
@@ -134,6 +134,41 @@
 
 </section>
 
+{%- if section.settings.output_schema -%}
+	{%- assign faq_schema_count = 0 -%}
+	{%- for block in section.blocks -%}
+		{%- if block.type == 'faq' and block.settings.question != blank and block.settings.answer != blank -%}
+			{%- assign faq_schema_count = faq_schema_count | plus: 1 -%}
+		{%- endif -%}
+	{%- endfor -%}
+
+	{%- if faq_schema_count > 0 -%}
+		<script type="application/ld+json">
+			{
+				"@context": "https://schema.org",
+				"@type": "FAQPage",
+				"mainEntity": [
+					{%- assign faq_emitted = 0 -%}
+					{%- for block in section.blocks -%}
+						{%- if block.type == 'faq' and block.settings.question != blank and block.settings.answer != blank -%}
+							{%- if faq_emitted > 0 -%},{%- endif -%}
+							{
+								"@type": "Question",
+								"name": {{ block.settings.question | json }},
+								"acceptedAnswer": {
+									"@type": "Answer",
+									"text": {{ block.settings.answer | replace: '</p>', ' </p>' | replace: '<br />', ' ' | replace: '<br/>', ' ' | replace: '<br>', ' ' | replace: '</li>', ' </li>' | strip_html | strip | json }}
+								}
+							}
+							{%- assign faq_emitted = faq_emitted | plus: 1 -%}
+						{%- endif -%}
+					{%- endfor -%}
+				]
+			}
+		</script>
+	{%- endif -%}
+{%- endif -%}
+
 {% schema %}
 {
 	"name": "Page",
@@ -169,6 +204,17 @@
 			"type": "url",
 			"id": "button_link",
 			"label": "Button link"
+		},
+		{
+			"type": "header",
+			"content": "SEO"
+		},
+		{
+			"type": "checkbox",
+			"id": "output_schema",
+			"label": "Output FAQ schema",
+			"info": "Turn off if this page also uses the FAQ section with schema on, to avoid duplicates",
+			"default": true
 		}
 	],
 	"blocks": [
