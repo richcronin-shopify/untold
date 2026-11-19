@@ -304,10 +304,7 @@
 		}
 
 		h2, h3, h4, h5 {
-			font-size: 28px;
-			@media (max-width: 767px) {
-				font-size: var(--xxs);
-			}
+			font-size: var(--h3);
 		}
 
 		ul, ol {
