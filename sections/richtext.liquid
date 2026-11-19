@@ -26,7 +26,7 @@
 
 						{% if bs.title != blank %}
 							<div class="rte block-subtitle" data-block="block-{{block.id}}">
-								<p class="text-note">{{bs.title}}</p>
+								<p class="text-note">{{bs.title | newline_to_br}}</p>
 							</div>
 						{% endif %}
 
