@@ -7,6 +7,7 @@
   width: 100%;
   height: 100vh;
   height: 100dvh;
+  --gravity-screen-height: 100vh;
   overflow: hidden;
   pointer-events: none !important;
   background: transparent;
@@ -30,7 +31,9 @@
   top: 0;
   left: clamp(0px, var(--gravity-x, 20%), calc(100% - var(--gravity-logo-width, 150px)));
   width: var(--gravity-logo-width, 150px);
-  height: 90px;
+  --gravity-item-height: 90px;
+  --gravity-floor-y: calc(var(--gravity-screen-height) - var(--gravity-item-height));
+  height: var(--gravity-item-height);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -51,9 +54,9 @@
   -webkit-user-drag: none;
 }
 
-/* Per-logo landing height, spin, sideways drift and bounce are set in Liquid.
-   A quick accelerating fall, uneven elastic bounce, then a final exit below
-   the bottom of the viewport. Everything plays once. */
+/* The landing point is the real bottom of the visible screen, taking each
+   logo's height into account (including on mobile). Two diminishing bounces,
+   then the logos drop below the viewport. No mid-screen collision point. */
 @keyframes brand-gravity-drop {
   0% {
     opacity: 0;
@@ -61,31 +64,31 @@
     animation-timing-function: cubic-bezier(.45, .02, .82, .51);
   }
   6% { opacity: 1; }
-  53% {
+  58% {
     opacity: 1;
-    transform: translate3d(var(--gravity-sway, 0px), var(--gravity-impact-y, 66vh), 0) rotate(var(--gravity-hit-angle, 10deg));
+    transform: translate3d(var(--gravity-sway, 0px), var(--gravity-floor-y), 0) rotate(var(--gravity-hit-angle, 10deg));
     animation-timing-function: cubic-bezier(.15, .63, .32, 1);
   }
-  64% {
-    transform: translate3d(var(--gravity-sway, 0px), calc(var(--gravity-impact-y, 66vh) - var(--gravity-bounce, 38px)), 0) rotate(0deg);
+  69% {
+    transform: translate3d(var(--gravity-sway, 0px), calc(var(--gravity-floor-y) - var(--gravity-bounce, 38px)), 0) rotate(0deg);
     animation-timing-function: cubic-bezier(.48, .02, .85, .65);
   }
-  75% {
-    transform: translate3d(calc(var(--gravity-sway, 0px) * 1.25), var(--gravity-impact-y, 66vh), 0) rotate(calc(var(--gravity-hit-angle, 10deg) * -.45));
+  78% {
+    transform: translate3d(calc(var(--gravity-sway, 0px) * 1.25), var(--gravity-floor-y), 0) rotate(calc(var(--gravity-hit-angle, 10deg) * -.45));
     animation-timing-function: cubic-bezier(.24, .66, .41, 1);
   }
-  81% {
-    transform: translate3d(calc(var(--gravity-sway, 0px) * 1.35), calc(var(--gravity-impact-y, 66vh) - 12px), 0) rotate(0deg);
+  84% {
+    transform: translate3d(calc(var(--gravity-sway, 0px) * 1.35), calc(var(--gravity-floor-y) - var(--gravity-bounce, 38px) * 0.3), 0) rotate(0deg);
     animation-timing-function: cubic-bezier(.55, .05, .9, .69);
   }
-  87% {
+  89% {
     opacity: 1;
-    transform: translate3d(calc(var(--gravity-sway, 0px) * 1.45), var(--gravity-impact-y, 66vh), 0) rotate(var(--gravity-hit-angle, 10deg));
+    transform: translate3d(calc(var(--gravity-sway, 0px) * 1.45), var(--gravity-floor-y), 0) rotate(var(--gravity-hit-angle, 10deg));
     animation-timing-function: cubic-bezier(.48, 0, .92, .72);
   }
   100% {
     opacity: 1;
-    transform: translate3d(var(--gravity-exit-sway, 0px), calc(100dvh + 180px), 0) rotate(var(--gravity-end-angle, 40deg));
+    transform: translate3d(var(--gravity-exit-sway, 0px), calc(var(--gravity-screen-height) + var(--gravity-item-height) + 120px), 0) rotate(var(--gravity-end-angle, 40deg));
   }
 }
 
@@ -96,8 +99,14 @@
 @media (max-width: 749px) {
   .brand-gravity__item {
     --gravity-logo-width: var(--gravity-logo-width-mobile, 100px);
-    height: 65px;
+    --gravity-item-height: 65px;
   }
+}
+
+
+/* Dynamic viewport units follow the actual visible screen on mobile browsers. */
+@supports (height: 100dvh) {
+  .brand-gravity { --gravity-screen-height: 100dvh; }
 }
 
 /* No splash for visitors who request reduced animation. */

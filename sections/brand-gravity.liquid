@@ -36,7 +36,6 @@
           assign hit_angle = n | times: 29 | plus: 10 | modulo: 53 | minus: 26
           assign end_angle = n | times: 51 | plus: 80 | modulo: 173 | minus: 86
           assign bounce = n | times: 19 | plus: 32 | modulo: 37 | plus: 28
-          assign impact = n | times: 13 | plus: 7 | modulo: 19 | plus: 58
           assign entry = n | times: 27 | plus: 27 | modulo: 81 | minus: 40
           assign duration_extra = n | times: 23 | modulo: 6 | divided_by: 10.0
           assign fall_duration = ss.duration | plus: duration_extra
@@ -52,7 +51,6 @@
             --gravity-start-angle: {{ start_angle }}deg;
             --gravity-hit-angle: {{ hit_angle }}deg;
             --gravity-end-angle: {{ end_angle }}deg;
-            --gravity-impact-y: {{ impact }}vh;
             --gravity-bounce: {{ bounce }}px;
             --gravity-duration: {{ fall_duration }}s;
             --gravity-delay: {{ stagger }}s;
