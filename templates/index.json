@@ -632,6 +632,17 @@
         "padding-top-m": 0,
         "padding-bottom-m": 20
       }
+    },
+    "brand_gravity_czTyC6": {
+      "type": "brand-gravity",
+      "name": "Falling brand logos",
+      "settings": {
+        "max_logos": 24,
+        "logo_width_desktop": 180,
+        "logo_width_mobile": 100,
+        "duration": 2,
+        "stagger": 0.1
+      }
     }
   },
   "order": [
@@ -646,6 +657,7 @@
     "park_slider_cDeyLk",
     "image_with_usps_KeYf6t",
     "multicolumn_zU8AgG",
-    "product_component_QLzHta"
+    "product_component_QLzHta",
+    "brand_gravity_czTyC6"
   ]
 }
