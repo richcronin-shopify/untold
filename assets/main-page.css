@@ -293,8 +293,12 @@
 
 	.article-rte {
 
-		h2, h3, h4, h5, h6 {
-			font-size: 22px;
+		h2, h3, h4, h5 {
+			font-size: 28px;
+		}
+
+		ul, ol {
+			margin-bottom: 30px;
 		}
 
 		table {
