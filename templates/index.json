@@ -157,7 +157,7 @@
       ],
       "custom_css": [
         "br {display: none;}",
-        "@media (max-width: 767px) {br {display: block;}}"
+        "@media (max-width: 767px) {br {display: block; }}"
       ],
       "name": "Richtext",
       "settings": {
@@ -374,6 +374,7 @@
       "name": "Product slider",
       "settings": {
         "title": "fresh drops",
+        "heading_tag": 3,
         "collection": "",
         "product_limit": 10,
         "show_view_all": true,
@@ -393,6 +394,7 @@
       "name": "Product slider",
       "settings": {
         "title": "on sale products",
+        "heading_tag": 4,
         "collection": "sale",
         "product_limit": 10,
         "show_view_all": true,
@@ -647,6 +649,7 @@
       "name": "Product slider",
       "settings": {
         "title": "Best sellers",
+        "heading_tag": 2,
         "collection": "bestsellers",
         "product_limit": 10,
         "show_view_all": true,
