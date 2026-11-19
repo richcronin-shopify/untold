@@ -56,29 +56,92 @@
 
 	{%- when 'article' -%}
 
+		{%- liquid
+			assign ld_description = article.excerpt | strip_html | strip
+			if ld_description == blank
+				assign ld_description = page_description | strip
+			endif
+			assign ld_about_page = pages['about']
+			if shop.brand.logo
+				assign ld_logo = shop.brand.logo | image_url: width: 600 | prepend: 'https:'
+			else
+				assign ld_logo = 'web-logo.svg' | asset_url | prepend: 'https:'
+			endif
+			assign ld_products = article.metafields.custom.featured_products.value
+		-%}
+
 		<script type="application/ld+json">
 		{
 			"@context": "https://schema.org",
 			"@type": "BlogPosting",
 			"headline": {{ article.title | json }},
 			"url": {{ canonical_url | json }},
+			"mainEntityOfPage": {
+				"@type": "WebPage",
+				"@id": {{ canonical_url | json }}
+			},
+			{%- if ld_description != blank %}
+			"description": {{ ld_description | json }},
+			{%- endif %}
+			"articleSection": {{ blog.title | json }},
+			"inLanguage": "en-GB",
 			"datePublished": {{ article.published_at | date: "%Y-%m-%dT%H:%M:%S%z" | json }},
 			"dateModified": {{ article.updated_at | date: "%Y-%m-%dT%H:%M:%S%z" | json }},
 			"author": {
 				"@type": "Person",
 				"name": {{ article.author | json }}
+				{%- if ld_about_page != blank -%},
+				"url": {{ shop.url | append: ld_about_page.url | json }}
+				{%- endif %}
 			},
 			"publisher": {
 				"@type": "Organization",
-				"name": {{ shop.name | json }}
+				"name": {{ shop.name | json }},
+				"url": {{ shop.url | json }},
+				"logo": {
+					"@type": "ImageObject",
+					"url": {{ ld_logo | json }}
+				}
 			}
 			{%- if article.image -%},
 			"image": [
 				{{ article.image | image_url: width: 1200 | prepend: 'https:' | json }}
 			]
-			{%- endif -%}
+			{%- endif %}
 		}
 		</script>
+
+		<script type="application/ld+json">
+		{
+			"@context": "https://schema.org",
+			"@type": "BreadcrumbList",
+			"itemListElement": [
+				{"@type": "ListItem", "position": 1, "name": "Home", "item": {{ shop.url | json }}},
+				{"@type": "ListItem", "position": 2, "name": {{ blog.title | json }}, "item": {{ shop.url | append: blog.url | json }}},
+				{"@type": "ListItem", "position": 3, "name": {{ article.title | json }}, "item": {{ canonical_url | json }}}
+			]
+		}
+		</script>
+
+		{%- if ld_products != blank -%}
+			<script type="application/ld+json">
+			{
+				"@context": "https://schema.org",
+				"@type": "ItemList",
+				"name": {{ article.title | append: ' - featured bikes' | json }},
+				"itemListElement": [
+					{%- assign ld_pos = 0 -%}
+					{%- for p in ld_products -%}
+						{%- if p.available -%}
+							{%- assign ld_pos = ld_pos | plus: 1 -%}
+							{%- if ld_pos > 1 -%},{%- endif -%}
+							{"@type": "ListItem", "position": {{ ld_pos }}, "name": {{ p.title | json }}, "url": {{ shop.url | append: p.url | json }}}
+						{%- endif -%}
+					{%- endfor -%}
+				]
+			}
+			</script>
+		{%- endif -%}
 
 
 {%- endcase -%}
