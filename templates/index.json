@@ -347,7 +347,7 @@
       "settings": {
         "title": "fresh drops",
         "collection": "",
-        "product_limit": 12,
+        "product_limit": 10,
         "show_view_all": true,
         "enable_carousel": true,
         "enable_mousewheel": false,
@@ -366,7 +366,7 @@
       "settings": {
         "title": "on sale products",
         "collection": "sale",
-        "product_limit": 12,
+        "product_limit": 10,
         "show_view_all": true,
         "enable_carousel": true,
         "enable_mousewheel": false,
