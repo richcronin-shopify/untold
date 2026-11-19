@@ -21,6 +21,13 @@
             "url": "shopify://collections/parts"
           }
         },
+        "announcement_bRh7GH": {
+          "type": "announcement",
+          "settings": {
+            "title": "Complete bikes from £99.99 - Shop now",
+            "url": "shopify://collections/complete-bikes"
+          }
+        },
         "announcement_TYnqEf": {
           "type": "announcement",
           "settings": {
@@ -38,6 +45,7 @@
       },
       "block_order": [
         "announcement_7crK3Q",
+        "announcement_bRh7GH",
         "announcement_TYnqEf",
         "announcement_DyQCfq"
       ],
