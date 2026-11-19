@@ -142,7 +142,7 @@ body {
 	&:not(.template-index):not(.template-collection):not(.no-top-padding) {
 		padding-top: 140px;
 		@media (max-width: 767px) {
-			padding-top: 120px;
+			padding-top: 110px;
 		}
 	}
 }
