@@ -295,6 +295,10 @@
 
 		font-size: var(--small);
 
+		@media (max-width: 767px) {
+			font-size: var(--xxs);
+		}
+
 		p {
 			line-height: 1.4;
 		}
