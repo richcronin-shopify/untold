@@ -19,7 +19,7 @@
 						{% when 'heading' %}
 
 						{% if bs.title != blank %}
-							<h{{bs.heading_tag}} class="h{{bs.font_size}} block-title" data-block="block-{{block.id}}">{{ bs.title }}</h{{bs.heading_tag}}>
+							<h{{bs.heading_tag}} class="h{{bs.font_size}} block-title" data-block="block-{{block.id}}">{{ bs.title | newline_to_br }}</h{{bs.heading_tag}}>
 						{% endif %}
 
 						{% when 'subtitle' %}
