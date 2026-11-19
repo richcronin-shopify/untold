@@ -28,15 +28,15 @@
         "faq_AmaF3C": {
           "type": "faq",
           "settings": {
-            "question": "Do you ship internationally?",
+            "question": "Do you ship to Europe, or only the UK?",
             "answer": "<p>No, unfortunately we only ship within the UK for now.</p>"
           }
         },
         "faq_qJEWHX": {
           "type": "faq",
           "settings": {
-            "question": "How long will my order take?",
-            "answer": "<p>All orders are shipped via Royal Mail 48 or DPD (for heavier, bulkier items). Please allow up to 4 business days in some cases for handling and postal delays.</p>"
+            "question": "How long does delivery take, and how much does it cost?",
+            "answer": "<p>Orders are usually dispatched within 1–2 days, and we aim to send orders placed before 2pm the same day. Delivery is Royal Mail Tracked 48 (£8) for smaller items or DPD (£12) for larger items, and it's free on UK orders over £200.</p>"
           }
         },
         "faq_4R7hzM": {
@@ -117,14 +117,7 @@
           "type": "faq",
           "settings": {
             "question": "What payment methods do you take?",
-            "answer": "<p>Apple and Google Pay, Klarna, Clearpay, PayPal along with all main card vendors.</p>"
-          }
-        },
-        "faq_9nwQPN": {
-          "type": "faq",
-          "settings": {
-            "question": "How do UNTOLD points work?",
-            "answer": "<p>Untold Points are our loyalty rewards — you earn <strong>1 point for every £1 you spend</strong>. Your points build up as you shop and can be redeemed against future purchases, giving you a little back every time you ride with us.</p>"
+            "answer": "<p>Apple and Google Pay, Klarna, Clearpay, PayPal, Shop Pay along with all main card vendors.</p>"
           }
         },
         "faq_MjNdPX": {
@@ -139,6 +132,13 @@
           "settings": {
             "question": "How do I get in touch, and when are you open?",
             "answer": "<p>You can reach out by using the live chat at the bottom right or contact us via the <a href=\"/pages/contact\" title=\"Contact\">contact page here</a>.</p>"
+          }
+        },
+        "faq_waCiNf": {
+          "type": "faq",
+          "settings": {
+            "question": "Does UNTOLD BMX have customer reviews?",
+            "answer": "<p>Yes, we collect customer reviews through Judge.me after each purchase.</p>"
           }
         }
       },
@@ -159,9 +159,9 @@
         "faq_Cei8Kf",
         "faq_heading_NRPiy9",
         "faq_zCJUTJ",
-        "faq_9nwQPN",
         "faq_MjNdPX",
-        "faq_7zB36q"
+        "faq_7zB36q",
+        "faq_waCiNf"
       ],
       "settings": {
         "nav_only": false,
