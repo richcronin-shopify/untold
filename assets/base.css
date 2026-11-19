@@ -358,8 +358,8 @@ button,
 			display: flex;
 			align-items: center;
 			flex: 0 0 auto;
-			gap: 20px;
-			padding-right: 20px; /* Keeps the gap identical at repeat boundaries. */
+			gap: 50px;
+			padding-right: 50px; /* Keeps the gap identical at repeat boundaries. */
 		}
 
 		.announcement-bar__item {
