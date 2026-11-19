@@ -4,12 +4,8 @@
 		padding: 40px 0;
 		text-align: center;
 
-		@media (max-width: 990px) {
-			padding-top: 130px;
-		}
-
 		@media (max-width: 768px) {
-			padding: 110px 0 30px;
+			padding: 0 16px 20px;
 		}
 	}
 
