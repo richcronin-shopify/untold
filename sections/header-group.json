@@ -43,7 +43,8 @@
       ],
       "settings": {
         "menu": "main-menu",
-        "mobile_footer_menu": "mobile-footer"
+        "mobile_footer_menu": "mobile-footer",
+        "announcement_speed": 90
       }
     },
     "cart_drawer": {
