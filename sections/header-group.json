@@ -17,14 +17,14 @@
         "announcement_7crK3Q": {
           "type": "announcement",
           "settings": {
-            "title": "free delivery on orders over £200",
+            "title": "free delivery on all orders over £200",
             "url": "shopify://collections/parts"
           }
         },
         "announcement_TYnqEf": {
           "type": "announcement",
           "settings": {
-            "title": "Pay in 3 with Klarna",
+            "title": "Pay in instalments with Klarna, Shop Pay or Clearpay",
             "url": "shopify://collections/parts"
           }
         },
