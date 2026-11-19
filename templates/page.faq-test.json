@@ -1,0 +1,54 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "faq_test": {
+      "type": "faq",
+      "settings": {
+        "heading": "Common questions",
+        "intro": "<p>Test intro for schema validation.</p>",
+        "heading_tag": 2,
+        "font_size": 2,
+        "text_align": "text-align-center",
+        "open_first": true,
+        "output_schema": true,
+        "link_label": "More questions? See our FAQs",
+        "link_url": "shopify://pages/faqs",
+        "padding-top": 50,
+        "padding-bottom": 50,
+        "padding-top-m": 30,
+        "padding-bottom-m": 30
+      },
+      "blocks": {
+        "faq_1": {
+          "type": "faq",
+          "settings": {
+            "question": "Do you ship to Europe, or only the UK?",
+            "answer": "<p>We deliver to UK addresses only. We don't currently ship to Europe or the rest of the world.</p>"
+          }
+        },
+        "faq_2": {
+          "type": "faq",
+          "settings": {
+            "question": "Is UNTOLD BMX an independent BMX shop in the UK run by riders?",
+            "answer": "<p>Yes. UNTOLD BMX is an independent, rider-run online BMX shop based in Folkestone, Kent.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_1",
+        "faq_2"
+      ]
+    }
+  },
+  "order": [
+    "faq_test"
+  ]
+}
