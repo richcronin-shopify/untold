@@ -358,8 +358,12 @@ button,
 			display: flex;
 			align-items: center;
 			flex: 0 0 auto;
-			gap: 50px;
-			padding-right: 50px;
+			gap: 80px;
+			padding-right: 80px;
+			@media (max-width: 990px) {
+				gap: 30px;
+				padding-right: 30px;
+			}
 		}
 
 		.announcement-bar__item {
