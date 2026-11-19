@@ -204,7 +204,7 @@
             "image": "shopify://shop_images/icon-cs.svg",
             "title": "need help?",
             "description": "Click the chat icon below",
-            "url": ""
+            "url": "shopify://pages/contact"
           }
         }
       },
