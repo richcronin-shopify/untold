@@ -358,8 +358,8 @@ button,
 			display: flex;
 			align-items: center;
 			flex: 0 0 auto;
-			gap: 50px;
-			padding-right: 50px; /* Keeps the gap identical at repeat boundaries. */
+			gap: 20px;
+			padding-right: 20px; /* Keeps the gap identical at repeat boundaries. */
 		}
 
 		.announcement-bar__item {
@@ -371,19 +371,18 @@ button,
 			white-space: nowrap;
 
 			a {
+				display: inline-flex;
+				align-items: center;
+				min-height: 40px;
 				color: inherit;
 				text-decoration: none;
 			}
 		}
 
-		&:hover .announcement-bar__track {
-			animation-play-state: paused;
-		}
-
-		/* Keyboard users can reach the original links, even when the ticker moved. */
+		/* Pause where the item is, so focusing/tapping a link never resets the track. */
+		&:hover .announcement-bar__track,
 		&:focus-within .announcement-bar__track {
-			animation: none;
-			transform: none;
+			animation-play-state: paused;
 		}
 
 		@media (prefers-reduced-motion: reduce) {
