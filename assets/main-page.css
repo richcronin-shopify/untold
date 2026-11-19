@@ -299,6 +299,11 @@
 			font-size: var(--xxs);
 		}
 
+		a {
+			color: var(--color-primary);
+			text-decoration: underline;
+		}
+
 		p {
 			line-height: 1.4;
 		}
