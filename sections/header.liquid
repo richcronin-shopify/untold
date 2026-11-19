@@ -1,41 +1,43 @@
-{%- assign ss = section.settings -%}
+{%- liquid
+	assign ss = section.settings
+	assign announcement_count = 0
+	for block in section.blocks
+		if block.type == 'announcement' and block.settings.title != blank
+			assign announcement_count = announcement_count | plus: 1
+		endif
+	endfor
+
+	assign copies_per_half = 6
+	if announcement_count == 2
+		assign copies_per_half = 8
+	elsif announcement_count == 1
+		assign copies_per_half = 20
+	endif
+	assign ticker_groups = copies_per_half | times: 2
+-%}
 
 <header class="site-header" data-header data-section-id="{{ section.id }}">
-	{%- if section.blocks.size > 0 -%}
-		<div class="announcement-bar">
-			<div class="announcement-bar__inner container">
+	{%- if announcement_count > 0 -%}
+		<div class="announcement-bar" style="--announcement-duration: {{ ss.announcement_speed | default: 45 }}s;">
+			<div class="announcement-bar__inner">
 				<div class="announcement-bar__track">
-					<div class="announcement-bar__group">
-						{%- for block in section.blocks -%}
-							{%- assign bs = block.settings -%}
-							{%- case block.type -%}
-								{%- when 'announcement' -%}
-									{%- if bs.title != blank -%}
-										<div class="announcement-bar__item" {{ block.shopify_attributes }}>
-											{%- if bs.url != blank -%}<a href="{{ bs.url }}">{%- endif -%}
-												{{- bs.title -}}
-											{%- if bs.url != blank -%}</a>{%- endif -%}
-										</div>
-									{%- endif -%}
-							{%- endcase -%}
-						{%- endfor -%}
-					</div>
-
-					<div class="announcement-bar__group announcement-bar__group--duplicate" aria-hidden="true">
-						{%- for block in section.blocks -%}
-							{%- assign bs = block.settings -%}
-							{%- case block.type -%}
-								{%- when 'announcement' -%}
-									{%- if bs.title != blank -%}
-										<div class="announcement-bar__item">
-											{%- if bs.url != blank -%}<a href="{{ bs.url }}" tabindex="-1">{%- endif -%}
-												{{- bs.title -}}
-											{%- if bs.url != blank -%}</a>{%- endif -%}
-										</div>
-									{%- endif -%}
-							{%- endcase -%}
-						{%- endfor -%}
-					</div>
+					{%- for copy_index in (1..ticker_groups) -%}
+						{%- assign is_duplicate = false -%}
+						{%- if copy_index > 1 -%}
+							{%- assign is_duplicate = true -%}
+						{%- endif -%}
+						<div class="announcement-bar__group{% if is_duplicate %} announcement-bar__group--duplicate{% endif %}"{% if is_duplicate %} aria-hidden="true"{% endif %}>
+							{%- for block in section.blocks -%}
+								{%- if block.type == 'announcement' and block.settings.title != blank -%}
+									<div class="announcement-bar__item"{% unless is_duplicate %} {{ block.shopify_attributes }}{% endunless %}>
+										{%- if block.settings.url != blank -%}<a href="{{ block.settings.url }}"{% if is_duplicate %} tabindex="-1"{% endif %}>{%- endif -%}
+											{{- block.settings.title -}}
+										{%- if block.settings.url != blank -%}</a>{%- endif -%}
+									</div>
+								{%- endif -%}
+							{%- endfor -%}
+						</div>
+					{%- endfor -%}
 				</div>
 			</div>
 		</div>
@@ -493,6 +495,16 @@
 			"id": "mobile_footer_menu",
 			"label": "Mobile footer menu",
 			"info": "Used for secondary links such as My Account, Contact, Delivery Information and Returns Policy."
+		},
+		{
+			"type": "range",
+			"id": "announcement_speed",
+			"min": 20,
+			"max": 90,
+			"step": 5,
+			"unit": "s",
+			"default": 45,
+			"label": "Announcement ticker loop duration"
 		}
 	],
 	"blocks": [
