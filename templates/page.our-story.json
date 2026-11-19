@@ -53,6 +53,7 @@
         "usp_3cpfiA",
         "usp_HUMVHH"
       ],
+      "disabled": true,
       "name": "Image with USPs",
       "settings": {
         "desktop_image": "shopify://shop_images/spotlight.jpg",
@@ -120,18 +121,34 @@
         "collection_VQmDaQ",
         "collection_FHGYiY"
       ],
+      "disabled": true,
       "name": "Collection grid",
       "settings": {
+        "blocks-per-row": 5,
+        "blocks-per-row-t": 3,
+        "blocks-per-row-m": 2,
         "padding-top": 50,
         "padding-bottom": 0,
         "padding-top-m": 0,
         "padding-bottom-m": 0
+      }
+    },
+    "page_wDTxkd": {
+      "type": "page",
+      "name": "Page",
+      "settings": {
+        "nav_only": false,
+        "navigation": "",
+        "button_intro": "",
+        "button_label": "",
+        "button_link": ""
       }
     }
   },
   "order": [
     "main",
     "image_with_usps_gLG8V9",
-    "collection_grid_HNBrQj"
+    "collection_grid_HNBrQj",
+    "page_wDTxkd"
   ]
 }
