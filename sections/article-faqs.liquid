@@ -1,0 +1,138 @@
+{{- 'main-page.css' | asset_url | stylesheet_tag -}}
+{%- assign ss = section.settings -%}
+{%- assign faq_items = article.metafields.custom.faq_list.value -%}
+
+{%- if faq_items != blank -%}
+	<section class="page page--faqs faq-section article-faqs" id="{{ section.id }}">
+		<div class="container">
+			<div class="page__inner">
+
+				{%- if ss.heading != blank -%}
+					<header class="page__header">
+						<h2 class="page__title h{{ ss.font_size }}">{{ ss.heading | escape }}</h2>
+					</header>
+				{%- endif -%}
+
+				<div class="page__faqs">
+					{%- assign first_opened = false -%}
+					{%- for faq in faq_items -%}
+						{%- if faq.question != blank -%}
+							<details class="page__faq"{% if ss.open_first and first_opened == false %} open{% endif %}>
+								<summary class="page__faq-trigger">
+									<span class="page__faq-question">{{ faq.question | escape }}</span>
+									<span class="page__faq-icon" aria-hidden="true"></span>
+								</summary>
+								{%- if faq.answer != blank -%}
+									<div class="page__faq-content rte">
+										{{ faq.answer | metafield_tag }}
+									</div>
+								{%- endif -%}
+							</details>
+							{%- assign first_opened = true -%}
+						{%- endif -%}
+					{%- endfor -%}
+				</div>
+
+			</div>
+		</div>
+	</section>
+
+	{%- if ss.output_schema -%}
+		<script type="application/ld+json">
+			{
+				"@context": "https://schema.org",
+				"@type": "FAQPage",
+				"mainEntity": [
+					{%- assign faq_emitted = 0 -%}
+					{%- for faq in faq_items -%}
+						{%- if faq.question != blank and faq.answer != blank -%}
+							{%- if faq_emitted > 0 -%},{%- endif -%}
+							{
+								"@type": "Question",
+								"name": {{ faq.question.value | json }},
+								"acceptedAnswer": {
+									"@type": "Answer",
+									"text": {{ faq.answer | metafield_tag | replace: '</p>', ' </p>' | replace: '<br>', ' ' | replace: '</li>', ' </li>' | strip_html | strip | json }}
+								}
+							}
+							{%- assign faq_emitted = faq_emitted | plus: 1 -%}
+						{%- endif -%}
+					{%- endfor -%}
+				]
+			}
+		</script>
+	{%- endif -%}
+{%- endif -%}
+
+{%- style -%}
+	#{{ section.id }} {
+		padding-top: {{ ss.padding-top }}px;
+		padding-bottom: {{ ss.padding-bottom }}px;
+	}
+	#{{ section.id }} .page__inner {
+		padding-top: 0;
+		padding-bottom: 0;
+	}
+	@media screen and (max-width: 750px) {
+		#{{ section.id }} {
+			padding-top: {{ ss.padding-top-m }}px;
+			padding-bottom: {{ ss.padding-bottom-m }}px;
+		}
+	}
+{%- endstyle -%}
+
+{% schema %}
+{
+	"name": "Article FAQs",
+	"tag": "section",
+	"class": "article-faqs-section",
+	"enabled_on": {
+		"templates": ["article"]
+	},
+	"settings": [
+		{
+			"type": "paragraph",
+			"content": "Shows the FAQs picked in the article's FAQ list metafield. Hidden when none are set."
+		},
+		{
+			"type": "text",
+			"id": "heading",
+			"label": "Heading",
+			"default": "Frequently asked questions"
+		},
+		{
+			"type": "select",
+			"id": "font_size",
+			"label": "Heading size",
+			"options": [
+				{"value": "2", "label": "H2"},
+				{"value": "3", "label": "H3"},
+				{"value": "4", "label": "H4"},
+				{"value": "5", "label": "H5"}
+			],
+			"default": "4"
+		},
+		{
+			"type": "checkbox",
+			"id": "open_first",
+			"label": "Open first question",
+			"default": false
+		},
+		{
+			"type": "checkbox",
+			"id": "output_schema",
+			"label": "Output FAQ schema",
+			"default": true
+		},
+		{"type": "header", "content": "Padding (desktop)"},
+		{"type": "range", "id": "padding-top", "min": 0, "max": 300, "step": 5, "label": "Padding top", "default": 40},
+		{"type": "range", "id": "padding-bottom", "min": 0, "max": 300, "step": 5, "label": "Padding bottom", "default": 40},
+		{"type": "header", "content": "Padding (mobile)"},
+		{"type": "range", "id": "padding-top-m", "min": 0, "max": 300, "step": 5, "label": "Padding top", "default": 30},
+		{"type": "range", "id": "padding-bottom-m", "min": 0, "max": 300, "step": 5, "label": "Padding bottom", "default": 30}
+	],
+	"presets": [
+		{"name": "Article FAQs"}
+	]
+}
+{% endschema %}
