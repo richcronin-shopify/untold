@@ -55,12 +55,19 @@
   if sp_setting == 'Covered / Undercover'
     assign sp_setting_label = 'Covered'
   endif
+  assign sp_alt = park.name.value | default: 'Skatepark' | strip
+  assign sp_town = park.town_city.value | strip
+  if sp_town != blank
+    unless sp_alt contains sp_town
+      assign sp_alt = sp_alt | append: ' in ' | append: sp_town
+    endunless
+  endif
 -%}
 <article class="skatepark-card"{% if sp_handle != blank %} data-park-handle="{{ sp_handle | escape }}"{% endif %}>
   <div class="skatepark-card__media">
     <a href="{{ sp_url }}" class="skatepark-card__media-link" tabindex="-1" aria-hidden="true">
       {%- if sp_img != blank -%}
-        <img src="{{ sp_img | escape }}" alt="" loading="{{ sp_loading }}" decoding="async" {% unless sp_is_placeholder %}referrerpolicy="no-referrer" {% endunless %}width="640" height="400" class="skatepark-card__image{% if sp_is_placeholder %} skatepark-card__image--placeholder{% endif %}">
+        <img src="{{ sp_img | escape }}" alt="{{ sp_alt | escape }}" loading="{{ sp_loading }}" decoding="async" {% unless sp_is_placeholder %}referrerpolicy="no-referrer" {% endunless %}width="640" height="400" class="skatepark-card__image{% if sp_is_placeholder %} skatepark-card__image--placeholder{% endif %}">
       {%- else -%}
         <span class="skatepark-card__placeholder" aria-hidden="true">{{ park.name.value | slice: 0 }}</span>
       {%- endif -%}
