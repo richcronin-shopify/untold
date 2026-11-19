@@ -135,6 +135,25 @@
     },
     "page_wDTxkd": {
       "type": "page",
+      "blocks": {
+        "faq_heading_tnttX3": {
+          "type": "faq_heading",
+          "settings": {
+            "title": "FAQ Heading"
+          }
+        },
+        "faq_waeH3U": {
+          "type": "faq",
+          "settings": {
+            "question": "Who is UNTOLD?",
+            "answer": "<p>Add your answer here.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_heading_tnttX3",
+        "faq_waeH3U"
+      ],
       "name": "Page",
       "settings": {
         "nav_only": false,
