@@ -70,7 +70,7 @@
           "type": "faq",
           "settings": {
             "question": "Can I swap something for a different size or colour?",
-            "answer": "<p>If you change your mind after you have placed an order please reach out to us ASAP.</p>"
+            "answer": "<p>Yes. Email <a href=\"mailto:support@untoldbmx.co.uk\">support@untoldbmx.co.uk</a> within 30 days and we'll arrange a swap, as long as the item is unused and in its original packaging.</p>"
           }
         },
         "faq_heading_iq9x7t": {
@@ -168,7 +168,8 @@
         "navigation": "in-page-menu",
         "button_intro": "<p>Still can’t find what you’re looking for?<br/>Please contact us below</p>",
         "button_label": "Contact us",
-        "button_link": "shopify://pages/contact"
+        "button_link": "shopify://pages/contact",
+        "output_schema": true
       }
     }
   },
