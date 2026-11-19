@@ -25,7 +25,7 @@
   <div class="container">
     <div class="product-slider__header">
       {%- if ss.title != blank -%}
-        <h2 class="product-slider__title h5">{{ ss.title }}</h2>
+        <h{{ss.heading_tag}} class="product-slider__title h5">{{ ss.title }}</h{{ss.heading_tag}}>
       {%- endif -%}
 
       <div class="product-slider__controls">
@@ -222,6 +222,16 @@
       "id": "title",
       "label": "Title",
       "default": "Best sellers"
+    },
+    {
+        "type": "range",
+        "id": "heading_tag",
+        "min": 1,
+        "max": 6,
+        "step": 1,
+        "label": "Title heading tag",
+        "info": "Header tags, also known as heading tags, are used to separate headings and subheadings on a webpage. They rank in order of importance, from H1 to H6, with H1s usually being the title. Header tags improve the readability and SEO of a webpage.",
+        "default": 2
     },
     {
       "type": "collection",
