@@ -298,7 +298,7 @@
 			width: 100%;
 			border-collapse: collapse;
 			text-align: left;
-			td, tr {
+			td, th {
 				border: 1px solid #fff;
 				font-size: 16px;
 				padding: 6px;
