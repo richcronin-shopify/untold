@@ -3,6 +3,8 @@
 	grid-template-columns: 1fr 1fr;
 	min-height: 520px;
 	color: var(--color-white);
+	border-top: 1px solid var(--color-white);
+	border-bottom: 1px solid var(--color-white);
 
 	@media (max-width: 767px) {
 		grid-template-columns: 1fr;
