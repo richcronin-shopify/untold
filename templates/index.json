@@ -638,7 +638,7 @@
       "name": "Falling brand logos",
       "settings": {
         "heading": "",
-        "background": "#151515",
+        "background": "rgba(0,0,0,0)",
         "max_logos": 14,
         "height_desktop": 380,
         "height_mobile": 300,
