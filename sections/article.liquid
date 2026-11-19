@@ -3,48 +3,48 @@
 
 <div class="page">
 
-	<div class="container">
+	{%- liquid
+		assign hero_excerpt = article.excerpt | strip_html | strip
+		if hero_excerpt == blank
+			assign hero_excerpt = article.content | strip_html | strip | truncatewords: 30
+		endif
+	-%}
 
-		{%- liquid
-			assign hero_excerpt = article.excerpt | strip_html | strip
-			if hero_excerpt == blank
-				assign hero_excerpt = article.content | strip_html | strip | truncatewords: 30
-			endif
-		-%}
+	<section class="article-hero{% unless article.image %} article-hero--no-image{% endunless %}">
+		{%- if article.image -%}
+			<div class="article-hero__media">
+				{{
+					article.image
+					| image_url: width: 1600
+					| image_tag:
+						class: 'article-hero__image',
+						loading: 'eager',
+						fetchpriority: 'high',
+						widths: '375, 550, 750, 1000, 1200, 1600',
+						sizes: '(min-width: 768px) 50vw, 100vw',
+						alt: article.image.alt | default: article.title
+				}}
+			</div>
+		{%- endif -%}
 
-		<section class="article-hero{% unless article.image %} article-hero--no-image{% endunless %}">
-			{%- if article.image -%}
-				<div class="article-hero__media">
-					{{
-						article.image
-						| image_url: width: 1600
-						| image_tag:
-							class: 'article-hero__image',
-							loading: 'eager',
-							fetchpriority: 'high',
-							widths: '375, 550, 750, 1000, 1200, 1600',
-							sizes: '(min-width: 768px) 50vw, 100vw',
-							alt: article.image.alt | default: article.title
-					}}
-				</div>
+		<div class="article-hero__content">
+			<h1 class="article-hero__title h2">{{ article.title }}</h1>
+
+			{%- if hero_excerpt != blank -%}
+				<p class="article-hero__excerpt">{{ hero_excerpt }}</p>
 			{%- endif -%}
 
-			<div class="article-hero__content">
-				<h1 class="article-hero__title h2">{{ article.title }}</h1>
-
-				{%- if hero_excerpt != blank -%}
-					<p class="article-hero__excerpt">{{ hero_excerpt }}</p>
+			<p class="article-hero__meta">
+				{%- if article.author != blank -%}
+					<span class="article-hero__author">By {{ article.author }}</span>
+					<span class="article-hero__divider" aria-hidden="true">&middot;</span>
 				{%- endif -%}
+				<span class="article-hero__date">Published on {{ article.published_at | time_tag: format: 'date' }}</span>
+			</p>
+		</div>
+	</section>
 
-				<p class="article-hero__meta">
-					{%- if article.author != blank -%}
-						<span class="article-hero__author">By {{ article.author }}</span>
-						<span class="article-hero__divider" aria-hidden="true">&middot;</span>
-					{%- endif -%}
-					<span class="article-hero__date">Published on {{ article.published_at | time_tag: format: 'date' }}</span>
-				</p>
-			</div>
-		</section>
+	<div class="container">
 
 		<div class="page__inner article-rte">
 
