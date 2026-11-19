@@ -38,10 +38,10 @@
 		justify-content: center;
 		align-items: center;
 		text-align: center;
-		padding: 180px 60px 60px;
+		padding: 60px;
 
 		@media (max-width: 990px) {
-			padding: 160px 40px 40px;
+			padding: 40px;
 		}
 
 		@media (max-width: 767px) {
@@ -52,7 +52,7 @@
 	.article-hero__title {
 		max-width: 640px;
 		margin: 0;
-		color: var(--color-black);
+		color: var(--color-white);
 	}
 
 	.article-hero__excerpt {
@@ -60,7 +60,7 @@
 		margin: 18px 0 0;
 		font-size: var(--xxs);
 		line-height: 1.5;
-		color: var(--color-black);
+		color: var(--color-white);
 	}
 
 	.article-hero__meta {
@@ -73,6 +73,6 @@
 		font-weight: 500;
 		text-transform: uppercase;
 		letter-spacing: 0.04em;
-		color: rgb(from var(--color-black) r g b / 75%);
+		color: var(--color-white);
 	}
 }
