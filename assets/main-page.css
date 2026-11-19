@@ -293,6 +293,8 @@
 
 	.article-rte {
 
+		font-size: var(--small);
+
 		h2, h3, h4, h5 {
 			font-size: 28px;
 		}
@@ -309,7 +311,7 @@
 			margin: 0 0 30px 0;
 			td, th {
 				border: 1px solid #fff;
-				font-size: 16px;
+				font-size: var(--small);
 				padding: 6px;
 			}
 		}
