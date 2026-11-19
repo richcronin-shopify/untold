@@ -9,130 +9,6 @@
  */
 {
   "sections": {
-    "main": {
-      "type": "page",
-      "disabled": true,
-      "settings": {
-        "nav_only": false,
-        "navigation": "",
-        "button_intro": "<p>Still can’t find what you’re looking for?<br>Please contact us below</p>",
-        "button_label": "Contact us",
-        "button_link": ""
-      }
-    },
-    "image_with_usps_gLG8V9": {
-      "type": "image-with-usps",
-      "blocks": {
-        "usp_qEE3mG": {
-          "type": "usp",
-          "settings": {
-            "icon": "shopify://shop_images/icon-secure.svg",
-            "title": "Trusted brands",
-            "description": "Proven BMX names"
-          }
-        },
-        "usp_3cpfiA": {
-          "type": "usp",
-          "settings": {
-            "icon": "shopify://shop_images/icon-cs.svg",
-            "title": "Expert advice",
-            "description": "Help from riders"
-          }
-        },
-        "usp_HUMVHH": {
-          "type": "usp",
-          "settings": {
-            "icon": "shopify://shop_images/icon-delivery.svg",
-            "title": "Real support",
-            "description": "Before and after"
-          }
-        }
-      },
-      "block_order": [
-        "usp_qEE3mG",
-        "usp_3cpfiA",
-        "usp_HUMVHH"
-      ],
-      "disabled": true,
-      "name": "Image with USPs",
-      "settings": {
-        "desktop_image": "shopify://shop_images/spotlight.jpg",
-        "mobile_image": "shopify://shop_images/rider-owned-m.jpg",
-        "heading": "Rider owned. Rider approved.",
-        "heading_tag": 2,
-        "font_size": 2,
-        "text": "<p>Untold BMX is built around the idea that every rider, bike and spot has a story worth discovering.</p><p>We’re here for the riders putting in the hours, the builds that come together part by part, the local scenes that keep BMX moving, and the products that earn their place through real use.</p><p>More than just a BMX store, Untold is about the culture around riding — the people, places and stories that don’t always get seen.</p><p><strong>Every rider has an untold story.</strong></p>",
-        "button_label": "",
-        "button_url": "",
-        "padding-top": 0,
-        "padding-bottom": 0,
-        "padding-top-m": 0,
-        "padding-bottom-m": 0
-      }
-    },
-    "collection_grid_HNBrQj": {
-      "type": "collection-grid",
-      "blocks": {
-        "collection_8rnnEt": {
-          "type": "collection",
-          "settings": {
-            "collection": "complete-bikes",
-            "image": "shopify://shop_images/complet-bikes.jpg",
-            "title": "Complete Bikes"
-          }
-        },
-        "collection_VdYRrX": {
-          "type": "collection",
-          "settings": {
-            "collection": "frames",
-            "image": "shopify://shop_images/frames_99457d6c-7c1b-43f0-a4d8-7d76fac3a0de.jpg",
-            "title": ""
-          }
-        },
-        "collection_ngJBGB": {
-          "type": "collection",
-          "settings": {
-            "collection": "wheels",
-            "image": "shopify://shop_images/wheels.jpg",
-            "title": ""
-          }
-        },
-        "collection_VQmDaQ": {
-          "type": "collection",
-          "settings": {
-            "collection": "parts",
-            "image": "shopify://shop_images/parts.jpg",
-            "title": "Parts"
-          }
-        },
-        "collection_FHGYiY": {
-          "type": "collection",
-          "settings": {
-            "collection": "sale",
-            "image": "shopify://shop_images/sale.jpg",
-            "title": "Sale"
-          }
-        }
-      },
-      "block_order": [
-        "collection_8rnnEt",
-        "collection_VdYRrX",
-        "collection_ngJBGB",
-        "collection_VQmDaQ",
-        "collection_FHGYiY"
-      ],
-      "disabled": true,
-      "name": "Collection grid",
-      "settings": {
-        "blocks-per-row": 5,
-        "blocks-per-row-t": 3,
-        "blocks-per-row-m": 2,
-        "padding-top": 50,
-        "padding-bottom": 0,
-        "padding-top-m": 0,
-        "padding-bottom-m": 0
-      }
-    },
     "page_wDTxkd": {
       "type": "page",
       "name": "Page",
@@ -143,12 +19,65 @@
         "button_label": "",
         "button_link": ""
       }
+    },
+    "faq_rhUfLM": {
+      "type": "faq",
+      "blocks": {
+        "faq_68pf3P": {
+          "type": "faq",
+          "settings": {
+            "question": "Is UNTOLD BMX an independent BMX shop in the UK run by riders?",
+            "answer": "<p>Yes. UNTOLD BMX is an independent, rider-run online BMX shop based in Folkestone, Kent. It's run by Rich Cronin, and we started trading in October 2026.</p>"
+          }
+        },
+        "faq_bNFjbB": {
+          "type": "faq",
+          "settings": {
+            "question": "Is UNTOLD BMX legit?",
+            "answer": "<p>Yes. UNTOLD BMX is a UK online BMX shop, trading since October 2026 and run by Rich Cronin. You can contact us at <a href=\"mailto:support@untoldbmx.co.uk\">support@untoldbmx.co.uk</a>, through live chat or on our contact page. We offer 30-day returns on unused items, handle warranty claims for you and collect customer reviews through Judge.me.</p>"
+          }
+        },
+        "faq_JFRMPE": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I get a custom BMX build from UNTOLD BMX?",
+            "answer": "<p>Yes, we can do custom builds. Please <a href=\"/pages/contact\" title=\"Contact\">get in touch</a> before placing an order.</p>"
+          }
+        },
+        "faq_K6BXUA": {
+          "type": "faq",
+          "settings": {
+            "question": "Which BMX brands do you stock?",
+            "answer": "<p>We stock genuine bikes and parts from brands including Cult, Kink, FIT, Colony, S&M, Federal, United, Tall Order, Primo, Fiend, Stranger, ODI and Pro-Tec.</p><p>See all the brands we stock <a href=\"/pages/brands-we-stock\" title=\"Brands we're stocking\">here</a>.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_68pf3P",
+        "faq_bNFjbB",
+        "faq_JFRMPE",
+        "faq_K6BXUA"
+      ],
+      "name": "FAQ",
+      "settings": {
+        "heading": "",
+        "intro": "",
+        "heading_tag": 2,
+        "font_size": 2,
+        "text_align": "text-align-center",
+        "open_first": false,
+        "output_schema": true,
+        "link_label": "More questions? See our FAQs",
+        "link_url": "",
+        "padding-top": 50,
+        "padding-bottom": 50,
+        "padding-top-m": 30,
+        "padding-bottom-m": 30
+      }
     }
   },
   "order": [
-    "main",
-    "image_with_usps_gLG8V9",
-    "collection_grid_HNBrQj",
-    "page_wDTxkd"
+    "page_wDTxkd",
+    "faq_rhUfLM"
   ]
 }
