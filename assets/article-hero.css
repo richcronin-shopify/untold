@@ -2,8 +2,7 @@
 	display: grid;
 	grid-template-columns: 1fr 1fr;
 	min-height: 520px;
-	background: var(--color-primary);
-	color: var(--color-black);
+	color: var(--color-white);
 
 	@media (max-width: 767px) {
 		grid-template-columns: 1fr;
