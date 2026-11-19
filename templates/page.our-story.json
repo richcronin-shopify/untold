@@ -84,7 +84,7 @@
         "open_first": false,
         "output_schema": true,
         "link_label": "More questions? See our FAQs",
-        "link_url": "",
+        "link_url": "shopify://pages/faqs",
         "padding-top": 60,
         "padding-bottom": 60,
         "padding-top-m": 30,
