@@ -296,8 +296,11 @@
 		table {
 			border: 1px solid #fff;
 			width: 100%;
-			td {
+			border-collapse: collapse;
+			td, tr {
 				border: 1px solid #fff;
+				font-size: 16px;
+				padding: 6px;
 			}
 		}
 
