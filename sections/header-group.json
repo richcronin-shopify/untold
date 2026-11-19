@@ -52,7 +52,7 @@
       "settings": {
         "menu": "main-menu",
         "mobile_footer_menu": "mobile-footer",
-        "announcement_speed": 90
+        "announcement_speed": 160
       }
     },
     "cart_drawer": {
