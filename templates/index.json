@@ -156,7 +156,8 @@
         "heading_tDJGTt"
       ],
       "custom_css": [
-        "br {display: none;}"
+        "br {display: none;}",
+        "@media (max-width: 767px) {br {display: block;}}"
       ],
       "name": "Richtext",
       "settings": {
