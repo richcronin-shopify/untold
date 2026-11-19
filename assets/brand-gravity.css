@@ -1,0 +1,122 @@
+/* Visual-only falling logos. Transform/opacity only: no layout animation or physics library. */
+.brand-gravity {
+  overflow: hidden;
+  background: var(--gravity-background, #151515);
+  color: #fff;
+}
+
+.brand-gravity__header {
+  padding-top: 32px;
+}
+
+.brand-gravity__heading {
+  margin: 0;
+  color: inherit;
+}
+
+.brand-gravity__stage {
+  position: relative;
+  height: var(--gravity-stage-height, 380px);
+  overflow: hidden;
+  isolation: isolate;
+  pointer-events: none;
+  --gravity-logo-height: 85px;
+}
+
+.brand-gravity__item {
+  position: absolute;
+  left: clamp(0px, var(--gravity-x, 20%), calc(100% - var(--gravity-logo-width, 150px)));
+  top: 0;
+  width: var(--gravity-logo-width, 150px);
+  height: var(--gravity-logo-height);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+  --gravity-ground: calc(var(--gravity-stage-height, 380px) - var(--gravity-logo-height) - 7px);
+}
+
+.brand-gravity__logo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.brand-gravity.is-running .brand-gravity__item {
+  animation-name: brand-gravity-fall;
+  animation-duration: var(--gravity-duration, 7s);
+  animation-delay: var(--gravity-delay, 0s);
+  animation-timing-function: linear;
+  animation-iteration-count: var(--gravity-repeat, infinite);
+  animation-fill-mode: both;
+}
+
+/* The logo drops, hits an imaginary floor, bounces twice, then exits below.
+   Each logo has a varied horizontal start / drift / tilt set in Liquid. */
+@keyframes brand-gravity-fall {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -155px, 0) rotate(var(--gravity-start-angle, -12deg));
+    animation-timing-function: cubic-bezier(.55, 0, .95, .58);
+  }
+  6% { opacity: 1; }
+  44% {
+    transform: translate3d(var(--gravity-drift, 10px), var(--gravity-ground), 0) rotate(var(--gravity-land-angle, 12deg));
+    animation-timing-function: cubic-bezier(.2, .7, .42, 1);
+  }
+  55% {
+    transform: translate3d(var(--gravity-drift, 10px), calc(var(--gravity-ground) - 50px), 0) rotate(0deg);
+    animation-timing-function: cubic-bezier(.5, 0, .93, .75);
+  }
+  66% {
+    transform: translate3d(var(--gravity-drift, 10px), var(--gravity-ground), 0) rotate(var(--gravity-half-angle, 6deg));
+    animation-timing-function: cubic-bezier(.16, .6, .4, 1);
+  }
+  74% {
+    transform: translate3d(var(--gravity-drift, 10px), calc(var(--gravity-ground) - 18px), 0) rotate(0deg);
+    animation-timing-function: cubic-bezier(.52, 0, .85, .75);
+  }
+  82% {
+    transform: translate3d(var(--gravity-drift, 10px), var(--gravity-ground), 0) rotate(0deg);
+    animation-timing-function: cubic-bezier(.52, 0, .96, .75);
+  }
+  94% { opacity: 1; }
+  100% {
+    opacity: 0;
+    transform: translate3d(var(--gravity-drift, 10px), calc(var(--gravity-stage-height, 380px) + 170px), 0) rotate(var(--gravity-land-angle, 12deg));
+  }
+}
+
+@media (max-width: 749px) {
+  .brand-gravity__header { padding-top: 24px; }
+  .brand-gravity__stage {
+    height: var(--gravity-stage-height-mobile, 300px);
+    --gravity-stage-height: var(--gravity-stage-height-mobile, 300px);
+    --gravity-logo-width: var(--gravity-logo-width-mobile, 100px);
+    --gravity-logo-height: 60px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brand-gravity__stage {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 14px 22px;
+    padding: 16px;
+  }
+  .brand-gravity__item,
+  .brand-gravity.is-running .brand-gravity__item {
+    position: static;
+    flex: 0 0 var(--gravity-logo-width, 150px);
+    opacity: 1;
+    animation: none;
+    transform: none;
+  }
+}
