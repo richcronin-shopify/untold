@@ -25,7 +25,7 @@
           "type": "announcement",
           "settings": {
             "title": "Complete bikes from £99.99 - Shop now",
-            "url": "shopify://collections/complete-bikes"
+            "url": "/collections/complete-bikes?sort_by=price-ascending"
           }
         },
         "announcement_TYnqEf": {
