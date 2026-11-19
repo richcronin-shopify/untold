@@ -52,7 +52,7 @@
 								"name": {{ faq.question.value | json }},
 								"acceptedAnswer": {
 									"@type": "Answer",
-									"text": {{ faq.answer | metafield_tag | replace: '</p>', ' </p>' | replace: '<br>', ' ' | replace: '</li>', ' </li>' | strip_html | strip | json }}
+									"text": {{ faq.answer | metafield_tag | replace: '</p>', ' </p>' | replace: '<br>', ' ' | replace: '</li>', ' </li>' | strip_html | replace: '&quot;', '"' | replace: '&#39;', "'" | replace: '&amp;', '&' | replace: '&nbsp;', ' ' | strip | json }}
 								}
 							}
 							{%- assign faq_emitted = faq_emitted | plus: 1 -%}
