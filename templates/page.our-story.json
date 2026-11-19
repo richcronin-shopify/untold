@@ -50,13 +50,29 @@
             "question": "Which BMX brands do you stock?",
             "answer": "<p>We stock genuine bikes and parts from brands including Cult, Kink, FIT, Colony, S&M, Federal, United, Tall Order, Primo, Fiend, Stranger, ODI and Pro-Tec.</p><p>See all the brands we stock <a href=\"/pages/brands-we-stock\" title=\"Brands we're stocking\">here</a>.</p>"
           }
+        },
+        "faq_7Ry3tr": {
+          "type": "faq",
+          "settings": {
+            "question": "Do you sell complete BMX bikes as well as parts?",
+            "answer": "<p>Yes. We sell everything from 12\" balance bikes to pro-level complete bikes, plus frames and every part you need for a frame-up build.</p>"
+          }
+        },
+        "faq_fcPjUa": {
+          "type": "faq",
+          "settings": {
+            "question": "Is UNTOLD BMX a physical shop or online only?",
+            "answer": "<p>UNTOLD BMX is an online BMX shop. We're looking to open a store in Folkestone, Kent in 2028. We do offer local collection if you're near!</p>"
+          }
         }
       },
       "block_order": [
         "faq_68pf3P",
         "faq_bNFjbB",
         "faq_JFRMPE",
-        "faq_K6BXUA"
+        "faq_K6BXUA",
+        "faq_7Ry3tr",
+        "faq_fcPjUa"
       ],
       "name": "FAQ",
       "settings": {
@@ -69,8 +85,8 @@
         "output_schema": true,
         "link_label": "More questions? See our FAQs",
         "link_url": "",
-        "padding-top": 50,
-        "padding-bottom": 50,
+        "padding-top": 60,
+        "padding-bottom": 60,
         "padding-top-m": 30,
         "padding-bottom-m": 30
       }
