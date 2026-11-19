@@ -110,7 +110,7 @@
 								"name": {{ block.settings.question | json }},
 								"acceptedAnswer": {
 									"@type": "Answer",
-									"text": {{ block.settings.answer | strip_html | strip | json }}
+									"text": {{ block.settings.answer | replace: '</p>', ' </p>' | replace: '<br>', ' ' | replace: '</li>', ' </li>' | strip_html | strip | json }}
 								}
 							}
 							{%- assign faq_emitted = faq_emitted | plus: 1 -%}
