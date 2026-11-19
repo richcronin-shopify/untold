@@ -305,6 +305,9 @@
 
 		h2, h3, h4, h5 {
 			font-size: 28px;
+			@media (max-width: 767px) {
+				font-size: var(--xxs);
+			}
 		}
 
 		ul, ol {
@@ -321,6 +324,9 @@
 				border: 1px solid #fff;
 				font-size: var(--small);
 				padding: 6px;
+				@media (max-width: 767px) {
+					font-size: var(--xxs);
+				}
 			}
 		}
 
