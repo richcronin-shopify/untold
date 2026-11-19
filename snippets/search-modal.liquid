@@ -100,8 +100,7 @@
 											class="search-modal__trending-item"
 											data-search-term="{{ search_term | escape }}"
 										>
-											<span aria-hidden="true">🔥</span>
-											{{ search_term }}
+											{{- search_term -}}
 										</a>
 
 									{%- endif -%}
@@ -323,7 +322,7 @@
 
 					url.searchParams.set(
 						'resources[limit]',
-						'6'
+						'12'
 					);
 
 
