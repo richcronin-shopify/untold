@@ -35,6 +35,13 @@
             "url": "shopify://collections/parts"
           }
         },
+        "announcement_gmKb4j": {
+          "type": "announcement",
+          "settings": {
+            "title": "Rider owned • Rider approved",
+            "url": ""
+          }
+        },
         "announcement_DyQCfq": {
           "type": "announcement",
           "settings": {
@@ -47,6 +54,7 @@
         "announcement_7crK3Q",
         "announcement_bRh7GH",
         "announcement_TYnqEf",
+        "announcement_gmKb4j",
         "announcement_DyQCfq"
       ],
       "settings": {
