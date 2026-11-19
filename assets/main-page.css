@@ -295,6 +295,10 @@
 
 		font-size: var(--small);
 
+		p {
+			line-height: 1.4;
+		}
+
 		h2, h3, h4, h5 {
 			font-size: 28px;
 		}
