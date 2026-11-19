@@ -297,6 +297,7 @@
 			border: 1px solid #fff;
 			width: 100%;
 			border-collapse: collapse;
+			text-align: left;
 			td, tr {
 				border: 1px solid #fff;
 				font-size: 16px;
