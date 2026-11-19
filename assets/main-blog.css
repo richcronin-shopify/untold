@@ -11,6 +11,9 @@
 
 	.main-blog__breadcrumbs {
 		margin: 0 0 24px;
+		@media (max-width: 768px) {
+			margin: 0 0 10px 0;
+		}
 
 		.breadcrumbs__list {
 			justify-content: center;
