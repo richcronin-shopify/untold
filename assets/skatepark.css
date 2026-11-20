@@ -2040,3 +2040,17 @@
 		}
 	}
 }
+
+/* Park FAQs centred on desktop */
+@media screen and (min-width: 990px) {
+	.skatepark-faq {
+		text-align: center;
+
+		.page__faqs {
+			max-width: 860px;
+			margin-left: auto;
+			margin-right: auto;
+			text-align: left;
+		}
+	}
+}
