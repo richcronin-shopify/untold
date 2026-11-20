@@ -280,14 +280,18 @@
   if sp_place != blank
     assign sp_in = ' in ' | append: sp_place
   endif
+  assign sp_in_town = ''
+  if sp_town != blank
+    assign sp_in_town = ' in ' | append: sp_town
+  endif
   if status == 'Closed (Graveyard)'
-    assign sp_sum1 = park_name | append: sp_in | append: ' has permanently closed.'
+    assign sp_sum1 = park_name | append: sp_in_town | append: ' has permanently closed.'
     assign sp_sum2 = 'It was ' | append: sp_art | append: ' ' | append: sp_desc | append: ", and we've kept this page for reference only."
   elsif status contains 'Temporarily Closed'
     if status contains 'Construction'
-      assign sp_sum1 = park_name | append: sp_in | append: ' is temporarily closed for building work.'
+      assign sp_sum1 = park_name | append: sp_in_town | append: ' is temporarily closed for building work.'
     else
-      assign sp_sum1 = park_name | append: sp_in | append: ' is temporarily closed.'
+      assign sp_sum1 = park_name | append: sp_in_town | append: ' is temporarily closed.'
     endif
     assign sp_sum2 = "It's " | append: sp_art | append: ' ' | append: sp_desc | append: ', so check locally before you travel.'
   else
@@ -326,7 +330,7 @@
       assign sp_oh_kind = 'seasonal'
     endif
   endif
-  assign sp_oh_text = sp_oh | replace: 'Mo-Su ', 'every day, ' | replace: 'Mo-Fr ', 'Monday to Friday, ' | replace: 'Sa-Su ', 'Saturday and Sunday, ' | replace: 'Apr-Sep ', 'April to September, ' | replace: 'Oct-May ', 'October to May, ' | replace: 'Oct-Mar ', 'October to March, ' | replace: ';', ', and'
+  assign sp_oh_text = sp_oh | replace: 'Mo-Su ', 'every day, ' | replace: 'Mo-Fr ', 'Monday to Friday, ' | replace: 'Sa-Su ', 'Saturday and Sunday, ' | replace: 'Apr-Sep ', 'April to September, ' | replace: 'Oct-May ', 'October to May, ' | replace: 'Oct-Mar ', 'October to March, ' | replace: ';', ';'
 
   # FAQ question/answer pairs, joined with a delimiter
   assign sp_faq_q = ''
@@ -464,10 +468,15 @@
       assign sp_q = 'Where is ' | append: park_name | append: '?'
       assign sp_a = park_name | append: ' is'
       if sp_addr != blank and sp_addr != town and sp_addr != sp_town
-        assign sp_a = sp_a | append: ' at ' | append: sp_addr | append: ','
+        assign sp_a = sp_a | append: ' at ' | append: sp_addr
+        unless sp_addr contains sp_town
+          assign sp_a = sp_a | append: ','
+        endunless
       endif
       if sp_town != blank
-        assign sp_a = sp_a | append: ' in ' | append: sp_town
+        unless sp_addr contains sp_town
+          assign sp_a = sp_a | append: ' in ' | append: sp_town
+        endunless
       endif
       if park.postcode.value != blank
         assign sp_a = sp_a | append: ' ' | append: park.postcode.value
@@ -954,7 +963,7 @@
     {%- if county != blank and county != region -%},"name":{{ county | json }},"containedInPlace":{"@type":"AdministrativeArea","name":{{ region | json }}
     {%- else -%},"name":{{ region | json }}
     {%- endif -%}
-    {%- if park.country.value != blank -%},"containedInPlace":{"@type":"Country","name":{{ park.country.value | json }}}{%- endif -%}
+    {%- if park.country.value != blank and park.country.value != region -%},"containedInPlace":{"@type":"Country","name":{{ park.country.value | json }}}{%- endif -%}
     {%- if county != blank and county != region -%}}{%- endif -%}}
   {%- endif -%}
   {%- if sp_closed == false and sp_oh_kind == 'always' -%},
