@@ -75,6 +75,417 @@
 
   assign w3w = park.what3words.value | remove: '///' | strip
   assign status = park.verification_status.value
+
+  comment
+    Plain-facts summary, labels and park FAQ, built from the park's fields.
+    No entry fee or cost data is used here. Default or empty values are skipped.
+  endcomment
+  assign sp_closed = false
+  if status == 'Closed (Graveyard)' or status contains 'Temporarily Closed'
+    assign sp_closed = true
+  endif
+
+  assign sp_town = town
+  if sp_town contains '('
+    assign sp_town = sp_town | split: '(' | first | strip
+  endif
+  assign sp_place = sp_town
+  if region != blank and region != sp_town
+    if sp_place != blank
+      assign sp_place = sp_place | append: ', ' | append: region
+    else
+      assign sp_place = region
+    endif
+  endif
+
+  assign sp_setting_raw = park.setting.value
+  assign sp_setting = ''
+  assign sp_setting_label = ''
+  case sp_setting_raw
+    when 'Outdoor'
+      assign sp_setting = 'outdoor'
+      assign sp_setting_label = 'Outdoor'
+    when 'Indoor'
+      assign sp_setting = 'indoor'
+      assign sp_setting_label = 'Indoor'
+    when 'Covered / Undercover'
+      assign sp_setting = 'covered'
+      assign sp_setting_label = 'Covered'
+  endcase
+
+  assign sp_surface = park.surface_material.value | remove: 'Mixed (' | remove: ')' | replace: 'Composite / Skatelite', 'Composite' | replace: 'Asphalt / Tarmac', 'Tarmac' | replace: 'Asphalt Berms', 'Asphalt' | replace: ' / ', ', ' | downcase | strip
+  if sp_surface contains ', '
+    assign sp_surface = sp_surface | replace_last: ', ', ' and '
+  endif
+  assign sp_surface_label = sp_surface | capitalize
+
+  assign sp_kind = 'skatepark'
+  case park.park_type.value
+    when 'BMX Track / Dirt Jumps'
+      assign sp_kind = 'BMX track and dirt jump spot'
+    when 'Pump Track'
+      assign sp_kind = 'pump track'
+    when 'Mini Ramp'
+      assign sp_kind = 'mini ramp'
+    when 'Skatepark & Pump / BMX Track'
+      assign sp_kind = 'skatepark and pump track'
+    when 'Bowl / Pool'
+      assign sp_kind = 'skate bowl'
+    when 'Multi-Sport Action Park'
+      assign sp_kind = 'action sports park'
+    when 'Street Plaza'
+      assign sp_kind = 'street plaza'
+  endcase
+
+  assign sp_flood = park.floodlit.value
+  assign sp_light_adj = ''
+  assign sp_light_label = ''
+  case sp_flood
+    when 'Yes'
+      assign sp_light_adj = 'floodlit'
+      assign sp_light_label = 'Floodlit'
+    when 'Partial / Covered'
+      assign sp_light_adj = 'partly lit'
+      assign sp_light_label = 'Partly lit'
+    when 'Indoor (Lit)'
+      assign sp_light_label = 'Lit indoors'
+  endcase
+
+  # Descriptor without lights, e.g. "outdoor concrete skatepark"
+  assign sp_desc = sp_kind
+  if sp_surface != blank
+    assign sp_desc = sp_surface | append: ' ' | append: sp_desc
+  endif
+  assign sp_desc_lit = sp_desc
+  if sp_light_adj != blank and sp_setting != 'indoor'
+    if sp_setting != blank
+      assign sp_desc_lit = sp_setting | append: ', ' | append: sp_light_adj | append: ' ' | append: sp_desc
+    else
+      assign sp_desc_lit = sp_light_adj | append: ' ' | append: sp_desc
+    endif
+  elsif sp_setting != blank
+    assign sp_desc_lit = sp_setting | append: ' ' | append: sp_desc
+  endif
+  if sp_setting != blank
+    assign sp_desc = sp_setting | append: ' ' | append: sp_desc
+  endif
+  assign sp_ch = sp_desc_lit | slice: 0 | downcase
+  assign sp_art_lit = 'a'
+  if 'aeiou' contains sp_ch
+    assign sp_art_lit = 'an'
+  endif
+  assign sp_ch = sp_desc | slice: 0 | downcase
+  assign sp_art = 'a'
+  if 'aeiou' contains sp_ch
+    assign sp_art = 'an'
+  endif
+  assign sp_ch = sp_kind | slice: 0 | downcase
+  assign sp_desc_nosetting = sp_kind
+  if sp_surface != blank
+    assign sp_desc_nosetting = sp_surface | append: ' ' | append: sp_kind
+  endif
+  assign sp_ch = sp_desc_nosetting | slice: 0 | downcase
+  assign sp_art_ns = 'a'
+  if 'aeiou' contains sp_ch
+    assign sp_art_ns = 'an'
+  endif
+
+  # Features with articles: "a bowl, a street section and rollers"
+  assign sp_feat_all = ''
+  assign sp_feat_five = ''
+  assign sp_feat_count = 0
+  assign sp_feat_parts = park.features.value | split: ','
+  for f in sp_feat_parts
+    assign f_raw = f | strip
+    if f_raw == blank
+      continue
+    endif
+    assign f_txt = f_raw | downcase | replace: ' / ', '/' | replace: 'bmx', 'BMX' | replace: 'diy', 'DIY'
+    assign f_last = f_txt | slice: -1
+    assign f_first = f_txt | slice: 0
+    if f_last == 's' or f_txt == 'pool coping'
+      assign f_item = f_txt
+    elsif 'aeiou' contains f_first
+      assign f_item = 'an ' | append: f_txt
+    else
+      assign f_item = 'a ' | append: f_txt
+    endif
+    assign sp_feat_count = sp_feat_count | plus: 1
+    if sp_feat_all == ''
+      assign sp_feat_all = f_item
+    else
+      assign sp_feat_all = sp_feat_all | append: ', ' | append: f_item
+    endif
+    if sp_feat_count <= 5
+      if sp_feat_five == ''
+        assign sp_feat_five = f_item
+      else
+        assign sp_feat_five = sp_feat_five | append: ', ' | append: f_item
+      endif
+    endif
+  endfor
+  if sp_feat_all contains ', '
+    assign sp_feat_all = sp_feat_all | replace_last: ', ', ' and '
+  endif
+  if sp_feat_five contains ', '
+    assign sp_feat_five = sp_feat_five | replace_last: ', ', ' and '
+  endif
+
+  # Facilities, skipping the "Public Park Access" default
+  assign sp_fac = ''
+  assign sp_fac_parts = park.facilities.value | split: ','
+  for fc in sp_fac_parts
+    assign fc_raw = fc | strip
+    assign fc_txt = ''
+    case fc_raw
+      when 'Toilet', 'Toilets'
+        assign fc_txt = 'toilets'
+      when 'Lighting'
+        assign fc_txt = 'lighting'
+      when 'On-site Cafe', 'Cafe'
+        assign fc_txt = 'a café'
+      when 'Relaxing Area'
+        assign fc_txt = 'a seating area'
+      when 'On-site Skate Shop'
+        assign fc_txt = 'an on-site skate shop'
+      when 'Viewing Area'
+        assign fc_txt = 'a viewing area'
+      when 'Lockers'
+        assign fc_txt = 'lockers'
+      when 'Coaching'
+        assign fc_txt = 'coaching'
+      when 'Bike Hire'
+        assign fc_txt = 'bike hire'
+      when 'Parking'
+        assign fc_txt = 'parking'
+    endcase
+    if fc_txt != blank
+      unless sp_fac contains fc_txt
+        if sp_fac == ''
+          assign sp_fac = fc_txt
+        else
+          assign sp_fac = sp_fac | append: ', ' | append: fc_txt
+        endif
+      endunless
+    endif
+  endfor
+  if sp_fac contains ', '
+    assign sp_fac = sp_fac | replace_last: ', ', ' and '
+  endif
+
+  # Two-sentence summary
+  assign sp_sum1 = ''
+  assign sp_sum2 = ''
+  assign sp_in = ''
+  if sp_place != blank
+    assign sp_in = ' in ' | append: sp_place
+  endif
+  if status == 'Closed (Graveyard)'
+    assign sp_sum1 = park_name | append: sp_in | append: ' has permanently closed.'
+    assign sp_sum2 = 'It was ' | append: sp_art | append: ' ' | append: sp_desc | append: ", and we've kept this page for reference only."
+  elsif status contains 'Temporarily Closed'
+    if status contains 'Construction'
+      assign sp_sum1 = park_name | append: sp_in | append: ' is temporarily closed for building work.'
+    else
+      assign sp_sum1 = park_name | append: sp_in | append: ' is temporarily closed.'
+    endif
+    assign sp_sum2 = "It's " | append: sp_art | append: ' ' | append: sp_desc | append: ', so check locally before you travel.'
+  else
+    assign sp_sum1 = park_name | append: ' is ' | append: sp_art_lit | append: ' ' | append: sp_desc_lit | append: sp_in | append: '.'
+    if sp_feat_five != blank
+      if sp_feat_count > 5
+        assign sp_sum2 = 'Its features include ' | append: sp_feat_five | append: '.'
+      else
+        assign sp_sum2 = 'It has ' | append: sp_feat_five | append: '.'
+      endif
+    endif
+  endif
+
+  # Opening hours: only real timetables count (not the defaults)
+  assign sp_oh = park.opening_hours.value | strip
+  assign sp_oh_kind = ''
+  assign sp_oh_first = sp_oh | slice: 0, 2
+  assign sp_day_codes = 'Mo,Tu,We,Th,Fr,Sa,Su' | split: ','
+  if sp_oh == 'Dawn to Dusk / 24h Public Access'
+    assign sp_oh_kind = 'default'
+  elsif sp_oh == 'Session Times / Pre-Booking Advised'
+    assign sp_oh_kind = 'session'
+  elsif sp_oh == '24/7'
+    assign sp_oh_kind = 'always'
+  elsif sp_oh contains ':'
+    if sp_day_codes contains sp_oh_first
+      assign sp_oh_kind = 'timetable'
+      assign sp_oh_parts = sp_oh | split: ';'
+      for ohp in sp_oh_parts
+        assign ohp_tokens = ohp | strip | split: ' '
+        if ohp_tokens.size != 2
+          assign sp_oh_kind = 'seasonal'
+        endif
+      endfor
+    else
+      assign sp_oh_kind = 'seasonal'
+    endif
+  endif
+  assign sp_oh_text = sp_oh | replace: 'Mo-Su ', 'every day, ' | replace: 'Mo-Fr ', 'Monday to Friday, ' | replace: 'Sa-Su ', 'Saturday and Sunday, ' | replace: 'Apr-Sep ', 'April to September, ' | replace: 'Oct-May ', 'October to May, ' | replace: 'Oct-Mar ', 'October to March, ' | replace: ';', ', and'
+
+  # FAQ question/answer pairs, joined with a delimiter
+  assign sp_faq_q = ''
+  assign sp_faq_a = ''
+  assign sp_d = '~~'
+  unless sp_closed
+    assign sp_bmx = park.bmx_allowed.value
+    if sp_bmx != blank
+      assign sp_q = 'Can you ride BMX at ' | append: park_name | append: '?'
+      if sp_bmx contains 'Session'
+        assign sp_a = 'Yes, BMX is allowed at ' | append: park_name | append: ', but check the session times before you go.'
+      else
+        assign sp_a = 'Yes. BMX is allowed at ' | append: park_name | append: '.'
+      endif
+      assign sp_others = ''
+      assign sp_disc = park.disciplines_supported.value | split: ','
+      for dsc in sp_disc
+        assign dsc_raw = dsc | strip
+        assign dsc_txt = ''
+        case dsc_raw
+          when 'Skateboard'
+            assign dsc_txt = 'skateboarding'
+          when 'Scooter'
+            assign dsc_txt = 'scooters'
+          when 'Inline'
+            assign dsc_txt = 'inline skating'
+          when 'Quad Skate'
+            assign dsc_txt = 'quad skating'
+          when 'MTB'
+            assign dsc_txt = 'mountain bikes'
+          when 'Jump Bike'
+            assign dsc_txt = 'jump bikes'
+          when 'Balance Bike'
+            assign dsc_txt = 'balance bikes'
+        endcase
+        if dsc_txt != blank
+          if sp_others == ''
+            assign sp_others = dsc_txt
+          else
+            assign sp_others = sp_others | append: ', ' | append: dsc_txt
+          endif
+        endif
+      endfor
+      if sp_others != blank
+        if sp_others contains ', '
+          assign sp_others = sp_others | replace_last: ', ', ' and '
+        endif
+        assign sp_a = sp_a | append: " It's also used for " | append: sp_others | append: '.'
+      endif
+      case park.skill_levels.value
+        when 'All Levels (Beginner to Pro / Training)'
+          assign sp_a = sp_a | append: ' It suits riders of all levels, from beginners to pros.'
+        when 'All Levels (Beginner, Intermediate, Advanced)'
+          assign sp_a = sp_a | append: ' It suits riders of all levels, from beginners to advanced.'
+        when 'Beginner, Intermediate'
+          assign sp_a = sp_a | append: " It's best suited to beginner and intermediate riders."
+      endcase
+      assign sp_faq_q = sp_faq_q | append: sp_q | append: sp_d
+      assign sp_faq_a = sp_faq_a | append: sp_a | append: sp_d
+    endif
+
+    if sp_setting != blank
+      assign sp_q = 'Is ' | append: park_name | append: ' indoor or floodlit?'
+      if sp_setting == 'indoor'
+        assign sp_a = "It's an indoor park, so you can ride whatever the weather."
+      else
+        if sp_setting == 'covered'
+          assign sp_a = "It's covered, so it's sheltered from the rain."
+        else
+          assign sp_a = "It's an outdoor park."
+        endif
+        case sp_flood
+          when 'Yes'
+            assign sp_a = sp_a | append: " It's floodlit, so you can ride after dark, but check locally for when the lights are on."
+          when 'Partial / Covered'
+            assign sp_a = sp_a | append: ' Part of it is lit or covered.'
+          when 'No'
+            assign sp_a = sp_a | append: " It isn't listed as floodlit, so plan to ride in daylight."
+        endcase
+        if park.rain_friendly.value == true and sp_setting != 'covered'
+          assign sp_a = sp_a | append: " It's listed as rain-friendly."
+        endif
+      endif
+      assign sp_faq_q = sp_faq_q | append: sp_q | append: sp_d
+      assign sp_faq_a = sp_faq_a | append: sp_a | append: sp_d
+    endif
+
+    if sp_feat_all != blank
+      assign sp_q = "What's at " | append: park_name | append: '?'
+      assign sp_a = park_name | append: ' is ' | append: sp_art_ns | append: ' ' | append: sp_desc_nosetting | append: ' with ' | append: sp_feat_all | append: '.'
+      if sp_fac != blank
+        assign sp_a = sp_a | append: ' Facilities include ' | append: sp_fac | append: '.'
+      endif
+      if park.builder_designer.value != blank
+        assign sp_a = sp_a | append: ' It was built by ' | append: park.builder_designer.value | append: '.'
+      endif
+      assign sp_faq_q = sp_faq_q | append: sp_q | append: sp_d
+      assign sp_faq_a = sp_faq_a | append: sp_a | append: sp_d
+    endif
+
+    assign sp_a = ''
+    case sp_oh_kind
+      when 'timetable', 'seasonal'
+        assign sp_a = 'The listed opening hours are ' | append: sp_oh_text | append: '. Times can change, so check with the park before you travel.'
+      when 'always'
+        assign sp_a = "It's listed as open 24 hours a day, 7 days a week."
+      when 'default'
+        assign sp_a = "It's in a public space with open access, so you can usually ride there from dawn to dusk. There are no set opening times listed."
+      when 'session'
+        assign sp_a = "Riding is in set sessions, and booking ahead is advised. Check the park's own website or social pages for current session times."
+    endcase
+    if sp_a != blank
+      assign sp_q = 'When is ' | append: park_name | append: ' open?'
+      assign sp_faq_q = sp_faq_q | append: sp_q | append: sp_d
+      assign sp_faq_a = sp_faq_a | append: sp_a | append: sp_d
+    endif
+
+    assign sp_a = ''
+    case park.helmet_required.value
+      when 'Yes (Mandatory)'
+        assign sp_a = 'Yes. A helmet is required at ' | append: park_name | append: '.'
+      when 'Yes (Full Face Recommended)'
+        assign sp_a = 'Yes. A helmet is required, and a full-face helmet is recommended.'
+      when 'Recommended'
+        assign sp_a = "A helmet isn't listed as compulsory, but wearing one is recommended."
+    endcase
+    if sp_a != blank
+      assign sp_q = 'Do you need a helmet at ' | append: park_name | append: '?'
+      assign sp_faq_q = sp_faq_q | append: sp_q | append: sp_d
+      assign sp_faq_a = sp_faq_a | append: sp_a | append: sp_d
+    endif
+
+    assign sp_addr = park.address_line.value | strip
+    if sp_addr != blank or sp_town != blank
+      assign sp_q = 'Where is ' | append: park_name | append: '?'
+      assign sp_a = park_name | append: ' is'
+      if sp_addr != blank and sp_addr != town and sp_addr != sp_town
+        assign sp_a = sp_a | append: ' at ' | append: sp_addr | append: ','
+      endif
+      if sp_town != blank
+        assign sp_a = sp_a | append: ' in ' | append: sp_town
+      endif
+      if park.postcode.value != blank
+        assign sp_a = sp_a | append: ' ' | append: park.postcode.value
+      endif
+      assign sp_a = sp_a | append: '.'
+      if w3w != blank
+        assign sp_a = sp_a | append: ' Its what3words address is ///' | append: w3w | append: '.'
+      endif
+      assign sp_faq_q = sp_faq_q | append: sp_q | append: sp_d
+      assign sp_faq_a = sp_faq_a | append: sp_a | append: sp_d
+    endif
+  endunless
+  assign sp_faq_qs = sp_faq_q | split: sp_d
+  assign sp_faq_as = sp_faq_a | split: sp_d
+  assign sp_maps_url = park.google_maps_url.value
+  if sp_maps_url == blank and has_geo
+    assign sp_maps_url = 'https://www.google.com/maps/search/?api=1&query=' | append: lat | append: ',' | append: lng
+  endif
 -%}
 
 <section class="skatepark" id="{{ section.id }}">
@@ -112,6 +523,18 @@
           endif
         -%}
         <p class="skatepark__status" role="status">{{ status_label | escape }}</p>
+      {%- endif -%}
+      {%- if ss.show_summary and sp_sum1 != blank -%}
+        <div class="skatepark-summary">
+          <p class="skatepark-summary__text">{{ sp_sum1 | escape }}{% if sp_sum2 != blank %} {{ sp_sum2 | escape }}{% endif %}</p>
+          {%- if sp_setting_label != blank or sp_surface_label != blank or sp_light_label != blank -%}
+            <ul class="skatepark-chips skatepark-summary__labels" role="list" aria-label="Park at a glance">
+              {%- if sp_setting_label != blank -%}<li class="skatepark-chip">{{ sp_setting_label | escape }}</li>{%- endif -%}
+              {%- if sp_surface_label != blank -%}<li class="skatepark-chip">{{ sp_surface_label | escape }}</li>{%- endif -%}
+              {%- if sp_light_label != blank -%}<li class="skatepark-chip">{{ sp_light_label | escape }}</li>{%- endif -%}
+            </ul>
+          {%- endif -%}
+        </div>
       {%- endif -%}
       {%- if ss.show_park_actions and customer -%}
         <div
@@ -433,6 +856,28 @@
       </div>
     </div>
 
+    {%- if ss.show_faq and sp_faq_qs.size > 0 -%}
+      <div class="skatepark-faq" id="{{ section.id }}-faq">
+        <h2 class="skatepark__heading h5">{{ ss.faq_heading | default: 'FAQs' | escape }}</h2>
+        <div class="page__faqs">
+          {%- for sp_fq in sp_faq_qs -%}
+            {%- assign sp_fa = sp_faq_as[forloop.index0] -%}
+            {%- if sp_fq != blank and sp_fa != blank -%}
+              <details class="page__faq">
+                <summary class="page__faq-trigger">
+                  <span class="page__faq-question">{{ sp_fq | escape }}</span>
+                  <span class="page__faq-icon" aria-hidden="true"></span>
+                </summary>
+                <div class="page__faq-content rte">
+                  <p>{{ sp_fa | escape }}</p>
+                </div>
+              </details>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+
   </div>
 </section>
 
@@ -470,8 +915,95 @@
   {%- if park.phone.value != blank -%},
   "telephone": {{ park.phone.value | json }}
   {%- endif -%}
+  {%- comment -%} Amenities, access, map, area and real opening hours. No fee data. {%- endcomment -%}
+  {%- capture sp_amen -%}
+    {%- for f in sp_feat_parts -%}
+      {%- assign f_raw = f | strip -%}
+      {%- if f_raw != blank -%}{"@type":"LocationFeatureSpecification","name":{{ f_raw | json }},"value":true},{%- endif -%}
+    {%- endfor -%}
+    {%- for fc in sp_fac_parts -%}
+      {%- assign fc_raw = fc | strip -%}
+      {%- if fc_raw != blank and fc_raw != 'Public Park Access' -%}{"@type":"LocationFeatureSpecification","name":{{ fc_raw | json }},"value":true},{%- endif -%}
+    {%- endfor -%}
+    {%- case sp_flood -%}
+      {%- when 'Yes', 'Indoor (Lit)' -%}{"@type":"LocationFeatureSpecification","name":"Floodlit","value":true},
+      {%- when 'Partial / Covered' -%}{"@type":"LocationFeatureSpecification","name":"Partly floodlit","value":true},
+      {%- when 'No' -%}{"@type":"LocationFeatureSpecification","name":"Floodlit","value":false},
+    {%- endcase -%}
+    {%- case sp_setting -%}
+      {%- when 'indoor' -%}{"@type":"LocationFeatureSpecification","name":"Indoor","value":true},
+      {%- when 'covered' -%}{"@type":"LocationFeatureSpecification","name":"Covered","value":true},
+      {%- when 'outdoor' -%}{"@type":"LocationFeatureSpecification","name":"Indoor","value":false},
+    {%- endcase -%}
+    {%- if park.rain_friendly.value == true -%}{"@type":"LocationFeatureSpecification","name":"Rain-friendly","value":true},
+    {%- elsif park.rain_friendly.value == false -%}{"@type":"LocationFeatureSpecification","name":"Rain-friendly","value":false},
+    {%- endif -%}
+  {%- endcapture -%}
+  {%- assign sp_amen = sp_amen | strip | remove_last: ',' -%}
+  {%- if sp_amen != blank -%},
+  "amenityFeature": [{{ sp_amen }}]
+  {%- endif -%}
+  {%- if park.entry_type.value != blank -%},
+  "publicAccess": {% if park.entry_type.value == 'Club / Members' %}false{% else %}true{% endif %}
+  {%- endif -%}
+  {%- if sp_maps_url != blank -%},
+  "hasMap": {{ sp_maps_url | json }}
+  {%- endif -%}
+  {%- if region != blank -%},
+  "containedInPlace": {"@type":"AdministrativeArea"
+    {%- if county != blank and county != region -%},"name":{{ county | json }},"containedInPlace":{"@type":"AdministrativeArea","name":{{ region | json }}
+    {%- else -%},"name":{{ region | json }}
+    {%- endif -%}
+    {%- if park.country.value != blank -%},"containedInPlace":{"@type":"Country","name":{{ park.country.value | json }}}{%- endif -%}
+    {%- if county != blank and county != region -%}}{%- endif -%}}
+  {%- endif -%}
+  {%- if sp_closed == false and sp_oh_kind == 'always' -%},
+  "openingHoursSpecification": [{"@type":"OpeningHoursSpecification","dayOfWeek":["https://schema.org/Monday","https://schema.org/Tuesday","https://schema.org/Wednesday","https://schema.org/Thursday","https://schema.org/Friday","https://schema.org/Saturday","https://schema.org/Sunday"],"opens":"00:00","closes":"23:59"}]
+  {%- elsif sp_closed == false and sp_oh_kind == 'timetable' -%},
+  "openingHoursSpecification": [
+    {%- assign sp_day_names = 'Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday' | split: ',' -%}
+    {%- for ohp in sp_oh_parts -%}
+      {%- assign ohp_tokens = ohp | strip | split: ' ' -%}
+      {%- assign ohp_range = ohp_tokens[0] -%}
+      {%- assign ohp_times = ohp_tokens[1] | split: '-' -%}
+      {%- assign ohp_from = ohp_range | split: '-' | first -%}
+      {%- assign ohp_to = ohp_range | split: '-' | last -%}
+      {%- assign ohp_in = false -%}
+      {%- assign ohp_days = '' -%}
+      {%- for dc in sp_day_codes -%}
+        {%- if dc == ohp_from -%}{%- assign ohp_in = true -%}{%- endif -%}
+        {%- if ohp_in -%}
+          {%- assign ohp_day = sp_day_names[forloop.index0] -%}
+          {%- capture ohp_days -%}{{ ohp_days }}{% if ohp_days != '' %},{% endif %}"https://schema.org/{{ ohp_day }}"{%- endcapture -%}
+        {%- endif -%}
+        {%- if dc == ohp_to -%}{%- assign ohp_in = false -%}{%- endif -%}
+      {%- endfor -%}
+      {"@type":"OpeningHoursSpecification","dayOfWeek":[{{ ohp_days }}],"opens":{{ ohp_times | first | json }},"closes":{{ ohp_times | last | json }}}{%- unless forloop.last -%},{%- endunless -%}
+    {%- endfor -%}
+  ]
+  {%- endif -%}
 }
 </script>
+{%- if ss.show_faq and ss.faq_schema and sp_faq_qs.size > 0 -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {%- assign sp_faq_n = 0 -%}
+    {%- for sp_fq in sp_faq_qs -%}
+      {%- assign sp_fa = sp_faq_as[forloop.index0] -%}
+      {%- if sp_fq != blank and sp_fa != blank -%}
+        {%- if sp_faq_n > 0 -%},{%- endif -%}
+        {"@type": "Question", "name": {{ sp_fq | json }}, "acceptedAnswer": {"@type": "Answer", "text": {{ sp_fa | json }}}}
+        {%- assign sp_faq_n = sp_faq_n | plus: 1 -%}
+      {%- endif -%}
+    {%- endfor -%}
+  ]
+}
+</script>
+{%- endif -%}
+
 {%- if ss.show_events and event_keys.size > 0 -%}
 <script type="application/ld+json">
 {
@@ -664,6 +1196,36 @@
       "id": "show_map",
       "label": "Show map",
       "default": true
+    },
+    {
+      "type": "header",
+      "content": "Park summary and FAQ"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_summary",
+      "label": "Show plain-facts summary under the park name",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_faq",
+      "label": "Show park FAQ",
+      "default": true,
+      "info": "Questions are built from the park's data. Questions with empty or default answers are skipped."
+    },
+    {
+      "type": "checkbox",
+      "id": "faq_schema",
+      "label": "Output FAQ schema",
+      "default": true,
+      "info": "Adds FAQPage structured data for the park FAQ. Only works when the FAQ is shown."
+    },
+    {
+      "type": "text",
+      "id": "faq_heading",
+      "label": "FAQ heading",
+      "default": "Park FAQs"
     },
     {
       "type": "header",
