@@ -44,7 +44,7 @@
           "type": "promo_products",
           "settings": {
             "heading": "50% off grips with any bars",
-            "text": "<p>Add any bars to your basket and get a pair of grips half price. Discount applies automatically at checkout.</p>",
+            "text": "<p>Add any bars to your basket and get a pair of grips half price. Discount applies automatically at checkout. <a href=\"/collections/grips-promo-50-off-with-bars\" title=\"Grips promo (50% off with bars)\">View all</a>.</p>",
             "badge_label": "50% off",
             "collection": "grips-promo-50-off-with-bars",
             "product_limit": 16,
