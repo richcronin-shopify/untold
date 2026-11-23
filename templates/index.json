@@ -225,17 +225,17 @@
     "collection_grid_ydaH7n": {
       "type": "collection-grid",
       "blocks": {
-        "collection_TNJyMY": {
-          "type": "collection",
-          "settings": {
-            "collection": "grips",
-            "title": ""
-          }
-        },
         "collection_PgNP4w": {
           "type": "collection",
           "settings": {
             "collection": "bars",
+            "title": "Bars (50% off grips)"
+          }
+        },
+        "collection_TNJyMY": {
+          "type": "collection",
+          "settings": {
+            "collection": "grips",
             "title": ""
           }
         },
@@ -270,8 +270,8 @@
         }
       },
       "block_order": [
-        "collection_TNJyMY",
         "collection_PgNP4w",
+        "collection_TNJyMY",
         "collection_JPiyLY",
         "collection_Tx6Urx",
         "collection_NLazNy",
