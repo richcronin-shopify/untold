@@ -28,6 +28,13 @@
             "url": "/collections/complete-bikes?sort_by=price-ascending"
           }
         },
+        "announcement_MtAFEH": {
+          "type": "announcement",
+          "settings": {
+            "title": "50% off grips with all bars",
+            "url": "shopify://collections/bars"
+          }
+        },
         "announcement_TYnqEf": {
           "type": "announcement",
           "settings": {
@@ -53,6 +60,7 @@
       "block_order": [
         "announcement_7crK3Q",
         "announcement_bRh7GH",
+        "announcement_MtAFEH",
         "announcement_TYnqEf",
         "announcement_gmKb4j",
         "announcement_DyQCfq"
