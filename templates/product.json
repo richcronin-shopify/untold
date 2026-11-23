@@ -39,12 +39,27 @@
             "subtext": "Create an account to collect and redeem points.",
             "link": "shopify://pages/loyalty"
           }
+        },
+        "promo_products_Rtp8xB": {
+          "type": "promo_products",
+          "settings": {
+            "heading": "50% off grips with any bars",
+            "text": "<p>Add any bars to your basket and get a pair of grips half price. Discount applies automatically at checkout.</p>",
+            "badge_label": "50% off",
+            "collection": "grips-promo-50-off-with-bars",
+            "product_limit": 16,
+            "discount_percentage": 50,
+            "only_in_stock": true,
+            "only_on_trigger_collection": true,
+            "trigger_collection": "bars"
+          }
         }
       },
       "block_order": [
         "judge_me_reviews_preview_badge_mVpT3d",
         "size_guide_fddUjr",
-        "points_VfQeEP"
+        "points_VfQeEP",
+        "promo_products_Rtp8xB"
       ],
       "settings": {
         "show_image_zoom": true,
