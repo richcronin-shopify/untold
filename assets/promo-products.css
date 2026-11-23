@@ -148,16 +148,24 @@
 	color: var(--color-primary);
 }
 
-/* Keep the carousel inside the product column */
+/* Keep the carousel inside the product column.
+   The list and cards are positioned so that absolutely positioned children
+   (e.g. the theme's .visually-hidden price labels) use them as their
+   containing block. Without this they are positioned against .container,
+   escape the list's overflow clipping and widen the whole page. */
 .promo-products {
+	position: relative;
 	min-width: 0;
 	max-width: 100%;
-	overflow: hidden;
-	contain: inline-size;
 }
 
 .promo-products__list {
+	position: relative;
 	width: 100%;
 	max-width: 100%;
 	min-width: 0;
+}
+
+.promo-products__card {
+	position: relative;
 }
