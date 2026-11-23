@@ -147,3 +147,17 @@
 	font-size: 15px;
 	color: var(--color-primary);
 }
+
+/* Keep the carousel inside the product column */
+.promo-products {
+	min-width: 0;
+	max-width: 100%;
+	overflow: hidden;
+	contain: inline-size;
+}
+
+.promo-products__list {
+	width: 100%;
+	max-width: 100%;
+	min-width: 0;
+}
