@@ -621,6 +621,10 @@
 
 						</a>
 
+					{%- elsif block.type == 'promo_products' -%}
+
+						{%- render 'promo-products', block: block, product: product -%}
+
 					{%- endif -%}
 
 				{%- endfor -%}
@@ -1977,10 +1981,90 @@
 					"label": "Link"
 				}
 			]
+		},
+		{
+			"type": "promo_products",
+			"name": "Promo products",
+			"limit": 1,
+			"settings": [
+				{
+					"type": "header",
+					"content": "Content"
+				},
+				{
+					"type": "text",
+					"id": "heading",
+					"label": "Heading",
+					"default": "50% off grips with any bars"
+				},
+				{
+					"type": "richtext",
+					"id": "text",
+					"label": "Text",
+					"default": "<p>Add any bars to your basket and get a pair of grips half price. Discount applies automatically at checkout.</p>"
+				},
+				{
+					"type": "text",
+					"id": "badge_label",
+					"label": "Badge label",
+					"default": "50% off"
+				},
+				{
+					"type": "header",
+					"content": "Products"
+				},
+				{
+					"type": "collection",
+					"id": "collection",
+					"label": "Offer collection",
+					"info": "Products shown in the block. The collection must be available on the Online Store."
+				},
+				{
+					"type": "range",
+					"id": "product_limit",
+					"min": 2,
+					"max": 16,
+					"step": 1,
+					"label": "Maximum products to show",
+					"default": 8
+				},
+				{
+					"type": "number",
+					"id": "discount_percentage",
+					"label": "Discount percentage shown",
+					"info": "Display only. Match it to the automatic discount (1 to 100). The real discount is applied in the basket.",
+					"default": 50
+				},
+				{
+					"type": "checkbox",
+					"id": "only_in_stock",
+					"label": "Show only in-stock products",
+					"default": true
+				},
+				{
+					"type": "header",
+					"content": "Visibility"
+				},
+				{
+					"type": "checkbox",
+					"id": "only_on_trigger_collection",
+					"label": "Show only on products in a chosen collection",
+					"default": true
+				},
+				{
+					"type": "collection",
+					"id": "trigger_collection",
+					"label": "Trigger collection",
+					"info": "For example Bars. The block only appears on products in this collection when the setting above is on."
+				}
+			]
 		}
 	],
 	"disabled_on": {
-		"groups": ["header", "footer"]
+		"groups": [
+			"header",
+			"footer"
+		]
 	}
 }
 {% endschema %}

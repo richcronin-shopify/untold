@@ -1,0 +1,123 @@
+{%- comment -%}
+	Promo products block for the product section.
+	Shows products from a chosen collection with a percentage discount preview,
+	e.g. "50% off grips with any bars". Display only: the real discount is an
+	automatic discount applied in the basket/checkout.
+
+	Accepts:
+	- block: the 'promo_products' block
+	- product: the current product
+{%- endcomment -%}
+
+{%- liquid
+	assign bs = block.settings
+	assign promo_collection = bs.collection
+
+	assign show_block = true
+	if promo_collection == blank
+		assign show_block = false
+	endif
+
+	if show_block and bs.only_on_trigger_collection
+		assign show_block = false
+		if bs.trigger_collection != blank
+			for c in product.collections
+				if c.id == bs.trigger_collection.id
+					assign show_block = true
+					break
+				endif
+			endfor
+		endif
+	endif
+
+	assign promo_pct = bs.discount_percentage | default: 50 | plus: 0
+	if promo_pct < 1 or promo_pct > 100
+		assign promo_pct = 50
+	endif
+
+	assign promo_limit = bs.product_limit | default: 8 | plus: 0
+-%}
+
+{%- if show_block -%}
+
+	{%- capture promo_cards -%}
+		{%- assign promo_count = 0 -%}
+		{%- for promo_product in promo_collection.products -%}
+			{%- if promo_count >= promo_limit -%}{%- break -%}{%- endif -%}
+			{%- if promo_product.id == product.id -%}{%- continue -%}{%- endif -%}
+			{%- if bs.only_in_stock and promo_product.available == false -%}{%- continue -%}{%- endif -%}
+
+			{%- liquid
+				assign promo_count = promo_count | plus: 1
+				assign promo_original = promo_product.price_min
+				assign promo_saving = promo_original | times: promo_pct | divided_by: 100.0 | floor
+				assign promo_price = promo_original | minus: promo_saving
+			-%}
+
+			<li class="promo-products__item">
+				<a href="{{ promo_product.url }}" class="promo-products__card">
+					<div class="promo-products__media">
+						{%- if promo_product.featured_image != blank -%}
+							{{
+								promo_product.featured_image
+								| image_url: width: 360
+								| image_tag:
+									loading: 'lazy',
+									widths: '180, 270, 360',
+									sizes: '(min-width: 990px) 160px, 40vw',
+									alt: promo_product.featured_image.alt | default: promo_product.title,
+									class: 'promo-products__image'
+							}}
+						{%- else -%}
+							{{ 'product-1' | placeholder_svg_tag: 'promo-products__image promo-products__image--placeholder' }}
+						{%- endif -%}
+
+						{%- if bs.badge_label != blank -%}
+							<span class="promo-products__badge">{{ bs.badge_label | escape }}</span>
+						{%- endif -%}
+					</div>
+
+					<div class="promo-products__content">
+						<span class="promo-products__title">{{ promo_product.title | escape }}</span>
+
+						<span class="promo-products__price">
+							<span class="visually-hidden">Regular price</span>
+							<s class="promo-products__price-compare">{{ promo_original | money }}</s>
+							<span class="visually-hidden">Offer price</span>
+							<span class="promo-products__price-current">
+								{%- if promo_product.price_varies -%}From {% endif -%}
+								{{ promo_price | money }}
+							</span>
+						</span>
+					</div>
+				</a>
+			</li>
+		{%- endfor -%}
+	{%- endcapture -%}
+
+	{%- if promo_count > 0 -%}
+		{{ 'promo-products.css' | asset_url | stylesheet_tag }}
+
+		<div class="promo-products" {{ block.shopify_attributes }}>
+			{%- if bs.heading != blank or bs.text != blank -%}
+				<div class="promo-products__header">
+					{%- if bs.heading != blank -%}
+						<h2 class="promo-products__heading">{{ bs.heading | escape }}</h2>
+					{%- endif -%}
+					{%- if bs.text != blank -%}
+						<div class="promo-products__text">{{ bs.text }}</div>
+					{%- endif -%}
+				</div>
+			{%- endif -%}
+
+			<ul class="promo-products__list" role="list" aria-label="{{ bs.heading | default: 'Offer products' | escape }}">
+				{{ promo_cards }}
+			</ul>
+		</div>
+	{%- endif -%}
+
+{%- elsif request.design_mode and promo_collection == blank -%}
+	<div class="promo-products promo-products--empty" {{ block.shopify_attributes }}>
+		<p>Promo products: choose a collection in the block settings.</p>
+	</div>
+{%- endif -%}
