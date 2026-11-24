@@ -4,7 +4,7 @@
 	- returns: refund policy (30 days, by post, customer pays return postage)
 	- shipping: UK delivery profile rates (RM48 £8, DPD £12 for products tagged ship:dpd, free from £200)
 	- delivery time: not stocked at UNTOLD Warehouse = 1-2 days handling + 2-3 days transit (RM48).
-	  Warehouse-stocked = transit only (warehouse dispatch time not yet confirmed).
+	  Warehouse-stocked = 0-1 days handling (next working day) + 2-3 days transit.
 	  Warehouse stock = variant custom.in_stock (same flag as the on-page dispatch text).
 	  Per-location inventory is not readable in Liquid for every variant (store_availabilities
 	  only covers the selected / first available variant), so the metafield is the source.
@@ -99,9 +99,11 @@
 			"shippingDestination": {"@type": "DefinedRegion", "addressCountry": "GB"},
 			"deliveryTime": {
 				"@type": "ShippingDeliveryTime",
-				{%- unless sd_wh %}
+				{%- if sd_wh %}
+				"handlingTime": {"@type": "QuantitativeValue", "minValue": 0, "maxValue": 1, "unitCode": "DAY"},
+				{%- else %}
 				"handlingTime": {"@type": "QuantitativeValue", "minValue": 1, "maxValue": 2, "unitCode": "DAY"},
-				{%- endunless %}
+				{%- endif %}
 				"transitTime": {"@type": "QuantitativeValue", "minValue": 2, "maxValue": 3, "unitCode": "DAY"}
 			}
 		},
