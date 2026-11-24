@@ -2330,7 +2330,8 @@ button,
 .jdgm-cards-carousel {
 
 	.jdgm-title,
-	.jdgm-header-info * {
+	.jdgm-header-info *,
+	.jdgm-header-info .jdgm-star {
 		color: #fff !important;
 	}
 
