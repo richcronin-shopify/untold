@@ -2330,9 +2330,12 @@ button,
 .jdgm-cards-carousel {
 
 	.jdgm-title,
-	.jdgm-header-info *,
-	.jdgm-header-info .jdgm-star {
+	.jdgm-header-info * {
 		color: #fff !important;
+	}
+
+	.jdgm-header-info .jdgm-star {
+		color: var(--color-primary) !important;
 	}
 
 	.jdgm-media-card .jdgm-rating-section .jdgm-star {
