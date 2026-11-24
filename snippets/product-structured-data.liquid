@@ -2,11 +2,12 @@
 	Product / ProductGroup JSON-LD. Replaces {{ product | structured_data }}.
 	- gtin only when the barcode passes the GTIN length + check-digit test (snippet: valid-gtin)
 	- returns: refund policy (30 days, by post, customer pays return postage)
-	- shipping: UK delivery profile rates (RM48 £8 / DPD £12 for bulkier items, free from £200)
+	- shipping: UK delivery profile rates (RM48 £8, DPD £12 for products tagged ship:dpd, free from £200)
 	- delivery time: not stocked at UNTOLD Warehouse = 1-2 days handling + 2-3 days transit (RM48).
 	  Warehouse-stocked = transit only (warehouse dispatch time not yet confirmed).
-	  Warehouse stock = variant custom.in_stock (same flag as the on-page dispatch text)
-	  or available at the UNTOLD Warehouse pickup location.
+	  Warehouse stock = variant custom.in_stock (same flag as the on-page dispatch text).
+	  Per-location inventory is not readable in Liquid for every variant (store_availabilities
+	  only covers the selected / first available variant), so the metafield is the source.
 {%- endcomment -%}
 {%- liquid
 	assign sd_url = shop.url | append: product.url
@@ -18,16 +19,9 @@
 		assign sd_desc = product.title
 	endif
 
-	assign sd_type = product.type | downcase
-	assign sd_title = product.title | downcase
 	assign sd_bulky = false
-	assign sd_type4 = sd_type | slice: 0, 4
-	if sd_type contains 'frame' or sd_type contains 'bike' or sd_type contains 'tyre' or sd_type contains 'wheels' or sd_type == 'rims' or sd_type4 == 'bars' or sd_type == 'bicycle handlebars'
+	if product.tags contains 'ship:dpd'
 		assign sd_bulky = true
-	elsif sd_type == 'bmx parts'
-		if sd_title contains ' bars' or sd_title contains 'handlebar' or sd_title contains 'frame' or sd_title contains ' wheel' or sd_title contains 'tyre' or sd_title contains ' rim'
-			assign sd_bulky = true
-		endif
 	endif
 
 	assign sd_varies = ''
@@ -73,12 +67,6 @@
 		assign sd_wh = false
 		if variant.metafields.custom.in_stock.value == true
 			assign sd_wh = true
-		else
-			for sa in variant.store_availabilities
-				if sa.location.name == 'UNTOLD Warehouse' and sa.available
-					assign sd_wh = true
-				endif
-			endfor
 		endif
 		if variant.price >= 20000
 			assign sd_rate = '0.00'
