@@ -1,54 +1,60 @@
 {%- liquid
 	assign breadcrumbs = resource.metafields.custom.breadcrumbs.value
+	assign bc_is_product = false
+	if request.page_type == 'product' and resource.id == product.id
+		assign bc_is_product = true
+	endif
+	assign bc_fallback = blank
+	if bc_is_product and breadcrumbs == blank
+		capture bc_fallback_handle
+			render 'product-breadcrumb-collection', product: resource
+		endcapture
+		assign bc_fallback_handle = bc_fallback_handle | strip
+		if bc_fallback_handle != blank
+			assign bc_fallback = collections[bc_fallback_handle]
+		endif
+	endif
+	assign bc_pos = 1
 -%}
-
 <nav class="breadcrumbs" aria-label="Breadcrumb">
 	<ol class="breadcrumbs__list" role="list">
-
-		<li class="breadcrumbs__item">
-			<a href="{{ routes.root_url }}" class="breadcrumbs__link">
-				Home
-			</a>
-		</li>
-
+		<li class="breadcrumbs__item"><a href="{{ routes.root_url }}" class="breadcrumbs__link">Home</a></li>
 		{%- if breadcrumbs != blank -%}
-
 			{%- for breadcrumb_collection in breadcrumbs -%}
-
 				{%- unless breadcrumb_collection.url == resource.url -%}
-
-					<li class="breadcrumbs__item">
-
-						<span class="breadcrumbs__separator" aria-hidden="true">
-							/
-						</span>
-
-						<a
-							href="{{ breadcrumb_collection.url }}"
-							class="breadcrumbs__link"
-						>
-							{{ breadcrumb_collection.title }}
-						</a>
-
-					</li>
-
+					<li class="breadcrumbs__item"><span class="breadcrumbs__separator" aria-hidden="true">/</span>
+						<a href="{{ breadcrumb_collection.url }}" class="breadcrumbs__link">{{ breadcrumb_collection.title }}</a></li>
 				{%- endunless -%}
-
 			{%- endfor -%}
-
+		{%- elsif bc_fallback != blank -%}
+			<li class="breadcrumbs__item"><span class="breadcrumbs__separator" aria-hidden="true">/</span>
+				<a href="{{ bc_fallback.url }}" class="breadcrumbs__link">{{ bc_fallback.title }}</a></li>
 		{%- endif -%}
-
-		<li class="breadcrumbs__item">
-
-			<span class="breadcrumbs__separator" aria-hidden="true">
-				/
-			</span>
-
-			<span class="breadcrumbs__current" aria-current="page">
-				{{ resource.title }}
-			</span>
-
-		</li>
-
+		<li class="breadcrumbs__item"><span class="breadcrumbs__separator" aria-hidden="true">/</span>
+			<span class="breadcrumbs__current" aria-current="page">{{ resource.title }}</span></li>
 	</ol>
 </nav>
+{%- if bc_is_product -%}
+<script type="application/ld+json">
+{
+	"@context": "https://schema.org",
+	"@type": "BreadcrumbList",
+	"itemListElement": [
+		{"@type": "ListItem", "position": 1, "name": "Home", "item": {{ shop.url | append: '/' | json }}}
+		{%- if breadcrumbs != blank -%}
+			{%- for breadcrumb_collection in breadcrumbs -%}
+				{%- unless breadcrumb_collection.url == resource.url -%}
+					{%- assign bc_pos = bc_pos | plus: 1 -%},
+		{"@type": "ListItem", "position": {{ bc_pos }}, "name": {{ breadcrumb_collection.title | json }}, "item": {{ shop.url | append: breadcrumb_collection.url | json }}}
+				{%- endunless -%}
+			{%- endfor -%}
+		{%- elsif bc_fallback != blank -%}
+			{%- assign bc_pos = bc_pos | plus: 1 -%},
+		{"@type": "ListItem", "position": {{ bc_pos }}, "name": {{ bc_fallback.title | json }}, "item": {{ shop.url | append: bc_fallback.url | json }}}
+		{%- endif -%}
+		{%- assign bc_pos = bc_pos | plus: 1 -%},
+		{"@type": "ListItem", "position": {{ bc_pos }}, "name": {{ resource.title | json }}, "item": {{ shop.url | append: resource.url | json }}}
+	]
+}
+</script>
+{%- endif -%}

@@ -9,12 +9,29 @@
 	Global organisation schema
 {%- endcomment -%}
 
+{%- liquid
+	if shop.brand.logo
+		assign org_logo = shop.brand.logo | image_url: width: 600 | prepend: 'https:'
+	else
+		assign org_logo = 'web-logo.svg' | asset_url | prepend: 'https:'
+	endif
+-%}
+
 <script type="application/ld+json">
 {
 	"@context": "https://schema.org",
 	"@type": "Organization",
+	"@id": {{ shop.url | append: '/#organization' | json }},
 	"name": {{ shop.name | json }},
-	"url": {{ shop.url | json }}
+	"url": {{ shop.url | json }},
+	"logo": {
+		"@type": "ImageObject",
+		"url": {{ org_logo | json }}
+	},
+	"sameAs": [
+		"https://www.instagram.com/untoldbmx/",
+		"https://www.tiktok.com/@untoldbmx"
+	]
 }
 </script>
 
