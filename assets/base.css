@@ -2329,6 +2329,10 @@ button,
 
 .jdgm-cards-carousel {
 
+	.jdgm-title {
+		color: #fff !important;
+	}
+
 	.jdgm-media-card .jdgm-rating-section .jdgm-star {
 		font-size: 14px !important;
 	}
