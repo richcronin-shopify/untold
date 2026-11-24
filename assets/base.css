@@ -2334,7 +2334,8 @@ button,
 		color: #fff !important;
 	}
 
-	.jdgm-header-info .jdgm-star {
+	.jdgm-header-info .jdgm-star,
+	.jdgm-header-info .jdgm-rating-star {
 		color: var(--color-primary) !important;
 	}
 
