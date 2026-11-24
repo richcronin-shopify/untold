@@ -27,21 +27,21 @@
           "type": "faq",
           "settings": {
             "question": "Is UNTOLD BMX an independent BMX shop in the UK run by riders?",
-            "answer": "<p>Yes. UNTOLD BMX is an independent, rider-run online BMX shop based in Folkestone, Kent. It's run by Rich Cronin, and we started trading in October 2026.</p>"
+            "answer": "<p>Yes. UNTOLD BMX is an independent, rider-run online BMX shop based in Folkestone, Kent. It is run by Rich Cronin, a sole trader trading as UNTOLD BMX, and has been trading online since October 2026.</p>"
           }
         },
         "faq_bNFjbB": {
           "type": "faq",
           "settings": {
             "question": "Is UNTOLD BMX legit?",
-            "answer": "<p>Yes. UNTOLD BMX is a UK online BMX shop, trading since October 2026 and run by Rich Cronin. You can contact us at <a href=\"mailto:support@untoldbmx.co.uk\">support@untoldbmx.co.uk</a>, through live chat or on our contact page. We offer 30-day returns on unused items, handle warranty claims for you and collect customer reviews through Judge.me.</p>"
+            "answer": "<p>Yes. UNTOLD BMX is a genuine UK online BMX shop, run by Rich Cronin and trading since October 2026. You can contact the shop at <a href=\"mailto:support@untoldbmx.co.uk\">support@untoldbmx.co.uk</a>, through live chat or on the <a href=\"/pages/contact\" title=\"Contact\">contact page</a>.</p><p>UNTOLD BMX offers 30-day returns on unused items in their original packaging and handles warranty claims for you. Verified Judge.me customer reviews are published on the homepage.</p>"
           }
         },
         "faq_JFRMPE": {
           "type": "faq",
           "settings": {
-            "question": "Can I get a custom BMX build from UNTOLD BMX?",
-            "answer": "<p>Yes, we can do custom builds. Please <a href=\"/pages/contact\" title=\"Contact\">get in touch</a> before placing an order.</p>"
+            "question": "Can I buy a custom BMX build from UNTOLD BMX?",
+            "answer": "<p>Yes. UNTOLD BMX builds custom BMX bikes in house. Parts can be ordered in from suppliers, the bike is built in house, then it is shipped to you.</p><p>Please <a href=\"/pages/contact\" title=\"Contact\">get in touch</a> before placing an order.</p>"
           }
         },
         "faq_K6BXUA": {
@@ -62,13 +62,21 @@
           "type": "faq",
           "settings": {
             "question": "Is UNTOLD BMX a physical shop or online only?",
-            "answer": "<p>UNTOLD BMX is an online BMX shop. We're looking to open a store in Folkestone, Kent in 2027. We do offer local collection if you're near!</p>"
+            "answer": "<p>UNTOLD BMX is an online BMX shop, based in Folkestone, Kent. A physical store in Folkestone is planned for 2028. Local collection is available if you are nearby.</p>"
+          }
+        },
+        "faq_reviews_jdgm": {
+          "type": "faq",
+          "settings": {
+            "question": "Does UNTOLD BMX have customer reviews?",
+            "answer": "<p>Yes. UNTOLD BMX publishes verified Judge.me customer reviews on its homepage. You can also contact the shop at <a href=\"mailto:support@untoldbmx.co.uk\">support@untoldbmx.co.uk</a> and it offers 30-day returns on unused items in their original packaging.</p>"
           }
         }
       },
       "block_order": [
         "faq_68pf3P",
         "faq_bNFjbB",
+        "faq_reviews_jdgm",
         "faq_JFRMPE",
         "faq_K6BXUA",
         "faq_7Ry3tr",

@@ -22,28 +22,28 @@
           "type": "faq",
           "settings": {
             "question": "Do you offer free delivery?",
-            "answer": "<p>Yes! Free UK delivery on orders over £200<\/p>"
+            "answer": "<p>Yes. UNTOLD BMX offers free UK delivery on orders over £200. Orders under £200 are £8 with Royal Mail Tracked 48, or £12 with DPD for bulkier items.</p>"
           }
         },
         "faq_AmaF3C": {
           "type": "faq",
           "settings": {
             "question": "Do you ship to Europe, or only the UK?",
-            "answer": "<p>We only ship within the UK for now.<\/p>"
+            "answer": "<p>No. UNTOLD BMX does not ship to Europe. Delivery is to UK addresses only.</p>"
           }
         },
         "faq_qJEWHX": {
           "type": "faq",
           "settings": {
-            "question": "How long does delivery take, and how much does it cost?",
-            "answer": "<p>Orders are usually dispatched within 1–2 days, and we aim to send orders placed before 2pm the same day. Delivery is Royal Mail Tracked 48 (£8) for smaller items or DPD (£12) for larger items, and it's free on UK orders over £200.<\/p>"
+            "question": "How quickly does UNTOLD BMX dispatch and deliver, and how much does it cost?",
+            "answer": "<p>UNTOLD BMX dispatches items stocked at its UNTOLD Warehouse the next working day. All other items are dispatched in 1–2 days and then sent by Royal Mail Tracked 48.</p><p>Delivery is £8 with Royal Mail Tracked 48, or £12 with DPD for bulkier items, and it is free on UK orders over £200. Delivery is to UK addresses only.</p>"
           }
         },
         "faq_4R7hzM": {
           "type": "faq",
           "settings": {
             "question": "Can I change or cancel my order after I've paid?",
-            "answer": "<p>If you change your mind after you have placed an order please reach out to us ASAP.<\/p>"
+            "answer": "<p>If you change your mind after you have placed an order please reach out to us ASAP.</p>"
           }
         },
         "faq_heading_CR3txp": {
@@ -56,21 +56,21 @@
           "type": "faq",
           "settings": {
             "question": "What's your returns policy?",
-            "answer": "<p>30 days, unused, in the original packaging.&nbsp;<\/p>"
+            "answer": "<p>UNTOLD BMX offers a 30-day returns policy. To be eligible, your item must be unused, in the same condition that you received it, and in its original packaging, and any free gifts included with the order must also be returned.</p><p>See the full <a href=\"/policies/refund-policy\" title=\"Refund policy\">refund policy</a> for details.</p>"
           }
         },
         "faq_QBcBqb": {
           "type": "faq",
           "settings": {
             "question": "Who pays for return postage, and how long do refunds take?",
-            "answer": "<p>Customer pays, refunds take up to 14 working days.<\/p>"
+            "answer": "<p>If you return an item to UNTOLD BMX, you are responsible for the return postage, and the original shipping costs are non-refundable. Once a refund is approved, a credit is applied to your original payment method and can take up to 14 working days, depending on the bank.</p>"
           }
         },
         "faq_xPcqMM": {
           "type": "faq",
           "settings": {
             "question": "Can I swap something for a different size or colour?",
-            "answer": "<p>Yes. Email <a href=\"mailto:support@untoldbmx.co.uk\">support@untoldbmx.co.uk<\/a> within 30 days and we'll arrange a swap, as long as the item is unused and in its original packaging.<\/p>"
+            "answer": "<p>UNTOLD BMX replaces items that are defective or damaged. For any other replacement reason, please get in touch at <a href=\"mailto:support@untoldbmx.co.uk\">support@untoldbmx.co.uk</a>.</p>"
           }
         },
         "faq_heading_iq9x7t": {
@@ -83,28 +83,28 @@
           "type": "faq",
           "settings": {
             "question": "What size BMX do I need?",
-            "answer": "<p>More information on choosing the correct BMX size can be found on our <a href=\"\/pages\/bmx-bike-size-guide\" title=\"BMX size guide\">BMX size guide<\/a>.<\/p>"
+            "answer": "<p>More information on choosing the correct BMX size can be found on our <a href=\"/pages/bmx-bike-size-guide\" title=\"BMX size guide\">BMX size guide</a>.</p>"
           }
         },
         "faq_Y6RtCz": {
           "type": "faq",
           "settings": {
             "question": "What brands do you stock?",
-            "answer": "<p>We stock genuine bikes and parts from brands including Cult, Kink, FIT, Colony, S&M, Federal, United, Tall Order, Primo, Fiend, Stranger, ODI and Pro-Tec.<\/p><p>See all the brands we stock <a href=\"https:\/\/untoldbmx.co.uk\/pages\/brands-we-stock\" title=\"Brands we're stocking\">here<\/a>.<\/p>"
+            "answer": "<p>We stock genuine bikes and parts from brands including Cult, Kink, FIT, Colony, S&M, Federal, United, Tall Order, Primo, Fiend, Stranger, ODI and Pro-Tec.</p><p>See all the <a href=\"/pages/brands-we-stock\" title=\"Brands we stock\">brands we stock</a>.</p>"
           }
         },
         "faq_JnTFaw": {
           "type": "faq",
           "settings": {
             "question": "Cassette or freecoaster, what's the difference?",
-            "answer": "<p>With a <strong>cassette hub<\/strong>, your cranks turn backwards when you roll fakie. They feel direct and responsive and are a popular all-round choice.<\/p><p>A <strong>freecoaster hub<\/strong> lets you roll backwards without the cranks moving, making fakies and technical street tricks easier. The trade-off is a little more slack before the hub engages when you pedal forward.<\/p>"
+            "answer": "<p>With a <strong>cassette hub</strong>, your cranks turn backwards when you roll fakie. They feel direct and responsive and are a popular all-round choice.</p><p>A <strong>freecoaster hub</strong> lets you roll backwards without the cranks moving, making fakies and technical street tricks easier. The trade-off is a little more slack before the hub engages when you pedal forward.</p>"
           }
         },
         "faq_Cei8Kf": {
           "type": "faq",
           "settings": {
             "question": "Do complete bikes arrive ready to ride?",
-            "answer": "<p>Each BMX differs slightly with how it's packaged so please reach out to us before purchasing if you need full assembly.<\/p>"
+            "answer": "<p>Each BMX differs slightly with how it's packaged so please reach out to us before purchasing if you need full assembly.</p>"
           }
         },
         "faq_heading_NRPiy9": {
@@ -117,28 +117,28 @@
           "type": "faq",
           "settings": {
             "question": "What payment methods do you take?",
-            "answer": "<p>Apple and Google Pay, Klarna, Clearpay, PayPal, Shop Pay along with all major debit and credit cards.<\/p>"
+            "answer": "<p>UNTOLD BMX accepts major debit and credit cards, plus Apple Pay, Google Pay, PayPal and Shop Pay. Pay later options are Klarna, Shop Pay and Clearpay (pay in 4).</p>"
           }
         },
         "faq_MjNdPX": {
           "type": "faq",
           "settings": {
             "question": "How does warranty work?",
-            "answer": "<p>All warranty queries should come through us first. Just email our support team with the details and we’ll help assess the issue, then work directly with the relevant distributor or brand to get it resolved for you.<\/p>"
+            "answer": "<p>All warranty queries should come through us first. Just email our support team with the details and we’ll help assess the issue, then work directly with the relevant distributor or brand to get it resolved for you.</p>"
           }
         },
         "faq_7zB36q": {
           "type": "faq",
           "settings": {
             "question": "How do I get in touch, and when are you open?",
-            "answer": "<p>Email <a href=\"mailto:support@untoldbmx.co.uk\">support@untoldbmx.co.uk<\/a>, use the live chat at the bottom right or our <a href=\"\/pages\/contact\" title=\"Contact us\">contact page<\/a>. We're open Monday to Friday 9am–5pm and Saturday 9am–3pm, and closed on Sunday.<\/p>"
+            "answer": "<p>You can email UNTOLD BMX at <a href=\"mailto:support@untoldbmx.co.uk\">support@untoldbmx.co.uk</a>, and we reply within 24 hours. You can also use the live chat or the <a href=\"/pages/contact\" title=\"Contact us\">contact page</a>.</p><p>Support hours are Monday to Friday 9am–5pm and Saturday 9am–3pm, and the shop is closed on Sunday.</p>"
           }
         },
-        "faq_waCiNf": {
+        "faq_sale_collection": {
           "type": "faq",
           "settings": {
-            "question": "Does UNTOLD BMX have customer reviews?",
-            "answer": "<p>Yes, we collect customer reviews through Judge.me after each purchase.<\/p>"
+            "question": "Where can I find BMX bikes and parts on sale at UNTOLD BMX?",
+            "answer": "<p>UNTOLD BMX lists sale bikes and parts in its <a href=\"/collections/sale\" title=\"Sale\">Sale collection</a>. The selection changes as items are added and sold.</p>"
           }
         }
       },
@@ -157,18 +157,18 @@
         "faq_Y6RtCz",
         "faq_JnTFaw",
         "faq_Cei8Kf",
+        "faq_sale_collection",
         "faq_heading_NRPiy9",
         "faq_zCJUTJ",
         "faq_MjNdPX",
-        "faq_7zB36q",
-        "faq_waCiNf"
+        "faq_7zB36q"
       ],
       "settings": {
         "nav_only": false,
         "navigation": "in-page-menu",
-        "button_intro": "<p>Still can’t find what you’re looking for?<br\/>Please contact us below<\/p>",
+        "button_intro": "<p>Still can’t find what you’re looking for?<br/>Please contact us below</p>",
         "button_label": "Contact us",
-        "button_link": "shopify:\/\/pages\/contact",
+        "button_link": "shopify://pages/contact",
         "output_schema": true
       }
     }
