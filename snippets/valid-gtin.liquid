@@ -1,0 +1,41 @@
+{%- comment -%}
+	Outputs the barcode only if it is a valid GTIN-8/12/13/14 (digits + check digit). Otherwise outputs nothing.
+	Usage: {% capture g %}{% render 'valid-gtin', code: variant.barcode %}{% endcapture %}
+{%- endcomment -%}
+{%- liquid
+	assign vg_code = code | strip | remove: ' '
+	assign vg_len = vg_code.size
+	assign vg_ok = false
+	if vg_len == 8 or vg_len == 12 or vg_len == 13 or vg_len == 14
+		assign vg_ok = true
+		assign vg_chars = vg_code | split: ''
+		assign vg_sum = 0
+		for i in (1..vg_len)
+			assign vg_pos = vg_len | minus: i
+			assign vg_ch = vg_chars[vg_pos]
+			unless '0123456789' contains vg_ch
+				assign vg_ok = false
+				break
+			endunless
+			if i > 1
+				assign vg_d = vg_ch | plus: 0
+				assign vg_m = i | modulo: 2
+				if vg_m == 0
+					assign vg_d = vg_d | times: 3
+				endif
+				assign vg_sum = vg_sum | plus: vg_d
+			endif
+		endfor
+		if vg_ok
+			assign vg_check = vg_sum | modulo: 10
+			assign vg_check = 10 | minus: vg_check | modulo: 10
+			assign vg_last = vg_chars | last | plus: 0
+			if vg_check != vg_last
+				assign vg_ok = false
+			endif
+		endif
+	endif
+	if vg_ok
+		echo vg_code
+	endif
+-%}

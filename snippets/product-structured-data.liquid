@@ -1,0 +1,178 @@
+{%- comment -%}
+	Product / ProductGroup JSON-LD. Replaces {{ product | structured_data }}.
+	- gtin only when the barcode passes the GTIN length + check-digit test (snippet: valid-gtin)
+	- returns: refund policy (30 days, by post, customer pays return postage)
+	- shipping: UK delivery profile rates (RM48 £8 / DPD £12 for bulkier items, free from £200)
+	- delivery time: not stocked at UNTOLD Warehouse = 1-2 days handling + 2-3 days transit (RM48).
+	  Warehouse-stocked = transit only (warehouse dispatch time not yet confirmed).
+	  Warehouse stock = variant custom.in_stock (same flag as the on-page dispatch text)
+	  or available at the UNTOLD Warehouse pickup location.
+{%- endcomment -%}
+{%- liquid
+	assign sd_url = shop.url | append: product.url
+	assign sd_org_id = shop.url | append: '/#organization'
+	assign sd_year = 'now' | date: '%Y' | plus: 1
+	assign sd_valid_until = sd_year | append: '-12-31'
+	assign sd_desc = product.description | strip_html | strip_newlines | strip | truncate: 5000
+	if sd_desc == blank
+		assign sd_desc = product.title
+	endif
+
+	assign sd_type = product.type | downcase
+	assign sd_title = product.title | downcase
+	assign sd_bulky = false
+	assign sd_type4 = sd_type | slice: 0, 4
+	if sd_type contains 'frame' or sd_type contains 'bike' or sd_type contains 'tyre' or sd_type contains 'wheels' or sd_type == 'rims' or sd_type4 == 'bars' or sd_type == 'bicycle handlebars'
+		assign sd_bulky = true
+	elsif sd_type == 'bmx parts'
+		if sd_title contains ' bars' or sd_title contains 'handlebar' or sd_title contains 'frame' or sd_title contains ' wheel' or sd_title contains 'tyre' or sd_title contains ' rim'
+			assign sd_bulky = true
+		endif
+	endif
+
+	assign sd_varies = ''
+	for opt in product.options_with_values
+		assign on = opt.name | downcase
+		if on contains 'size' or on contains 'length' or on contains 'width' or on contains 'rise'
+			unless sd_varies contains 'size'
+				assign sd_varies = sd_varies | append: ',"https://schema.org/size"'
+			endunless
+		elsif on contains 'colour' or on contains 'color' or on contains 'finish'
+			unless sd_varies contains 'color'
+				assign sd_varies = sd_varies | append: ',"https://schema.org/color"'
+			endunless
+		elsif on contains 'material'
+			unless sd_varies contains 'material'
+				assign sd_varies = sd_varies | append: ',"https://schema.org/material"'
+			endunless
+		endif
+	endfor
+	assign sd_varies = sd_varies | remove_first: ','
+	assign sd_group = true
+	if product.has_only_default_variant or product.variants.size == 1
+		assign sd_group = false
+	endif
+-%}
+{%- capture sd_return -%}
+"hasMerchantReturnPolicy": {
+	"@type": "MerchantReturnPolicy",
+	"applicableCountry": "GB",
+	"returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+	"merchantReturnDays": 30,
+	"returnMethod": "https://schema.org/ReturnByMail",
+	"returnFees": "https://schema.org/ReturnFeesCustomerResponsibility",
+	"merchantReturnLink": {{ shop.url | append: '/policies/refund-policy' | json }}
+}
+{%- endcapture -%}
+{%- capture sd_seller -%}
+"seller": {"@type": "Organization", "@id": {{ sd_org_id | json }}, "name": {{ shop.name | json }}}
+{%- endcapture -%}
+{%- capture sd_offers -%}
+{%- for variant in product.variants -%}
+	{%- liquid
+		assign sd_wh = false
+		if variant.metafields.custom.in_stock.value == true
+			assign sd_wh = true
+		else
+			for sa in variant.store_availabilities
+				if sa.location.name == 'UNTOLD Warehouse' and sa.available
+					assign sd_wh = true
+				endif
+			endfor
+		endif
+		if variant.price >= 20000
+			assign sd_rate = '0.00'
+		elsif sd_bulky
+			assign sd_rate = '12.00'
+		else
+			assign sd_rate = '8.00'
+		endif
+		capture sd_gtin
+			render 'valid-gtin', code: variant.barcode
+		endcapture
+		assign sd_gtin = sd_gtin | strip
+		assign sd_vurl = sd_url | append: '?variant=' | append: variant.id
+		assign sd_img = variant.featured_image | default: product.featured_image
+	-%}
+	{%- capture sd_offer -%}
+	{
+		"@type": "Offer",
+		"@id": {{ sd_vurl | append: '#offer' | json }},
+		"url": {{ sd_vurl | json }},
+		"price": {{ variant.price | divided_by: 100.0 | json }},
+		"priceCurrency": {{ cart.currency.iso_code | json }},
+		"priceValidUntil": {{ sd_valid_until | json }},
+		"availability": "https://schema.org/{% if variant.available %}InStock{% else %}OutOfStock{% endif %}",
+		"itemCondition": "https://schema.org/NewCondition",
+		{{ sd_seller }},
+		"shippingDetails": {
+			"@type": "OfferShippingDetails",
+			"shippingRate": {"@type": "MonetaryAmount", "value": {{ sd_rate }}, "currency": "GBP"},
+			"shippingDestination": {"@type": "DefinedRegion", "addressCountry": "GB"},
+			"deliveryTime": {
+				"@type": "ShippingDeliveryTime",
+				{%- unless sd_wh %}
+				"handlingTime": {"@type": "QuantitativeValue", "minValue": 1, "maxValue": 2, "unitCode": "DAY"},
+				{%- endunless %}
+				"transitTime": {"@type": "QuantitativeValue", "minValue": 2, "maxValue": 3, "unitCode": "DAY"}
+			}
+		},
+		{{ sd_return }}
+	}
+	{%- endcapture -%}
+	{%- if sd_group -%}
+	{%- unless forloop.first %},{% endunless %}
+	{
+		"@type": "Product",
+		"@id": {{ sd_vurl | append: '#variant' | json }},
+		"name": {{ product.title | append: ' - ' | append: variant.title | json }},
+		{%- if variant.sku != blank %}"sku": {{ variant.sku | json }},{% endif %}
+		{%- if sd_gtin != blank %}"gtin": {{ sd_gtin | json }},{% endif %}
+		{%- if sd_img %}"image": {{ sd_img | image_url: width: 1920 | prepend: 'https:' | json }},{% endif %}
+		{%- for opt in product.options_with_values -%}
+			{%- assign on = opt.name | downcase -%}
+			{%- assign ov = variant.options[forloop.index0] -%}
+			{%- if on contains 'size' or on contains 'length' or on contains 'width' or on contains 'rise' -%}"size": {{ ov | json }},
+			{%- elsif on contains 'colour' or on contains 'color' or on contains 'finish' -%}"color": {{ ov | json }},
+			{%- elsif on contains 'material' -%}"material": {{ ov | json }},
+			{%- endif -%}
+		{%- endfor %}
+		"offers": {{ sd_offer }}
+	}
+	{%- else -%}
+		{%- assign sd_single_offer = sd_offer -%}
+		{%- assign sd_single_gtin = sd_gtin -%}
+		{%- assign sd_single_sku = variant.sku -%}
+	{%- endif -%}
+{%- endfor -%}
+{%- endcapture -%}
+<script type="application/ld+json">
+{
+	"@context": "https://schema.org",
+	"@type": {% if sd_group %}"ProductGroup"{% else %}"Product"{% endif %},
+	"@id": {{ sd_url | append: '#product' | json }},
+	"name": {{ product.title | json }},
+	"url": {{ sd_url | json }},
+	"description": {{ sd_desc | json }},
+	{%- if product.featured_image %}
+	"image": [{% for img in product.images limit: 5 %}{{ img | image_url: width: 1920 | prepend: 'https:' | json }}{% unless forloop.last %},{% endunless %}{% endfor %}],
+	{%- endif %}
+	{%- if product.vendor != blank %}
+	"brand": {"@type": "Brand", "name": {{ product.vendor | json }}},
+	{%- endif %}
+	{%- if product.category %}
+	"category": {{ product.category.name | json }},
+	{%- endif %}
+	{%- if sd_group %}
+	"productGroupID": {{ product.id | append: '' | json }},
+	{%- if sd_varies != blank %}
+	"variesBy": [{{ sd_varies }}],
+	{%- endif %}
+	"hasVariant": [{{ sd_offers }}]
+	{%- else %}
+	{%- if sd_single_sku != blank %}"sku": {{ sd_single_sku | json }},{% endif %}
+	{%- if sd_single_gtin != blank %}"gtin": {{ sd_single_gtin | json }},{% endif %}
+	"offers": {{ sd_single_offer }}
+	{%- endif %}
+}
+</script>

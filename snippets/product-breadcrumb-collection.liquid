@@ -1,0 +1,16 @@
+{%- comment -%}
+	Outputs the handle of the category collection used as the breadcrumb fallback
+	for a product without custom.breadcrumbs. Picks the first category collection
+	(most specific first) the product belongs to. Brand, promo, sale and size
+	collections are deliberately not in the list.
+{%- endcomment -%}
+{%- liquid
+	assign pbc_handles = product.collections | map: 'handle'
+	assign pbc_priority = 'complete-bikes,frames,forks,bars,stems,grips,bar-ends,headsets,seats,seat-posts,seat-clamps,cranks,sprockets,chains,pedals,bbs,front-hubs,rear-hubs,hubs,hub-guards,hub-spares,front-wheels,rear-wheels,wheel-sets,wheels,rims,spokes,tyres,inner-tubes,wheel-parts,pegs,brakes,levers,gyros,mounts,cables,helmets,backpacks,tools,stickers,media,apparel,accessories,drivetrain,parts' | split: ','
+	for pbc_h in pbc_priority
+		if pbc_handles contains pbc_h
+			echo pbc_h
+			break
+		endif
+	endfor
+-%}
