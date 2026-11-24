@@ -12,21 +12,6 @@
 
 	<link rel="icon" type="image/png" href="{{ 'favicon.png' | asset_url }}">
 
-    {%- comment -%} Speed 24 Nov 2026: preload the main product image (LCP), same srcset/sizes as the gallery's first image {%- endcomment -%}
-    {%- if request.page_type == 'product' and product.media.first.media_type == 'image' -%}
-      {%- assign lcp_img = product.media.first.preview_image -%}
-      {%- capture lcp_srcset -%}
-        {%- for w in (1..6) -%}
-          {%- case w -%}{%- when 1 -%}{%- assign px = 480 -%}{%- when 2 -%}{%- assign px = 720 -%}{%- when 3 -%}{%- assign px = 960 -%}{%- when 4 -%}{%- assign px = 1200 -%}{%- when 5 -%}{%- assign px = 1600 -%}{%- when 6 -%}{%- assign px = 1800 -%}{%- endcase -%}
-          {%- if lcp_img.width >= px -%}, {{ lcp_img | image_url: width: px }} {{ px }}w{%- endif -%}
-        {%- endfor -%}
-      {%- endcapture -%}
-      {%- assign lcp_srcset = lcp_srcset | strip | remove_first: ', ' -%}
-      {%- if lcp_srcset != blank -%}
-      <link rel="preload" as="image" fetchpriority="high" imagesrcset="{{ lcp_srcset }}" imagesizes="(min-width: 990px) calc((100vw - 252px) / 2), (min-width: 768px) calc(100vw - 40px), calc(100vw - 16px)">
-      {%- endif -%}
-    {%- endif -%}
-
     {% # Load and preload the critical CSS %}
     {{ 'critical.css' | asset_url | stylesheet_tag: preload: true }}
     {{ 'base.css' | asset_url | stylesheet_tag }}
