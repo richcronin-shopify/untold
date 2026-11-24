@@ -2347,6 +2347,6 @@ button,
 
 .jdgm-modal__content {
 	.jm-content {
-		
+		background: var(--color-black) !important;
 	}
 }
