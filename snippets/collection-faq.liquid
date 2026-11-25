@@ -1,0 +1,134 @@
+{%- comment -%}
+  UNTOLD: renders collection.metafields.custom.faq
+  (JSON list of {question, answer_html}) plus one FAQPage JSON-LD.
+  Installed 25 Nov 2026. Shows nothing when the metafield is blank.
+{%- endcomment -%}
+{%- assign faqs = collection.metafields.custom.faq.value -%}
+{%- if faqs and faqs.size > 0 -%}
+<section class="collection-faq" aria-labelledby="collection-faq-title">
+	<h2 class="collection-faq__title" id="collection-faq-title">{{ collection.title | escape }} FAQs</h2>
+	<div class="collection-faq__list">
+		{%- for f in faqs -%}
+			{%- if f.question != blank and f.answer_html != blank -%}
+				<details class="collection-faq__item">
+					<summary class="collection-faq__trigger">
+						<span class="collection-faq__question">{{ f.question | escape }}</span>
+						<span class="collection-faq__icon" aria-hidden="true"></span>
+					</summary>
+					<div class="collection-faq__answer rte">{{ f.answer_html }}</div>
+				</details>
+			{%- endif -%}
+		{%- endfor -%}
+	</div>
+</section>
+<script type="application/ld+json">
+{
+	"@context": "https://schema.org",
+	"@type": "FAQPage",
+	"mainEntity": [
+	{%- assign faq_emitted = 0 -%}
+	{%- for f in faqs -%}
+		{%- if f.question != blank and f.answer_html != blank -%}
+			{%- if faq_emitted > 0 -%},{%- endif -%}
+			{
+				"@type": "Question",
+				"name": {{ f.question | json }},
+				"acceptedAnswer": {
+					"@type": "Answer",
+					"text": {{ f.answer_html | replace: '</p>', ' </p>' | replace: '<br>', ' ' | strip_html | strip | json }}
+				}
+			}
+			{%- assign faq_emitted = faq_emitted | plus: 1 -%}
+		{%- endif -%}
+	{%- endfor -%}
+	]
+}
+</script>
+<style>
+	.collection-faq {
+		width: 860px;
+		max-width: 100%;
+		margin: 60px auto 0;
+	}
+	.collection-faq__title {
+		margin: 0 0 24px;
+		text-align: left;
+	}
+	.collection-faq__item {
+		border: 1px solid rgb(from var(--color-white, #fff) r g b / 45%);
+		border-radius: 2px;
+		margin-bottom: 5px;
+	}
+	.collection-faq__item:last-child {
+		margin-bottom: 0;
+	}
+	.collection-faq__trigger {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 20px;
+		min-height: 50px;
+		padding: 12px 22px;
+		cursor: pointer;
+		list-style: none;
+	}
+	.collection-faq__trigger::-webkit-details-marker {
+		display: none;
+	}
+	.collection-faq__question {
+		font-weight: 400;
+	}
+	.collection-faq__icon {
+		position: relative;
+		display: block;
+		width: 16px;
+		height: 16px;
+		flex-shrink: 0;
+	}
+	.collection-faq__icon::before,
+	.collection-faq__icon::after {
+		content: "";
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		width: 16px;
+		height: 1px;
+		background: var(--color-white, #fff);
+		transform: translate(-50%, -50%);
+		transition: 0.2s transform;
+	}
+	.collection-faq__icon::after {
+		transform: translate(-50%, -50%) rotate(90deg);
+	}
+	.collection-faq__item[open] .collection-faq__icon::after {
+		transform: translate(-50%, -50%) rotate(0deg);
+	}
+	.collection-faq__answer {
+		padding: 0 22px 20px;
+		line-height: 1.5;
+	}
+	.collection-faq__answer p {
+		margin-bottom: 16px;
+	}
+	.collection-faq__answer p:last-child {
+		margin-bottom: 0;
+	}
+	.collection-faq__answer a {
+		color: var(--color-primary, #fff);
+		text-decoration: underline;
+		text-underline-offset: 2px;
+	}
+	@media (max-width: 767px) {
+		.collection-faq {
+			margin-top: 40px;
+		}
+		.collection-faq__trigger {
+			padding: 12px 16px;
+			gap: 12px;
+		}
+		.collection-faq__answer {
+			padding: 0 16px 16px;
+		}
+	}
+</style>
+{%- endif -%}
