@@ -1,0 +1,89 @@
+{%- comment -%}
+  Size chart for frames and complete bikes.
+  Keep the 20" top tube numbers in lockstep with the Buying guides article
+  what-size-bmx-frame-do-i-need-for-my-height.
+  16" and 18" heights match /pages/bmx-bike-size-guide.
+  lead_with: 'wheels' shows the smaller-wheel table first (12–18" completes).
+{%- endcomment -%}
+
+{%- assign lead_with = lead_with | default: 'toptube' -%}
+
+{%- capture size_chart_20 -%}
+	<p>BMX frames are sized by top tube length, not by a small/medium/large label. This chart is a starting point for 20&quot; bikes.</p>
+
+	<table>
+		<caption>20&quot; bikes (top tube vs height)</caption>
+		<thead>
+			<tr>
+				<th scope="col">Rider height</th>
+				<th scope="col">Approx. height in cm</th>
+				<th scope="col">Typical top tube</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>Under 5'4&quot;</td>
+				<td>Under 163 cm</td>
+				<td>20&quot;–20.25&quot;</td>
+			</tr>
+			<tr>
+				<td>5'4&quot;–5'8&quot;</td>
+				<td>163–173 cm</td>
+				<td>20.5&quot;</td>
+			</tr>
+			<tr>
+				<td>5'8&quot;–6'0&quot;</td>
+				<td>173–183 cm</td>
+				<td>20.75&quot;</td>
+			</tr>
+			<tr>
+				<td>6'0&quot; and over</td>
+				<td>183 cm and over</td>
+				<td>21&quot; and up</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<p>If you're between sizes, don't automatically round up. Street and technical riding often suits the shorter end of your range; park, transition and trails often suit the middle or longer end.</p>
+{%- endcapture -%}
+
+{%- capture size_chart_wheels -%}
+	<p>For 16&quot; and 18&quot; complete bikes, or mini frames, start with wheel size rather than top tube:</p>
+
+	<table>
+		<caption>Smaller wheel sizes</caption>
+		<thead>
+			<tr>
+				<th scope="col">Wheel size</th>
+				<th scope="col">Rider height</th>
+				<th scope="col">Approx. height in cm</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>16&quot;</td>
+				<td>3'0&quot;–3'8&quot;</td>
+				<td>90–110 cm</td>
+			</tr>
+			<tr>
+				<td>18&quot;</td>
+				<td>3'6&quot;–4'6&quot;</td>
+				<td>105–135 cm</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<p>12&quot; and 14&quot; completes are listed on the <a href="/pages/bmx-bike-size-guide">BMX size guide</a>. 22&quot; and 24&quot; cruiser frames are a different fit — <a href="/pages/contact">get in touch</a> if you need help choosing one.</p>
+{%- endcapture -%}
+
+<div class="frame-size-chart">
+	{%- if lead_with == 'wheels' -%}
+		{{ size_chart_wheels }}
+		{{ size_chart_20 }}
+	{%- else -%}
+		{{ size_chart_20 }}
+		{{ size_chart_wheels }}
+	{%- endif -%}
+
+	<p><a href="/blogs/buying-guides/what-size-bmx-frame-do-i-need-for-my-height">What size BMX frame do I need for my height?</a></p>
+</div>
