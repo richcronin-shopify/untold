@@ -16,27 +16,53 @@
   assign region_enc = region | url_encode
 
   comment
-    Image fallback: park photos -> satellite thumbnail -> "photo coming soon" placeholder.
+    Gallery: uploaded Shopify images first, then external photos, de-duplicated.
+    Satellite or the placeholder is used only when both lists are empty.
   endcomment
-  assign images = park.thumbnail_image_url.value
+  assign uploaded_images = park.gallery_images.value
+  assign uploaded_count = 0
+  assign uploaded_srcs = '|'
+  if uploaded_images != blank
+    for file in uploaded_images
+      if file != blank
+        assign uploaded_count = uploaded_count | plus: 1
+        assign uploaded_src = file | image_url: width: 1600
+        if uploaded_src != blank
+          unless uploaded_src contains '://'
+            assign uploaded_src = uploaded_src | prepend: 'https:'
+          endunless
+          assign uploaded_srcs = uploaded_srcs | append: uploaded_src | append: '|'
+        endif
+      endif
+    endfor
+  endif
+
+  assign external_photos = park.thumbnail_image_url.value
+  assign external_count = 0
+  if external_photos != blank
+    for img in external_photos
+      if img == blank or img contains 'google.com/vt/'
+        continue
+      endif
+      if uploaded_srcs contains img
+        continue
+      endif
+      assign external_count = external_count | plus: 1
+    endfor
+  endif
+
   assign image_mode = 'photos'
-  if images == blank or images.size == 0
+  assign using_satellite = false
+  assign images = external_photos
+  if uploaded_count == 0 and external_count == 0
     if park.satellite_thumbnail_url.value != blank
       assign images = park.satellite_thumbnail_url.value | split: '|||'
       assign image_mode = 'satellite'
+      assign using_satellite = true
     else
       assign images = blank
       assign image_mode = 'placeholder'
     endif
-  else
-    assign first_image = images | first
-    if first_image contains 'google.com/vt/'
-      assign image_mode = 'satellite'
-    endif
-  endif
-  assign using_satellite = false
-  if image_mode == 'satellite'
-    assign using_satellite = true
   endif
 
   capture placeholder_url
@@ -45,6 +71,14 @@
   assign placeholder_url = placeholder_url | strip
   if image_mode != 'placeholder' and placeholder_url == blank
     assign placeholder_url = ''
+  endif
+
+  if using_satellite
+    assign gallery_count = images.size | at_most: ss.max_images
+  elsif image_mode == 'placeholder'
+    assign gallery_count = 0
+  else
+    assign gallery_count = uploaded_count | plus: external_count | at_most: ss.max_images
   endif
 
   assign image_alt = park_name
@@ -570,28 +604,80 @@
       <div class="skatepark__main">
 
         <div class="skatepark-gallery{% if using_satellite %} skatepark-gallery--satellite{% endif %}" data-skatepark-gallery{% if placeholder_url != blank %} data-placeholder="{{ placeholder_url | escape }}"{% endif %}>
-          {%- if images != blank and images.size > 0 -%}
-            {%- assign gallery_count = images.size | at_most: ss.max_images -%}
+          {%- if gallery_count > 0 -%}
             <div class="skatepark-gallery__stage">
               <div class="swiper skatepark-gallery__swiper" data-gallery-swiper>
                 <div class="swiper-wrapper">
-                  {%- for img in images limit: ss.max_images -%}
-                    <div class="swiper-slide skatepark-gallery__slide">
-                      <img
-                        src="{{ img | escape }}"
-                        alt="{{ image_alt | escape }}{% if gallery_count > 1 %} – photo {{ forloop.index }}{% endif %}"
-                        class="skatepark-gallery__image"
-                        {% if forloop.first %}fetchpriority="high"{% else %}loading="lazy"{% endif %}
-                        decoding="async"
-                        referrerpolicy="no-referrer"
-                        width="1280"
-                        height="960"
-                        {%- if placeholder_url != blank %}
-                        data-fallback="{{ placeholder_url | escape }}"
-                        {%- endif %}
-                      >
-                    </div>
-                  {%- endfor -%}
+                  {%- if using_satellite -%}
+                    {%- for img in images limit: ss.max_images -%}
+                      <div class="swiper-slide skatepark-gallery__slide" data-photo-source="satellite">
+                        <img
+                          src="{{ img | escape }}"
+                          alt="{{ image_alt | escape }}{% if gallery_count > 1 %} – photo {{ forloop.index }}{% endif %}"
+                          class="skatepark-gallery__image"
+                          {% if forloop.first %}fetchpriority="high"{% else %}loading="lazy"{% endif %}
+                          decoding="async"
+                          referrerpolicy="no-referrer"
+                          width="1280"
+                          height="960"
+                          {%- if placeholder_url != blank %}
+                          data-fallback="{{ placeholder_url | escape }}"
+                          {%- endif %}
+                        >
+                      </div>
+                    {%- endfor -%}
+                  {%- else -%}
+                    {%- assign slides_out = 0 -%}
+                    {%- if uploaded_images != blank -%}
+                      {%- for file in uploaded_images -%}
+                        {%- if slides_out >= ss.max_images -%}{%- break -%}{%- endif -%}
+                        {%- if file == blank -%}{%- continue -%}{%- endif -%}
+                        {%- assign slide_alt = file.alt | strip -%}
+                        {%- if slide_alt == blank -%}
+                          {%- assign slide_alt = image_alt -%}
+                        {%- endif -%}
+                        {%- if gallery_count > 1 and slide_alt == image_alt -%}
+                          {%- assign photo_num = slides_out | plus: 1 -%}
+                          {%- assign slide_alt = slide_alt | append: ' – photo ' | append: photo_num -%}
+                        {%- endif -%}
+                        <div class="swiper-slide skatepark-gallery__slide" data-photo-source="upload">
+                          {%- if slides_out == 0 and placeholder_url != blank -%}
+                            {{ file | image_url: width: 1600 | image_tag: widths: '400, 800, 1200, 1600', sizes: '(min-width: 990px) 800px, 100vw', alt: slide_alt, class: 'skatepark-gallery__image', fetchpriority: 'high', decoding: 'async', width: 1280, height: 960, data-fallback: placeholder_url }}
+                          {%- elsif slides_out == 0 -%}
+                            {{ file | image_url: width: 1600 | image_tag: widths: '400, 800, 1200, 1600', sizes: '(min-width: 990px) 800px, 100vw', alt: slide_alt, class: 'skatepark-gallery__image', fetchpriority: 'high', decoding: 'async', width: 1280, height: 960 }}
+                          {%- elsif placeholder_url != blank -%}
+                            {{ file | image_url: width: 1600 | image_tag: widths: '400, 800, 1200, 1600', sizes: '(min-width: 990px) 800px, 100vw', alt: slide_alt, class: 'skatepark-gallery__image', loading: 'lazy', decoding: 'async', width: 1280, height: 960, data-fallback: placeholder_url }}
+                          {%- else -%}
+                            {{ file | image_url: width: 1600 | image_tag: widths: '400, 800, 1200, 1600', sizes: '(min-width: 990px) 800px, 100vw', alt: slide_alt, class: 'skatepark-gallery__image', loading: 'lazy', decoding: 'async', width: 1280, height: 960 }}
+                          {%- endif -%}
+                        </div>
+                        {%- assign slides_out = slides_out | plus: 1 -%}
+                      {%- endfor -%}
+                    {%- endif -%}
+                    {%- if images != blank -%}
+                      {%- for img in images -%}
+                        {%- if slides_out >= ss.max_images -%}{%- break -%}{%- endif -%}
+                        {%- if img == blank or img contains 'google.com/vt/' -%}{%- continue -%}{%- endif -%}
+                        {%- if uploaded_srcs contains img -%}{%- continue -%}{%- endif -%}
+                        <div class="swiper-slide skatepark-gallery__slide" data-photo-source="external">
+                          <img
+                            src="{{ img | escape }}"
+                            alt="{{ image_alt | escape }}{% if gallery_count > 1 %} – photo {{ slides_out | plus: 1 }}{% endif %}"
+                            class="skatepark-gallery__image"
+                            {% if slides_out == 0 %}fetchpriority="high"{% else %}loading="lazy"{% endif %}
+                            decoding="async"
+                            referrerpolicy="no-referrer"
+                            width="1280"
+                            height="960"
+                            {%- if placeholder_url != blank %}
+                            data-fallback="{{ placeholder_url | escape }}"
+                            {%- endif %}
+                          >
+                        </div>
+                        {%- assign slides_out = slides_out | plus: 1 -%}
+                      {%- endfor -%}
+                    {%- endif -%}
+                  {%- endif -%}
                 </div>
               </div>
 
@@ -623,26 +709,61 @@
               <div class="skatepark-gallery__pagination swiper-pagination"></div>
 
               <div class="skatepark-gallery__thumbs">
-                {%- for img in images limit: ss.max_images -%}
-                  <button type="button" class="skatepark-gallery__thumb button--reset{% if forloop.first %} is-active{% endif %}" data-gallery-thumb="{{ forloop.index0 }}" aria-label="Show photo {{ forloop.index }} of {{ gallery_count }}">
-                    <img src="{{ img | escape }}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="160" height="120"{% if placeholder_url != blank %} data-fallback="{{ placeholder_url | escape }}"{% endif %}>
-                  </button>
-                {%- endfor -%}
+                {%- if using_satellite -%}
+                  {%- for img in images limit: ss.max_images -%}
+                    <button type="button" class="skatepark-gallery__thumb button--reset{% if forloop.first %} is-active{% endif %}" data-gallery-thumb="{{ forloop.index0 }}" aria-label="Show photo {{ forloop.index }} of {{ gallery_count }}">
+                      <img src="{{ img | escape }}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="160" height="120"{% if placeholder_url != blank %} data-fallback="{{ placeholder_url | escape }}"{% endif %}>
+                    </button>
+                  {%- endfor -%}
+                {%- else -%}
+                  {%- assign thumbs_out = 0 -%}
+                  {%- if uploaded_images != blank -%}
+                    {%- for file in uploaded_images -%}
+                      {%- if thumbs_out >= ss.max_images -%}{%- break -%}{%- endif -%}
+                      {%- if file == blank -%}{%- continue -%}{%- endif -%}
+                      <button type="button" class="skatepark-gallery__thumb button--reset{% if thumbs_out == 0 %} is-active{% endif %}" data-gallery-thumb="{{ thumbs_out }}" aria-label="Show photo {{ thumbs_out | plus: 1 }} of {{ gallery_count }}">
+                        {%- if placeholder_url != blank -%}
+                          {{ file | image_url: width: 240 | image_tag: alt: '', width: 160, height: 120, loading: 'lazy', decoding: 'async', data-fallback: placeholder_url }}
+                        {%- else -%}
+                          {{ file | image_url: width: 240 | image_tag: alt: '', width: 160, height: 120, loading: 'lazy', decoding: 'async' }}
+                        {%- endif -%}
+                      </button>
+                      {%- assign thumbs_out = thumbs_out | plus: 1 -%}
+                    {%- endfor -%}
+                  {%- endif -%}
+                  {%- if images != blank -%}
+                    {%- for img in images -%}
+                      {%- if thumbs_out >= ss.max_images -%}{%- break -%}{%- endif -%}
+                      {%- if img == blank or img contains 'google.com/vt/' -%}{%- continue -%}{%- endif -%}
+                      {%- if uploaded_srcs contains img -%}{%- continue -%}{%- endif -%}
+                      <button type="button" class="skatepark-gallery__thumb button--reset{% if thumbs_out == 0 %} is-active{% endif %}" data-gallery-thumb="{{ thumbs_out }}" aria-label="Show photo {{ thumbs_out | plus: 1 }} of {{ gallery_count }}">
+                        <img src="{{ img | escape }}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="160" height="120"{% if placeholder_url != blank %} data-fallback="{{ placeholder_url | escape }}"{% endif %}>
+                      </button>
+                      {%- assign thumbs_out = thumbs_out | plus: 1 -%}
+                    {%- endfor -%}
+                  {%- endif -%}
+                {%- endif -%}
               </div>
             {%- endif -%}
 
             {%- if credit != blank or licence_name != blank -%}
-              <p class="skatepark-gallery__credit">
-                {%- if credit != blank -%}{{ credit | escape }}{%- endif -%}
-                {%- if licence_name != blank -%}
-                  {%- if credit != blank %} · {% endif -%}
-                  {%- if licence_url != blank -%}
-                    <a href="{% render 'skatepark-ref-url', url: licence_url %}" target="_blank" rel="noopener nofollow">{{ licence_name | escape }}</a>
-                  {%- else -%}
-                    {{ licence_name | escape }}
-                  {%- endif -%}
+              {%- if using_satellite or uploaded_count == 0 or external_count > 0 -%}
+                {%- if using_satellite == false and uploaded_count > 0 and external_count > 0 -%}
+                  <p class="skatepark-gallery__credit" hidden>
+                {%- else -%}
+                  <p class="skatepark-gallery__credit">
                 {%- endif -%}
-              </p>
+                  {%- if credit != blank -%}{{ credit | escape }}{%- endif -%}
+                  {%- if licence_name != blank -%}
+                    {%- if credit != blank %} · {% endif -%}
+                    {%- if licence_url != blank -%}
+                      <a href="{% render 'skatepark-ref-url', url: licence_url %}" target="_blank" rel="noopener nofollow">{{ licence_name | escape }}</a>
+                    {%- else -%}
+                      {{ licence_name | escape }}
+                    {%- endif -%}
+                  {%- endif -%}
+                </p>
+              {%- endif -%}
             {%- endif -%}
           {%- else -%}
             <div class="skatepark-gallery__stage skatepark-gallery__stage--placeholder">
@@ -916,16 +1037,35 @@
   {%- if has_geo -%},
   "geo": {"@type": "GeoCoordinates", "latitude": {{ lat | json }}, "longitude": {{ lng | json }}}
   {%- endif -%}
-  {%- if images != blank and images.size > 0 and using_satellite == false -%}
+  {%- if using_satellite == false and gallery_count > 0 -%}
   {%- capture schema_imgs -%}
     {%- assign schema_img_count = 0 -%}
-    {%- for img in images limit: 5 -%}
-      {%- if img != blank and img contains '://' and img != placeholder_url -%}
+    {%- if uploaded_images != blank -%}
+      {%- for file in uploaded_images -%}
+        {%- if schema_img_count >= 5 -%}{%- break -%}{%- endif -%}
+        {%- if file == blank -%}{%- continue -%}{%- endif -%}
+        {%- assign schema_img = file | image_url: width: 1600 -%}
+        {%- if schema_img != blank -%}
+          {%- unless schema_img contains '://' -%}
+            {%- assign schema_img = schema_img | prepend: 'https:' -%}
+          {%- endunless -%}
+          {%- if schema_img_count > 0 -%},{%- endif -%}
+          {{- schema_img | json -}}
+          {%- assign schema_img_count = schema_img_count | plus: 1 -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endif -%}
+    {%- if images != blank -%}
+      {%- for img in images -%}
+        {%- if schema_img_count >= 5 -%}{%- break -%}{%- endif -%}
+        {%- if img == blank or img contains 'google.com/vt/' or img == placeholder_url -%}{%- continue -%}{%- endif -%}
+        {%- unless img contains '://' -%}{%- continue -%}{%- endunless -%}
+        {%- if uploaded_srcs contains img -%}{%- continue -%}{%- endif -%}
         {%- if schema_img_count > 0 -%},{%- endif -%}
         {{- img | json -}}
         {%- assign schema_img_count = schema_img_count | plus: 1 -%}
-      {%- endif -%}
-    {%- endfor -%}
+      {%- endfor -%}
+    {%- endif -%}
   {%- endcapture -%}
   {%- if schema_imgs != blank -%},
   "image": [{{ schema_imgs }}]
@@ -1086,12 +1226,27 @@
         const pagination = gallery.querySelector('.skatepark-gallery__pagination');
         const thumbs = gallery.querySelectorAll('[data-gallery-thumb]');
 
+        const creditEl = gallery.querySelector('.skatepark-gallery__credit');
         const syncThumbs = (swiper) => {
           thumbs.forEach((thumb, i) => thumb.classList.toggle('is-active', i === swiper.activeIndex));
           const active = thumbs[swiper.activeIndex];
           if (active && active.scrollIntoView && gallery.dataset.initialised === 'true') {
             active.parentElement.scrollTo({ left: active.offsetLeft - active.parentElement.clientWidth / 2 + active.clientWidth / 2, behavior: 'smooth' });
           }
+        };
+        const syncCredit = (swiper) => {
+          if (!creditEl) return;
+          const slide = swiper.slides[swiper.activeIndex];
+          const source = slide && slide.getAttribute('data-photo-source');
+          if (source === 'upload') {
+            creditEl.setAttribute('hidden', '');
+          } else {
+            creditEl.removeAttribute('hidden');
+          }
+        };
+        const syncGallery = (swiper) => {
+          syncThumbs(swiper);
+          syncCredit(swiper);
         };
 
         const swiper = new Swiper(swiperElement, {
@@ -1127,10 +1282,11 @@
           },
 
           on: {
-            slideChange: syncThumbs
+            slideChange: syncGallery
           }
         });
 
+        syncCredit(swiper);
         thumbs.forEach((thumb, i) => thumb.addEventListener('click', () => swiper.slideTo(i)));
 
         /* Drop photos whose external URL fails to load. If none remain, show the placeholder. */

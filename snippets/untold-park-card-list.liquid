@@ -30,16 +30,27 @@
             assign park_name = park.system.handle | replace: '-', ' '
           endif
           assign image_src = ''
-          assign raw = park.thumbnail_image_url.value
-          if raw.first contains '://'
-            for thumb in raw
-              if thumb contains '://'
-                assign image_src = thumb
-                break
-              endif
-            endfor
-          elsif raw contains '://'
-            assign image_src = raw
+          assign uploaded_first = park.gallery_images.value | first
+          if uploaded_first != blank
+            assign image_src = uploaded_first | image_url: width: 640
+            if image_src != blank
+              unless image_src contains '://'
+                assign image_src = image_src | prepend: 'https:'
+              endunless
+            endif
+          endif
+          if image_src == blank
+            assign raw = park.thumbnail_image_url.value
+            if raw.first contains '://'
+              for thumb in raw
+                if thumb contains '://'
+                  assign image_src = thumb
+                  break
+                endif
+              endfor
+            elsif raw contains '://'
+              assign image_src = raw
+            endif
           endif
           if image_src == blank and park.satellite_thumbnail_url.value contains '://'
             assign image_src = park.satellite_thumbnail_url.value

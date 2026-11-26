@@ -95,8 +95,12 @@
     endif
 
     assign sp_has_photo = false
+    assign uploaded_first = metaobject.gallery_images.value | first
+    if uploaded_first != blank
+      assign sp_has_photo = true
+    endif
     assign sp_thumb0 = metaobject.thumbnail_image_url.value | first
-    if sp_thumb0 != blank
+    if sp_has_photo == false and sp_thumb0 != blank
       unless sp_thumb0 contains 'google.com/vt/'
         assign sp_has_photo = true
       endunless
@@ -302,9 +306,18 @@
       Social image: first real park photo; satellite tiles are not used, so parks without a
       photo get the "photo coming soon" placeholder.
     endcomment
-    assign sp_image = metaobject.thumbnail_image_url.value | first
-    if sp_image contains 'google.com/vt/'
-      assign sp_image = blank
+    if uploaded_first != blank
+      assign sp_image = uploaded_first | image_url: width: 1200
+      if sp_image != blank
+        unless sp_image contains '://'
+          assign sp_image = sp_image | prepend: 'https:'
+        endunless
+      endif
+    else
+      assign sp_image = metaobject.thumbnail_image_url.value | first
+      if sp_image contains 'google.com/vt/'
+        assign sp_image = blank
+      endif
     endif
     if sp_image == blank
       capture sp_image
@@ -367,9 +380,19 @@
     assign og_title = seo_title
     assign og_description = seo_description
     if pe_park != blank
-      assign sp_image = pe_park.thumbnail_image_url.value | first
-      if sp_image contains 'google.com/vt/'
-        assign sp_image = blank
+      assign pe_uploaded = pe_park.gallery_images.value | first
+      if pe_uploaded != blank
+        assign sp_image = pe_uploaded | image_url: width: 1200
+        if sp_image != blank
+          unless sp_image contains '://'
+            assign sp_image = sp_image | prepend: 'https:'
+          endunless
+        endif
+      else
+        assign sp_image = pe_park.thumbnail_image_url.value | first
+        if sp_image contains 'google.com/vt/'
+          assign sp_image = blank
+        endif
       endif
     endif
     if sp_image == blank

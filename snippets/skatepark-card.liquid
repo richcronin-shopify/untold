@@ -17,9 +17,19 @@
     endcapture
     assign sp_placeholder = sp_placeholder | strip
   endif
-  assign sp_img = park.thumbnail_image_url.value | first
-  if sp_img == blank
-    assign sp_img = park.satellite_thumbnail_url.value
+  assign uploaded_first = park.gallery_images.value | first
+  if uploaded_first != blank
+    assign sp_img = uploaded_first | image_url: width: 640
+    if sp_img != blank
+      unless sp_img contains '://'
+        assign sp_img = sp_img | prepend: 'https:'
+      endunless
+    endif
+  else
+    assign sp_img = park.thumbnail_image_url.value | first
+    if sp_img == blank
+      assign sp_img = park.satellite_thumbnail_url.value
+    endif
   endif
   assign sp_is_placeholder = false
   if sp_img == blank and sp_placeholder != blank

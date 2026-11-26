@@ -4,14 +4,20 @@
   Request: /pages/<handle>?view=skateparks-data (250 parks per page). Further pages use the
   parameter named in the "param" field, e.g. &page_xxxx=2.
   Keys: u url, n name, t town, c county, r region, p postcode, y park type, s setting,
-  a latitude, o longitude, i image (first photo, else satellite; never the placeholder),
+  a latitude, o longitude, i image (first uploaded photo, else first external photo, else satellite; never the placeholder),
   e upcoming events, h handle, f feature icon keys. The finder JS uses the theme
   placeholder setting from data-placeholder when i is empty or a photo later fails.
 {%- endcomment -%}
 {%- paginate shop.metaobjects.skatepark.values by 250 -%}
 {"page":{{ paginate.current_page | default: 1 }},"param":{{ paginate.page_param | default: 'page' | json }},"pages":{{ paginate.pages | default: 1 }},"total":{{ paginate.items }},"items":[
 {%- for p in shop.metaobjects.skatepark.values -%}
+{%- assign uploaded_first = p.gallery_images.value | first -%}
+{%- if uploaded_first != blank -%}
+{%- assign img = uploaded_first | image_url: width: 640 -%}
+{%- if img != blank -%}{%- unless img contains '://' -%}{%- assign img = img | prepend: 'https:' -%}{%- endunless -%}{%- endif -%}
+{%- else -%}
 {%- assign img = p.thumbnail_image_url.value | first | default: p.satellite_thumbnail_url.value -%}
+{%- endif -%}
 {%- assign ev = '' -%}{%- if p.events.value != blank -%}{%- capture ev -%}{% render 'park-event-upcoming-keys', events: p.events.value %}{%- endcapture -%}{%- endif -%}
 {%- capture feat_keys -%}{% render 'skatepark-feature-keys', park: p %}{%- endcapture -%}
 {"u":{{ p.system.url | json }},"h":{{ p.system.handle | json }},"n":{{ p.name.value | json }},"t":{{ p.town_city.value | json }},"c":{{ p.county_district.value | json }},"r":{{ p.region.value | json }},"p":{{ p.postcode.value | json }},"y":{{ p.park_type.value | strip | json }},"s":{{ p.setting.value | strip | json }},"f":{{ feat_keys | strip | json }},"a":{{ p.latitude.value | json }},"o":{{ p.longitude.value | json }},"i":{{ img | json }}{% if ev contains ':' %},"e":1{% endif %}}{%- unless forloop.last -%},{%- endunless %}

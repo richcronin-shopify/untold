@@ -10,9 +10,19 @@
   if event.status.value == 'Cancelled'
     assign ps_status = 'https://schema.org/EventCancelled'
   endif
-  assign ps_img = park.thumbnail_image_url.value | first
-  if ps_img contains 'google.com/vt/'
-    assign ps_img = blank
+  assign ps_uploaded = park.gallery_images.value | first
+  if ps_uploaded != blank
+    assign ps_img = ps_uploaded | image_url: width: 1600
+    if ps_img != blank
+      unless ps_img contains '://'
+        assign ps_img = ps_img | prepend: 'https:'
+      endunless
+    endif
+  else
+    assign ps_img = park.thumbnail_image_url.value | first
+    if ps_img contains 'google.com/vt/'
+      assign ps_img = blank
+    endif
   endif
   if event.cover_image.value != blank
     assign ps_img = event.cover_image.value | image_url: width: 1600 | prepend: 'https:'
