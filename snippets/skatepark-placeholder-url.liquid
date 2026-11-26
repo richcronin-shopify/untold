@@ -1,9 +1,12 @@
 {% doc %}
-  Outputs the URL of the "photo coming soon" image used for parks with no photos.
-  Order: the image picked in the section settings, then park-coming-soon.jpg from
-  Shopify Files, then the fallback URL text setting, then the built-in CDN URL.
+  Outputs the URL of the placeholder image used for parks with no photos,
+  or when a park photo fails to load.
+  Order: the theme setting "Skatepark placeholder image", then an image
+  passed in from a section, then park-placeholder.jpg from Shopify Files,
+  then park-coming-soon.jpg, then the fallback URL text setting, then a
+  built-in Files URL.
 
-  @param {image} [image] - Placeholder image picked in the section settings
+  @param {image} [image] - Placeholder image picked in a section setting
   @param {string} [url] - Fallback placeholder URL
   @param {number} [width] - Width to request when the image comes from Shopify (default 1600)
 
@@ -12,7 +15,13 @@
 {% enddoc %}
 {%- liquid
   assign sp_ph_width = width | default: 1600
-  assign sp_ph = image
+  assign sp_ph = settings.skatepark_placeholder_image
+  if sp_ph == blank
+    assign sp_ph = image
+  endif
+  if sp_ph == blank
+    assign sp_ph = images['park-placeholder.jpg']
+  endif
   if sp_ph == blank
     assign sp_ph = images['park-coming-soon.jpg']
   endif
@@ -20,7 +29,7 @@
   if sp_ph != blank
     assign sp_ph_url = sp_ph | image_url: width: sp_ph_width
   else
-    assign sp_ph_url = url | strip | default: 'https://cdn.shopify.com/s/files/1/0052/6873/4040/files/park-coming-soon.jpg?v=1793626514'
+    assign sp_ph_url = url | strip | default: 'https://cdn.shopify.com/s/files/1/0052/6873/4040/files/park-placeholder.jpg?v=1793898245'
   endif
 
   assign sp_ph_start = sp_ph_url | slice: 0, 2

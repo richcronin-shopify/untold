@@ -3,20 +3,27 @@
 
   @param {object} park - A skatepark metaobject
   @param {number} [index] - Position in the list, used to load the first images eagerly
-  @param {string} [placeholder] - Image URL used when the park has no photo or satellite image
+  @param {string} [placeholder] - Image URL used when the park has no photo or satellite image. Defaults to the theme Skatepark placeholder setting.
   @param {boolean} [show_bookmark] - Show the favourite bookmark control (default false)
   @param {boolean} [is_favourite] - Whether the signed-in customer has favourited this park
   @param {boolean} [show_trending] - Show the trending flag on the image
   @param {string} [trending_label] - Label for the trending flag
 {% enddoc %}
 {%- liquid
+  assign sp_placeholder = placeholder | strip
+  if sp_placeholder == blank
+    capture sp_placeholder
+      render 'skatepark-placeholder-url', width: 640
+    endcapture
+    assign sp_placeholder = sp_placeholder | strip
+  endif
   assign sp_img = park.thumbnail_image_url.value | first
   if sp_img == blank
     assign sp_img = park.satellite_thumbnail_url.value
   endif
   assign sp_is_placeholder = false
-  if sp_img == blank and placeholder != blank
-    assign sp_img = placeholder
+  if sp_img == blank and sp_placeholder != blank
+    assign sp_img = sp_placeholder
     assign sp_is_placeholder = true
   endif
   assign sp_loading = 'lazy'
@@ -67,7 +74,24 @@
   <div class="skatepark-card__media">
     <a href="{{ sp_url }}" class="skatepark-card__media-link" tabindex="-1" aria-hidden="true">
       {%- if sp_img != blank -%}
-        <img src="{{ sp_img | escape }}" alt="{{ sp_alt | escape }}" loading="{{ sp_loading }}" decoding="async" {% unless sp_is_placeholder %}referrerpolicy="no-referrer" {% endunless %}width="640" height="400" class="skatepark-card__image{% if sp_is_placeholder %} skatepark-card__image--placeholder{% endif %}">
+        <img
+          src="{{ sp_img | escape }}"
+          alt="{{ sp_alt | escape }}"
+          loading="{{ sp_loading }}"
+          decoding="async"
+          width="640"
+          height="400"
+          class="skatepark-card__image{% if sp_is_placeholder %} skatepark-card__image--placeholder{% endif %}"
+          {%- unless sp_is_placeholder %}
+          referrerpolicy="no-referrer"
+          {%- if sp_placeholder != blank %}
+          data-fallback="{{ sp_placeholder | escape }}"
+          onerror="if(this.dataset.fallback){this.onerror=null;this.src=this.dataset.fallback;this.classList.add('skatepark-card__image--placeholder');this.removeAttribute('referrerpolicy');this.removeAttribute('data-fallback');}"
+          {%- endif %}
+          {%- endunless %}
+        >
+      {%- elsif sp_placeholder != blank -%}
+        <img src="{{ sp_placeholder | escape }}" alt="{{ sp_alt | escape }}" loading="{{ sp_loading }}" decoding="async" width="640" height="400" class="skatepark-card__image skatepark-card__image--placeholder">
       {%- else -%}
         <span class="skatepark-card__placeholder" aria-hidden="true">{{ park.name.value | slice: 0 }}</span>
       {%- endif -%}

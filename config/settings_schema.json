@@ -190,5 +190,16 @@
         "label": "Button link"
       }
     ]
+  },
+  {
+    "name": "Skateparks",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "skatepark_placeholder_image",
+        "label": "Skatepark placeholder image",
+        "info": "Shown when a park has no photo, or when a photo fails to load. If empty, park-placeholder.jpg from Files is used."
+      }
+    ]
   }
 ]

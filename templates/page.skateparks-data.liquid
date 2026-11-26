@@ -4,7 +4,9 @@
   Request: /pages/<handle>?view=skateparks-data (250 parks per page). Further pages use the
   parameter named in the "param" field, e.g. &page_xxxx=2.
   Keys: u url, n name, t town, c county, r region, p postcode, y park type, s setting,
-  a latitude, o longitude, i image, e upcoming events, h handle, f feature icon keys.
+  a latitude, o longitude, i image (first photo, else satellite; never the placeholder),
+  e upcoming events, h handle, f feature icon keys. The finder JS uses the theme
+  placeholder setting from data-placeholder when i is empty or a photo later fails.
 {%- endcomment -%}
 {%- paginate shop.metaobjects.skatepark.values by 250 -%}
 {"page":{{ paginate.current_page | default: 1 }},"param":{{ paginate.page_param | default: 'page' | json }},"pages":{{ paginate.pages | default: 1 }},"total":{{ paginate.items }},"items":[

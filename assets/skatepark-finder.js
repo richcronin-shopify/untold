@@ -247,10 +247,14 @@
 
   const card = (p, i) => {
     const meta = esc(p.t || '') + (p.c && p.c !== p.t ? ', ' + esc(p.c) : '');
+    const loading = i < 4 ? 'eager' : 'lazy';
+    const phAttr = placeholder
+      ? ' data-fallback="' + esc(placeholder) + '" onerror="if(this.dataset.fallback){this.onerror=null;this.src=this.dataset.fallback;this.classList.add(\'skatepark-card__image--placeholder\');this.removeAttribute(\'referrerpolicy\');this.removeAttribute(\'data-fallback\');}"'
+      : '';
     const img = p.i
-      ? '<img src="' + esc(p.i) + '" alt="" loading="' + (i < 4 ? 'eager' : 'lazy') + '" decoding="async" width="640" height="400" referrerpolicy="no-referrer" class="skatepark-card__image">'
+      ? '<img src="' + esc(p.i) + '" alt="" loading="' + loading + '" decoding="async" width="640" height="400" referrerpolicy="no-referrer" class="skatepark-card__image"' + phAttr + '>'
       : placeholder
-        ? '<img src="' + esc(placeholder) + '" alt="" loading="' + (i < 4 ? 'eager' : 'lazy') + '" decoding="async" width="640" height="400" class="skatepark-card__image skatepark-card__image--placeholder">'
+        ? '<img src="' + esc(placeholder) + '" alt="" loading="' + loading + '" decoding="async" width="640" height="400" class="skatepark-card__image skatepark-card__image--placeholder">'
         : '<span class="skatepark-card__placeholder" aria-hidden="true">' + esc((p.n || '?').charAt(0)) + '</span>';
     const fav = p.h && favourites.has(p.h);
     const bookmark = p.h

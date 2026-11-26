@@ -39,11 +39,12 @@
     assign using_satellite = true
   endif
 
-  if image_mode == 'placeholder'
-    capture placeholder_url
-      render 'skatepark-placeholder-url', image: ss.placeholder_image, url: ss.placeholder_url, width: 1280
-    endcapture
-    assign placeholder_url = placeholder_url | strip
+  capture placeholder_url
+    render 'skatepark-placeholder-url', image: ss.placeholder_image, url: ss.placeholder_url, width: 1280
+  endcapture
+  assign placeholder_url = placeholder_url | strip
+  if image_mode != 'placeholder' and placeholder_url == blank
+    assign placeholder_url = ''
   endif
 
   assign image_alt = park_name
@@ -568,7 +569,7 @@
 
       <div class="skatepark__main">
 
-        <div class="skatepark-gallery{% if using_satellite %} skatepark-gallery--satellite{% endif %}" data-skatepark-gallery>
+        <div class="skatepark-gallery{% if using_satellite %} skatepark-gallery--satellite{% endif %}" data-skatepark-gallery{% if placeholder_url != blank %} data-placeholder="{{ placeholder_url | escape }}"{% endif %}>
           {%- if images != blank and images.size > 0 -%}
             {%- assign gallery_count = images.size | at_most: ss.max_images -%}
             <div class="skatepark-gallery__stage">
@@ -585,6 +586,9 @@
                         referrerpolicy="no-referrer"
                         width="1280"
                         height="960"
+                        {%- if placeholder_url != blank %}
+                        data-fallback="{{ placeholder_url | escape }}"
+                        {%- endif %}
                       >
                     </div>
                   {%- endfor -%}
@@ -621,7 +625,7 @@
               <div class="skatepark-gallery__thumbs">
                 {%- for img in images limit: ss.max_images -%}
                   <button type="button" class="skatepark-gallery__thumb button--reset{% if forloop.first %} is-active{% endif %}" data-gallery-thumb="{{ forloop.index0 }}" aria-label="Show photo {{ forloop.index }} of {{ gallery_count }}">
-                    <img src="{{ img | escape }}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="160" height="120">
+                    <img src="{{ img | escape }}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" width="160" height="120"{% if placeholder_url != blank %} data-fallback="{{ placeholder_url | escape }}"{% endif %}>
                   </button>
                 {%- endfor -%}
               </div>
@@ -912,8 +916,20 @@
   {%- if has_geo -%},
   "geo": {"@type": "GeoCoordinates", "latitude": {{ lat | json }}, "longitude": {{ lng | json }}}
   {%- endif -%}
-  {%- if images != blank and images.size > 0 and using_satellite == false -%},
-  "image": [{%- for img in images limit: 5 -%}{{ img | json }}{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}]
+  {%- if images != blank and images.size > 0 and using_satellite == false -%}
+  {%- capture schema_imgs -%}
+    {%- assign schema_img_count = 0 -%}
+    {%- for img in images limit: 5 -%}
+      {%- if img != blank and img contains '://' and img != placeholder_url -%}
+        {%- if schema_img_count > 0 -%},{%- endif -%}
+        {{- img | json -}}
+        {%- assign schema_img_count = schema_img_count | plus: 1 -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endcapture -%}
+  {%- if schema_imgs != blank -%},
+  "image": [{{ schema_imgs }}]
+  {%- endif -%}
   {%- endif -%}
   {%- if park.entry_type.value == 'Free' -%},
   "isAccessibleForFree": true
@@ -1117,16 +1133,34 @@
 
         thumbs.forEach((thumb, i) => thumb.addEventListener('click', () => swiper.slideTo(i)));
 
-        /* Drop photos whose external URL fails to load. */
+        /* Drop photos whose external URL fails to load. If none remain, show the placeholder. */
+        const fallback = gallery.dataset.placeholder || '';
+        const swapToPlaceholder = (failedImg) => {
+          if (!fallback || !failedImg || failedImg.src === fallback) {
+            gallery.classList.add('skatepark-gallery--broken');
+            return;
+          }
+          failedImg.onerror = null;
+          failedImg.src = fallback;
+          failedImg.classList.add('skatepark-gallery__image--placeholder');
+          failedImg.removeAttribute('referrerpolicy');
+          failedImg.removeAttribute('data-fallback');
+          const thumbImg = gallery.querySelector('.skatepark-gallery__thumb.is-active img, [data-gallery-thumb] img');
+          if (thumbImg) thumbImg.src = fallback;
+        };
         swiperElement.querySelectorAll('.skatepark-gallery__image').forEach((img) => {
           const drop = () => {
             const slide = img.closest('.swiper-slide');
             const index = [...swiper.slides].indexOf(slide);
             if (index < 0) return;
-            swiper.removeSlide(index);
-            const thumb = gallery.querySelectorAll('[data-gallery-thumb]')[index];
-            if (thumb) thumb.remove();
-            if (swiper.slides.length === 0) gallery.classList.add('skatepark-gallery--broken');
+            if (swiper.slides.length > 1) {
+              swiper.removeSlide(index);
+              const thumb = gallery.querySelectorAll('[data-gallery-thumb]')[index];
+              if (thumb) thumb.remove();
+              if (swiper.slides.length === 0) swapToPlaceholder(img);
+            } else {
+              swapToPlaceholder(img);
+            }
           };
           if (img.complete && img.naturalWidth === 0) drop();
           else img.addEventListener('error', drop, { once: true });
