@@ -10,7 +10,7 @@
 	assign sd_scope = scope | default: 'product'
 	assign sd_names = 'Wheel size,Tyre width,Tyre PSI,Tyre bead,Bar rise,Bar width,Bar upsweep,Bar backsweep,Hub driver,Hub drive side,Hub driver teeth,Hub axle,Hub holes,Stem reach,Stem rise,Fork offset,Fork steerer length,Sprocket teeth' | split: ','
 	assign sd_keys  = 'wheel_size,tyre_width,tyre_psi,tyre_bead,bar_rise,bar_width,bar_upsweep,bar_backsweep,hub_driver,hub_drive_side,hub_driver_teeth,hub_axle,hub_holes,stem_reach,stem_rise,fork_offset,fork_steerer_length,sprocket_teeth' | split: ','
-	assign sd_units = ',in,PSI,,in,in,deg,deg,,,,teeth,,,holes,mm,mm,mm,mm,teeth' | split: ','
+	assign sd_units = ',in,PSI,,in,in,deg,deg,,,teeth,,holes,mm,mm,mm,mm,teeth' | split: ','
 	assign sd_first = true
 -%}
 {%- if sd_scope == 'variant' and variant -%}
@@ -37,26 +37,36 @@
 	{%- if sd_color != blank -%}
 		{%- assign sd_color_names = '' -%}
 		{%- for sd_item in sd_color -%}
-			{%- if sd_color_names != blank -%}
-				{%- assign sd_color_names = sd_color_names | append: ', ' -%}
+			{%- assign sd_label = sd_item.label.value | default: sd_item.label | default: sd_item.display_name -%}
+			{%- if sd_label != blank -%}
+				{%- if sd_color_names != blank -%}
+					{%- assign sd_color_names = sd_color_names | append: ', ' -%}
+				{%- endif -%}
+				{%- assign sd_color_names = sd_color_names | append: sd_label -%}
 			{%- endif -%}
-			{%- assign sd_color_names = sd_color_names | append: sd_item.display_name -%}
 		{%- endfor -%}
-		{%- unless sd_first -%},{%- endunless -%}
-		{%- assign sd_first = false -%}
-		{"@type":"PropertyValue","name":"Colour","value":{{ sd_color_names | json }}}
+		{%- if sd_color_names != blank -%}
+			{%- unless sd_first -%},{%- endunless -%}
+			{%- assign sd_first = false -%}
+			{"@type":"PropertyValue","name":"Colour","value":{{ sd_color_names | json }}}
+		{%- endif -%}
 	{%- endif -%}
 	{%- assign sd_material = product.metafields.shopify.material.value -%}
 	{%- if sd_material != blank -%}
 		{%- assign sd_material_names = '' -%}
 		{%- for sd_item in sd_material -%}
-			{%- if sd_material_names != blank -%}
-				{%- assign sd_material_names = sd_material_names | append: ', ' -%}
+			{%- assign sd_label = sd_item.label.value | default: sd_item.label | default: sd_item.display_name -%}
+			{%- if sd_label != blank -%}
+				{%- if sd_material_names != blank -%}
+					{%- assign sd_material_names = sd_material_names | append: ', ' -%}
+				{%- endif -%}
+				{%- assign sd_material_names = sd_material_names | append: sd_label -%}
 			{%- endif -%}
-			{%- assign sd_material_names = sd_material_names | append: sd_item.display_name -%}
 		{%- endfor -%}
-		{%- unless sd_first -%},{%- endunless -%}
-		{%- assign sd_first = false -%}
-		{"@type":"PropertyValue","name":"Material","value":{{ sd_material_names | json }}}
+		{%- if sd_material_names != blank -%}
+			{%- unless sd_first -%},{%- endunless -%}
+			{%- assign sd_first = false -%}
+			{"@type":"PropertyValue","name":"Material","value":{{ sd_material_names | json }}}
+		{%- endif -%}
 	{%- endif -%}
 {%- endif -%}
