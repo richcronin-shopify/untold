@@ -127,6 +127,19 @@
 			{%- elsif on contains 'material' -%}"material": {{ ov | json }},
 			{%- endif -%}
 		{%- endfor %}
+		{%- capture sd_vprod -%}{% render 'product-spec-jsonld', scope: 'product' %}{%- endcapture -%}
+		{%- capture sd_vvar -%}{% render 'product-spec-jsonld', scope: 'variant', variant: variant %}{%- endcapture -%}
+		{%- assign sd_vprod = sd_vprod | strip -%}
+		{%- assign sd_vvar = sd_vvar | strip -%}
+		{%- assign sd_vprops = sd_vprod -%}
+		{%- if sd_vprod != blank and sd_vvar != blank -%}
+			{%- assign sd_vprops = sd_vprod | append: ',' | append: sd_vvar -%}
+		{%- elsif sd_vvar != blank -%}
+			{%- assign sd_vprops = sd_vvar -%}
+		{%- endif -%}
+		{%- if sd_vprops != blank -%}
+		"additionalProperty": [{{ sd_vprops }}],
+		{%- endif -%}
 		"offers": {{ sd_offer }}
 	}
 	{%- else -%}
@@ -163,6 +176,11 @@
 	{%- if sd_single_sku != blank %}"sku": {{ sd_single_sku | json }},{% endif %}
 	{%- if sd_single_gtin != blank %}"gtin": {{ sd_single_gtin | json }},{% endif %}
 	"offers": {{ sd_single_offer }}
+	{%- endif %}
+	{%- capture sd_pprops -%}{% render 'product-spec-jsonld', scope: 'product' %}{%- endcapture -%}
+	{%- assign sd_pprops = sd_pprops | strip -%}
+	{%- if sd_pprops != blank -%}
+	,"additionalProperty": [{{ sd_pprops }}]
 	{%- endif %}
 }
 </script>

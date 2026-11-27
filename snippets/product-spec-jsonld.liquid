@@ -1,0 +1,62 @@
+{%- comment -%}
+	schema.org PropertyValue list from BMX spec metafields (custom.*) and, when
+	present, Shopify taxonomy attributes (shopify.color-pattern, shopify.material).
+
+	Accepts:
+	  scope: 'product' (default) or 'variant'
+	  variant: the variant drop, required when scope is 'variant'
+{%- endcomment -%}
+{%- liquid
+	assign sd_scope = scope | default: 'product'
+	assign sd_names = 'Wheel size,Tyre width,Tyre PSI,Tyre bead,Bar rise,Bar width,Bar upsweep,Bar backsweep,Hub driver,Hub drive side,Hub driver teeth,Hub axle,Hub holes,Stem reach,Stem rise,Fork offset,Fork steerer length,Sprocket teeth' | split: ','
+	assign sd_keys  = 'wheel_size,tyre_width,tyre_psi,tyre_bead,bar_rise,bar_width,bar_upsweep,bar_backsweep,hub_driver,hub_drive_side,hub_driver_teeth,hub_axle,hub_holes,stem_reach,stem_rise,fork_offset,fork_steerer_length,sprocket_teeth' | split: ','
+	assign sd_units = ',in,PSI,,in,in,deg,deg,,,,teeth,,,holes,mm,mm,mm,mm,teeth' | split: ','
+	assign sd_first = true
+-%}
+{%- if sd_scope == 'variant' and variant -%}
+	{%- for i in (0..17) -%}
+		{%- assign sd_key = sd_keys[i] -%}
+		{%- assign sd_val = variant.metafields.custom[sd_key].value -%}
+		{%- if sd_val != blank -%}
+			{%- unless sd_first -%},{%- endunless -%}
+			{%- assign sd_first = false -%}
+			{"@type":"PropertyValue","name":{{ sd_names[i] | json }},"value":{{ sd_val | json }}{%- if sd_units[i] != blank -%},"unitText":{{ sd_units[i] | json }}{%- endif -%}}
+		{%- endif -%}
+	{%- endfor -%}
+{%- else -%}
+	{%- for i in (0..17) -%}
+		{%- assign sd_key = sd_keys[i] -%}
+		{%- assign sd_val = product.metafields.custom[sd_key].value -%}
+		{%- if sd_val != blank -%}
+			{%- unless sd_first -%},{%- endunless -%}
+			{%- assign sd_first = false -%}
+			{"@type":"PropertyValue","name":{{ sd_names[i] | json }},"value":{{ sd_val | json }}{%- if sd_units[i] != blank -%},"unitText":{{ sd_units[i] | json }}{%- endif -%}}
+		{%- endif -%}
+	{%- endfor -%}
+	{%- assign sd_color = product.metafields.shopify['color-pattern'].value -%}
+	{%- if sd_color != blank -%}
+		{%- assign sd_color_names = '' -%}
+		{%- for sd_item in sd_color -%}
+			{%- if sd_color_names != blank -%}
+				{%- assign sd_color_names = sd_color_names | append: ', ' -%}
+			{%- endif -%}
+			{%- assign sd_color_names = sd_color_names | append: sd_item.display_name -%}
+		{%- endfor -%}
+		{%- unless sd_first -%},{%- endunless -%}
+		{%- assign sd_first = false -%}
+		{"@type":"PropertyValue","name":"Colour","value":{{ sd_color_names | json }}}
+	{%- endif -%}
+	{%- assign sd_material = product.metafields.shopify.material.value -%}
+	{%- if sd_material != blank -%}
+		{%- assign sd_material_names = '' -%}
+		{%- for sd_item in sd_material -%}
+			{%- if sd_material_names != blank -%}
+				{%- assign sd_material_names = sd_material_names | append: ', ' -%}
+			{%- endif -%}
+			{%- assign sd_material_names = sd_material_names | append: sd_item.display_name -%}
+		{%- endfor -%}
+		{%- unless sd_first -%},{%- endunless -%}
+		{%- assign sd_first = false -%}
+		{"@type":"PropertyValue","name":"Material","value":{{ sd_material_names | json }}}
+	{%- endif -%}
+{%- endif -%}
